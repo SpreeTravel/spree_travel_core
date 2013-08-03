@@ -1,0 +1,113 @@
+<ul id="products" >
+  <% products_related.each do |product| %>
+        <% a = product.taxons.where(:taxonomy_id => Spree::Taxon.find_by_permalink('flight-destinations').taxonomy_id)[0] %>
+        <% b = product.taxons.where(:taxonomy_id => Spree::Taxon.find_by_permalink('flight-destinations').taxonomy_id)[1] %>
+
+        <%
+           round_trip = false
+           #for variant in product.variants
+             if product.master.option_values.include?(Spree::OptionValue.find_by_name("trip-round-trip"))
+               round_trip = true
+             end
+           #end
+        %>
+
+        <li id="product_<%= product.id %>" class="columns alpha omega eleven show-in" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
+          <div id="block-one-transfer" class="columns alpha four">
+            <div class="columns alpha two product-image-transfer">
+              <%= if !a.icon.nil?
+                   image_tag a.icon.url(:height)
+                 end %>
+            </div>
+            <div class="columns omega two product-image-transfer">
+              <%= if !b.icon.nil?
+                   image_tag b.icon.url(:height)
+                 end %>
+            </div>
+          </div>
+
+          <div id="block-two-transfer" class="columns omega seven">
+            <div id="head-one-transfer" class="columns alpha omega seven">
+              <ul>
+                <li class="tng-feat">
+                    <a href="/" class="product-name" itemprop="name"><%= a.name %></a>
+                    <div class="country">
+                        <% country = get_country(a) %>
+                        <img src="/assets/store/flags/<%= country[0] %>.png" ></img>
+                        <p><%= country[1] %></p>
+                    </div>
+                </li>
+                <li class="tng-feat"><div class="triangulo-izq"></div></li>
+                <li class="tng-feat"><div class="triangulo-der<% if not round_trip %>-none<% end %>"></div></li>
+                <li class="tng-feat">
+                    <a href="/" class="product-name" itemprop="name"><%= b.name %></a>
+                    <div class="country">
+                        <% country = get_country(b) %>
+                        <img src="/assets/store/flags/<%= country[0] %>.png" ></img>
+                        <p><%= country[1] %></p>
+                    </div>
+                </li>
+              </ul>
+            </div>
+
+            <div id="box-ida" class="columns alpha omega seven description-transfer product-text">
+              <ul>
+                <li>
+                  <ul class="columns alpha omega seven">
+                    <li class="ida-flight"></li>
+                    <li class="ida-vuelta-text"><%= t('leave') %></li>
+                    <li class="destino-ida-flight tng-feat"><%= a.name %></li>
+                    <li class="tng-feat"><div class="triangulo-izq tng-min"></div></li>
+                    <li class="destino-ida-vuelta-text"><%= b.name %></li>
+                    <li><%= product.product_properties.where(:property_id => Spree::Property.find_by_name('flight-frecuency'))[0].value %></li>
+                  </ul>
+                </li>
+                <li>
+                  <ul class="toprow columns alpha omega seven">
+                    <li class="horarios"><%= t('departure')%>:<label class="time"> <%= product.product_properties.where(:property_id => Spree::Property.find_by_name('flight-start-time')).first.value %> </label></li>
+                    <li class="horarios"><%= t('arrival')%>:<label class="time"> <%= product.product_properties.where(:property_id => Spree::Property.find_by_name('flight-end-time')).first.value %> </label></li>
+                    <li class="horarios"><%= product.product_properties.where(:property_id => Spree::Property.find_by_name('flight-duration')).first.value %> <%= t('hours') %></li>
+                    <li class="horarios"> <%= if !product.product_properties.where(:property_id => Spree::Property.find_by_name('aerolinea')).empty?
+                                                product.product_properties.where(:property_id => Spree::Property.find_by_name('aerolinea')).first.value
+                                              end%> </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+
+            <% if round_trip %>
+                <div id="box-vuelta" class="columns alpha omega seven description-transfer product-text">
+                  <ul>
+                    <li>
+                      <ul class="columns alpha omega seven">
+                        <li class="vuelta-flight"></li>
+                        <li class="ida-vuelta-text"><%= t('return') %></li>
+                        <li class="destino-ida-flight tng-feat"><%= b.name %></li>
+                        <li class="tng-feat"><div class="triangulo-izq tng-min"></div></li>
+                        <li class="destino-ida-vuelta-text"><%= a.name %></li>
+                        <li><%= product.product_properties.where(:property_id => Spree::Property.find_by_name('flight-frecuency'))[0].value %></li>
+                      </ul>
+                    </li>
+                    <li>
+                      <ul class="toprow columns alpha omega seven">
+                        <li class="horarios"><%= t('departure')%>:<label class="time"> <%= product.product_properties.where(:property_id => Spree::Property.find_by_name('flight-start-time')).first.value %> </label></li>
+                        <li class="horarios"><%= t('arrival')%>:<label class="time"> <%= product.product_properties.where(:property_id => Spree::Property.find_by_name('flight-end-time')).first.value %> </label></li>
+                        <li class="horarios"><%= product.product_properties.where(:property_id => Spree::Property.find_by_name('flight-duration')).first.value %> <%= t('hours') %></li>
+                        <li class="horarios"> <%= if !product.product_properties.where(:property_id => Spree::Property.find_by_name('aerolinea')).empty?
+                                                    product.product_properties.where(:property_id => Spree::Property.find_by_name('aerolinea')).first.value
+                                                 end%> </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+            <% end %>
+
+            <%= render(:partial => "spree/products/cart_form", :locals => { :product => product, :type => "flight" }) %>
+
+          </div>
+        </li>
+
+  <% end %>
+</ul>
+
+

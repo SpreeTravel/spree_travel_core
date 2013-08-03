@@ -1,0 +1,31 @@
+<% content_for :sidebar do %>
+    <div id="cart-summary" class="columns alpha four">
+      <ul id="cart-list-summary" >
+        <li class="cart-summary-header"><p><%= t('subtotal') %></p></li>
+        <li class="cart-summary-count">(<%= @order.products.count %> <%= t('product') %><% if @order.products.count > 1 %>s<% end %>)</li>
+        <li class="cart-summary-price"><p><%= price(@order.item_total)%></p></li>
+        <!-- TODO: bateo grande con las promociones, algo no pincha bien (puse un parche en el helper) -->
+        <% if @order.adjustments.present? && @order.adjustments.eligible.count > 0 %>
+            <li id="summary-order-charges" class="cart-summary-price-1" >
+              <% @order.adjustments.eligible.each do |adjustment| %>
+                  <% next if (adjustment.originator_type == 'Spree::TaxRate') and (adjustment.amount == 0) %>
+                  <ul>
+                    <li><p><%= adjustment.label %>: <%= price(adjustment.amount) %></p></li>
+                  </ul>
+              <% end %>
+            </li>
+        <% end %>
+        <li class="cart-summary-button">
+          <% if current_user %>
+              <%= link_to checkout_path do %>
+                  <%= render :partial => 'button_checkout' %>
+              <% end %>
+          <% else %>
+              <a href="#" onclick="loginOverlay('backlogin', 'backregister')">
+                  <%= render :partial => 'button_checkout' %>
+              </a>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+<% end %>

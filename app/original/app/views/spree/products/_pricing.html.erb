@@ -1,0 +1,68 @@
+<%  if SpreeFlexiVariants::Config[:use_javascript_pricing_updates]  %>
+
+<%= content_for :head do %>
+  <%# didn't use javascript_tag here so we don't confuse deface %>
+  <script type="text/javascript">
+    //<![CDATA[
+    // First I need to set up a mapping for the variants on the screen so I can easily grab their prices
+
+    var variant_price_map={};
+
+    <% if @product.has_variants? %>
+      <% @product.variants.active.each_with_index do |v,index| %>
+        variant_price_map[<%= v.id %>]= <%= v.price %>;
+      <% end %>
+    <% end %>
+
+
+    // we start off the page w/ a known base price, a known set of
+    // possible configurations (ad_hoc_option_values), and no customizations
+
+    // 'updatePrice()' takes the base price + current 'configuration' adjustments + 'customization' adjustments
+
+    var base_price=<%= @product.price %>;
+
+    // keep track of ad_hoc adjustments
+    var price_modifier_map={};
+
+    <%  @product.ad_hoc_option_types.each do |pot| %>
+      <% pot.option_values.each do |pov| %>
+        price_modifier_map[<%= pov.id %>]= <%= pov.price_modifier %>;
+      <% end %>
+    <% end %>
+
+
+    var delay = (function(){
+      var timer = 0;
+      return function(callback, ms){
+        clearTimeout (timer);
+        timer = setTimeout(callback, ms);
+      };
+    })();
+
+	function isNumeric(input) {
+		return (input - 0) == input && input.length > 0;
+	}
+
+	function compute_customization_price() {
+		var price=0;
+		$(".customization_price").each(function() {
+			var val=$(this).val();
+			if (isNumeric(val)) {
+				price  +=  parseFloat(val);
+			}
+		});
+		return price;
+	}
+
+	function updatePrice() {
+//		var cur_customization_price =  compute_customization_price();
+//		var cur_price = base_price * cur_customization_price;
+//		$('.price.selling').text(cur_price.toFixed(2));
+	}
+
+  //]]>
+  </script>
+<% end %>
+<% # end if SpreeFlexiVariants::Config[:use_javascript_pricing_updates] %>
+<% end %>

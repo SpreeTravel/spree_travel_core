@@ -1,0 +1,11 @@
+<div id="order_details" data-hook>
+  <div class="clear"></div>
+  <legend><%= t(@order.state, :scope => :order_state).titleize %></legend>
+  <%= render :partial => 'spree/shared/order_details', :locals => { :order => @order } %>
+</div>
+
+<br />
+
+<div class="form-buttons" data-hook="buttons">
+  <%= submit_tag t(:place_order), :class => 'continue button primary' %>
+</div>

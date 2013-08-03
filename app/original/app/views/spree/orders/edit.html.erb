@@ -1,0 +1,55 @@
+<% @body_id = 'cart' %>
+
+<% previous_path = session[:url_before_cart] || root_path %>
+
+<% if @order.line_items.empty? %>
+
+  <div data-hook="empty_cart">
+
+    <div id="cart-header"   class="columns omega sixteen">
+      <p><%= t('your_cart_is_empty') %></p>
+    </div>
+    <%= link_to previous_path, :id => "cart-continue" do %>
+        <div id="icon-continue-shopping"/>
+        <p><%= t('continue_shopping') %></p>
+    <% end %>
+  </div>
+
+<% else %>
+
+  <div id="cart-header" class="columns omega twelve">
+     <p><%= t('my_trip') %></p>
+  </div>
+
+  <div class="columns omega twelve cart-body" data-hook="outside_cart_form">
+    <%= form_for @order, :url => update_cart_path, :html => {:id => 'update-cart'} do |order_form| %>
+      <div data-hook="inside_cart_form">
+
+        <div data-hook="cart_items">
+          <%= render :partial => 'form', :locals => { :order_form => order_form } %>
+        </div>
+
+      </div>
+    <% end %>
+  </div>
+
+  <div id="cart-footer" class="columns omega twelve" data-hook>
+    <%= form_tag empty_cart_path, :id => "cart-empty", :method => :put do %>
+        <div id="icon-empty-cart"/>
+        <p><%= submit_tag t('empty_cart'), :class => 'button-empty' %></p>
+    <% end %>
+    <%= link_to previous_path, :id => "cart-continue" do %>
+        <div id="icon-continue-shopping"/>
+        <p><%= t('continue_shopping') %></p>
+    <% end %>
+    <%= form_for @order, :url => update_cart_path, :html => {:id => 'update-cart'} do |order_form| %>
+        <div class="links" data-hook="cart_buttons">
+          <%= button_tag :id => "cart-update" do %>
+              <div id="icon-update-cart"/>
+              <p><%= t('update') %></p>
+          <% end %>
+        </div>
+    <% end %>
+  </div>
+
+<% end %>

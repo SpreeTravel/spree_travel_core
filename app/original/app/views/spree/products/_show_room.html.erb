@@ -1,0 +1,27 @@
+<div id="product-show" data-hook="product_show" itemscope itemtype="http://schema.org/Product">
+  <% @body_id = 'product-details' %>
+
+  <%= render(:partial => "spree/products/product_detail_left", :locals => { :product => product }) %>
+
+  <div class="columns eleven" data-hook="product_right_part">
+
+    <%= render(:partial => "spree/products/cart_form", :locals => { :product => product }) %>
+
+    <!--<div id="detail-options" class="columns alpha eleven row" data-hook='product_right_part'>-->
+
+      <!--<p class="product-detail-title-options"><%#= t('service') %></p>-->
+      <!--<ul id="options">-->
+        <!--<%# product.properties.each do |prop| %>-->
+            <!--<li><ul class="two columns alpha product-option"><li class="icon-check"></li><li class="product-info"><%#= prop.presentation %></li></ul></li>-->
+        <!--<%# end %>-->
+      <!--</ul>-->
+
+    <!--</div>-->
+
+  </div>
+
+  <%= render(:partial => "spree/products/rooms", :locals => { :rooms => product.parent.children_rooms - [product] }) %>
+
+
+
+</div>

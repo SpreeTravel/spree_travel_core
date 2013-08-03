@@ -1,0 +1,20 @@
+<% adult_id = "adult_#{product_customization_type.customizable_product_options.first.id}" %>
+<% adult_price_id = "adult_price_#{product_customization_type.customizable_product_options.second.id}" %>
+<% children_id = "children_#{product_customization_type.customizable_product_options.third.id}" %>
+<% children_price_id = "children_price_#{product_customization_type.customizable_product_options.last.id}" %>
+
+<% adults = values[:adults] || 0 %>
+<% adults_price = values[:adults_price] || 0  %>
+<% children = values[:children] || 0 %>
+<% children_price = values[:children_price] || 0 %>
+
+<% option = product_customization_type.customizable_product_options.first %>
+<%= hidden_field_tag "#{param_prefix}[#{option.id}]",adults , :id => adult_id  %>
+<% option = product_customization_type.customizable_product_options.second %>
+<%= hidden_field_tag "#{param_prefix}[#{option.id}]",adults_price , :id => adult_price_id  %>
+<% option = product_customization_type.customizable_product_options.third %>
+<%= hidden_field_tag "#{param_prefix}[#{option.id}]",children , :id => children_id  %>
+<% option = product_customization_type.customizable_product_options.last %>
+<%= hidden_field_tag "#{param_prefix}[#{option.id}]",children_price , :id => children_price_id  %>
+
+

@@ -1,0 +1,88 @@
+.facebook_sidebar{
+    border: 1px solid #c5c5c5;
+    margin: 15px 0;
+}
+
+.title_facebook{
+    height: 60px;
+}
+
+.title_facebook li{
+    /*float: left;*/
+    /*display: inline;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;*/
+    font-family: Bebas Neue;
+    font-size: 21px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #808080;
+}
+
+.title_facebook li p{
+    float: left;
+    display: inline;
+    /*margin-top: 10px;*/
+    margin-left: 5px;
+    padding-top: 13px;
+}
+
+.title_facebook li img.left_facebook{
+    float: left;
+    display: inline;
+    width: 43px;
+    height: 43px;
+    margin-top: 10px;
+    margin-left: 10px;
+    background-repeat: no-repeat;
+    background-image: url("gs_facebook.jpg");
+    background-position: 0px 0px;
+
+}
+
+.listado_facebook{
+    border-top: 3px solid #c5c5c5;
+}
+
+.listado_facebook ul{
+    margin: 0 10px;
+    padding: 0;
+    list-style: none;
+    display: block;
+    border-bottom: 1px solid #c5c5c5;
+    height: 30px;
+}
+
+.listado_facebook ul li{
+    float: left;
+    margin-top: 5px;
+}
+
+.listado_facebook ul li#number_val{
+    font-family: bebas neue;
+    font-size: 24px;
+    font-weight: normal;
+    color: #c5c5c5;
+    width: 20px;
+}
+
+.listado_facebook ul li#name_val{
+    font-family: arial, helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    color: #1d95cb;
+    margin-left: 5px;
+}
+
+.listado_facebook ul li#price_val{
+    /*position: relative;
+    clear: left;
+    float: right;*/
+    font-family: arial, helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #4d4d4d;
+    /*margin-bottom: 15px;*/
+
+}

@@ -1,0 +1,85 @@
+<% a = product.taxons.where("permalink like '%destinations%'")[0] %>
+<% b = product.taxons.where("permalink like '%destinations%'")[1] %>
+
+<%
+   round_trip = false
+   for variant in product.variants
+     if variant.option_values.include?(Spree::OptionValue.find_by_name("trip-round-trip"))
+       round_trip = true
+       break
+     end
+   end
+%>
+
+<li id="product_<%= product.id %>" class="show-out" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
+
+  <div id="block-one-transfer" class="four columns">
+    <div class="product-image-transfer two columns alpha">
+      <%= if !a.nil? and !a.icon.nil?
+            image_tag a.icon.url(:height)
+          end %>
+    </div>
+    <div class="product-image-transfer two columns omega">
+      <%= if !b.nil? and !b.icon.nil?
+            image_tag b.icon.url(:height)
+          end %>
+    </div>
+  </div>
+
+  <div id="block-two-transfer" class="eight columns">
+
+    <div id="head-one-transfer" class="eight columns alpha">
+      <ul>
+        <li class="tng-feat">
+          <p class="product-name-no-link"><%= truncate(product.name.split('-')[0], :length => 20, :omission => "...") %> - <%= truncate(product.name.split('-')[1], :length => 20, :omission => "...") %></p>
+          <div class="country">
+            <% country = get_country(a) %>
+            <img src="/assets/store/flags/<%= country[0] %>.png" ></img>
+            <p><%= country[1] %></p>
+          </div>
+        </li>
+        <!--<li><div class="triangulo-izq"></div></li>-->
+        <!--<li><div class="triangulo-der"></div></li>-->
+        <!--<li><p class="product-name-no-link"><%#= truncate(product.name.split('-')[1].downcase.capitalize, :length => 20, :omission => "...") %></p></li>-->
+      </ul>
+    </div>
+
+    <div id="box-ida" class="description-transfer eight columns alpha product-text">
+      <ul>
+        <li>
+          <ul class="eight columns alpha">
+            <li><div class="triangulo-izq"></div></li>
+            <li class="ida-vuelta-text"><%= t('leave') %></li>
+            <li class="destino-ida-flight tng-feat"><%= a.name if !a.nil? %></li>
+            <li class="tng-feat">-</li>
+            <li class="destino-ida-vuelta-text"><%= b.name if !b.nil? %></li>
+            <li><%= t('all_days') %></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <% if round_trip %>
+        <div id="box-vuelta" class="description-transfer eight columns alpha product-text">
+          <ul>
+            <li>
+              <ul class="eight columns alpha">
+                <li><div class="triangulo-izq"></div></li>
+                <li class="ida-vuelta-text"><%= t('return') %></li>
+                <li class="destino-ida-flight tng-feat"><%= b.name if !b.nil? %></li>
+                <li class="tng-feat">--</li>
+                <li class="destino-ida-vuelta-text"><%= a.name if !a.nil? %></li>
+                <li><%= t('all_days') %></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+    <% else %>
+        <div class="columns alpha eight row">
+        </div>
+    <% end %>
+
+    <%= render(:partial => "spree/products/cart_form", :locals => { :product => product, :type => "transfer" }) %>
+
+  </div>
+</li>

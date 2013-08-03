@@ -1,0 +1,21 @@
+<% check_in_dom_id = "check_in_out_input_#{product_customization_type.customizable_product_options.first.id}" %>
+<% check_out_dom_id = "check_in_out_input_#{product_customization_type.customizable_product_options.second.id}" %>
+
+<%#= render :partial => "spree/products/customizations/calculator/#{calculator_name(product_customization_type)}",
+           :locals => {:calculator=>product_customization_type.calculator} %>
+
+<%
+   if product.rent?
+     checkin = params[:date_rent] || (Time.now + 1.day).strftime("%Y-%m-%d")
+     checkout = params[:date_devolution_rent] || (Time.now + 4.day).strftime("%Y-%m-%d")
+   elsif product.accommodation?
+     checkin = params[:check_in_accommodation] || (Time.now + 1.day).strftime("%Y-%m-%d")
+     checkout = params[:check_out_accommodation] || (Time.now + 2.day).strftime("%Y-%m-%d")
+   end
+%>
+
+<% option = product_customization_type.customizable_product_options.first %>
+<%= hidden_field_tag "#{param_prefix}[#{option.id}]",checkin , :id => check_in_dom_id  %>
+<% option = product_customization_type.customizable_product_options.second %>
+<%= hidden_field_tag "#{param_prefix}[#{option.id}]",checkout , :id => check_out_dom_id  %>
+

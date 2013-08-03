@@ -1,0 +1,62 @@
+
+<h3><%= t('customer_details') %></h3>
+<table class="index" data-hook="customer_guest">
+  <thead>
+    <th colspan="8"><%= t('account') %></th>
+  </thead>
+  <tbody>
+    <tr data-hook="customer_fields">
+      <td class="lbl-col"><%= f.label :email, t('email') + ':' %></td>
+      <td class="val-col" colspan="3"><%= f.email_field :email, :class => 'fullwidth' %></td>
+      <td class="lbl-col"><%= label_tag nil, t('guest_checkout') %>:</td>
+      <td class="val-col" colspan="3">
+        <% if @order.completed? %>
+          <%= @order.user.nil? ? t('yes') : t('no') %>
+        <% else %>
+          <% guest = @order.user.nil? || @order.user.anonymous? %>
+          <label class="sub">
+            <%= radio_button_tag :guest_checkout, true, guest %>
+            <%= t('yes') %>
+          </label> &nbsp;
+          <label class="sub">
+            <%= radio_button_tag :guest_checkout, false, !guest, :disabled => @order.cart? %>
+            <%= t('no') %>
+          </label>
+          <%= hidden_field_tag :user_id, @order.user_id %>
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="booking">
+  <thead>
+  <th colspan="8"><%= t('booking_date') %></th>
+  </thead>
+  <%= @order.line_items.each do |item| %>
+      <% item.product_customizations.each do |customization| %>
+          <br><strong><%= customization.product_customization_type.presentation.humanize %>:</strong>
+          <% customization.customized_product_options.each do |option| %>
+              <%= option.customizable_product_option.presentation %>: <%= option.value %>
+          <% end %>
+      <% end %>
+  <% end %>
+</table>
+
+
+<%= f.fields_for :bill_address do |ba_form| %>
+  <%= render :partial => 'spree/admin/shared/address_form', :locals => { :f => ba_form, :name => t('billing_address'), :use_billing => false } %>
+<% end %>
+
+<%= f.fields_for :pax_contacts do |pax_contact| %>
+    <%= render :partial => 'spree/admin/shared/pax_form', :locals => { :f => pax_contact, :name => t('guest_contact') } %>
+<% end %>
+
+<p class="form-buttons" data-hook="buttons">
+  <%= button @order.cart? ? t('continue') : t('update') %>
+</p>
+
+<% content_for :head do %>
+  <%= javascript_include_tag states_path, 'admin/address_states.js' %>
+<% end %>
+

@@ -1,0 +1,207 @@
+/* get rid of those system borders being generated for A tags */
+a:active {
+    outline:none;
+}
+
+:focus {
+    -moz-outline-style:none;
+}
+
+.back_overlay {
+    display:none;
+}
+
+.red_error {
+    color: red;
+}
+
+#backlogin, #backregister, #backforgot, #backdescription, #backedit {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 50;
+}
+
+
+#overlaylogin, #overlayregister, #overlayforgot, #overlaydescription, #overlayedit {
+  background-color: #ffffff;
+  color:#808080;
+  text-align: left;
+  font-family: arial, helvetica, sans-serif;
+  font-weight: normal;
+  font-size: 11px;
+  /*width:320px;*/
+  /*height: 800px;*/
+  padding:20px;
+  box-shadow: 0px 0px 3px 1px #4d4d4d;
+  -webkit-box-shadow: 0px 0px 3px 1px #4d4d4d;
+  -moz-box-shadow: 0px 0px 3px 1px #4d4d4d;
+}
+
+div.contentWrap {
+    height:auto;
+    overflow-y:auto;
+    width: 320px;
+    /*position: absolute;*/
+    z-index: 10;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.contentWrap-description {
+    height:400px;
+    overflow-y:auto;
+    width: 600px;
+    /*position: absolute;*/
+    z-index: 10;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#existing-customer, #new-customer, #edit-customer {
+    width: auto;
+}
+
+#existing-customer p, #new-customer p, #edit-customer p {
+   padding-top: 0;
+}
+
+#existing-customer p input.button,
+#new-customer p input.button,
+#edit-customer p input.button {
+    height: 30px;
+    color:#808080;
+    font-family: bebas neue;
+    font-weight: normal;
+    font-size: 18px;
+    text-transform: uppercase;
+    padding-bottom: 0;
+
+}
+
+#existing-customer img, #edit-customer img {
+    height: 16px;
+    width: 16px;
+    background-repeat: no-repeat;
+    background-image: url("mi-cuenta-registro-ventana.png");
+    background-position: 0px 0px;
+    border: 0;
+    float: left;
+    margin-top: 2px;
+    margin-right: 5px;
+}
+
+#new-customer img, #forgot-customer img {
+    height: 16px;
+    width: 16px;
+    background-repeat: no-repeat;
+    background-image: url("mi-cuenta-registro-ventana.png");
+    background-position: -20px 0px;
+    border: 0;
+    float: left;
+    margin-top: 2px;
+    margin-right: 5px;
+}
+
+#existing-customer form, #new-customer form, #forgot-customer form, #edit-customer form {
+    border-bottom: 1px dotted #c5c5c5;
+    margin-bottom: 5px;
+    padding-bottom: 10px;
+}
+
+div#pfd p {
+    display: block;
+    padding: 5px 0px;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: normal;
+    color: #4d4d4d;
+}
+
+/*.head_login{*/
+   /*display: inline-block;*/
+/*}*/
+
+h6.title_user {
+    font-family: bebas neue;
+    font-size: 21px;
+    font-weight: normal;
+    color: #808080;
+    text-transform: uppercase;
+    float: left;
+}
+
+#password-credentials p{
+    padding-top: 0px;
+}
+
+#password-credentials input.title, #new-customer input.title{
+    height: 30px;
+}
+
+#password-credentials input.title:focus, #new-customer input.title:focus {
+    border: 1px solid #ed8000;
+}
+
+.close-login {
+    float: right;
+}
+
+#button-login, #button-register, #button-edit {
+    height: 30px;
+    width: 100px;
+    padding-top: 5px;
+    background: linear-gradient(top, rgb(242, 166, 77) 0%, rgb(237, 129, 0) 50%);
+    background: -moz-linear-gradient(top, rgb(242, 166, 77) 0%, rgb(237, 129, 0) 50%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgb(242, 166, 77)), color-stop(50%, rgb(237, 129, 0)));
+    background: -webkit-linear-gradient(top, rgb(242, 166, 77) 0%, rgb(237, 129, 0) 50%);
+    background: -o-linear-gradient(top, rgb(242, 166, 77) 0%, rgb(237, 129, 0) 50%);
+    background: -ms-linear-gradient(top, rgb(242, 166, 77) 0%, rgb(237, 129, 0) 50%);
+    font-family: bebas neue;
+    font-size: 18px;
+    font-weight: normal;
+    color: #ffffff;
+    text-align: center;
+    text-transform: uppercase;
+    border: none;
+}
+
+#button-forgot {
+    height: 30px;
+    width: 150px;
+    padding-top: 5px;
+    background: linear-gradient(top, rgb(242, 166, 77) 0%, rgb(237, 129, 0) 50%);
+    background: -moz-linear-gradient(top, rgb(242, 166, 77) 0%, rgb(237, 129, 0) 50%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgb(242, 166, 77)), color-stop(50%, rgb(237, 129, 0)));
+    background: -webkit-linear-gradient(top, rgb(242, 166, 77) 0%, rgb(237, 129, 0) 50%);
+    background: -o-linear-gradient(top, rgb(242, 166, 77) 0%, rgb(237, 129, 0) 50%);
+    background: -ms-linear-gradient(top, rgb(242, 166, 77) 0%, rgb(237, 129, 0) 50%);
+    font-family: bebas neue;
+    font-size: 18px;
+    font-weight: normal;
+    color: #ffffff;
+    text-align: center;
+    text-transform: uppercase;
+    border: none
+}
+
+table#summary tbody tr td a {
+    color: #ed8000;
+}
+
+table#summary tbody tr td a:hover {
+    color: #ed8000 !important;
+}
+
+table#summary thead {
+    background-color: #d1d1d1;
+}
+
+table#summary tbody tr.odd {
+    background-color: #f2f2f2;
+}

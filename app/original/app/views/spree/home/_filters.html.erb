@@ -1,0 +1,46 @@
+<% content_for :sidebar do %>
+
+    <div id="sidebar_filters">
+        <% new_params = params.clone %>
+        <%= form_tag( new_params.merge!({:controller => :home, :action => :index}), {:method => :get, :id => "search_sidebar"}) do %>
+            <div id="title_sidebar_filters">
+                <p><%= t('filter_by') %>:</p>
+            </div>
+            <div id="body_sidebar_filters">
+              <p><%= t('categories') %></p>
+              <% categories     = Spree::Taxon.find_by_permalink('categories').children
+                 sub_categories = Spree::Taxon.find_by_permalink(categories[3].permalink).children
+                 search_categories = [categories[0], categories[1], categories[2], categories[4], sub_categories[0], sub_categories[1]] %>
+              <ul>
+                <% search_categories.each do |c| %>
+                   <li><label><%= check_box_tag c.permalink, params[c.permalink], !params[c.permalink].nil? %> <%= c.name %></label></li>
+                <% end %>
+              </ul>
+              <p><%= t('things_to_do') %></p>
+              <% things = Spree::Taxon.find_by_permalink('things-to-do').children %>
+              <ul>
+                <% things.each do |t| %>
+                    <li><label><%= check_box_tag t.permalink, params[t.permalink], !params[t.permalink].nil? %> <%= t.name %></label></li>
+                <% end %>
+              </ul>
+              <p><%= t('destinations') %></p>
+              <% destinations = Spree::Taxon.find_by_permalink('destinations').children[0].children.order(:position) %>
+              <ul>
+                 <% destinations.each do |d| %>
+                    <li><label><%= check_box_tag d.permalink, params[d.permalink], !params[d.permalink].nil? %> <%= d.name %></label></li>
+                 <% end %>
+              </ul>
+            </div>
+            <div id="buttons_sidebar_filters">
+              <div id="icon-apply-search"></div>
+              <%= hidden_field_tag :keywords, params[:keywords] %>
+              <%= submit_tag t('apply'), :class => "apply-search" %>
+              <input type="button" class="clear-search" onclick="clear_search('search_sidebar')" value="<%= t('delete') %>"/>
+              <div id="icon-clear-search"></div>
+            </div>
+        <% end %>
+    </div>
+
+<% end %>
+
+

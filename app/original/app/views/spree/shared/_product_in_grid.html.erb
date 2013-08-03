@@ -1,0 +1,54 @@
+  <% if !get_group_preview.nil? %>
+      <div class="title_group_products twelve">
+        <ul>
+          <li><img class="left"/></li>
+          <li><p>mas vendidos</p></li>
+          <li><img class="rigth"/></li>
+        </ul>
+      </div>
+
+      <div>
+      <ul id="products_grid">
+      <% get_group_preview[1].each do |product| %>
+            <li id="product_element" class="four">
+              <ul>
+                <li class="product_image">
+                    <%= image_tag("store/prodIcon.png", :height => '165', :width => '214') %>
+                    <p class="product_name"> <%= product.name %> </p>
+                    <p class="dias_parents">7 dias | <%= link_to "Cuba - Pinar del Rio - San Luis", root_path %></p>
+                </li>
+                <li class="intermedio">
+                  <ul class="info_icons">
+                    <li>
+                      <ul class="info_compra">
+                        <li id="icon_info">
+                          <img/>
+                          <%= link_to "detalles", root_path %>
+                        </li>
+                        <li id="icon_compra">
+                          <img/>
+                          <%= link_to "comprar", root_path %>
+                        </li>
+                     </ul>
+                    </li>
+                    <li>
+                      <ul class="opcionicon_price">
+                        <li id="opcionicon">
+                            <img id="op1" width="20px" height="20px"/>
+                            <img id="op2" width="20px" height="20px"/>
+                            <img id="op3" width="20px" height="20px"/>
+                        </li>
+                        <li id="price">
+                            <p> <%= number_to_currency product.price, :precision => 0  %> </p>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li class="categorias_parents"><p>Excursion > Rural</p></li>
+              </ul>
+            </li>
+      <% end %>
+      </ul>
+      </div>
+  <% end %>

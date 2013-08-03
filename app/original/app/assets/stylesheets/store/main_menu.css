@@ -1,0 +1,582 @@
+nav.columns.alpha.omega.sixteen{
+    height: 39px;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul#main-nav-bar{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background-color: #4d4d4d;
+    border-bottom: 1px solid #4d4d4d;
+    height: 39px;
+}
+
+nav ul#main-nav-bar li {
+    float: left;
+    position: relative;
+    padding: 0;
+    margin: 0;
+    /*border-right: red solid 1px;
+    border-left: blue solid 1px;*/
+    border-right: 1px solid #363636;
+    border-left: 1px solid #666666;
+    text-align: center;
+}
+
+nav ul#main-nav-bar li#programs-link a{
+    width: 100px;
+}
+
+nav ul#main-nav-bar li#tours-link a{
+    width: 106px;
+}
+
+nav ul#main-nav-bar li#flights-link a{
+    width: 73px;
+}
+
+nav ul#main-nav-bar li#cars-and-transfers-link a{
+    width: 135px;
+}
+
+nav ul#main-nav-bar li#accommodation-link a{
+    width: 105px;
+}
+
+nav ul#main-nav-bar li#promos-link a{
+    width: 89px;
+}
+
+nav ul#main-nav-bar li#destinos-link a{
+    width: 106px;
+}
+
+nav ul#main-nav-bar li#destinos-link ul ul li a{
+    width: 150px;
+}
+
+nav ul#main-nav-bar li#lugares-link a{
+    width: 99px;
+}
+
+nav ul#main-nav-bar li:last-child {
+    border-right: none;
+}
+
+nav ul#main-nav-bar li:first-child {
+    border-left: none;
+}
+
+a.top_link{
+    color: #acacac;
+}
+
+a.top_link:hover{
+    color: #ffffff !important;
+}
+
+nav ul#main-nav-bar a {
+    float: left;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    color: #acacac;
+    text-transform: uppercase;
+    font-family: Bebas Neue;
+    font-size: 18px;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+/*nav ul#main-nav-bar a:hover {
+    color: #ffffff !important;
+}*/
+
+nav ul#main-nav-bar li#home-link a {
+    /*background: #ee8100 no-repeat;*/
+    /*background: linear-gradient(top, #f3a74d 0%, #ed8000 50%);
+    background: -moz-linear-gradient(top, #f3a74d 0%, #ed8000 50%);
+    background: -webkit-linear-gradient(top, #f3a74d 0%,#ed8000 50%);*/
+    /*background: transparent no-repeat;
+    background-image: url('home.png');*/
+    background-position: right;
+    padding: 0 0 0 0px;
+    margin: 0 0 0 10px;;
+    height: 40px;
+    width: 40px;
+}
+
+nav ul#main-nav-bar li#home-link a.home_link {
+    background: linear-gradient(top, rgb(242, 166, 77) 0%, rgb(235, 127, 0) 50%);
+    background: -moz-linear-gradient(top, rgb(242, 166, 77) 0%, rgb(235, 127, 0) 50%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgb(242, 166, 77)), color-stop(50%, rgb(235, 127, 0)));
+    background: -webkit-linear-gradient(top, rgb(242, 166, 77) 0%, rgb(235, 127, 0) 50%);
+    background: -o-linear-gradient(top, rgb(242, 166, 77) 0%, rgb(235, 127, 0) 50%);
+    background: -ms-linear-gradient(top, rgb(242, 166, 77) 0%, rgb(235, 127, 0) 50%);
+}
+
+nav ul#main-nav-bar li#home-link a img {
+    width: 20px;
+    height: 20px;
+    background-image: url("inicio.png");
+    background-position: 0px 0px;
+    margin-top: 10px;
+    border: none;
+}
+
+nav ul#main-nav-bar li#home-link a img:hover {
+    width: 20px;
+    height: 20px;
+    background-image: url("inicio.png");
+    background-position: 0px -20px;
+    margin-top: 10px;
+    border: none;
+}
+
+nav ul#main-nav-bar li#destinos-link a, nav ul#main-nav-bar li#lugares-link a{
+    color: #acacac;
+    text-transform: none;
+    font-family: arial, helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 11px;
+    padding-top: 3px;
+    /*padding: 0;*/
+    /*position: relative;*/
+    /*height: 40px;*/
+}
+
+nav ul#main-nav-bar li#lugares-link img, nav ul#main-nav-bar li#destinos-link img{
+    width: 20px;
+    height: 20px;
+    background: transparent no-repeat;
+    background-image: url("iconografia.png");
+    background-position: 0px 0px;
+    /*margin-top: 10px;*/
+    margin: 0px 0 0 0;
+    border: none;
+    position: relative;
+    top: 6px;
+}
+
+nav ul#main-nav-bar li#lugares-link img{
+    background-position: -161px -35px;
+}
+
+nav ul#main-nav-bar li#destinos-link img{
+    background-position: -161px 1px;
+}
+
+nav ul#main-nav-bar li#destinos-link span, nav ul#main-nav-bar li#lugares-link span{
+    /*padding: 0 0 5px 0;*/
+    margin: 0px 0 0px 5px;
+    /*top: 10px;*/
+    top: 1px;
+    position: relative;
+}
+
+nav ul#main-nav-bar li:hover > a {
+    color: #ffffff;
+}
+
+nav ul#main-nav-bar ul {
+    margin: 0 0 0 20px;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 39px;
+    left: 0;
+    z-index: 10;
+    background: #f2f2f2;
+}
+
+nav ul#main-nav-bar li#lugares-link ul {
+    margin: 0 0 0 0px;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 39px;
+    left: -3px;
+    right: 0;
+    z-index: 10;
+    background: #f2f2f2;
+}
+
+nav ul#main-nav-bar li#lugares-link ul li {
+    padding-left: 5px;
+}
+
+nav ul#main-nav-bar li:hover > ul {
+    opacity: 1;
+    visibility: visible;
+    margin: 0;
+}
+
+nav ul#main-nav-bar li#lugares-link:hover > ul {
+    opacity: 1;
+    visibility: visible;
+    margin: 0;
+}
+
+nav ul#main-nav-bar ul ul {
+    top: 0;
+    left: -127px;
+    margin: 0 20px 0 0;
+    _margin: 0; /*IE6 only*/
+    box-shadow: -1px 0 0 rgba(255,255,255,.3);
+}
+
+nav ul#main-nav-bar ul li {
+    float: none;
+    display: block;
+    border: 0;
+    _line-height: 0; /*IE6 only*/
+    /*box-shadow: 0 1px 0 blue, 0 1px 0 red;*/
+    border-bottom: 1px solid #c9c9c9;
+    border-top: 1px solid #ffffff;
+    text-align: left;
+    /*margin-top: 2px;*/
+}
+
+/*nav ul#main-nav-bar ul li:last-child {
+    box-shadow: 0 1px 0 #81a521, 0 2px 0 #81a521;
+}*/
+
+nav ul#main-nav-bar ul a {
+    padding: 6px 6px;
+    display: block;
+    white-space: nowrap;
+    float: none;
+    text-transform: none;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    color: #808080;
+}
+
+nav ul#main-nav-bar ul li a {
+    margin-left: 5px;
+}
+
+nav ul#main-nav-bar li#destinos-link a, nav ul#main-nav-bar li#lugares-link a {
+    margin-left: 0px;
+}
+
+nav ul#main-nav-bar ul a:hover {
+    background-color: #f2f2f2;
+}
+
+nav ul#main-nav-bar ul li:first-child > a:after {
+    content: '';
+    position: absolute;
+    left: 40px;
+    top: -6px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #f2f2f2;
+}
+
+nav ul#main-nav-bar ul li:first-child a:hover:after {
+    border-bottom-color: #f2f2f2;
+}
+
+nav ul#main-nav-bar ul ul li:first-child a:after {
+    left: -50px;
+    top: 50%;
+    margin-top: -6px;
+    border-left: 6px solid blue;
+    border-bottom: 6px solid transparent;
+    border-top: 6px solid transparent;
+    border-right: 0;
+}
+
+nav ul#main-nav-bar ul ul li:first-child a:hover:after {
+    border-left-color: #f2f2f2;
+    border-bottom-color: transparent;
+}
+
+/*nav ul#main-nav-bar ul li:last-child > a {
+    border-radius: 0 0 3px 3px;
+}*/
+
+nav ul#main-nav-bar ul li:first-child {
+    margin-top: 0px;
+}
+
+nav ul#main-nav-bar ul li:first-child a {
+    padding: 6px 6px;
+}
+
+/*listado de destino y lugares*/
+
+
+
+nav ul#main-nav-bar li#destinos-link ul{
+    /*background-color: #333333;*/
+    background-color: #333333;
+    width: 147px;
+}
+
+nav ul#main-nav-bar li#destinos-link ul ul{
+    width: 180px;
+}
+
+nav ul#main-nav-bar li#destinos-link ul ul li{
+    text-align: left;
+}
+
+nav ul#main-nav-bar li#lugares-link ul{
+    /*background-color: #333333;*/
+    background-color: #333333;
+}
+
+nav ul#main-nav-bar li#destinos-link ul li,
+nav ul#main-nav-bar li#lugares-link ul li{
+    /*box-shadow: 0 1px 0 red, 0 1px 0 blue;*/
+    border-bottom: 1px solid #1f1f1f;
+    border-top: 1px solid #484848;
+    float: none;
+    display: block;
+    /*border: 0;*/
+    _line-height: 0; /*IE6 only*/
+    /*height: 30px;*/
+    text-align: left;
+    /*margin: 5px 0 0 0;*/
+}
+
+nav ul#main-nav-bar li#destinos-link ul a{
+    /*height: 10px;*/
+    padding: 6px 10px 6px 20px;
+    /*width: 130px;*/
+    /*_height: 10px;*/ /*IE6 only*/
+    /*height: 10px;*/
+    display: block;
+    white-space: nowrap;
+    float: none;
+    text-transform: none;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    /*vertical-align: middle;*/
+    color: #c5c5c5;
+    /*top: 5px;*/
+}
+
+nav ul#main-nav-bar li#destinos-link ul ul li a {
+    padding: 6px 10px 6px 10px;
+}
+
+nav ul#main-nav-bar li#lugares-link ul a{
+    /*height: 10px;*/
+    padding: 6px 0px;
+    /*width: 130px;*/
+    /*_height: 10px;*/ /*IE6 only*/
+    /*height: 10px;*/
+    display: block;
+    white-space: nowrap;
+    float: none;
+    text-transform: none;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    /*vertical-align: middle;*/
+    color: #c5c5c5;
+    /*top: 5px;*/
+}
+
+nav ul#main-nav-bar li#destinos-link a:hover,
+nav ul#main-nav-bar li#lugares-link a:hover{
+    color: #c5c5c5 !important;
+}
+
+nav ul#main-nav-bar li#destinos-link ul a:hover,
+nav ul#main-nav-bar li#lugares-link ul a:hover{
+    color: #ffffff !important;
+}
+
+nav ul#main-nav-bar li#destinos-link ul li:first-child,
+nav ul#main-nav-bar li#lugares-link ul li:first-child{
+    margin-top: 0px;
+}
+
+/*nav ul#main-nav-bar li#destinos-link ul li:first-child a{*/
+    /*padding: 6px 10px 6px 20px;*/
+/*}*/
+
+nav ul#main-nav-bar li#destinos-link ul ul li:first-child a{
+    padding: 6px 10px 6px 10px;
+}
+
+nav ul#main-nav-bar li#lugares-link ul li:first-child a{
+    padding: 6px 0px;
+}
+
+nav ul#main-nav-bar li#destinos-link ul li:last-child,
+nav ul#main-nav-bar li#lugares-link ul li:last-child{
+    box-shadow: 0 1px 0 #ed8000, 0 2px 0 #ed8000;
+}
+
+nav ul#main-nav-bar li#destinos-link ul li a:hover,
+nav ul#main-nav-bar li#lugares-link ul li a:hover{
+    background-color: #333333;
+}
+
+nav ul#main-nav-bar li#destinos-link ul li:first-child > a:after,
+nav ul#main-nav-bar li#lugares-link ul li:first-child > a:after{
+    content: '';
+    position: absolute;
+    left: 60px;
+    top: -6px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #333333;
+}
+
+nav ul#main-nav-bar li#destinos-link ul ul li:first-child a:after{
+    left: 185px;
+    top: 50%;
+    margin-top: -6px;
+    border-left: 0;
+    border-bottom: 6px solid transparent;
+    border-top: 6px solid transparent;
+    border-right: 6px solid #ffffff;
+}
+
+nav ul#main-nav-bar li#destinos-link ul ul {
+    top: 0;
+    left: -180px;
+    margin: 0 20px 0 0;
+    _margin: 0; /*IE6 only*/
+    box-shadow: -1px 0 0 rgba(255,255,255,.3);
+}
+
+/*nav ul#main-nav-bar li#lugares-link ul ul li:first-child a:after{
+    left: 137px;
+    top: 50%;
+    margin-top: -6px;
+    border-left: 0;
+    border-bottom: 6px solid transparent;
+    border-top: 6px solid transparent;
+    border-right: 6px solid #ffffff;
+}*/
+
+/*------------------active menu button color-------------------------------*/
+a.programs {
+    background: linear-gradient(top, rgb(163, 209, 43) 0%, rgb(128, 163, 33) 50%);
+    background: -moz-linear-gradient(top, rgb(163, 209, 43) 0%, rgb(128, 163, 33) 50%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(163, 209, 43)), color-stop(50%, rgb(128, 163, 33)));
+    background: -webkit-linear-gradient(top, rgb(163, 209, 43) 0%, rgb(128, 163, 33) 50%);
+    background: -o-linear-gradient(top, rgb(163, 209, 43) 0%, rgb(128, 163, 33) 50%);
+    background: -ms-linear-gradient(top, rgb(163, 209, 43) 0%, rgb(128, 163, 33) 50%);
+    color: #ffffff !important;
+}
+
+li.programs-hover a:hover{
+    color: #81a521 !important;
+}
+
+nav ul#main-nav-bar ul li.programs-hover:last-child{
+    box-shadow: 0 1px 0 #81a521, 0 2px 0 #81a521;
+}
+
+a.tours {
+    background: linear-gradient(top, rgb(44, 204, 188) 0%, rgb(0, 173, 160) 50%);
+    background: -moz-linear-gradient(top, rgb(44, 204, 188) 0%, rgb(0, 173, 160) 50%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgb(44, 204, 188)), color-stop(50%, rgb(0, 173, 160)));
+    background: -webkit-linear-gradient(top, rgb(44, 204, 188) 0%, rgb(0, 173, 160) 50%);
+    background: -o-linear-gradient(top, rgb(44, 204, 188) 0%, rgb(0, 173, 160) 50%);
+    background: -ms-linear-gradient(top, rgb(44, 204, 188) 0%, rgb(0, 173, 160) 50%);
+    color: #ffffff !important;
+}
+
+li.tours-hover a:hover{
+    color: #00aea1 !important;
+}
+
+nav ul#main-nav-bar ul li.tours-hover:last-child{
+    box-shadow: 0 1px 0 #00aea1, 0 2px 0 #00aea1;
+}
+
+a.flights {
+    background: linear-gradient(top, rgb(28, 183, 232) 0%, rgb(0, 161, 224) 50%);
+    background: -moz-linear-gradient(top, rgb(28, 183, 232) 0%, rgb(0, 161, 224) 50%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgb(28, 183, 232)), color-stop(50%, rgb(0, 161, 224)));
+    background: -webkit-linear-gradient(top, rgb(28, 183, 232) 0%, rgb(0, 161, 224) 50%);
+    background: -o-linear-gradient(top, rgb(28, 183, 232) 0%, rgb(0, 161, 224) 50%);
+    background: -ms-linear-gradient(top, rgb(28, 183, 232) 0%, rgb(0, 161, 224) 50%);
+    color: #ffffff !important;
+}
+
+li.flights-hover a:hover{
+    color: #00a2e2 !important;
+}
+
+li.flights-hover {
+    width: 100px
+}
+
+nav ul#main-nav-bar ul li.flights-hover:last-child{
+    box-shadow: 0 1px 0 #00a2e2, 0 2px 0 #00a2e2;
+}
+
+a.accommodation {
+    background: linear-gradient(top, rgb(181, 145, 219) 0%, rgb(138, 102, 184) 50%);
+    background: -moz-linear-gradient(top, rgb(181, 145, 219) 0%, rgb(138, 102, 184) 50%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgb(181, 145, 219)), color-stop(50%, rgb(138, 102, 184)));
+    background: -webkit-linear-gradient(top, rgb(181, 145, 219) 0%,rgb(138, 102, 184) 50%);
+    background: -o-linear-gradient(top, rgb(181, 145, 219) 0%, rgb(138, 102, 184) 50%);
+    background: -ms-linear-gradient(top, rgb(181, 145, 219) 0%, rgb(138, 102, 184) 50%);
+    color: #ffffff !important;
+}
+
+li.accommodation-hover a:hover{
+    color: #8b67b9 !important;
+}
+
+nav ul#main-nav-bar ul li.accommodation-hover:last-child{
+    box-shadow: 0 1px 0 #8b67b9, 0 2px 0 #8b67b9;
+}
+
+a.cars-and-transfers {
+    background: linear-gradient(top, rgb(179, 151, 36) 0%, rgb(156, 130, 15) 50%);
+    background: -moz-linear-gradient(top, rgb(179, 151, 36) 0%, rgb(156, 130, 15) 50%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgb(179, 151, 36)), color-stop(50%, rgb(156, 130, 15)));
+    background: -webkit-linear-gradient(top, rgb(179, 151, 36) 0%, rgb(156, 130, 15)  50%);
+    background: -o-linear-gradient(top, rgb(179, 151, 36) 0%, rgb(156, 130, 15)  50%);
+    background: -ms-linear-gradient(top, rgb(179, 151, 36) 0%, rgb(156, 130, 15)  50%);
+    color: #ffffff !important;
+}
+
+li.cars-and-transfers-hover a:hover{
+    color: #9d830f !important;
+}
+
+nav ul#main-nav-bar ul li.cars-and-transfers-hover:last-child{
+    box-shadow: 0 1px 0 #9d830f, 0 2px 0 #9d830f;
+}
+
+a.promotion {
+    background: linear-gradient(top, rgb(255, 110, 110) 0%, rgb(232, 60, 60) 50%);
+    background: -moz-linear-gradient(top, rgb(255, 110, 110) 0%, rgb(232, 60, 60) 50%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgb(255, 110, 110)), color-stop(50%, rgb(232, 60, 60)));
+    background: -webkit-linear-gradient(top, rgb(255, 110, 110) 0%, rgb(232, 60, 60) 50%);
+    background: -o-linear-gradient(top, rgb(255, 110, 110) 0%, rgb(232, 60, 60) 50%);
+    background: -ms-linear-gradient(top, rgb(255, 110, 110) 0%, rgb(232, 60, 60) 50%);
+    color: #ffffff !important;
+}
+
+li.promotion-hover a:hover{
+    color: #e93c3c !important;
+}
+
+nav ul#main-nav-bar ul li.promotion-hover:last-child{
+    box-shadow: 0 1px 0 #e93c3c, 0 2px 0 #e93c3c;
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,13 @@
+<div class="columns alpha five" data-hook="product_left_part">
+  <% if product.images.size > 1 %>
+      <div id="thumbnails" data-hook>
+        <%= render :partial => 'spree/products/thumbnails', :locals => { :product => (@product || product) } %>
+      </div>
+  <% end %>
+  <div class="row" data-hook>
+    <%= render :partial => 'spree/products/product_map', :locals => { :product => (@product || product)} %>
+  </div>
+  <div data-hook>
+    <%= render :partial => 'spree/products/product_points', :locals => { :product => (@product || product) } %>
+  </div>
+</div>

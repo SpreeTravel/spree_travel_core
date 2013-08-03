@@ -1,0 +1,12 @@
+<table>
+  <tr>
+    <td><%= t('name') %>:</td>
+    <td><%= text_field :property_type, :name, :disabled => !@property_type.new_record? %></td>
+  </tr>
+  <tr>
+    <td><%= t('show') %>:</td>
+    <td><%= select :property_type, :show, PropertyShow.all %></td>
+  </tr>
+</table>
+
+

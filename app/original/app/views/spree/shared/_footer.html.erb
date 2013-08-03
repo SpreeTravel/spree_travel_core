@@ -1,0 +1,66 @@
+<div class="container twelve columns">
+   <ul>
+     <li>
+       <ul>
+         <li class="container eight columns alpha titles"><%= t('follow_us') %></li>
+         <li class="container four columns omega titles"><%= t('share') %></li>
+       </ul>
+     </li>
+     <li>
+       <ul>
+         <li id="redes" class="container eight columns alpha">
+           <ul id="redes-sociales">
+             <li><a href="http://www.facebook.com/grandslamcuba"><%=image_tag('store/img_trans.gif', :id=>"facebook", :size => "1x1")%><span>Facebook</span></a></li>
+             <li><a href=" http://twitter.com/GrandSlamCuba"><%=image_tag('store/img_trans.gif', :id=>"twitter", :size => "1x1")%><span>Twitter</span></a></li>
+             <li><a><%=image_tag('store/img_trans.gif', :id=>"rss", :size => "1x1")%><span class="shadow">RSS</span></a></li>
+             <!--<li><%#=image_tag('store/img_trans.gif', :id=>"rss", :size => "1x1")%><span>RSS</span></li>-->
+             <li><a><%=image_tag('store/img_trans.gif', :id=>"boletin", :size => "1x1")%><span class="shadow">Boletin</span></a></li>
+             <!--<li><%#=image_tag('store/img_trans.gif', :id=>"boletin", :size => "1x1")%><span>Boletin</span></li>-->
+           </ul>
+         </li>
+         <li id="addthis" class="container four columns omega " style="margin-top: 10px;">
+           <%= render(:partial => "spree/shared/addthis") %>
+         </li>
+       </ul>
+     </li>
+     <li>
+       <div id="links-text" class="container twelve columns omega alpha">
+         <p><%= link_to t('home'), root_path %></p>
+         <% if current_user %>
+             <p><%= link_to t('my_account'), spree.account_path %></p>
+             <!--<li><%#= link_to t('logout'), spree.destroy_user_session_path %></li>-->
+         <% else %>
+             <!--<p><%#= link_to t('login'), spree.login_path %></p>-->
+             <p><a href="#" onclick="loginOverlay('backlogin', 'backregister')"><%= t('login') %></a></p>
+         <% end %>
+         <p><%= link_to t('my_trip'), cart_path%></p>
+         <p><a href="#" onclick="loginOverlay('backregister', 'backlogin')"><%= t('new_account') %></a></p>
+         <!--<p><%#= link_to t('new_account'), spree.signup_path %></p>-->
+         <p><%= link_to t('legal_terms'), 'http://www.grandslamtravelagency.com/legal_terms/' %></p>
+         <p><%= link_to t('about'), 'http://www.grandslamtravelagency.com/about/' %></p>
+         <!--<p><a href="#"><%#= t('credits') %></a></p>-->
+       </div>
+     </li>
+   </ul>
+</div>
+<div class="container four columns">
+   <ul>
+     <li class="titles">
+      <%= t('contact_us') %>
+     </li>
+     <li>
+       <ul id="mail-text">
+         <li id="m1">
+           <%= image_tag('store/laura.jpg', :width => '35', :height => '35') %>
+         </li>
+         <li id="m2"><p><%= t('contact_support') %></p></li>
+         <li id="m3">
+           <%= image_tag('store/img_trans.gif', :id=>"send", :size => "1x1")%>
+           <%= link_to t('enviar_email'), '/contact' %>
+         </li>
+         <li id="m4">
+           <%=image_tag('store/img_trans.gif', :id=>"telef", :size => "1x1")%>Tel: (53 7) 204 0065 / 204 0072</li>
+       </ul>
+     </li>
+   </ul>
+</div>

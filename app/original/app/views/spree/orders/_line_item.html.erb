@@ -1,0 +1,59 @@
+<tr id="cart-item-separator-top"></tr>
+<tr id="cart-item" class="<%= cycle('', 'alt') %> line-item" >
+  <td  id="cart-item-image" data-hook="cart_item_image">
+    <% if variant.product.flight? || variant.product.transfer? %>
+        <% a = variant.product.taxons.where("permalink like '%destinations%'")[0] %>
+        <% b = variant.product.taxons.where("permalink like '%destinations%'")[1] %>
+        <div class="item-half-image">
+          <%= if !a.nil? and !a.icon.nil?
+                image_tag a.icon.url(:height)
+              end %>
+        </div>
+        <div class="item-half-image">
+          <%= if !b.nil? and !b.icon.nil?
+                image_tag b.icon.url(:height)
+              end %>
+        </div>
+    <% else %>
+        <div id="item-image">
+          <% if !variant.product.images.empty? %>
+                <%= link_to image_tag(variant.product.images.first.attachment.url(:list)), variant.product %>
+          <% elsif variant.product.room? && !variant.product.parent_hotel.images.empty? %>
+                <%= link_to image_tag(variant.product.parent_hotel.images.first.attachment.url(:list)), variant.product %>
+          <% else %>
+              <%= image_tag 'store/no_imagen_72x72.png' %>
+          <% end %>
+        </div>
+    <% end %>
+  </td>
+  <td class="cart-item-separator"></td>
+  <td id="cart-item-description" data-hook="cart_item_description">
+        <p class="cart-item-name"><%= variant.product.name %></p>
+        <p id='cart-item-product-description'>
+            <% if variant.product.room? %>
+              <%#= truncate(variant.product.parent_hotel.description.to_s.gsub(/<[^>]*>/,''), :length => 100, :omission => "...") %>
+              <%= line_item.context.html_safe %>
+            <% else %>
+              <%#= truncate(variant.product.small_description, :length => 100, :omission => "...") %>
+              <%= line_item.context.html_safe %>
+            <% end %>
+        </p>
+  </td>
+  <td class="cart-item-separator"></td>
+  <td id="cart-item-price" data-hook="cart_item_price">
+        <div id="price" class="columns alpha omega three" >
+            <%= line_item.context[:adult_programs] %>
+            <p class="product-price"><%= price(line_item.price) %><%#= price_with_context( line_item.product, line_item.context ) %></p>
+        </div>
+
+        <%= link_to '#', :class => 'delete', :id => "delete_#{dom_id(line_item)}" do %>
+            <div id="icon-delete"/>
+            <p class="cart-item-link"><%= t('delete_from_my_travel') %></p>
+        <% end %>
+
+        <td data-hook="cart_item_quantity">
+            <%= item_form.hidden_field :quantity, :min => 0, :class => "line_item_quantity", :size => 5 %>
+        </td>
+  </td>
+</tr>
+<tr id="cart-item-separator-bottom"></tr>

@@ -1,0 +1,144 @@
+div #reviews {
+  border-top: 3px solid #ed8000;
+  float: left;
+  padding: 0px 0px 10px 0px;
+  margin: 0px;
+}
+
+.author {
+  font-family: arial, helvetica, sans-serif;
+  font-size: 11px;
+  color: #808080;
+}
+
+.review-text {
+  font-family: arial, helvetica, sans-serif;
+  font-size: 12px;
+  color: #4d4d4d;
+  border-bottom: 1px dotted #c5c5c5;
+  padding: 15px 0px 15px 0px; }
+
+#reviews_form {
+  border: 3px solid #c5c5c5;
+  padding: 15px;
+  width: 614px;
+  margin-top: 20px;
+}
+
+#new_review_icon {
+  height: 18px;
+  width: 18px;
+  background-image: url("comentarios.png");
+  background-position: 36px 0px;
+  float: left;
+  margin-right: 5px;
+}
+
+#review_send_icon {
+    height: 18px;
+    width: 18px;
+    background-image: url("comentarios.png");
+    background-position: 54px 0px;
+}
+
+.review_name_field {
+    margin-bottom: 10px;
+}
+
+.review_review_field {
+    margin-bottom: 10px;
+}
+
+#note_review {
+    display: inline;
+    float: right;
+    padding: 0px;
+}
+
+#review_name:focus, #review_review:focus {
+    border: 1px solid #ed8000;
+}
+
+#reviews_title {
+    font-family: Bebas Neue;
+    font-size: 21px;
+    font-weight: normal;
+    color: #808080;
+    float: left;
+    display: inline;
+    padding: 0px;
+}
+
+#reviews_title2 {
+    font-family: Bebas Neue;
+    font-size: 21px;
+    font-weight: normal;
+    color: #ed8000;
+    float: left;
+    display: inline;
+    padding: 0px;
+}
+
+#icon-coments {
+    height: 18px;
+    width: 18px;
+    background-image: url("comentarios.png");
+    background-position: 0px 0px;
+    float: left;
+    margin-right: 5px;
+}
+
+ul#review-header {
+    margin: 15px 0px 0px 0px;
+    height: 18px;
+}
+
+ul#write-header {
+    height: 18px;
+    margin-bottom: 15px;
+}
+
+#reviews div.review {
+    margin: 15px 0px 0px 0px !important;
+    padding: 0px 0px 15px 0px !important;
+    border-bottom: 1px dotted #c5c5c5 !important;
+    display: inline-block !important;
+}
+
+div.review_author {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+div.review_author p.author {
+    padding: 0px;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 11px;
+    color: #808080;
+    display: inline;
+}
+
+div.review_author p.author span {
+    text-transform: lowercase;
+}
+
+div.review_body {
+    display: inline-block;
+}
+
+div.review_body p {
+   padding: 0px;
+   font-family: arial, helvetica, sans-serif;
+   font-size: 12px;
+   font-weight: normal;
+   color: #4d4d4d;
+   display: block;
+}
+
+div.single_rating_holder {
+   float: right;
+}
+
+div.single_rating_holder p {
+   padding: 0px;
+}

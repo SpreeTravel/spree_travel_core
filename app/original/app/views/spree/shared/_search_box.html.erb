@@ -1,0 +1,444 @@
+ <%
+
+    init_plain              = "<option value=''>#{t('select')}</option>".html_safe
+    init                    = "<optgroup label=#{t('destination')}><option value=''>#{t('select')}</option></optgroup>".html_safe
+
+    categories              = Spree::Taxon.find_by_permalink('categories').children
+    categories_left         = [categories[1], categories[4], categories[2]]
+    sub_categories          = Spree::Taxon.find_by_permalink(categories[3].permalink).children
+    categories_right        = [categories[0], sub_categories[0], sub_categories[1]]
+
+    search_categories = categories + sub_categories
+
+    destination_ids         = Spree::Taxon.find_by_permalink('destinations').children.map(&:id)
+    destinations            = Spree::Taxon.where(:id => destination_ids).includes(:translations)
+    flight_ids              = Spree::Taxon.find_by_permalink('flight-destinations').children.map(&:id)
+    flight_destinations     = Spree::Taxon.where(:id => flight_ids).includes(:translations)
+
+    adults_options          = (1..4).map  {|a| [a, a]}
+    adults_more_options     = (1..8).map  {|a| [a, a]}
+    adults_plus_options     = (1..43).map {|a| [a, a]}
+    children_options        = (0..2).map  {|a| [a, a]}
+    children_plus_options   = (0..43).map {|a| [a, a]}
+    infants_options         = (0..2).map  {|a| [a, a]}
+    infants_plus_options    = (0..43).map {|a| [a, a]}
+
+    meal_plan_option_values = Spree::OptionValue.where(:option_type_id => Spree::OptionType.find_by_name('meal-plan').id).includes(:translations)
+    meal_plan_options       = meal_plan_option_values.map{|ov| [ov.presentation, ov.id]}
+
+    tr_option_values        = Spree::OptionValue.where(:option_type_id => Spree::OptionType.find_by_name('transmission').id).includes(:translations)
+    transmission            = tr_option_values.map{|ov| [ov.presentation, ov.id]}
+
+    tconfort_option_values  = Spree::OptionValue.where(:option_type_id => Spree::OptionType.find_by_name('taxi-confort').id).includes(:translations)
+    taxi_confort            = tconfort_option_values.map{|ov| [ov.presentation, ov.id]}
+
+    adults_program          = params[:adults_program]   || Constant::DEFAULT_ADULTS_PROGRAM
+    children_program        = params[:children_program] || Constant::DEFAULT_CHILDREN_PROGRAM
+    infants_program         = params[:infants_program]  || Constant::DEFAULT_INFANTS_PROGRAM
+    date_program            = params[:date_program]     || Constant.DEFAULT_DATE_PROGRAM.strftime(Constant::DATE_FORMAT)
+    if params[:adults_program].nil?
+      if @product
+        @product.variants_including_master.each do |v|
+          if !v.end_date.nil? && date_program.to_date < v.end_date
+            adults_program = v.adults
+            params[:adults_program] = v.adults
+            break
+          end
+        end
+      end
+    end
+
+    check_in_accommodation  = params[:check_in_accommodation]  || Constant.DEFAULT_CHECK_IN_ACCOMMODATION.strftime(Constant::DATE_FORMAT)
+    check_out_accommodation = params[:check_out_accommodation] || Constant.DEFAULT_CHECK_OUT_ACCOMMODATION.strftime(Constant::DATE_FORMAT)
+    adults_accommodation    = params[:adults_accommodation]    || Constant::DEFAULT_ADULTS_ACCOMMODATION
+    children_accommodation  = params[:children_accommodation]  || Constant::DEFAULT_CHILDREN_ACCOMMODATION
+    infants_accommodation   = params[:infants_accommodation]   || Constant::DEFAULT_INFANTS_ACCOMMODATION
+    meal_plan_accommodation = params[:meal_plan_accommodation] || Constant.DEFAULT_MEAL_PLAN_ACCOMMODATION
+    if params[:meal_plan_accommodation].nil?
+      if @product
+        @product.variants_including_master.each do |v|
+          if !v.end_date.nil? && check_out_accommodation.to_date < v.end_date
+            ov = v.option_values.where(:name => 'meal-plan').first
+            if !ov.nil?
+                meal_plan_accommodation = ov.id
+                params[:meal_plan_accommodation] = ov.id
+                break
+            end
+          end
+        end
+      end
+    end
+
+    init_date_rent          = params[:date_rent]            || Constant.DEFAULT_INIT_DATE_RENT.strftime(Constant::DATE_FORMAT)
+    end_date_rent           = params[:date_devolution_rent] || Constant.DEFAULT_END_DATE_RENT.strftime(Constant::DATE_FORMAT)
+    transmission_rent       = params[:transmission_rent] || Constant.DEFAULT_TRANSMISSION_RENT
+    if params[:transmission_rent].nil?
+      if @product
+        @product.variants_including_master.each do |v|
+          if !v.end_date.nil? && end_date_rent.to_date < v.end_date
+            transmission_rent = v.transmission
+            params[:transmission_rent] = v.transmission
+            break
+          end
+        end
+      end
+    end
+
+    init_date_transfer      = params[:date_transfer]        || Constant.DEFAULT_INIT_DATE_TRANSFER.strftime(Constant::DATE_FORMAT)
+    end_date_transfer       = params[:date_return_transfer] || Constant.DEFAULT_END_DATE_TRANSFER.strftime(Constant::DATE_FORMAT)
+    adults_transfer         = params[:adults_transfer]      || Constant::DEFAULT_ADULTS_TRANSFER
+    children_transfer       = params[:children_transfer]    || Constant::DEFAULT_CHILDREN_TRANSFER
+    infants_transfer        = params[:infants_transfer]     || Constant::DEFAULT_INFANTS_TRANSFER
+    confort_transfer        = params[:confort_transfer]     || Constant.DEFAULT_CONFORT_TRANSFER
+
+    init_date_flight        = params[:date_flight]        || Constant.DEFAULT_INIT_DATE_FLIGHT.strftime(Constant::DATE_FORMAT)
+    end_date_flight         = params[:date_return_flight] || Constant.DEFAULT_END_DATE_FLIGHT.strftime(Constant::DATE_FORMAT)
+    adults_flight           = params[:adults_flight]      || Constant::DEFAULT_ADULTS_FLIGHT
+    children_flight         = params[:children_flightl]   || Constant::DEFAULT_CHILDREN_FLIGHT
+    infants_flights         = params[:infants_flights]    || Constant::DEFAULT_INFANTS_FLIGHT
+
+    tx = nil
+    taxon = @taxon
+    pk = ""
+    if @taxon
+      taxon = @taxon
+      pk = @taxon.permalink
+    elsif @product
+      taxon = @product.taxons.where("permalink like 'categories%'").first
+      if taxon.nil?
+        tx = search_categories[1]
+      end
+      pk = @product.permalink
+    else
+      tx = search_categories[1] unless @taxon
+      pk = tx.permalink
+    end
+
+    while tx.nil?
+      if search_categories.include?(taxon)
+        tx = taxon
+      else
+        if taxon.parent
+          taxon = taxon.parent
+        else
+          tx = search_categories.first
+        end
+      end
+    end
+
+    flag_search_product = false
+    flag_your_search = false
+    if controller.controller_name == 'products' && !@product.point?
+      flag_your_search = true
+    end
+
+    # TODO: las opciones que vienen en la consulta
+    # TODO: ver como se puede mover todo esto para unos helpers
+    # TODO: en algun lugar de configuracion poner la cantidad de adultos minimo y maximo
+%>
+    <%= form_tag({:controller => :home, :action => :index}, {:method => :get}) do %>
+      <fieldset id="header-filters" >
+
+        <div id="label-search" class="<%= 'hidden' if not flag_your_search %>">
+           <p><%= t('your_search') %>:</p>
+        </div>
+
+        <div id="your-search" class="<%= 'hidden' if not flag_your_search %>">
+          <% if flag_your_search %>
+            <p><%= pass_context(@product, 1, params).gsub("|", "<br>").html_safe %></p>
+          <% end %>
+        </div>
+
+        <div id="radios" class="<%= 'hidden' if flag_your_search %>">
+          <ul id="radios_pev">
+            <% categories_left.each do |category| %>
+              <li><label><%= radio_button_tag :id, category.permalink, category.permalink == tx.permalink %> <%= category.name %></label></li>
+            <% end %>
+          </ul>
+          <ul id="radios_aao">
+            <% categories_right.each do |category| %>
+              <li><label><%= radio_button_tag :id, category.permalink, category.permalink == tx.permalink %> <%= category.name %></label></li>
+            <% end %>
+            <% if categories_left.length != categories_right.length %>
+              <li><label>&nbsp;</label></li>
+            <% end %>
+          </ul>
+        </div>
+
+        <div id="form-combos" class="<%= 'hidden' if flag_your_search %>">
+
+          <div id="radios_vuelos">
+            <ul id="radios_pev_vuelos">
+              <li><label><%= radio_button_tag :flight_go_and_back, 'trip-one-way' %> <%= t('one_way') %> </label></li>
+            </ul>
+            <ul id="radios_aao_vuelos">
+              <li><label><%= radio_button_tag :flight_go_and_back, 'trip-round-trip', :checked => true %> <%= t('round_trip') %> </label></li>
+            </ul>
+          </div>
+
+          <div id="radios_renta_idas">
+            <ul id="radios_pev_renta_ida">
+              <li><label><%= radio_button_tag :transfer_go_and_back, 'trip-one-way', :checked => true %> <%= t('one_way') %></label></li>
+            </ul>
+            <ul id="radios_aao_renta_vuelta">
+              <li><label><%= radio_button_tag :transfer_go_and_back, 'trip-round-trip' %> <%= t('round_trip') %></label></li>
+            </ul>
+          </div>
+
+          <!-- BEGIN PROGRAMS -->
+          <div id="program_stuff">
+            <label id="destinos"><%= t('destination')%> <br>
+              <%= select_tag :destination_program, init + option_groups_from_collection_for_select(destinations, :sorted_children, :name, :id, :name, params[:destination_program] )%>
+            </label>
+
+            <br id="br_destinos">
+
+            <ul class="filtros_inline">
+                <li>
+                  <label id="edad_adultos"> <%= t('adults') %><br>
+                    <%= select_tag :adults_program, options_for_select(adults_more_options, adults_program) %>
+                  </label>
+                </li>
+                <li>
+                  <label id="date_program"><%= t('begin_date')%> <br>
+                    <input id="inicio" type="text" name="date_program" class="datepicker" value="<%= date_program %>">
+                    <!--<div id="icon-calendar-program"></div>-->
+                  </label>
+                </li>
+            </ul>
+
+            <br id="br_adultos">
+
+            <label id="edad_ninnos"><%= t('children')%><br>
+              <%= select_tag :children_program, options_for_select(children_options, children_program) %>
+            </label>
+
+            <br id="br_ninnos">
+
+            <label id="edad_bebes"><%= t('infants')%> <br>
+              <%= select_tag :infants_program, options_for_select(infants_options, infants_program) %>
+            </label>
+
+          </div>
+          <!-- END PROGRAMS -->
+
+          <!-- BEGIN ACCOMODATION -->
+          <div id="accommodation_stuff">
+            <ul>
+              <li>
+                <label id="destinos_alojamientos"> <%= t('destination')%> <br>
+                  <%= select_tag :destination_accommodation, init + option_groups_from_collection_for_select(destinations, :sorted_children, :name, :id, :name,params[:destination_accommodation] )%>
+                </label>
+              </li>
+            </ul>
+
+            <ul class="filtros_inline">
+              <li>
+                <label id="entradas"><%= t('check_in')%> <br>
+                  <input id="entrada" type="text" name="check_in_accommodation" value="<%= check_in_accommodation %>" onchange="CompareDates('entrada', 'salida', 1, true)" class="datepicker">
+                  <!--<div id="icon-calendar-accommodation-in"></div>-->
+                </label>
+              </li>
+              <li>
+                <label id="salidas"><%= t('check_out')%> <br>
+                  <input id="salida" type="text" name="check_out_accommodation" value="<%= check_out_accommodation %>" onchange="CompareDates('entrada', 'salida', 1, false)" class="datepicker">
+                  <!--<div id="icon-calendar-accommodation-out"></div>-->
+                </label>
+              </li>
+            </ul>
+
+            <ul class="filtros_inline">
+              <li>
+                <label id="edad_adultos_alojamientos"> <%= t('adults') %><br>
+                  <%= select_tag :adults_accommodation, options_for_select(adults_options, adults_accommodation), :id => :adultos_alojamientos %>
+                </label>
+              </li>
+              <li>
+                <label id="edad_ninnos_alojamientos"><%= t('children')%><br>
+                  <%= select_tag :children_accommodation, options_for_select(children_options, children_accommodation) %>
+                </label>
+              </li>
+              <li>
+                <label id="edad_bebes_alojamientos"><%= t('infants')%> <br>
+                  <%= select_tag :infants_accommodation, options_for_select(infants_options, infants_accommodation) %>
+                </label>
+              </li>
+            </ul>
+
+            <ul>
+              <li>
+                <label id="meal_plan_label"><%= t('meal_plan')%> <br>
+                  <%= select_tag :meal_plan_accommodation, options_for_select(meal_plan_options, meal_plan_accommodation) %>
+                </label>
+              </li>
+            </ul>
+          </div>
+          <!-- END ACCOMODATION -->
+
+          <!-- BEGIN RENT -->
+          <div id="rent_stuff">
+            <label id="autos"> <%= t('rent')%><br>
+              <%= select_tag :origin_rent, init + option_groups_from_collection_for_select(destinations, :sorted_children, :name, :id, :name,params[:origin_rent]), :id => :auto%>
+            </label>
+            <label id="devoluciones"> <%= t('devolution')%> <br>
+              <%= select_tag :destination_rent, init + option_groups_from_collection_for_select(destinations, :sorted_children, :name, :id, :name,params[:destination_rent]), :id => :devolucion%>
+            </label>
+
+            <ul class="filtros_inline">
+              <li>
+                <label id="inicios"><%= t('init')%> <br>
+                  <input id="inicio_rent" type="text" name="date_rent" class="datepicker" onchange="CompareDates('inicio_rent', 'fin_rent', 3, true)" value="<%= init_date_rent %>">
+                  <!--<div id="icon-calendar-rent-in"></div>-->
+                </label>
+              </li>
+              <li>
+                <label id="fines"> <%= t('end') %><br>
+                  <input id="fin_rent" type="text" name="date_devolution_rent" class="datepicker" onchange="CompareDates('inicio_rent', 'fin_rent', 3, false)" value="<%= end_date_rent %>">
+                  <!--<div id="icon-calendar-rent-out"></div>-->
+                </label>
+              </li>
+            </ul>
+
+            <ul>
+              <li>
+                <label id="transmission_label"><%= t('transmission')%> <br>
+                  <%= select_tag :transmission_rent, options_for_select(transmission, transmission_rent) %>
+                </label>
+              </li>
+            </ul>
+          </div>
+          <!-- END RENT -->
+
+          <!--BEGIN TRANSFER -->
+          <div id="transfer_stuff">
+            <ul id="odt" class="filtros_inline">
+              <li id="ot">
+                <label id="origen_traslados"><%= t('origin') %> <br>
+                  <%= select_tag :origin_transfer, init + option_groups_from_collection_for_select(destinations, :sorted_children, :name, :id, :name,params[:origin_transfer]), :id => :origen_traslado%>
+                </label>
+              </li>
+              <li id="dt">
+                <label id="destinos_traslados"> <%= t('destination')%><br>
+                 <%= select_tag :destination_transfer, init + option_groups_from_collection_for_select(destinations, :sorted_children, :name, :id, :name,params[:destination_transfer])%>
+                </label>
+              </li>
+            </ul>
+
+            <ul class="filtros_inline">
+              <li>
+                <label id="partidas_traslados"> <%= t('departure')%><br>
+                  <input id="partida_traslado" type="text" name="date_transfer" class="datepicker" onchange="CompareDates('partida_traslado', 'regreso_traslado', 1, true)" value="<%= init_date_transfer %>">
+                  <!--<div id="icon-calendar-transfer"></div>-->
+                </label>
+              </li>
+              <li>
+                <label id="regresos_traslados"> <%= t('return')%><br>
+                  <input id="regreso_traslado" type="text" name="date_return_transfer" class="datepicker" onchange="CompareDates('partida_traslado', 'regreso_traslado', 1, false)" value="<%= end_date_transfer %>">
+                  <!--<div id="icon-calendar-transfer-return"></div>-->
+                </label>
+              </li>
+            </ul>
+
+            <ul class="filtros_inline">
+              <li>
+                <label id="edad_adultos_traslados"> <%= t('adults')%><br>
+                  <%= select_tag :adults_transfer, options_for_select(adults_plus_options, adults_transfer) %>
+                </label>
+              </li>
+              <li>
+                <label id="edad_ninnos_traslados"> <%= t('children')%> <br>
+                  <%= select_tag :children_transfer, options_for_select(children_plus_options, children_transfer) %>
+                </label>
+              </li>
+              <li>
+                <%# TODO: esto hay que quitarlo %>
+                <label id="edad_bebes_traslados"> <%= t('infants') %><br>
+                  <%= select_tag :infants_transfer, options_for_select(infants_plus_options, infants_transfer) %>
+                </label>
+              </li>
+            </ul>
+
+            <ul class="filtros_inline">
+              <li>
+                <label id="transfer-taxi-confort"><%= t('confort')%> <br>
+                  <%= select_tag :confort_transfer, options_for_select(taxi_confort, confort_transfer) %>
+                </label>
+              </li>
+            </ul>
+          </div>
+          <!-- END TRANSFER -->
+
+          <!-- BEGIN FLIGHT  -->
+          <div if="flight_stuff">
+            <ul id="odv" class="filtros_inline">
+              <li id="ov">
+                <label id="origen_vuelos"> <%= t('origin') %><br>
+                  <%= select_tag :origin_flight, init + option_groups_from_collection_for_select(flight_destinations, :sorted_children, :name, :id, :name,params[:origin_flight])%>
+                </label>
+              </li>
+              <li id="dv">
+                <label id="destinos_vuelos"> <%= t('destination')%><br>
+                  <%= select_tag :destination_flight, init + option_groups_from_collection_for_select(flight_destinations, :sorted_children, :name, :id, :name,params[:destination_flight])%>
+                </label>
+              </li>
+            </ul>
+
+            <ul class="filtros_inline">
+              <li>
+                <label id="partidas"> <%= t('departure')%><br>
+                  <input id="partida" type="text" name="date_flight" class="datepicker" onchange="CompareDates('partida', 'regreso', 1, true)" value="<%= init_date_flight %>">
+                  <!--<div id="icon-calendar-flight"></div>-->
+                </label>
+              </li>
+              <li>
+                <label id="regresos"> <%= t('return')%><br>
+                  <input id="regreso" type="text" name="date_return_flight" class="datepicker" onchange="CompareDates('partida', 'regreso', 1, false)" value="<%= end_date_flight %>">
+                  <!--<div id="icon-calendar-flight-return"></div>-->
+                </label>
+              </li>
+            </ul>
+
+            <ul class="filtros_inline">
+              <li>
+                <label id="edad_adultos_vuelos"> <%= t('adults')%><br>
+                  <%= select_tag :adults_flight, options_for_select(adults_options, adults_flight) %>
+                </label>
+              </li>
+              <li>
+                <label id="edad_ninnos_vuelos"> <%= t('children')%> <br>
+                  <%= select_tag :children_flight, options_for_select(children_options, children_flight) %>
+                </label>
+              </li>
+              <li>
+                <label id="edad_bebes_vuelos"> <%= t('infants') %><br>
+                  <%= select_tag :infants_flight, options_for_select(infants_options, infants_flights) %>
+                </label>
+              </li>
+            </ul>
+          </div>
+          <!-- END FLIGHT -->
+
+        </div>
+
+        <div id="form-link" class="<%= 'hidden' if not flag_your_search %>">
+          <%= link_to_function t('modify') + ' | ', "change_search('update')" %>
+        </div>
+
+        <div id="form-link-up" class="<%= 'hidden' if not flag_your_search %>">
+          <%= link_to_function t('new_search'), "change_search('new')" %>
+        </div>
+
+        <div id="form-button" class="<%= 'hidden' if flag_your_search %>">
+          <%= hidden_field_tag :redirect_controller, :taxons %>
+          <%= hidden_field_tag :redirect_action, :show %>
+          <%= hidden_field_tag :redirect_product, @product.permalink if @product %>
+          <%= hidden_field_tag :you_search, :yes %>
+          <input id="btn-search" type="submit" value="<%= t('search') %>" class="search-box-button" />
+        </div>
+
+      </fieldset>
+    <% end %>
+
+<script type="text/javascript">
+    initOtherRadio('id', '<%= tx.permalink %>');
+</script>
