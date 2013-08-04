@@ -1,3 +1,38 @@
 /*
  *= require store/spree_frontend
 */
+
+ul#products li {
+    text-align: left;
+}
+
+.product-image {
+    max-width: 120px;
+    float: left;
+    margin-right: 10px;
+}
+
+ul#products li a.info {
+    overflow: hidden;
+    border-bottom: 0;
+    font-size: 14px;
+    color: black;
+    height: 20px
+}
+
+ul#products li .product-mini-description {
+    color: #bbbbbb;
+    font-weight: normal;
+}
+
+ul#products li .product-image {
+    border: 0;
+}
+
+.product-item {
+   border: 1px solid #d9d9db;
+}
+
+.product-item:hover {
+    border: 1px solid #1D95CB;
+}

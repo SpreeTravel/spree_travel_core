@@ -1,0 +1,12 @@
+<li id="product_<%= product.id %>" class="columns twelve product-item" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
+  <div class="product-image">
+    <%= link_to small_image(product, :itemprop => "image"), product, :itemprop => 'url' %>
+  </div>
+  <div class="product-title">
+    <%= link_to product.name, product, :class => 'info', :itemprop => "name", :title => product.name %>
+  </div>
+  <div class="product-mini-description">
+    <%= truncate(product.description, :length => 300)%>
+  </div>
+  <span class="price selling" itemprop="price"><%= display_price(product) %></span>
+</li>

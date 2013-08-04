@@ -1,17 +1,21 @@
 Spree::Product.class_eval do
 
+  def product?
+    self.is?(Spree::Product)
+  end
+
   ###############################################################################
   # Price/Variant Methods
   ###############################################################################
 
   # NOTE: este metodo se redefine en las clases herederas
   def variant_for_these_params(params)
-    nil
+    self.master
   end
 
   # NOTE: este metodo hay que redefinirlo en las clases herederas
   def price_for_these_params(params)
-    0.0
+    self.price
   end
 
   def price_and_variant_for_these_params(params)
@@ -34,8 +38,8 @@ Spree::Product.class_eval do
     options << self.class_name(:full)
     options << self.class_name(:normal)
     options << self.class_name(:small)
+    options << self.class_name(:path)
     options << self.class_name(:view)
-    options << self.class_name(:easy)
     options.include?(class_name)
   end
 
@@ -54,10 +58,10 @@ Spree::Product.class_eval do
     when :small
       prefix = "Spree::Product"
       small  = false
-    when :view
+    when :path
       prefix = ''
       small  = true
-    when :easy
+    when :view
       prefix = 'spree/product'
       small  = true
     end
@@ -76,19 +80,19 @@ Spree::Product.class_eval do
   # se recomienda que la relación sea siempre del hijo al padre
   # por ejemplo "is_room_for_that_hotel"
   def parent_relation_name
-    nil
+    Constant::RELATION_IS_CHILD_OF_PARENT
   end
 
   # NOTE: lo mismo que con parent_relation_name
   def children_relation_name
-    nil
+    Constant::RELATION_IS_CHILD_OF_PARENT
   end
 
   # NOTE: lo mismo aqui
   # NOTE: recomendamos que el main_child tenga las dos relaciones
   # la de children y la de main_child
   def main_child_relation_name
-    nil
+    Constant::RELATION_IS_MAIN_CHILD_OF_PARENT
   end
 
   def parent(options = {})
