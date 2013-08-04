@@ -1,0 +1,53 @@
+<%  @product = @promotion_product || product   %>
+
+<li id="product_<%= @product.id %>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
+
+  <div class="product-image-flight">
+	<ul>
+	  <li>Image 1</li>
+	  <li>Image 2</li>
+    </ul>
+  </div>
+
+  <div class="product-text-flight">
+    <div class="product-name-flight">
+		 <ul>
+          <li>Montevideo</li>
+          <li> kk </li>
+          <li> Cancun </li>
+        </ul>
+    </div>
+
+    <div>
+      Para crear diseños web profesionales, es imprescindible conocer y dominar los selectores de CSS.
+      Como se vio en el capítulo anterior, una regla de CSS está formada por una parte llamada “selector” y otra parte llamada declaración.
+    </div>
+    <div>
+      2000 USD
+    </div>
+    <%= render(:partial => "spree/products/mini_cart_form") if @product.hotel? or @product.transfer? %>
+  </div>
+</li>
+
+<!--
+
+ <% # @product = @promotion_product || product   %>
+
+<li id="product_<%#= @product.id %>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
+  <div class="product-image">
+    <% #= product_image2(@product) %>
+    <%# if !@product.route?%>
+      <span class="price selling" itemprop="price"><%#= number_to_currency @product.product_price %></span>
+    <%# end %>
+  </div>
+  <div class="product-text">
+      <%#= link_to @product.name, @product, :class => 'info', :itemprop => "name"%>   &nbsp;
+      <%#= stars(@product) if @product.hotel? %>
+      <br>
+      <%#= truncated_description(@product) %> <br>
+      <%#= plan_alimenticio(@product) if @product.hotel? %>
+      <%#= related_products(@product) if @product.package? %>
+      <%#= render(:partial => "spree/products/mini_cart_form") if @product.hotel? or @product.transfer? %>
+  </div>
+</li>
+-->

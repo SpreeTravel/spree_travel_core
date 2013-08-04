@@ -1,0 +1,18 @@
+<div class="right" data-hook="admin_product_form_right">
+  <%= f.field_container :price do %>
+      <%= f.label :price, t('master_price') %> <span class="required">*</span><br />
+      <%= f.text_field :price, :value => number_with_precision(@product.price, :precision => 2) %>
+      <%= f.error_message_on :price %>
+  <% end %>
+
+  <p>
+    <%= f.label :available_on, t('available_on') %><br />
+    <%= f.error_message_on :available_on %>
+    <%= f.text_field :available_on, :class => 'datepicker' %>
+  </p>
+
+  <p>
+    <%= f.label :sku, t('sku') %><br />
+    <%= f.text_field :sku, :size => 16 %>
+  </p>
+</div>

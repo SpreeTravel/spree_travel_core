@@ -1,0 +1,11 @@
+<tr id="spree_variant_<%= variant.id %>" <%= 'style="color:red;"' if variant.deleted? %> data-hook="variants_row">
+  <td><span class="handle"></span> <%= variant.options_text %></td>
+  <td><%= variant.price %></td>
+  <td><%= variant.sku %></td>
+  <td><%= variant.on_hand %></td>
+  <td valign="top">
+    <%= link_to_edit(variant) unless variant.deleted? %>
+    &nbsp;
+    <%= link_to_delete(variant) unless variant.deleted? %>
+  </td>
+</tr>

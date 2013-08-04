@@ -1,0 +1,14 @@
+<% content_for :sidebar do %>
+    <%= render :partial => 'spree/home/filters' %>
+    <%= render :partial => 'spree/shared/promotion_products', :locals => { :taxon => nil } %>
+    <%= render :partial => 'spree/shared/popular_products', :locals => { :taxon => nil } %>
+    <%= render :partial => 'spree/home/facebook', :locals => { :taxon => nil } %>
+<% end %>
+
+<div id="taxon_products" data-hook="taxon_products">
+    <%= render :partial => 'spree/shared/products', :locals => { :products => @products, :taxon => nil} %>
+</div>
+
+
+
+

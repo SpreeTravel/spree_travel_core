@@ -1,0 +1,62 @@
+<div data-hook="product_show" itemscope itemtype="http://schema.org/Product">
+
+  <div id="head-detail-one" class="twelve columns omega" >
+    <ul id="product-name">
+      <li><p class="product-detail-name" itemprop="name"><%= promotion.name %></p></li>
+    </ul>
+  </div>
+  <div id="head-two" class="twelve columns omega" >
+    <ul id="product-head">
+      <li>
+        <!--<ul class="product-data">
+          <li class="icon-destination"></li>
+          <li><%#= my_destination(promotion.products.first) %></li>
+        </ul>-->
+      </li>
+    </ul>
+  </div>
+
+  <div class="columns five" data-hook="product_left_part">
+    <div class="row" data-hook="product_left_part_wrap">
+
+      <div id="product-images" data-hook="product_images">
+        <div id="main-image" data-hook>
+           <%=  image_tag @promotion.attachment.url(:show) %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="columns seven omega" >
+    <div id="detail-description" class="row" >
+
+      <p class="product-detail-title-description"><%= t('description')%></p>
+      <div class="product-detail-description">
+        <%= truncate( promotion.description.html_safe, :length => 400, :omission => "...") %>
+      </div>
+      <!--<div id="more">-->
+        <!--<a href="#" onclick="loginOverlay('backdescription', 'backlogin')"><div class="icon-more"></div></a>-->
+      <!--</div>-->
+
+    </div>
+  </div>
+
+</div>
+
+
+<div id="backdescription" class="back_overlay" >
+  <div class="contentWrap-description" id="overlaydescription">
+    <div id="full-description">
+      <div class="head_login">
+        <h6 class="title_user"><%= promotion.name %></h6>
+        <a href="#" onclick="closeOverlay('backdescription')" class="close-login"><%= t('close') %></a>
+      </div>
+      <div id="pfd">
+        <% good_description = ActiveSupport::Multibyte::Unicode.tidy_bytes(promotion.description.to_s) %>
+        <%= good_description.html_safe %>
+      </div>
+      <!--<a href="#" onclick="closeOverlay('backdescription')" class="close-login"><%#= t('close') %></a>-->
+    </div>
+  </div>
+</div>

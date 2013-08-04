@@ -1,0 +1,6 @@
+  <%= f.field_container :property_type do %>
+    <%= f.label :property_type, t('property_type') %> <span class="required">*</span><br />
+    <%= f.select :property_type_id, Spree::PropertyType.all.collect {|pt| [pt.name, pt.id]}, :prompt => '--' %>
+    <%= f.error_message_on :property_type %>
+  <% end %>
+

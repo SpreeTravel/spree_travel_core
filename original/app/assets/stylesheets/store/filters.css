@@ -1,0 +1,574 @@
+.hidden {
+    display: none;
+    /*visibility: hidden;*/
+}
+
+div#header-filters{
+    background-color: #4d4d4d;
+    width: 220px;
+    float: right;
+    position: relative;
+    height: 275px;
+}
+
+div#header-filters > div{
+    display: inline-block;
+    /*margin: 0 0 0 10px;
+    padding: 0;*/
+    float: left;
+}
+
+fieldset#header-filters{
+    background-color: #4d4d4d;
+    width: 220px;
+    float: right;
+    position: relative;
+    height: 275px;
+}
+
+fieldset#header-filters > div{
+    /*display: inline-block;*/
+    /*margin: 0 0 0 10px;
+    padding: 0;*/
+    float: left;
+}
+
+div#radios,
+div#form-combos div#radios_vuelos,
+div#form-combos div#radios_renta,
+div#form-combos div#radios_renta_idas{
+    width: 210px;
+    margin: 0 0 0 10px;
+    padding: 0;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    /*text-transform: capitalize;*/
+    color: #f2f2f2;
+    /*background: blue;*/
+}
+
+div#form-combos div#radios_vuelos,
+div#form-combos div#radios_renta,
+div#form-combos div#radios_renta_idas{
+    margin: 0;
+}
+
+/*div#form-combos div#radios_vuelos, div#radios_renta, div#radios_renta_idas{
+    height: 30px;
+}*/
+
+div#radios ul,
+div#form-combos div#radios_vuelos ul,
+div#form-combos div#radios_renta ul,
+div#form-combos div#radios_renta_idas ul{
+    width: 90px;
+    float: left;
+    list-style: none;
+    margin: 10px 0 0 0;
+}
+
+div#form-combos div#radios_vuelos ul,
+div#form-combos div#radios_renta ul,
+div#form-combos div#radios_renta_idas ul{
+    margin: -3px 0 0 0;
+}
+
+div#form-combos div#radios_vuelos label,
+div#form-combos div#radios_renta label,
+div#form-combos div#radios_renta_idas label{
+    font-family: arial, helvetica, sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    /*text-transform: capitalize;*/
+    color: #f2f2f2;
+    /*padding-top: 5px;*/
+}
+
+div#form-combos div#radios_vuelos input,
+div#form-combos div#radios_renta input,
+div#form-combos div#radios_renta_idas input{
+    height: 13px;
+    width: 13px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+div#radios_renta ul, div#radios_renta_idas ul{
+    margin: 5px 0 5px 0;
+}
+
+
+div#form-combos div#radios_renta_idas ul{
+    /*padding-top: 3px;*/
+    border-bottom: 1px solid #363636;
+}
+
+/*div#form-combos div#radios_renta_idas li{*/
+   /*border-top: 1px solid #838383;*/
+/*}*/
+
+div#radios ul#radios_pev,
+div#form-combos div#radios_vuelos ul#radios_pev_vuelos,
+div#form-combos div#radios_renta ul#radios_pev_renta,
+div#form-combos div#radios_renta_idas ul#radios_pev_renta_ida{
+    width: 90px;
+    border-bottom: 1px solid #363636;
+}
+
+div#radios ul#radios_aao,
+div#form-combos div#radios_vuelos ul#radios_aao_vuelos,
+div#form-combos div#radios_renta ul#radios_aao_renta,
+div#form-combos div#radios_renta_idas ul#radios_aao_renta_vuelta{
+    width: 120px;
+    border-bottom: 1px solid #363636;
+}
+
+div#form-combos{
+    width: 210px;
+    border-top: 1px solid #838383;
+    /*background: blue;*/
+    margin: 0 0 0 10px;
+    padding: 5px 0 0 0;
+    height: 181px;
+}
+
+div#form-combos label#horario_regresos, div#form-combos label#horario_fines{
+    margin-left: 27px;
+}
+
+/*div#form-combos label#autos {*/
+    /*width: 210px;*/
+    /*border-top: 1px solid #838383;*/
+    /*padding-top: 4px;*/
+/*}*/
+
+div#form-combos select#destino, div#form-combos select#auto, div#form-combos select#devolucion {
+    width: 210px;
+}
+
+div#form-combos select#adults_program, div#form-combos select#children_program, div#form-combos select#infants_program {
+    width: 95px;
+}
+
+div#form-combos select#destination_accommodation,
+div#form-combos select#meal_plan_accommodation,
+div#form-combos select#destination_program,
+div#form-combos select#transmission_rent {
+    width: 210px;
+}
+
+div#form-combos select#origin_flight,
+div#form-combos select#destination_flight,
+div#form-combos select#origen_traslado,
+div#form-combos select#destination_transfer {
+    width: 100px;
+    margin-top: 0px;
+}
+
+div#form-combos input#partida,
+div#form-combos input#regreso,
+div#form-combos input#incio,
+div#form-combos input#fin,
+div#form-combos input#partida_traslado,
+div#form-combos input#regreso_traslado {
+    width: 76px;
+}
+
+div#form-combos ul.filtros_inline{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+div#form-combos ul.filtros_inline li{
+    float: left;
+    display: inline;
+    margin-right: 10px;
+}
+
+div#form-combos ul.filtros_inline li:last-child{
+    margin-right: 0;
+}
+
+/*div#form-combos img {*/
+    /*height: 1px;*/
+    /*width: 16px;*/
+    /*margin-left: 7px;*/
+    /*position: relative;*/
+    /*z-index: 4;*/
+/*}*/
+
+div#icon-calendar-program {
+    height: 18px;
+    width: 18px;
+    background-image: url("iconografia.png");
+    background-position: -18px -108px;
+    position: absolute;
+    top: 47%;
+    left: 88%;
+    z-index: 5;
+    display: inline-block;
+}
+
+div#icon-calendar-flight {
+    height: 18px;
+    width: 18px;
+    background-image: url("iconografia.png");
+    background-position: -18px -108px;
+    position: absolute;
+    top: 54%;
+    left: 41%;
+    z-index: 5;
+    display: inline-block;
+}
+
+div#icon-calendar-flight-return {
+    height: 18px;
+    width: 18px;
+    background-image: url("iconografia.png");
+    background-position: -18px -108px;
+    position: absolute;
+    top: 54%;
+    left: 91%;
+    z-index: 5;
+    display: inline-block;
+}
+
+div#icon-calendar-transfer {
+    height: 18px;
+    width: 18px;
+    background-image: url("iconografia.png");
+    background-position: -18px -108px;
+    position: absolute;
+    top: 54%;
+    left: 41%;
+    z-index: 5;
+    display: inline-block;
+}
+
+div#icon-calendar-transfer-return {
+    height: 18px;
+    width: 18px;
+    background-image: url("iconografia.png");
+    background-position: -18px -108px;
+    position: absolute;
+    top: 54%;
+    left: 91%;
+    z-index: 5;
+    display: inline-block;
+}
+
+div#icon-calendar-accommodation-in {
+    height: 18px;
+    width: 18px;
+    background-image: url("iconografia.png");
+    background-position: -18px -108px;
+    position: absolute;
+    top: 47%;
+    left: 41%;
+    z-index: 5;
+    display: inline-block;
+}
+
+div#icon-calendar-accommodation-out {
+    height: 18px;
+    width: 18px;
+    background-image: url("iconografia.png");
+    background-position: -18px -108px;
+    position: absolute;
+    top: 47%;
+    left: 90%;
+    z-index: 5;
+    display: inline-block;
+}
+
+div#icon-calendar-rent-in {
+    height: 18px;
+    width: 18px;
+    background-image: url("iconografia.png");
+    background-position: -18px -108px;
+    position: absolute;
+    top: 62%;
+    left: 41%;
+    z-index: 5;
+    display: inline-block;
+}
+
+div#icon-calendar-rent-out {
+    height: 18px;
+    width: 18px;
+    background-image: url("iconografia.png");
+    background-position: -18px -108px;
+    position: absolute;
+    top: 62%;
+    left: 91%;
+    z-index: 5;
+    display: inline-block;
+}
+
+div#form-combos label{
+    font-family: arial, helvetica, sans-serif;
+    font-size: 10px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #f2f2f2;
+    /*padding-top: 5px;*/
+}
+
+div#form-combos select{
+    /*position: relative;*/
+    height: 16px;
+    width: 63px;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    text-transform: capitalize;
+    color: #4d4d4d;
+    border: 1px solid #f2f2f2;
+    /*margin-bottom: 0px;*/
+    margin-top: -3px;
+    padding: 0 0 0 2px;
+    /*background-image: none;*/
+    /*vertical-align: top;*/
+}
+
+div#form-combos select#hora_partida,
+div#form-combos select#hora_regreso,
+div#form-combos select#hora_inicio,
+div#form-combos select#hora_fin{
+    width: 73px;
+}
+
+div#form-combos select#origen_vuelo,
+div#form-combos select#destino_vuelo,
+div#form-combos select#origen_traslado,
+div#form-combos select#destino_traslado{
+    width: 100px;
+}
+
+div#form-combos li#ot, div#form-combos li#ov{
+    padding-right: 10px;
+}
+
+div#form-combos li#ot,
+div#form-combos li#dt,
+div#form-combos li#ov,
+div#form-combos li#dv{
+    float: left;
+    display: inline;
+    /*margin-right: 10px;*/
+    /*width: 100px;*/
+    border-top: 1px solid #838383;
+}
+
+/*div#form-combos div#rent_devolution {*/
+    /*border-top: 1px solid #838383;*/
+    /*display: inline-block;*/
+/*}*/
+
+div#form-combos input{
+    height: 16px;
+    width: 73px;
+    font-family: arial, helvetica, sans-serif;
+    font-size: 11px;
+    font-weight: normal;
+    text-transform: capitalize;
+    color: #4d4d4d;
+    border: 1px solid #f2f2f2;
+    /*margin-top: -3px;*/
+}
+
+div#form-button{
+    width: 220px;
+    height: 20px;
+    text-align: center;
+    bottom: 1px;
+}
+
+div#form-button input {
+    font-family: bebas neue;
+    font-size: 16px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #4d4d4d;
+    margin: 0;
+    padding: 0;
+    width: 100px;
+    height: 20px;
+    background: linear-gradient(top, rgb(235, 235, 235) 0%, rgb(171, 171, 171) 50%);
+    background: -moz-linear-gradient(top, rgb(235, 235, 235) 0%, rgb(171, 171, 171) 50%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(235, 235, 235)), color-stop(75%,rgb(171, 171, 171)));
+    background: -webkit-linear-gradient(top, rgb(235, 235, 235) 0%, rgb(171, 171, 171) 50%);
+    background: -o-linear-gradient(top, rgb(235, 235, 235) 0%, rgb(171, 171, 171) 50%);
+    background: -ms-linear-gradient(top, rgb(235, 235, 235) 0%, rgb(171, 171, 171) 50%);
+    border: none;
+}
+
+div#form-button input#button-search  {
+    font-family: bebas neue;
+    font-size: 16px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #4d4d4d;
+    margin: 0;
+    padding: 0;
+    width: 100px;
+    height: 20px;
+    background: linear-gradient(top, rgb(235, 235, 235) 0%, rgb(171, 171, 171) 50%);
+    background: -moz-linear-gradient(top, rgb(235, 235, 235) 0%, rgb(171, 171, 171) 50%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgb(235, 235, 235)), color-stop(50%,rgb(171, 171, 171)));
+    background: -webkit-linear-gradient(top, rgb(235, 235, 235) 0%, rgb(171, 171, 171) 50%);
+    background: -o-linear-gradient(top, rgb(235, 235, 235) 0%, rgb(171, 171, 171) 50%);
+    background: -ms-linear-gradient(top, rgb(235, 235, 235) 0%, rgb(171, 171, 171) 50%);
+    border: none;
+}
+
+div#icon-lupa {
+    height: 14px;
+    width: 14px;
+    background-image: url('iconografia.png');
+    background-position: -120px -72px;
+}
+
+div#form-button input.search-box-button {
+    line-height: 22px;
+}
+
+div#form-button input.search-box-button:hover {
+    color: #4d4d4d !important;
+}
+
+/*
+div#form-radiobuttons{
+    margin-left: 10px;
+    height: 89px;
+    */
+/*background-color: green;*//*
+
+    border-bottom: 1px solid #838383;
+    padding-top: 10px;
+    font-family: arial;
+    font-size: 11px;
+    font-weight: normal;
+    text-transform: capitalize;
+    color: #f2f2f2;
+}
+
+div#form-radiobuttons label{
+    display: inline-block;
+    margin-right: 10px;
+}
+
+div#form-radiobuttons input:focus { color:#ff0000; background-color:blue; }
+div#form-radiobuttons input:active { background-color:green; }
+
+div#form-combos{
+    padding-top: 10px;
+    margin-left: 10px;
+    height: 144px;
+    */
+/*background-color: #ff0000;*//*
+
+    border-top: 1px solid #363636;
+    font-family: arial;
+    font-size: 10px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #f2f2f2;
+}
+
+div#form-combos select{
+    height: 16px;
+}
+
+div#form-button{
+    text-align: center;
+    height: 20px;
+    font-family: bebas neue;
+    font-size: 16px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #f2f2f2;
+}*/
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    /*border: 1px solid #DDD;*/
+    /*background: #F6F6F6 url(/assets/jquery-ui/ui-bg_highlight-soft_100_f6f6f6_1x100.png) 50% 50% repeat-x;*/
+    /*font-weight: bold;*/
+    color: #ed8000 !important;
+}
+
+.ui-state-default:hover, .ui-widget-content .ui-state-default:hover, .ui-widget-header .ui-state-default:hover {
+    background: #c5c5c5 !important;
+    border: 1px solid #c5c5c5;
+}
+
+#meal_plan_label {
+    width: 200px;
+}
+
+div#form-combos select#confort_transfer {
+    width: 200px;
+}
+
+div#form-link, div#form-link-up {
+    text-align: center;
+    /*width: 210px;*/
+    float: left;
+}
+
+div#form-link {
+    margin-left: 10px;
+}
+
+div#form-link-up {
+    margin-left: 5px;
+}
+
+div#form-link a, div#form-link-up a {
+    font-family: bebas neue;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #ffffff;
+    font-size: 18px;
+}
+
+div#form-link a:hover, div#form-button a:hover, div#form-link-up a:hover {
+    text-decoration: none;
+    color: #ed8000 !important;
+}
+
+div#form-button a {
+    font-family: bebas neue;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #ffffff;
+    font-size: 18px;
+    float: right;
+}
+
+div#label-search {
+    width: 210px;
+    border-bottom: 1px solid #363636;
+    margin-left: 10px;
+}
+
+div#your-search {
+    width: 210px;
+    border-top: 1px solid #838383;
+    margin: 0 0 0 10px;
+    padding: 5px 0 0 0;
+}
+
+div#your-search p {
+    color: #ffffff;
+}
+
+div#label-search p {
+    font-family: bebas neue;
+    text-transform: uppercase;
+    color: #ffffff;
+    font-size: 18px;
+    padding-bottom: 5px;
+}

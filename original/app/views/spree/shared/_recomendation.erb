@@ -1,0 +1,34 @@
+<% content_for :sidebar do %>
+<div id="sidebar_recomended">
+  <% if !@recomended_product.nil? %>
+      <div class="mas_valorados_sidebar four">
+        <div class="title_valorados_products">
+          <ul>
+            <li><%= image_tag('store/img_trans.gif', :size => "1x1", :class=>"left_recomendation r-background-position-#{many_color(taxon)}")%></li>
+            <li><p><%= t('recomended') %></p></li>
+          </ul>
+        </div>
+
+        <div class="listado_valorados border-<%= many_color(taxon) %>">
+          <% @recomended_product.each do |product| %>
+
+              <ul id="recomended_sidebar" data-hook="preview_row" >
+                <li></li>
+                <li id="name_val">
+                  <p>
+                    <%= link_to product_path(product) do%>
+                      <span itemprop="name"><%= product.name %></span>
+                    <% end %>
+                  </p>
+                </li>
+                <li id="price_val">
+                  <p><%= price_with_context(product, params)  %></p>
+                </li>
+              </ul>
+
+          <% end %>
+        </div>
+      </div>
+  <% end %>
+</div>
+<% end %>

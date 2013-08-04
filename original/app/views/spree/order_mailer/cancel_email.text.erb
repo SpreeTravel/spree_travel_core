@@ -1,0 +1,26 @@
+Estimada/o cliente,
+
+<%= t('email_canceled_introduction') %>
+
+============================================================
+Orden de Venta [CANCELED]
+============================================================
+<% @order.line_items.each do |item| %>
+<%= item.variant.product.name%> <%#= variant_options(item.variant) %>
+<%= item.context.gsub("<br>", "\n") %>
+<%#= render :partial => 'spree/shared/additional_line_item_fields', :locals=>{:item => item} %>
+<% end %>
+============================================================
+Subtotal: <%= number_to_currency @order.item_total %>
+<% @order.adjustments.each do |adjustment| %>
+<%= "#{adjustment.label}: #{number_to_currency adjustment.amount, :precision => 0 }"%>
+<% end %>
+
+Order Total: <%= number_to_currency @order.total, :precision => 0  %>
+
+
+Ante cualquier duda o eventualidad consulte a nuestros especialistas <%= link_to 'aquí', "https://www.grandslamtravelagency.com/contact" %>.
+
+Gracias por elegir a GrandSlam Limited
+
+Mediante el uso de los servicios de GrandSlam y su sitio Ud. acepta los <%= link_to t('legal_terms'), 'http://www.grandslamtravelagency.com/legal_terms/' %>.

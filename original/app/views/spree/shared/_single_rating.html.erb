@@ -1,0 +1,20 @@
+<% if !review.rating.blank? %>
+<p class="single_rating rate"><span id="star_s<%= review.id.to_s %>" data-rating="<%= review.rating || 0 %>"></span></p>
+<span class="average"><%#= review.rating.to_s + " " + t("reviews_rating.on_stars") + " 5 " + t(:stars) %></span>
+<% end %>
+<script type="text/javascript">
+<!--//
+	jQuery(document).ready(function() {
+		$("#star_s<%= review.id.to_s %>").raty({
+		  readOnly: true,
+		  start: <%= review.rating %>,
+		  half:  true,
+		  width: 180,
+		  starHalf: 'circle-half<%= "-big" if (Spree::Config[:star_big] == true) %>.png',
+		  starOff: 'circle-off<%= "-big" if (Spree::Config[:star_big] == true) %>.png',
+	 	  starOn: 'circle-on<%= "-big" if (Spree::Config[:star_big] == true) %>.png',
+		  path: '/assets/'
+		});
+	});
+//-->
+</script>

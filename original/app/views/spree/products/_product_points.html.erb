@@ -1,0 +1,33 @@
+<div  data-hook="product_points">
+   <% @product ||= product %>
+    <% unless @product.points_of_interest.empty? %>
+      <div id="attractions-<%= get_category(product) %>">
+          <ul id="product-head-map">
+            <li class="icon-attraction-<%= get_category(product) %>"></li>
+            <li class="product-title-map"><%= t('things_to_do') %></li>
+          </ul>
+
+          <table id="product-properties" class="table-display" data-hook width="100%">
+            <tbody>
+            <% start = if product.route? then '/' else '@' end %>
+            <% @points_to_show = points_to_hash(product.points_of_interest, start) %>
+            <% for hash in @points_to_show %>
+                <%# css_class = cycle('even', 'odd') %>
+                <!--<tr class="<%#= css_class %>">-->
+                <tr class="point_distance" >
+                  <td class="derecha1">
+                        <% attraction_category = get_attraction_category(hash[:point]) %>
+                        <div class="icon-<%= attraction_category ? attraction_category : 'is-product' %>"></div>
+                        <div class="<%= 'orange-link' if not attraction_category %>"><%= point_of_interest(hash) %></div>
+                  </td>
+                  <% if !@product.destination? %>
+                    <td class="derecha2"> <%= distance_to_point(@product, hash[:point])%> </td>
+                  <% end %>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+      </div>
+    <% end %>
+</div>
+

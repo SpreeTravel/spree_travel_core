@@ -1,0 +1,43 @@
+<%
+   active_taxon = nil
+   if @taxon
+     active_taxon = @taxon
+   elsif @product
+     active_taxon = @product.taxons.where("permalink like 'categories%'").first
+   end
+%>
+<% Spree::Taxon.joins(:taxonomy).where('parent_id' => Spree::Taxon.find_by_permalink('categories').id).order(:position).each do |taxon| %>
+    <li id=<%="#{taxon.permalink.split('/')[-1]}-link"%> data-hook>
+        <%= link_to taxon.name, nested_taxons_path(taxon.permalink), :class => "top_link #{active_button(taxon, active_taxon)}" %>
+        <ul class="sub">
+          <% Spree::Taxon.where(:parent_id => taxon.id).order(:position).each do |second_level_taxon|  %>
+              <li class=<%="#{taxon.permalink.split('/')[-1]}-hover"%>><%= link_to second_level_taxon.name,
+                               :controller => "taxons", :action => "show", :id => second_level_taxon.permalink%> </li>
+          <% end %>
+        </ul>
+    </li>
+<% end %>
+<li id='promos-link'><%= link_to t('offers'), '/promos/index' , :class => "top_link #{active_promotion}"  %></li>
+<li id="destinos-link"><a><%= image_tag('store/img_trans.gif', :size => "1x1")%><%= t('destinations') %></a>
+  <ul>
+    <% Spree::Taxon.where(:parent_id => Spree::Taxon.find_by_permalink('destinations').id).each do |destinations| %>
+    <li><%= link_to destinations.permalink.split('/')[-1].humanize, nested_taxons_path(destinations.permalink) %>
+        <ul class="sub">
+          <% Spree::Taxon.where(:parent_id => destinations.id).order(:position).each do |second_level_destinations|  %>
+            <li><%= link_to second_level_destinations.name, nested_taxons_path(second_level_destinations.permalink) %>  </li>
+          <% end %>
+        </ul>
+    </li>
+    <% end %>
+  </ul>
+</li>
+<li id="lugares-link">
+  <a><%= image_tag('store/img_trans.gif', :size => "1x1")%><%= t('things_to_do') %></a>
+  <ul>
+    <% Spree::Taxon.where(:parent_id => Spree::Taxon.find_by_permalink('things-to-do').id).order(:position).each do |things| %>
+      <li>
+        <%= link_to things.name, nested_taxons_path(things.permalink) %>
+       </li>
+    <% end %>
+  </ul>
+</li>

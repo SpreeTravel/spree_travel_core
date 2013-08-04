@@ -1,0 +1,75 @@
+<div class="columns alpha omega twelve" data-hook="billing_fieldset_wrapper">
+<!--<fieldset id="billing" data-hook>-->
+  <%= form.fields_for :bill_address do |bill_form| %>
+    <p class="cart-body-title"><%= t('contact_information') %></p>
+    <p class="contact-text"><%= t('contact_text') %></p>
+    <div class="inner" data-hook="billing_inner">
+      <p class="columns alpha six field" id="bfirstname">
+        <%= bill_form.label :firstname, t('first_name') %><span class="req">*</span><br />
+        <%= bill_form.text_field :firstname, :class => 'required' %>
+      </p>
+      <p class="columns omega six field" id="blastname">
+        <%= bill_form.label :lastname, t('last_name') %><span class="req">*</span><br />
+        <%= bill_form.text_field :lastname, :class => 'required' %>
+      </p>
+      <p class="columns alpha six field" id="bcountry">
+        <%= bill_form.label :country_id, t('country') %><span class="req">*</span><br />
+        <span class="req">
+          <%= bill_form.collection_select :country_id, available_countries, :id, :name, {}, :class => 'required' %>
+        </span>
+      </p>
+      <% if Spree::Config[:address_requires_state] %>
+        <p class="field" id="bstate">
+          <% have_states = !@order.bill_address.country.states.empty? %>
+          <%= bill_form.label :state, t('state') %><span class="req">*</span><br />
+          <noscript>
+            <%= bill_form.text_field :state_name, :class => 'required' %>
+          </noscript>
+          <% state_elements = [
+             bill_form.collection_select(:state_id, @order.bill_address.country.states,
+                                :id, :name,
+                                {:include_blank => true},
+                                {:class => have_states ? 'required' : 'hidden',
+                                :disabled => !have_states}) +
+             bill_form.text_field(:state_name,
+                                :class => !have_states ? 'required' : 'hidden',
+                                :disabled => have_states)
+             ].join.gsub('"', "'").gsub("\n", "")
+          %>
+          <%= javascript_tag do -%>
+            document.write("<%== state_elements %>");
+          <% end -%>
+        </p>
+      <% end %>
+      <p class="columns omega six field" id="bphone">
+        <%= bill_form.label :phone, t('phone') %><span class="req">*</span><br />
+        <%= bill_form.text_field :phone, :class => 'required' %>
+      </p>
+    </div>
+
+<% end %>
+<!--</fieldset>-->
+</div>
+
+<!--<div class="columns omega six" data-hook="shipping_fieldset_wrapper">
+  <fieldset id="pax_amount" data-hook>
+    <legend><%#= t('pax_amount') %></legend>
+    <%#= t('pax_amount') %>
+    <%# array = [1,2,3,4,5,6,7,8,9,10] %>
+    <%#= select_tag :paxs, options_for_select(array, array.at(1)) %>
+  </fieldset>
+</div>-->
+
+
+<div class="columns alpha omega twelve" data-hook="shipping_fieldset_wrapper">
+  <fieldset id="custom_text" data-hook>
+    <p><%= t('custom_text') %></p>
+    <%= form.text_area :custom_text, :cols => '60', :rows => '10' %>
+  </fieldset>
+</div>
+
+<hr class="clear" />
+<div id="cart-sac-button" class="columns omega four" data-hook="buttons">
+    <ul class="button-checkout-left"><li id="icon-sac"/></ul>
+    <ul class="button-checkout-right padding-button-2"><li id="text-checkout"><%= submit_tag t('save_and_continue'), :id => 'sac-button' %></li></ul>
+</div>

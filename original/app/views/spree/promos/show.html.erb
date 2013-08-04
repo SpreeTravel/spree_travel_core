@@ -1,0 +1,41 @@
+<div id="header-slider-detail" class="row">
+
+    <div id="header-product-detail">
+        <%= render :partial => 'spree/promos/show_head', :locals => { :promotion => @promotion } %>
+    </div>
+    <%= render :partial => 'spree/shared/search_box' %>
+
+</div>
+
+<div>
+
+    <div id="detail-options" class="columns alpha twelve">
+
+      <% cont = 0
+         taxonomy_id = Spree::Taxon.find_by_permalink('categories').taxonomy_id
+         @promotion.products.each do |p|
+           t = p.taxons.where(:taxonomy_id => taxonomy_id).first
+           cont += 1 if t
+         end
+      %>
+      <p class="product-detail-title-options"><%= cont %> <%= t('product') %><% if cont > 1 %>s<% end %> <%= t('in_offers') %></p>
+
+      <ul id="products" class="inline product-listing" data-hook>
+        <% @promotion.products.each do |product| %>
+            <% if Spree::Config[:show_zero_stock_products] || product.has_stock? %>
+                <% taxon = product.taxons.where(:taxonomy_id => taxonomy_id).first %>
+                <%= product_view_distributer( product, taxon ) %>
+            <% end %>
+        <% end %>
+      </ul>
+
+    </div>
+
+      <% content_for :sidebar do %>
+          <div data-hook="taxon_sidebar_navigation" style="display: inline-block;">
+            <%#= render :partial => 'spree/home/facebook', :locals => { :taxon => @taxon } %>
+          </div>
+      <% end %>
+
+</div>
+

@@ -1,0 +1,46 @@
+<div id="product-show" data-hook="product_show" itemscope itemtype="http://schema.org/Product">
+  <% @body_id = 'product-details' %>
+
+  <%= render(:partial => "spree/products/product_detail_left", :locals => { :product => product }) %>
+
+  <div id="detail-options" class="columns eleven row">
+        <p class="product-detail-title-options" itemprop="name"><%= t('nearest_products') %> <%= product.name %>:</p>
+        <%
+           nearest = product.nearest(:distance => 30, :limit => 20)
+           max_for_category = 2
+           accommodations = []
+           programs = []
+           tours = []
+           nearest.each do |p|
+             accommodations << p if accommodations.length < max_for_category && p.accommodation?
+             programs << p if programs.length < max_for_category && p.program?
+             tours << p if tours.length < max_for_category && p.tour?
+           end
+        %>
+        <% if accommodations.length > 0 %>
+            <div id=title-in>
+              <p class="product-title-in"><%= t('accommodation') %></p>
+              <%= link_to t('see_all_accommodations'), nested_taxons_path('categories/accommodation')  %>
+            </div>
+            <%= render(:partial => "spree/products/accommodation", :locals => { :products_related => accommodations }) %>
+        <% end %>
+
+        <% if programs.length > 0 %>
+            <div id=title-in>
+              <p class="product-title-in"><%= t('programs') %></p>
+              <%= link_to t('see_all_programs'), nested_taxons_path('categories/programs')  %>
+            </div>
+            <%= render(:partial => "spree/products/programs", :locals => { :products_related => programs }) %>
+        <% end %>
+
+        <% if tours.length > 0 %>
+            <div id=title-in>
+              <p class="product-title-in"><%= t('tours') %></p>
+              <%= link_to t('see_all_tours'), nested_taxons_path('categories/tours')  %>
+            </div>
+            <%= render(:partial => "spree/products/programs", :locals => { :products_related => tours }) %>
+        <% end %>
+  </div>
+
+
+</div>

@@ -1,0 +1,46 @@
+<div id="order_summary" class="columns omega twelve" data-hook>
+
+    <div id="cart-header" data-hook="checkout_header">
+        <p data-hook="checkout_title"><%= t('checkout') %></p>
+        <div id="checkout-progress" data-hook="checkout_progress"><%= checkout_progress %></div>
+    </div>
+
+    <div class="columns omega twelve cart-body">
+      <div id="for-order" >
+        <p id="order-title"><%= t('order')%></p><p id="order-number"><%= " NO. " + @order.number %></p>
+      </div>
+
+      <div id="order" data-hook>
+        <% if params.has_key? :checkout_complete %>
+            <h3><%= t('thank_you_for_your_order') %></h3>
+        <% end %>
+        <%= render :partial => 'spree/shared/order_details', :locals => { :order => @order } %>
+
+      </div>
+    </div>
+
+    <%= render :partial => 'spree/checkout/summary', :locals => { :order => @order } %>
+
+</div>
+
+
+<div id="cart-sac-button" class="columns omega four" data-hook="buttons">
+  <ul class="button-checkout-left"><li id="icon-cs"/></ul>
+  <ul class="button-checkout-right padding-button-1">
+    <li id="text-checkout">
+      <% previous_path = session[:url_before_cart] || root_path %>
+      <%= link_to t('continue_shopping'), previous_path, :id => 'cs-link' %>
+    </li>
+  </ul>
+</div>
+
+<% if current_user.has_role?('admin') %>
+    <div id="cart-bn-button" class="columns omega four" data-hook="buttons">
+      <ul class="button-checkout-left"><li id="icon-sac"/></ul>
+      <ul class="button-checkout-right padding-button-1">
+        <li id="text-buynow">
+          <%= link_to 'Pague aquí', "https://secure.worldpay.com/wcc/purchase?instId=104509&amount=#{@order.item_total}&currency=#{Spree::Currency.current.char_code}&cartId=#{@order.number}", :id => 'bn-link' %>
+        </li>
+      </ul>
+    </div>
+<% end %>

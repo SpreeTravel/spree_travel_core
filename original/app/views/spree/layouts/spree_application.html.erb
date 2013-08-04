@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--[if IE 7]> <html class="ie ie7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="ie ie8" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> <![endif]-->
+<!--[if IE 9]> <html class="ie ie9" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> <![endif]-->
+<!--[if IE 10]> <html class="ie ie10" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> <![endif]-->
+<!--[if gt IE 10]><!--><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> <!--<![endif]-->
+
+  <head data-hook="inside_head">
+    <%= render :partial => 'spree/shared/head' %>
+  </head>
+
+  <body class="<%= body_class %>" id="<%= @body_id || 'default' %>" data-hook="body">
+    
+    <div class="container">
+
+      <header id="header" class="row" data-hook>
+      
+        <figure id="logo" class="columns alpha five" data-hook>
+          <%= logo %>
+        </figure>
+
+        <nav id="top-nav-bar" class="columns omega ten">
+          <ul id="nav-bar" class="inline" data-hook>
+            <%= render :partial => 'spree/shared/nav_bar' %>
+          </ul>
+        </nav>
+
+        <% if store_menu? %>
+          <nav class="columns alpha omega sixteen">
+            <ul id="main-nav-bar" class="inline container" data-hook>
+              <%= render :partial => 'spree/shared/store_menu' %>
+            </ul>
+          </nav>
+        <% end %>
+            
+      </header>
+
+      <div id="back-breadcrumbs" class="container">
+        <%
+            active_taxon = nil
+            if @taxon
+                active_taxon = @taxon
+            elsif @product
+                active_taxon = @product.taxons.where("permalink like 'categories%'").first
+            end
+        %>
+        <div id="header-breadcrumbs" class="<%= many_color(active_taxon) %>" >
+          <%= breadcrumbs(@taxon, @product) %>
+          <div id="end-breadcrumbs">
+            <%= content_tag(:span, t('custom_your_trip')) %>
+          </div>
+        </div>
+      </div>
+
+      <div id="wrapper" class="row" data-hook>
+
+        <%= render :partial => 'spree/shared/banner_filter' %>
+        
+        <% if content_for?(:sidebar) %>
+          <!--<aside id="sidebar" class="columns alpha four" data-hook>-->
+          <aside id="sidebar" class="columns four" data-hook>
+            <%= yield :sidebar %>
+            <%#= render 'spree/home/facebook' %>
+          </aside>
+        <% end %>
+
+        <!--<div id="content" class="columns omega <%# if !content_for?(:sidebar) %> sixteen alpha <%# else %> twelve <%# end %>" data-hook>-->
+        <div id="content" class="columns <% if !content_for?(:sidebar) %> sixteen <% else %> alpha twelve <% end %>" data-hook>
+          <%#= flash_messages %>
+          <%= yield %>
+        </div>
+
+      </div>
+
+      <footer id="footer" class="row container" data-hook>
+        <div id="footer-left" class="columns alpha container" data-hook>
+          <p><%= t('powered_by') %> <%= link_to 'Spree', 'http://spreecommerce.com/' %></p>
+        </div>
+        <div id="footer-right" class="columns omega eight" data-hook></div>
+      </footer>
+
+    </div>
+
+    <%#= render :partial => 'spree/shared/google_analytics' %>
+
+  </body>
+
+</html>

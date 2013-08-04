@@ -1,0 +1,39 @@
+Estimada/o, le confirmamos su orden <%= @order.number %>. Por favor, proceda a su pago mediante::
+
+- Tarjeta de crédito o débito mediante la pasarela de pago WorldPay pulsando <%= link_to 'Pague aqui', "https://secure.worldpay.com/wcc/purchase?instId=104509&amount=#{@order.item_total}&currency=#{Spree::Currency.current.char_code}&cartId=#{@order.number}" %>
+
+- Transferencia Bancaria con los siguientes datos
+
+  Nombre del Beneficiario: GrandSlam Limited
+  No. de Cuenta del Beneficiario/IBAN: ES68 0081 7310 6700 0149 1653
+  Banco del Beneficiario: SabadellCAM
+  Dirección del Banco: Av. Ciudad de Barcelona, 140, Madrid, España
+  Código SWIFT: BSABESBB
+  Referencia: <%= @order.number %>
+  EVITE CUALQUIER REFERENCIA A CUBA
+
+- Para otro método de pago contacte a nuestros especialistas.
+
+
+============================================================
+Detalle de la orden de venta <%= @order.number %>
+============================================================
+<% @order.line_items.each do |item| %>
+   <% if item.variant.product.permalink != 'generic-product' %>
+<%= item.variant.product.name%>
+   <% end %>
+<%= item.context.gsub("<br>", "\n") %>
+<% end %>
+============================================================
+Subtotal: <%= number_to_currency @order.item_total, :precision => 0  %>
+<% @order.adjustments.each do |adjustment| %>
+  <%= "#{adjustment.label}: #{number_to_currency adjustment.amount, :precision => 0 }"%>
+<% end %>
+
+Total: <%= number_to_currency @order.total, :precision => 0  %>
+
+Ante cualquier duda o eventualidad consulte a nuestros especialistas <%= link_to 'aquí', "https://www.grandslamtravelagency.com/contact" %>.
+
+Gracias por elegir a GrandSlam Limited
+
+Mediante el uso de los servicios de GrandSlam y su sitio Ud. acepta los <%= link_to t('legal_terms'), 'http://www.grandslamtravelagency.com/legal_terms/' %>.

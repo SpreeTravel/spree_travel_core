@@ -1,0 +1,9 @@
+<% content_for :sidebar do %>
+      <%= render :partial => 'spree/shared/promotion_products', :locals => { :taxon => nil } %>
+      <%= render :partial => 'spree/shared/popular_products', :locals => { :taxon => nil } %>
+      <%= render :partial => 'spree/home/facebook', :locals => { :taxon => nil } %>
+<% end %>
+
+<%= render 'recomended_products' %>
+<%= render 'product_atracciones_destinos' %>
+

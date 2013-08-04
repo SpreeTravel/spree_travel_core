@@ -1,0 +1,61 @@
+<div class="atracciones_destinos">
+  <div id="atracciones" class="four columns alpha">
+    <ul class="title_atracciones">
+      <li><%=image_tag('store/img_trans.gif', :size => "1x1", :class=>"left_atracciones")%></li>
+      <li><p><%= t('things_to_do')%></p></li>
+      <li><%=link_to image_tag('store/img_trans.gif', :size => "1x1", :class=>"rigth_atracciones"), nested_taxons_path('things-to-do')%></li>
+
+    </ul>
+    <ul class="products_atracciones">
+      <% @things.each do |p| %>
+      <li class="products_atracciones_item">
+        <ul>
+          <li><%= if !p.images.empty?
+                    link_to (image_tag p.images[0].attachment.url(:small), :width => '94', :height => '70'), p
+                  else
+                    image_tag('store/no_imagen_72x72.png', :width => '94', :height => '70')
+                  end %></li>
+
+          <li class="name_atracciones"><%= truncate(p.name, :length => 35, :omission => "...") %></li>
+          <li class="name_destino"><%= my_destination(p, false, true) %></li>
+          <li id="icon_info_attr">
+            <%= link_to "/products/#{p.permalink}", :class => "go-to-detail-button" do %>
+                <ul id="product-detail-icon">
+                  <li class="icon-detail" />
+                </ul>
+                <ul id="product-detail-text">
+                  <li class="product-text-button"><%= t('details') %></li>
+                </ul>
+            <% end %>
+          </li>
+        </ul>
+        <% taxon = p.taxons.where(:taxonomy_id => Spree::Taxon.find_by_permalink('things-to-do').taxonomy_id).first %>
+        <p><%= taxon.name %></p>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div id="destinos">
+    <ul class="title_destinos">
+      <li><%=image_tag('store/img_trans.gif', :size => "1x1", :class=>"left_destinos")%></li>
+      <li><p><%= t('destinations')%></p></li>
+      <li><%=link_to image_tag('store/img_trans.gif', :size => "1x1", :class=>"rigth_destinos"), nested_taxons_path('destinations/cuba')%></li>
+    </ul>
+    <ul class="products_destinos">
+      <% @destinations.each do |product| %>
+          <li class="two columns">
+            <% taxon_destination = product.taxons.first %>
+            <%= if !product.images.empty?
+                link_to (image_tag product.images[0].attachment.url(:small)), nested_taxons_path(taxon_destination.permalink)
+              else
+                image_tag('store/no_imagen_72x72.png')
+              end %>
+            <%= link_to taxon_destination.name, nested_taxons_path(taxon_destination.permalink) %>
+          </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+

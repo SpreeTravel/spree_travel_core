@@ -1,0 +1,23 @@
+<div data-hook="product_properties">
+
+  <% unless @property_hash['left'].empty? %>
+      <% for title in @property_hash['left'].keys %>
+
+          <h6 class="product-section-title"><%= title %></h6>
+
+          <table id="product-properties" class="table-display" data-hook width="100%">
+            <tbody>
+            <% for product_property in @property_hash['left'][title] %>
+                <% css_class = cycle('even', 'odd') %>
+                <tr class="<%= css_class %>">
+                  <td><strong><%= product_property.property.presentation %></strong></td>
+                  <td class="derecha"><%= product_property.value %></td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+
+      <% end %>
+  <% end %>
+
+</div>

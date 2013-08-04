@@ -1,0 +1,19 @@
+<% content_for :sidebar do %>
+<div id="sidebar_promotions" class="border-<%= many_color(taxon) %>">
+      <div class="title_products_promotions four">
+        <ul>
+          <li><%=image_tag('store/img_trans.gif', :size => "1x1", :class=>"left_promos p-background-position-#{many_color(taxon)}")%></li>
+          <li><p><%= t('offers')%></p></li>
+          <li><%=link_to image_tag('store/img_trans.gif', :size => "1x1", :class=>"rigth"), '/promos/index'%></li>
+        </ul>
+      </div>
+
+      <div class="promotions_images">
+        <% @promotions.each do |p| %>
+            <%= link_to (image_tag(p.small_attachment.url(:normal), :width => '210', :height => '121')), "/promo/show/#{p.id}" %>
+        <% end %>
+      </div>
+    </div>
+
+<% end %>
+

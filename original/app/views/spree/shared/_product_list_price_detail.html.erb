@@ -1,0 +1,14 @@
+
+<%
+   data_context = variant_and_price_with_context(product, params, type)
+   variant = !data_context.nil? ? data_context['variant'] : nil
+   price = !data_context.nil? ? data_context['price'] : nil
+   values = !data_context.nil? ? data_context['customization'] : {}
+%>
+<% if !price.nil? %>
+    <div id="price" class="columns <% if !product.room? %> alpha <% end %> two" >
+      <p class="product-price" itemprop="price"><%= price %></p>
+    </div>
+<% end %>
+
+<%= render(:partial => "spree/products/mini_cart_form", :locals => { :product => product, :variant => variant, :values => values, :params => params }) %>

@@ -1,0 +1,14 @@
+<p data-hook="address">
+  <% @order.pax_contacts.each do |pc| %>
+  <%= t('name') %>: <%= pc.first_name %>  <%= pc.last_name %><br />
+  <%= t('special_capacity') %>:
+      <%if pc.special_capacity == 'true' %><br />
+          <%= t('yes')  %><br />
+      <% else %>
+          <%= t('no')  %><br />
+      <% end %>
+  <%= t('sex') %>:  <%= pc.sex %><br />
+  <%= t('birth') %>:  <%= pc.birth %><br />
+  <br />
+  <% end %>
+</p>

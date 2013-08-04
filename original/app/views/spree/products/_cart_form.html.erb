@@ -1,0 +1,54 @@
+
+<div class="row">
+
+  <%= form_for :order, :url => populate_orders_url do |f| %>
+    <% data_context = variant_and_price_with_context(product, params, type)
+       variant = !data_context.nil? ? data_context['variant'] : nil
+       price = !data_context.nil? ? data_context['price'] : nil
+       values = !data_context.nil? ? data_context['customization'] : {}
+    %>
+    <%
+       if controller.controller_name == "taxons"
+         taxon = product.taxons.where("permalink like 'categories%'").first
+         current_path = nested_taxons_path(taxon.permalink)
+       elsif controller.controller_name == "products"
+         # TODO: revisar este link con raul, es probable que haya que pasarle los params de alguna forma
+         current_path = "/products/" + product.permalink
+       else
+         current_path = root_path
+       end
+    %>
+    <%= hidden_field_tag  "url_before_cart", current_path %>
+    <% if product.hotel? && variant %>
+        <% var = variant %>
+        <%= hidden_field_tag  "variants[#{variant.id}]", 1, :class => 'title' %>
+        <%= hidden_field_tag  "contexts[#{variant.id}]", pass_context(product, variant, params) %>
+        <div id="price" class="columns three alpha" >
+              <p class="product-price" itemprop="price"><%= price %> </p> <!--<label>  <%#= t('per_night') %></label></p>-->
+        </div>
+          <%# values = {}  %>
+          <div class="columns four" data-hook="product_price">
+          <%= button_tag :id => "cart-form-button", :class => 'primary columns alpha omega four add-to-cart-button' do %>
+              <ul class="cart-form-left"><li class="icon-viaje"/></ul>
+              <ul class="cart-form-right"><li class="product-detail-text-button"><%= t('add_to_my_travel') %></li></ul>
+          <% end %>
+        </div>
+      <%# elsif var = product.variant_with_context(params) %>
+      <% elsif variant %>
+          <% var = variant %>
+          <%= hidden_field_tag  "variants[#{variant.id}]", 1, :class => 'title' %>
+          <%= hidden_field_tag  "contexts[#{variant.id}]", pass_context(product, variant, params) %>
+            <div id="price" class="columns three alpha" >
+              <p class="product-price" itemprop="price"><%= price %> </p>
+            </div>
+          <%# values = product.values_for_customization(params)  %>
+          <div class="columns four" data-hook="product_price">
+          <%= button_tag :id => "cart-form-button", :class => 'primary columns alpha omega four add-to-cart-button' do %>
+              <ul class="cart-form-left"><li class="icon-viaje"/></ul>
+              <ul class="cart-form-right"><li class="product-detail-text-button"><%= t('add_to_my_travel') %></li></ul>
+          <% end %>
+        </div>
+    <% end %>
+  <% end %>
+
+</div>

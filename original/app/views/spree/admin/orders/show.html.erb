@@ -1,0 +1,32 @@
+<div class="toolbar order-links" data-hook="admin_order_show_buttons">
+  <%= button_link_to t('cancel'), fire_admin_order_url(@order.number, {:e => "cancel"}), :icon => 'delete', :confirm => t('custom_text') if @order.can_cancel? %>
+  <%= button_link_to t('edit'), edit_admin_order_url(@order.number), :icon => 'edit' %>
+</div>
+
+<%= render :partial => 'spree/admin/shared/order_tabs', :locals => { :current => 'Order Details' } %>
+
+<div data-hook="admin_order_show_addresses">
+  <% if @order.bill_address %>
+    <div class="adr">
+      <h4><%= t('contact_information') %></h4>
+      <%= render :partial => 'spree/admin/shared/address', :locals => { :address => @order.bill_address } %>
+    </div>
+  <% end %>
+  <% if @order.pax_contacts %>
+      <div class='adr'>
+        <h4><%= t('pax_contacts') %></h4>
+        <%= render :partial => 'spree/admin/shared/pax' %>
+      </div>
+  <% end %>
+  <% if @order.custom_text %>
+      <div class='adr'>
+        <h4><%= t('custom_text') %></h4>
+        <%= @order.custom_text %>
+      </div>
+  <% end %>
+  <hr />
+</div>
+
+<div data-hook="admin_order_show_details">
+  <%= render :partial => 'spree/admin/shared/order_details', :locals => { :order => @order } %>
+</div>

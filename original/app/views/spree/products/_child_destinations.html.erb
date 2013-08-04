@@ -1,0 +1,142 @@
+  <% destinations = child_destinations(product) %>
+  <% if destinations.length > 0 %>
+      <div id="detail-options" class="columns eleven row">
+          <p class="product-detail-title-options"><%= t('destinations_in') %> <%= product.name %></p>
+          <ul id="rooms">
+            <% destinations.each do |destination| %>
+
+                <li id="product_<%= destination.id %>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
+
+                  <div id="block-one-destination" class="columns four">
+                    <div class="product-image">
+                      <%= if !destination.images.empty?
+                           link_to (image_tag destination.images[0].attachment.url(:list)), destination
+                         end %>
+                    </div>
+                  </div>
+
+                  <div id="block-two-destination" class="seven columns">
+                    <div id="head-one" class="seven columns alpha" >
+                      <ul id="information">
+                        <li>
+                          <% taxon_destination = destination.taxons.first %>
+                          <%= link_to nested_taxons_path(taxon_destination.permalink), :class => "product-name" do%>
+                            <span itemprop="name"><%=  taxon_destination.name %></span>
+                          <% end %>
+                      </ul>
+                    </div>
+
+                    <% sub_destinations = child_destinations(destination) %>
+                    <% if sub_destinations.length > 0 %>
+                        <div id="head-two" class="eight columns alpha" >
+                          <ul id="product-head">
+                            <li id="destination-destinations" class="product-info"><%= t('destinations') %>: </li>
+                            <% sub_destinations.each do |gd| %>
+                                <% taxon_gd = gd.taxons.first %>
+                                <li>
+                                  <%= link_to nested_taxons_path(taxon_gd.permalink), :class => "product-name" do%>
+                                      <span itemprop="name"><%=  gd.name %></span>
+                                  <% end %>
+                                </li>
+                            <% end %>
+                          </ul>
+                        </div>
+                    <% end %>
+
+                    <div id="description" class="seven columns alpha product-text" itemprop="description" >
+                      <% if destination.description %>
+                          <% good_small_description = ActiveSupport::Multibyte::Unicode.tidy_bytes(destination.description.to_s) %>
+                          <%= truncate( good_small_description.gsub(/<[^>]*>/,'')  , :length => 200, :omission => "...") %>
+                      <% end %>
+                    </div>
+
+                    <div id="details" class="two columns alpha" >
+                      <%= link_to nested_taxons_path(taxon_destination.permalink), :class => "go-to-detail-button" do %>
+                          <ul id="product-detail-icon">
+                            <li class="icon-detail" />
+                          </ul>
+                          <ul id="product-detail-text">
+                            <li class="product-text-button"><%= t('details') %></li>
+                          </ul>
+                      <% end %>
+                    </div>
+
+                  </div>
+                </li>
+            <% end %>
+          </ul>
+      </div>
+  <% else %>
+      <div class="columns eleven">
+      <% taxon_destination = product.taxons.first %>
+
+      <!-- Vuelos y Transfers -->
+      <% flights = Spree::Product.in_taxons_at_same_time([taxon_destination, Spree::Taxon.find_by_permalink('categories/flights')]) %>
+      <% transfers = Spree::Product.in_taxons_at_same_time([taxon_destination, Spree::Taxon.find_by_permalink('categories/cars-and-transfers/transfers')]) %>
+      <% if flights.length > 0 or transfers.length > 0 %>
+          <div id="detail-options" class="columns eleven">
+            <p class="product-detail-title-options"><%= t('how_to_get_to') %></p>
+            <% if flights.length > 0 %>
+                <div id=title-in>
+                  <p class="product-title-in"><%= t('flights_to') %> <%= product.name %></p>
+                  <%= link_to t('see_all_flights'), nested_taxons_path('categories/flights')  %>
+                </div>
+                <%= render(:partial => "spree/products/flights", :locals => { :products_related => flights[0..1] }) %>
+            <% end %>
+            <% if transfers.length > 0 %>
+                <div id=title-in>
+                  <p class="product-title-in"><%= t('transfer_to') %> <%= product.name %></p>
+                  <% new_params = {:controller => "taxons", :action => "show", :id => "categories/cars-and-transfers/transfers", :destination_transfer => taxon_destination.id} %>
+                  <%= link_to t('see_all_transfers'), new_params %>
+                </div>
+                <%= render(:partial => "spree/products/rent_transfers", :locals => { :products_related => transfers[0..1] }) %>
+            <% end %>
+          </div>
+      <% end %>
+
+      <!-- Renta -->
+      <% rents = Spree::Product.in_taxons_at_same_time([taxon_destination, Spree::Taxon.find_by_permalink('categories/cars-and-transfers/rent-cars')]) %>
+      <% if rents.length > 0 %>
+          <div id="detail-options" class="columns eleven">
+            <p class="product-detail-title-options"><%= t('rent_cars_in') %> <%= product.name %></p>
+            <%= render(:partial => "spree/products/rent_cars", :locals => { :products_related => rents[0..1] }) %>
+          </div>
+      <% end %>
+
+      <!-- Alojamiento -->
+      <% accommodations = Spree::Product.in_taxons_at_same_time([taxon_destination, Spree::Taxon.find_by_permalink('categories/accommodation')]) %>
+      <% if accommodations.length > 0 %>
+          <div id="detail-options" class="columns eleven">
+              <p class="product-detail-title-options"><%= t('where_to_rest') %></p>
+              <% new_params = {:controller => "taxons", :action => "show", :id => "categories/accommodation", :destination_accommodation => taxon_destination.id} %>
+              <%= link_to t('see_all_accommodations'), new_params, :class => "detail-options-right" %>
+              <%= render(:partial => "spree/products/accommodation", :locals => { :products_related => accommodations[0..1] }) %>
+          </div>
+      <% end %>
+
+      <!-- Programas y excursiones -->
+      <% programs = Spree::Product.in_taxons_at_same_time([taxon_destination, Spree::Taxon.find_by_permalink('categories/programs')]) %>
+      <% tours = Spree::Product.in_taxons_at_same_time([taxon_destination, Spree::Taxon.find_by_permalink('categories/tours')]) %>
+      <% if programs.length > 0 or tours.length > 0 %>
+          <div id="detail-options" class="columns eleven">
+              <p class="product-detail-title-options"><%= t('programs') %></p>
+              <% if programs.length > 0 %>
+                  <div id=title-in>
+                    <p class="product-title-in"><%= t('programs_in') %> <%= product.name %></p>
+                    <% new_params = {:controller => "taxons", :action => "show", :id => "categories/programs", :destination_program => taxon_destination.id} %>
+                    <%= link_to t('see_all_programs'), new_params %>
+                  </div>
+                  <%= render(:partial => "spree/products/programs", :locals => { :products_related => programs[0..1] }) %>
+              <% end %>
+              <% if tours.length > 0 %>
+                  <div id=title-in>
+                    <p class="product-title-in"><%= t('tours_in') %> <%= product.name %></p>
+                    <% new_params = {:controller => "taxons", :action => "show", :id => "categories/tours", :destination_program => taxon_destination.id} %>
+                    <%= link_to t('see_all_tours'), new_params %>
+                  </div>
+                  <%= render(:partial => "spree/products/programs", :locals => { :products_related => tours[0..1] }) %>
+              <% end %>
+          </div>
+      <% end %>
+      </div>
+  <% end %>

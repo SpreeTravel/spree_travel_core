@@ -1,0 +1,25 @@
+<% promotions = @product.possible_promotions %>
+<% if promotions.any? %>
+<div id="promotions" itemprop="offers">
+  <h3><%= t('promotions') %></h3>
+
+  <% promotions.each do |promotion| %>
+  <div>
+    <% if promotion.expires_at && promotion.expires_at >= Date::today()  %>
+        <h4><%= promotion.name %></h4>
+        <%= raw(promotion.description.to_s.gsub(/^(.*)$/, '\1')) %>
+        <% if promotion.products.any? %>
+        <ul>
+          <% promotion.products.each do |product| %>
+            <li><%= link_to product.name, product_path(product) %></li>
+          <% end %>
+        </ul>
+        <% end %>
+    <% end %>
+  </div>
+  <% end %>
+
+</div>
+<% end %>
+
+

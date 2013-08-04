@@ -1,0 +1,16 @@
+#sidebar
+ul.sidebar li a {
+    padding: 4px 10px;
+}
+
+.toolbar {
+    float: none;
+}
+
+.toolbar ul.actions {
+    float: none;
+}
+
+.toolbar ul.actions li {
+    float: none;
+}

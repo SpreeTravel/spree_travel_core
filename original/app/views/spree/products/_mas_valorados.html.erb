@@ -1,0 +1,28 @@
+<div id="sidebar_valorados">
+  <% if !get_group_preview.nil? %>
+      <div class="mas_valorados_sidebar four">
+        <div class="title_valorados_products">
+          <ul>
+            <li><img class="left_valorados"/></li>
+            <li><p>mas vendidos</p></li>
+          </ul>
+        </div>
+
+        <div class="listado_valorados">
+          <% get_group_preview[1].each do |product| %>
+              <ul data-hook="preview_row">
+                <li id="number_val">
+                  <%= product.id %>
+                </li>
+                <li id="name_val">
+                  <%= link_to product.name, product_url(product) %>
+                </li>
+                <li id="price_val">
+                  <%= number_to_currency (product.price), :precision => 0  %>
+                </li>
+              </ul>
+          <% end %>
+        </div>
+      </div>
+  <% end %>
+</div>
