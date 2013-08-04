@@ -1,8 +1,0 @@
-<div id="product-show" data-hook="product_show" itemscope itemtype="http://schema.org/Product">
-  <% @body_id = 'product-details' %>
-
-  <%= render(:partial => 'spree/products/product_detail_left', :locals => { :product => product }) %>
-
-  <%= render(:partial => 'spree/products/child_destinations', :locals => { :product => product }) %>
-
-</div>

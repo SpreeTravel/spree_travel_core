@@ -1,8 +1,0 @@
-<% if get_recently_viewed_products.any? %>
-    <h6 class="taxonomy-root"><%= t('recently_viewed') %></h6>
-    <ul class="taxons-list">
-      <% get_recently_viewed_products.each do |p| %>
-          <li><%= link_to p.name, p %></li>
-      <% end -%>
-    </ul>
-<% end %>
