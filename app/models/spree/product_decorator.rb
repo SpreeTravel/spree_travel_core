@@ -4,6 +4,16 @@ Spree::Product.class_eval do
     self.is?(Spree::Product)
   end
 
+  # TODO: hacer un modelo nuevo tipo PropertyType pero para los herederos
+  # la idea es que uno en Admin/Configuracion pueda ver el listado de
+  # las clases herederas de spree_product y ademas peuda editar una
+  # DESCRIPCION y decidir si está HABILITADA o no esta clase
+  # el objetivo es que a la hora de crear un producto nuevo, se ponga
+  # en un combo el listado de todos los tipos que ese producto puede ser
+  def self.list_of_descendants
+    %w(Spree::Product SpreeProductCar Spree::ProductRentacar)
+  end
+
   ###############################################################################
   # Price/Variant Methods
   ###############################################################################
