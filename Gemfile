@@ -13,6 +13,7 @@ when :snc
 when :remote
   GEMS_PATH = 'http://rubygems.org'
   SPREE_DEVISE_PATH = 'https://github.com/radar'
+  SPREE_TRAVEL_PATH = 'file:///media/Data/jaf/spree'
 end
 ########################################################################
 
