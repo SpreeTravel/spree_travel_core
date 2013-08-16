@@ -29,5 +29,6 @@ gem 'spree_enhanced_banner', 		:git => "#{SPREE_TRAVEL_PATH}/spree_enhanced_bann
 gem 'spree_fancy_menu', 			:git => "#{SPREE_TRAVEL_PATH}/spree_fancy_menu"
 gem 'spree_location', 				:git => "#{SPREE_TRAVEL_PATH}/spree_location"
 gem 'spree_property_type', 			:git => "#{SPREE_TRAVEL_PATH}/spree_property_type"
+gem 'spree_search_box', 			:git => "#{SPREE_TRAVEL_PATH}/spree_search_box"
 
 gemspec
