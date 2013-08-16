@@ -1,21 +1,21 @@
-module SpreeTravel
+module SpreeTravelCore
   module Generators
     class InstallGenerator < Rails::Generators::Base
 
       class_option :auto_run_migrations, :type => :boolean, :default => false
 
       def add_javascripts
-        append_file 'app/assets/javascripts/store/all.js', "//= require store/spree_travel\n"
-        append_file 'app/assets/javascripts/admin/all.js', "//= require admin/spree_travel\n"
+        append_file 'app/assets/javascripts/store/all.js', "//= require store/spree_travel_core\n"
+        append_file 'app/assets/javascripts/admin/all.js', "//= require admin/spree_travel_core\n"
       end
 
       def add_stylesheets
-        inject_into_file 'app/assets/stylesheets/store/all.css', " *= require store/spree_travel\n", :before => /\*\//, :verbose => true
-        inject_into_file 'app/assets/stylesheets/admin/all.css', " *= require admin/spree_travel\n", :before => /\*\//, :verbose => true
+        inject_into_file 'app/assets/stylesheets/store/all.css', " *= require store/spree_travel_core\n", :before => /\*\//, :verbose => true
+        inject_into_file 'app/assets/stylesheets/admin/all.css', " *= require admin/spree_travel_core\n", :before => /\*\//, :verbose => true
       end
 
       def add_migrations
-        run 'bundle exec rake railties:install:migrations FROM=spree_travel'
+        run 'bundle exec rake railties:install:migrations FROM=spree_travel_core'
       end
 
       def run_migrations
