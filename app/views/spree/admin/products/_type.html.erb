@@ -1,7 +1,0 @@
-<div class="alpha eight columns">
-  <%= f.field_container :type do %>
-    <%= f.label :type, Spree.t(:type) %>
-    <%= f.error_message_on :type %>
-    <%= f.select :type, Spree::Product.list_of_descendants, {:include_blank => false}, {:class => 'select2 fullwidth'} %>
-  <% end %>
-</div>
