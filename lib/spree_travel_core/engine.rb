@@ -1,8 +1,8 @@
-module SpreeTravel
+module SpreeTravelCore
   class Engine < Rails::Engine
     require 'spree/core'
     isolate_namespace Spree
-    engine_name 'spree_travel'
+    engine_name 'spree_travel_core'
 
     config.autoload_paths += %W(#{config.root}/lib)
 

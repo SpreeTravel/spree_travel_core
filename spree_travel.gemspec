@@ -1,7 +1,7 @@
 # encoding: UTF-8
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
-  s.name        = 'spree_travel'
+  s.name        = 'spree_travel_core'
   s.version     = '2.0.3'
   s.summary     = 'Spree Travel Skeleton'
   s.description = 'Spree Travel Abstract Models, references to abstract Locations, etc.'
@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.author    = 'OpenJAF'
   s.email     = 'pqr@openjaf.com'
-  s.homepage  = 'http://github.com/openjaf/spree_travel'
+  s.homepage  = 'http://github.com/openjaf/spree_travel_core'
 
   #s.files       = `git ls-files`.split("\n")
   #s.test_files  = `git ls-files -- {test,spec,features}/*`.split("\n")
