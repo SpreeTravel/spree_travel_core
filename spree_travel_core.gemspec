@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_travel_core'
   s.version     = '2.0.3'
-  s.summary     = 'Spree Travel Skeleton'
+  s.summary     = 'Spree Travel Core'
   s.description = 'Spree Travel Abstract Models, references to abstract Locations, etc.'
   s.required_ruby_version = '>= 1.9.3'
 
