@@ -1,5 +1,5 @@
 <%= kls = "columns twelve product-item"%>
-<li id="product_<%= product.id %>" class="<%= kls %>" data-hook="product_<%=product.product_type.prefix%>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
+<li id="product_<%= product.id %>" class="<%= kls %>" data-hook2="product_<%=product.product_type.prefix%>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
   <div class="product-image">
     <%= link_to small_image(product, :itemprop => "image"), product, :itemprop => 'url' %>
   </div>
