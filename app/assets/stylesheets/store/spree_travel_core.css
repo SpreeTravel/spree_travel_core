@@ -20,6 +20,10 @@ ul#products li a.info {
     height: 20px
 }
 
+ul#products li a.info:hover {
+  color: #00adee;
+}
+
 ul#products li .product-mini-description {
     color: #bbbbbb;
     font-weight: normal;
