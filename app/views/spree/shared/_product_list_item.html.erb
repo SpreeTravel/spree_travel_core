@@ -10,7 +10,7 @@
     <%= truncate(product.description, :length => 300)%>
   </div>
     <div class="details">
-	  <p class="stock"><%= product.has_stock? ? "IN STOCK" : "OUT OF STOCK" %></p>
+	  <p class="stock"><%= product.in_stock? ? "IN STOCK" : "OUT OF STOCK" %></p>
 	  <p class="prices">
 	    <span class="price discounted"><%= number_to_currency(product.price * 1.2) %></span>&nbsp;
 	    <span class="price selling"><%= number_to_currency(product.price) %></span></p>
