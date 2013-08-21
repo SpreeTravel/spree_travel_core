@@ -1,4 +1,4 @@
-<%= kls = "columns twelve product-item"%>
+<% kls = "columns twelve product-item"%>
 <li id="product_<%= product.id %>" class="<%= kls %>" data-hook2="product_<%=product.product_type.prefix%>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
   <div class="product-image">
     <%= link_to small_image(product, :itemprop => "image"), product, :itemprop => 'url' %>
@@ -9,12 +9,7 @@
   <div class="product-mini-description">
     <%= truncate(product.description, :length => 300)%>
   </div>
-    <div class="details">
-      <!-- <p class="stock"><%# TODO: migue esto para que es? = product.in_stock? ? "IN STOCK" : "OUT OF STOCK" %></p> -->
-	  <p class="prices">
-	    <span class="price discounted"><%= number_to_currency(product.price * 1.2) %></span>&nbsp;
-	    <span class="price selling"><%= number_to_currency(product.price) %></span></p>
-	  <p>
-    <%= link_to 'View More', product_path(product), :class => 'button' %></p>
-  </div>
+	<span class="price">
+    <%= number_to_currency(product.price) %>
+  </span>
 </li>
