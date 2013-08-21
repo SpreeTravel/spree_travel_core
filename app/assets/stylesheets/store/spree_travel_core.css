@@ -2,7 +2,6 @@
  *= require store/spree_frontend
 */
 
-/*
 ul#products li {
     text-align: left;
 }
@@ -37,4 +36,3 @@ ul#products li .product-image {
 .product-item:hover {
     border: 1px solid #1D95CB;
 }
-/*
