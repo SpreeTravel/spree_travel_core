@@ -1,32 +1,5 @@
 Spree::Product.class_eval do
 
-
-  ###############################################################################
-  # Price/Variant Methods
-  # TODO: esto debe ir para spree_price_calculator
-  ###############################################################################
-
-  # NOTE: este metodo se redefine en las clases herederas
-  def variant_for_these_params(params)
-    self.master
-  end
-
-  # NOTE: este metodo hay que redefinirlo en las clases herederas
-  def price_for_these_params(params)
-    self.price
-  end
-
-  def price_and_variant_for_these_params(params)
-    variant = variant_for_these_params(params)
-    price = price_for_these_params(params)
-    result = {}
-    result[:variant] = variant
-    result[:price] = price
-    result[:customization] = {}
-    result
-  end
-
-
   ###############################################################################
   # Parent/Children Methods
   ###############################################################################
