@@ -5,15 +5,15 @@ Spree::Product.class_eval do
   ###############################################################################
 
   def parent_relation_name
-    Constant::RELATION_IS_CHILD_OF_PARENT
+    Spree::RELATION_IS_CHILD_OF_PARENT
   end
 
   def children_relation_name
-    Constant::RELATION_IS_CHILD_OF_PARENT
+    Spree::RELATION_IS_CHILD_OF_PARENT
   end
 
   def main_child_relation_name
-    Constant::RELATION_IS_MAIN_CHILD_OF_PARENT
+    Spree::RELATION_IS_MAIN_CHILD_OF_PARENT
   end
 
   def parent(options = {})
