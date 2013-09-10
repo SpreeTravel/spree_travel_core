@@ -1,3 +1,0 @@
-module Spree::PromosHelper
-
-end
