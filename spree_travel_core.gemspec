@@ -1,13 +1,18 @@
 # encoding: UTF-8
+
+require 'yaml'
+yaml = YAML.load(File.read('SPREE_TRAVEL_VERSIONS'))
+versions = yaml['gems']
+
 Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.name        = 'spree_travel_core'
-  s.version     = '2.0.3'
+  s.version     = versions['spree_travel']
   s.summary     = 'Spree Travel Core'
   s.description = 'Spree Travel Abstract Models, references to abstract Locations, etc.'
   s.required_ruby_version = '>= 1.9.3'
 
-  s.author    = 'OpenJAF'
+  s.authors   = ['Pedro Quintero', 'Miguel Sancho', 'Cesar Lage', 'Raul Perez-alejo']
   s.email     = 'pqr@openjaf.com'
   s.homepage  = 'http://github.com/openjaf/spree_travel_core'
 
@@ -16,13 +21,8 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'spree_core', '~> 2.0.3'
-  #s.add_dependency 'spree_enhanced_relations'
-  #s.add_dependency 'spree_enhanced_banner'
-  #s.add_dependency 'spree_fancy_menu'
-  #s.add_dependency 'spree_location'
-  #s.add_dependency 'spree_openerp_communicator'
-  #s.add_dependency 'spree_property_type'
+  s.add_dependency 'spree_core', '~> ' + versions['spree']
+  s.add_dependency 'spree_auth_devise', '~> ' + versions['spree_auth_devise']
 
   s.add_development_dependency 'capybara', '~> 2.0'
   s.add_development_dependency 'coffee-rails'

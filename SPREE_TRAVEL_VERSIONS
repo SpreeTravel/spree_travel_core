@@ -1,0 +1,6 @@
+gems:
+  spree: 2.1.1
+  spree_travel: 2.1.1
+  spree_auth_devise: 2.1.0
+  spree_related_products: 3.2.3
+  sunspot: 2.1.0
