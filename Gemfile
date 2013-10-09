@@ -19,7 +19,6 @@ end
 source GEMS_PATH
 
 gem 'spree_neighbors',          :git => "#{SPREE_TRAVEL_PATH}/spree_neighbors"
-gem 'spree_rate',               :git => "#{SPREE_TRAVEL_PATH}/spree_rate"
 gem 'spree_filters', 			      :git => "#{SPREE_TRAVEL_PATH}/spree_filters"
 gem 'spree_search_box',         :git => "#{SPREE_TRAVEL_PATH}/spree_search_box"
 gem 'spree_enhanced_relations', :git => "#{SPREE_TRAVEL_PATH}/spree_enhanced_relations"
