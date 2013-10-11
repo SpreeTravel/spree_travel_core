@@ -1,11 +1,35 @@
 Spree::Product.class_eval do
 
+  def rates
+    rate_class.where(:product_id => self.id)
+  end
+
+  def exceptions
+    exception_class.where(:product_id => self.id)
+  end
+
+  def combinations
+    combination_class.where(:product_id => self.id)
+  end
+
+  ###############################################################################
+  # Inheritable Methods
+  ###############################################################################
+
   def rate_class
     raise "NOT IMPLEMENTED"
   end
 
-  def rates
-    rate_class.where(:product_id => self.id)
+  def context_class
+    raise "NOT IMPLEMENTED"
+  end
+
+  def combination_class
+    raise "NOT IMPLEMENTED"
+  end
+
+  def exception_class
+    raise "NOT IMPLEMENTED"
   end
 
   ###############################################################################
