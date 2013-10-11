@@ -4,6 +4,10 @@ Spree::Product.class_eval do
     raise "NOT IMPLEMENTED"
   end
 
+  def rates
+    rate_class.where(:product_id => self.id)
+  end
+
   ###############################################################################
   # Parent/Children Methods
   ###############################################################################
