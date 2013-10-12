@@ -32,6 +32,10 @@ Spree::Product.class_eval do
     raise "NOT IMPLEMENTED"
   end
 
+  def generate_combinations
+    raise "NOT IMPLEMENTED"
+  end
+
   ###############################################################################
   # Parent/Children Methods
   ###############################################################################
