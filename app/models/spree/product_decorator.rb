@@ -32,7 +32,15 @@ Spree::Product.class_eval do
     raise "NOT IMPLEMENTED"
   end
 
+  def calculator_class
+    raise "NOT IMPLEMENTED"
+  end
+
   def generate_combinations
+    raise "NOT IMPLEMENTED"
+  end
+
+  def calculate_price(context)
     raise "NOT IMPLEMENTED"
   end
 
