@@ -1,9 +1,17 @@
 module ApplicationHelper
 
-  def rate_url(product)
+  def rates_url(product)
     rate_class = product.rate_class.to_s.underscore.pluralize
     rate_class = rate_class[6..-1] if rate_class.starts_with?('spree/')
     "/admin/products/#{product.permalink}/#{rate_class}"
+  rescue
+    '#'
+  end
+
+  def combinations_url(product)
+    combination_class = product.combination_class.to_s.underscore.pluralize
+    combination_class = combination_class[6..-1] if combination_class.starts_with?('spree/')
+    "/admin/products/#{product.permalink}/#{combination_class}"
   rescue
     '#'
   end
