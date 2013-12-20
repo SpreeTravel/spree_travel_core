@@ -3,4 +3,3 @@ Deface::Override.new(:virtual_path => "spree/taxons/show",
                      :remove => "[data-hook='taxon_children']",
                      :disabled => false
 )
-
