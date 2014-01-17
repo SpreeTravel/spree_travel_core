@@ -86,5 +86,20 @@ Spree::Product.class_eval do
     create_relation(main_child_relation_name, self, new_main_child, options)
   end
 
+  ###############################################################################
+  # Option Values for Product
+  ###############################################################################
+
+  def adults_options
+    self.variants.map{|v| v.option_values.map(&:name).select{|ov| ov.starts_with?('adult')}}.flatten.uniq
+  end
+
+  def children_options
+    self.variants.map{|v| v.option_values.map(&:name).select{|ov| ov.starts_with?('child')}}.flatten.uniq
+  end
+
+  def base_price
+    self.price
+  end
 
 end
