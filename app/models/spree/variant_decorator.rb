@@ -1,5 +1,13 @@
 Spree::Variant.class_eval do
 
+  def options_text
+    values = self.option_values.joins(:option_type).order("#{Spree::OptionType.table_name}.position asc")
+    values.map! do |ov|
+      "#{ov.option_type.presentation}: #{ov.presentation}</br>"
+    end
+    values.to_sentence({ words_connector: "", two_words_connector: "", last_word_connector: "" }).html_safe
+  end
+  
   def long_sku
     self.option_values.order(:position).map(&:name).join('-')
   end
