@@ -29,9 +29,14 @@
     <td class="cart-item-delete" data-hook="cart_item_delete">
       <%= link_to image_tag('icons/delete.png'), '#', :class => 'delete', :id => "delete_#{dom_id(line_item)}" %>
     </td>
-    <% line_item.paxes.each do |p|%>
-      <%= p.inspect  %>
-    <% end %>
+    <div>
+    <%  line_item.paxes.each do |pax|%>
+      <%= pax.inspect %>
+      <%# form_tag pax do |p| %>
+        <%#= p.text_field :first_name  %>
+      <%#end%>
+    <%  end %>
+    </div>
   </tr>
 
 <% end -%>
