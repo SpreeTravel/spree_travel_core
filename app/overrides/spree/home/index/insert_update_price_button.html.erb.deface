@@ -1,0 +1,4 @@
+<!-- insert_after "#submit" -->
+
+<%= button 'Update Price', :id => 'update_price' %>
+
