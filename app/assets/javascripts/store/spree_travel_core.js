@@ -1,10 +1,11 @@
 //= require store/spree_frontend
 //= require store/underscore
 
-$(document).ready(function() {
+function update_prices() {
    list = $('.ajax-price');
     $.each(list, function(index, object) {
         object = $(object);
+        object.html('<img src="/assets/ajax-loader.gif" >');
         product_id = object.attr('data-product-hook');
         $.ajax({
           data_type: 'JSON',
@@ -19,4 +20,10 @@ $(document).ready(function() {
           }
         });
     });
+    return false;
+}
+
+$(document).ready(function() {
+  update_prices();
+  $('#update_price').attr('onclick', 'update_prices()');
 });
