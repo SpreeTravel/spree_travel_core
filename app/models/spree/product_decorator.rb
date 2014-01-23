@@ -1,5 +1,7 @@
 Spree::Product.class_eval do
 
+  before_save :link_with_taxon_and_prototype
+
   def rates
     rate_class.where(:product_id => self.id)
   end
@@ -101,5 +103,33 @@ Spree::Product.class_eval do
   def base_price
     self.price
   end
+
+  def product_type_presentation
+    self.product_type.presentation
+  rescue
+    'Product'
+  end
+
+  def default_prototype
+    Spree::Prototype.find_by_name(self.product_type_presentation)
+  end
+
+  def default_taxon
+    Spree::Taxon.find_by_name(self.product_type_presentation)
+  end
+
+  def link_with_taxon_and_prototype
+    taxon = self.default_taxon
+    if self.taxons.to_a & taxon.self_and_descendants.to_a == []
+      self.taxons << taxon
+    end
+    self.default_prototype.option_types.each do |op|
+      self.option_types << op unless  self.option_types.include?(op)
+    end
+    self.default_prototype.properties.each do |pt|
+      self.properties << pt unless  self.properties.include?(pt)
+    end
+  end
+
 
 end
