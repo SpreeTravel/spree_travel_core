@@ -40,3 +40,7 @@ ul#products li .product-image {
 .product-item:hover {
     border: 1px solid #1D95CB;
 }
+
+.back_overlay{
+  display: none;
+}
