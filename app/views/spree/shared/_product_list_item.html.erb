@@ -4,7 +4,9 @@
     <%= link_to small_image(product, :itemprop => "image"), product, :itemprop => 'url' %>
   </div>
   <div class="product-title">
-    <%= link_to product.name, product, :class => 'info', :itemprop => "name", :title => product.name %>
+    <erb loud> link_to product, :class => 'info', :itemprop => "name", :title => product.name do </erb>
+      <%= product.name %>
+    <% end %>
   </div>
   <div class="product-mini-description">
     <%= truncate(product.description, :length => 300)%>
