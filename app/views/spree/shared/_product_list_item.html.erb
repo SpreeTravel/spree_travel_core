@@ -4,12 +4,14 @@
     <%= link_to small_image(product, :itemprop => "image"), product, :itemprop => 'url' %>
   </div>
   <div class="product-title">
-    <%= link_to product.name, product, :class => 'info', :itemprop => "name", :title => product.name %>
+    <erb loud> link_to product, :class => 'info', :itemprop => "name", :title => product.name do </erb>
+      <%= product.name %>
+    <% end %>
   </div>
   <div class="product-mini-description">
     <%= truncate(product.description, :length => 300)%>
   </div>
-  <span class="price">
-    <%= number_to_currency(product.price) %>
+  <span class="price ajax-price" data-product-hook="<%= product.id %>">
+    <%= image_tag 'ajax-loader.gif' %>
   </span>
 </li>
