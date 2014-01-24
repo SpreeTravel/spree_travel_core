@@ -11,6 +11,11 @@
     <td class="cart-item-description" data-hook="cart_item_description">
       <h4><%= link_to variant.product.name, product_path(variant.product) %></h4>
       <%= variant.options_text %>
+      <%= Spree.t(:pax) %>: 
+      <%= link_to "#", :onclick=>"paxOverlay('paxes_for_items')"   do %>
+         0/<%= line_item.paxes.count %> 
+      <% end %>   
+      
       <% if @order.insufficient_stock_lines.include? line_item %>
         <span class="out-of-stock">
           <%= Spree.t(:out_of_stock) %>&nbsp;&nbsp;<br />
@@ -30,13 +35,42 @@
       <%= link_to image_tag('icons/delete.png'), '#', :class => 'delete', :id => "delete_#{dom_id(line_item)}" %>
     </td>
     <div>
-    <%  line_item.paxes.each do |pax|%>
-      <%= pax.inspect %>
-      <%# form_tag pax do |p| %>
-        <%#= p.text_field :first_name  %>
-      <%#end%>
-    <%  end %>
     </div>
   </tr>
 
+
+
+<div id="paxes_for_items" class="back_overlay" >
+  <% line_item.paxes.each_with_index do |pax, index|%>
+    <%= item_form.fields_for :paxes, pax do |pax_fields|%>
+      <div class="columns alpha six" data-hook="billing_fieldset_wrapper">
+        <fieldset id="billing" data-hook>
+          <legend align="center"><%= Spree.t(:pax)%> <%= index + 1%></legend>
+            <p>
+              <%= pax_fields.label :first_name, Spree.t(:first_name) %><span class="required">*</span><br />
+              <%= pax_fields.text_field :first_name  %>
+            </p>
+            <p>
+              <%= pax_fields.label :last_name, Spree.t(:last_name) %><span class="required">*</span><br />
+              <%= pax_fields.text_field :last_name  %>
+            </p>
+            <p>
+              <%= pax_fields.label :sex, Spree.t(:sex) %><span class="required">*</span><br />
+              <%= pax_fields.text_field :sex  %>
+            </p>
+            <p>
+              <%= pax_fields.label :birth, Spree.t(:birth) %><span class="required">*</span><br />
+              <%= pax_fields.text_field :birth  %>
+            </p>
+        </fieldset>
+      </div>
+    <% end %> 
+  <% end %>
+        <%= submit_tag Spree.t('search'), :id => :submit %>
+
+  <a href="#" onclick="closeOverlay('paxes_for_items')">cloase</a>
+</div>
+
 <% end -%>
+
+
