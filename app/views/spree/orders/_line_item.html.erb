@@ -38,39 +38,6 @@
     </div>
   </tr>
 
-
-
-<div id="paxes_for_items" class="back_overlay" >
-  <% line_item.paxes.each_with_index do |pax, index|%>
-    <%= item_form.fields_for :paxes, pax do |pax_fields|%>
-      <div class="columns alpha six" data-hook="billing_fieldset_wrapper">
-        <fieldset id="billing" data-hook>
-          <legend align="center"><%= Spree.t(:pax)%> <%= index + 1%></legend>
-            <p>
-              <%= pax_fields.label :first_name, Spree.t(:first_name) %><span class="required">*</span><br />
-              <%= pax_fields.text_field :first_name  %>
-            </p>
-            <p>
-              <%= pax_fields.label :last_name, Spree.t(:last_name) %><span class="required">*</span><br />
-              <%= pax_fields.text_field :last_name  %>
-            </p>
-            <p>
-              <%= pax_fields.label :sex, Spree.t(:sex) %><span class="required">*</span><br />
-              <%= pax_fields.text_field :sex  %>
-            </p>
-            <p>
-              <%= pax_fields.label :birth, Spree.t(:birth) %><span class="required">*</span><br />
-              <%= pax_fields.text_field :birth  %>
-            </p>
-        </fieldset>
-      </div>
-    <% end %> 
-  <% end %>
-        <%= submit_tag Spree.t('search'), :id => :submit %>
-
-  <a href="#" onclick="closeOverlay('paxes_for_items')">cloase</a>
-</div>
-
 <% end -%>
 
 
