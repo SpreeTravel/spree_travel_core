@@ -12,7 +12,7 @@
       <h4><%= link_to variant.product.name, product_path(variant.product) %></h4>
       <%= variant.options_text %>
       <%= Spree.t(:pax) %>: 
-      <%= link_to "#", :onclick=>"paxOverlay('paxes_for_items')"   do %>
+      <%= link_to "#", :onclick=>"paxOverlay('line_item_detail')"   do %>
          0/<%= line_item.paxes.count %> 
       <% end %>   
       

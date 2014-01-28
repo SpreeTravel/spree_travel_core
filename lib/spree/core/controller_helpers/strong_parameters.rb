@@ -27,10 +27,17 @@ module Spree
 
         def permitted_order_attributes
           permitted_checkout_attributes + [
-            :line_items_attributes => permitted_line_item_attributes,
-            :paxes_attributes => permitted_pax_attributes
+            :line_items_attributes => permitted_line_item_attributes
           ]
         end
+        
+        def permitted_line_item_attributes
+          permitted_attributes.line_item_attributes + [
+            :paxes_attributes => permitted_pax_attributes
+          ]         
+        end
+         
+        
       end
     end
   end

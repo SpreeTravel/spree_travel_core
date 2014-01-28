@@ -47,41 +47,44 @@
 
   <!--Overlay-->
 
-  <div id="paxes_for_items" class="back_overlay" >
-<div class="columns alpha eleven" data-hook="billing_fieldset_wrapper">
+  <div id="line_item_detail" class="back_overlay" >
   <fieldset id="billing" data-hook>
     <% @order.line_items.each do |li| %>
       <legend align="center"><%= li.product.name %></legend>
-        <table>
-          <thead>
-            <tr>
-              <th><%= Spree.t(:first_name) %><span class="required">*</span></th>
-              <th><%= Spree.t(:last_name) %><span class="required">*</span>  </th>
-              <th><%= Spree.t(:sex) %><span class="required">*</span>              </th>
-              <th><%= Spree.t(:birth) %><span class="required">*</span>         </th>
-            </tr>
-          </thead>
-          <tbody>
-            <%= form_for li, url:line_items_update_path(li) do |li_form| %>
-              <%= li_form.fields_for :paxes do |pax_form| %>
-                <tr>
-                  <td><%= pax_form.text_field :first_name  %></td>
-                  <td><%= pax_form.text_field :last_name  %></td>
-                  <td><%= pax_form.text_field :sex  %></td>
-                  <td><%= pax_form.text_field :birth  %></td>
-                </tr>
-              <%end%>
-            <%#=li_form.submit%>
-            <% end %>
-          </tbody>
-        </table>
-            <%= submit_tag 'Update Line Items', :id => :submit %>
+        <%= form_for li, url:line_items_update_path(li) do |li_form| %>
+          <table>
+            <thead>
+              <tr>
+                <th><%= Spree.t(:first_name) %><span class="required">*</span></th>
+                <th><%= Spree.t(:last_name) %><span class="required">*</span>  </th>
+                <th><%= Spree.t(:sex) %><span class="required">*</span>        </th>
+                <th><%= Spree.t(:birth) %><span class="required">*</span>      </th>
+              </tr>
+            </thead>
+            <tbody>
+                <!--TODO revisar esto con peter porque no puedo acceder a estos objectos-->
+                <%= li_form.fields_for li.variant.option_values.first  do |ov_fields| %>
+                  <%= ov_fields.text_field :presentation %>
+                <% end %>
+                <%= li_form.fields_for :paxes do |pax_form| %>
+                  <tr>
+                    <td><%= pax_form.text_field :first_name  %></td>
+                    <td><%= pax_form.text_field :last_name  %></td>
+                    <td><%= pax_form.text_field :sex  %></td>
+                    <td><%= pax_form.text_field :birth  %></td>
+                  </tr>
+                <%end%>
+            </tbody>
+          </table>
+        <%=li_form.submit%>
+        <% end %>
+
     <% end %>
   </fieldset>
-</div>
 
 
-  <a href="#" onclick="closeOverlay('paxes_for_items')">close</a>
+
+  <a href="#" onclick="closeOverlay('line_item_detail')">close</a>
 </div>
 <!--Overlay-->
 
