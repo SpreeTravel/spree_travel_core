@@ -7,7 +7,7 @@ Spree::Variant.class_eval do
     end
     values.to_sentence({ words_connector: "", two_words_connector: "", last_word_connector: "" }).html_safe
   end
-  
+
   def long_sku
     self.option_values.order(:position).map(&:name).join('-')
   end
@@ -21,11 +21,11 @@ Spree::Variant.class_eval do
   end
 
   def start_date
-    self.get_option_value_from_type('start_season').to_d
+    self.get_option_value_from_type('start-season')
   end
 
   def end_date
-    self.get_option_value_from_type('end_season').to_d
+    self.get_option_value_from_type('end-season')
   end
 
   def get_option_value_from_name(option)

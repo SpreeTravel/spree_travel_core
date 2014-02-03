@@ -1,0 +1,92 @@
+<% @body_id = 'cart' %>
+
+<h1><%= Spree.t(:shopping_cart) %></h1>
+
+<% if @order.line_items.empty? %>
+
+  <div data-hook="empty_cart">
+    <p><%= Spree.t(:your_cart_is_empty) %></p>
+    <p><%= link_to Spree.t(:continue_shopping), products_path, :class => 'button continue' %></p>
+  </div>
+
+<% else %>
+  <div data-hook="outside_cart_form">
+    <%= form_for @order, :url => update_cart_path, :html => {:id => 'update-cart'} do |order_form| %>
+      <div data-hook="inside_cart_form">
+
+        <div data-hook="cart_items">
+          <%= render :partial => 'form', :locals => { :order_form => order_form } %>
+        </div>
+
+        <div id="subtotal" data-hook class="columns sixteen alpha omega">
+          <h5><%= Spree.t(:subtotal) %>: <span class="order-total"><%= @order.display_total.to_html %></span></h5>
+        </div>
+
+        <div class="links columns sixteen alpha omega" data-hook="cart_buttons">
+          <%= order_form.text_field :coupon_code, :size => 10, :placeholder => Spree.t(:coupon_code) %>
+          <%= button_tag :class => 'primary', :id => 'update-button' do %>
+            <%= Spree.t(:update) %>
+          <% end %>
+          <%= button_tag :class => 'button checkout primary', :id => 'checkout-link', :name => 'checkout' do %>
+            <%= Spree.t(:checkout) %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div id="empty-cart" data-hook>
+    <%= form_tag empty_cart_path, :method => :put do %>
+      <p id="clear_cart_link" data-hook>
+        <%= submit_tag Spree.t(:empty_cart), :class => 'button gray' %>
+        <%= Spree.t(:or) %>
+        <%= link_to Spree.t(:continue_shopping), products_path, :class => 'continue button gray' %>
+      </p>
+    <% end %>
+  </div>
+
+  <!--Overlay-->
+
+  <div id="line_item_detail" class="back_overlay" >
+  <fieldset id="billing" data-hook>
+    <% @order.line_items.each do |li| %>
+      <legend align="center"><%= li.product.name %></legend>
+        <%= form_for li, url:line_items_update_path(li) do |li_form| %>
+          <table>
+            <thead>
+              <tr>
+                <th><%= Spree.t(:first_name) %><span class="required">*</span></th>
+                <th><%= Spree.t(:last_name) %><span class="required">*</span>  </th>
+                <th><%= Spree.t(:sex) %><span class="required">*</span>        </th>
+                <th><%= Spree.t(:birth) %><span class="required">*</span>      </th>
+              </tr>
+            </thead>
+            <tbody>
+                <!--TODO revisar esto con peter porque no puedo acceder a estos objectos-->
+                <%= li_form.fields_for li.variant.option_values.first  do |ov_fields| %>
+                  <%= ov_fields.text_field :presentation %>
+                <% end %>
+                <%= li_form.fields_for :paxes do |pax_form| %>
+                  <tr>
+                    <td><%= pax_form.text_field :first_name  %></td>
+                    <td><%= pax_form.text_field :last_name  %></td>
+                    <td><%= pax_form.text_field :sex  %></td>
+                    <td><%= pax_form.text_field :birth  %></td>
+                  </tr>
+                <%end%>
+            </tbody>
+          </table>
+        <%=li_form.submit%>
+        <% end %>
+
+    <% end %>
+  </fieldset>
+
+
+
+  <a href="#" onclick="closeOverlay('line_item_detail')">close</a>
+</div>
+<!--Overlay-->
+
+
+<% end %>
