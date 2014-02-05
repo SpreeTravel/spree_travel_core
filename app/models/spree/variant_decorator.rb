@@ -22,11 +22,11 @@ module Spree
     end
 
     def start_date
-      self.get_option_value_from_type('start-season')
+      self.get_option_value_from_type('start_date')
     end
 
     def end_date
-      self.get_option_value_from_type('end-season')
+      self.get_option_value_from_type('end_date')
     end
 
     def get_option_value_from_name(option)
