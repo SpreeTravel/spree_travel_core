@@ -1,6 +1,8 @@
 //= require store/spree_frontend
 //= require store/underscore
 //= require store/cart_overlay
+//= require store/datepicker
+//= require jquery.ui.datepicker
 
 function update_prices() {
    list = $('.ajax-price');

@@ -1,5 +1,8 @@
 /*
  *= require store/spree_frontend
+ *= require jquery.ui.datepicker
+ *= require jquery.ui.theme
+ 
 */
 
 ul#products li {
@@ -58,7 +61,7 @@ ul#products li .product-image {
 
 #line_item_detail {
   width: 80%;
-  height: 60%;
+  /*height: 60%;*/
   background-color: #ffffff;
   color:#808080;
   text-align: left;

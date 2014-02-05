@@ -40,7 +40,7 @@ module Spree
 
     @@line_item_attributes = [:id, :variant_id, :quantity, :paxes]
 
-    @@pax_attributes = [:first_name, :last_name, :sex, :birth]
+    @@pax_attributes = [:id, :first_name, :last_name, :sex, :birth]
 
     @@option_type_attributes = [:name, :presentation, :option_values_attributes]
 
