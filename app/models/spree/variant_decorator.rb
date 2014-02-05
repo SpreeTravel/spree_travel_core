@@ -44,34 +44,40 @@ module Spree
       new_params.each do |option, value|
         option_type = OptionType.find_by_name(option)
         value =  option_type.name + '-' + value.to_s unless value.to_s.include?('-')
-        generado = "sov_" + option_type.name
-        generado2 = "sovv_" + option_type.name
-        result << {:option => option, :value => value, :generado => generado, :generado2 => generado2}
+        sov = "sov_" + option_type.name
+        sovv = "sovv_" + option_type.name
+        result << {:option => option, :value => value, :sov => sov, :sovv => sovv}
       end
       result
     end
 
     def self.with_option_values(params)
       filtered_params = filter_params(params)
-      sql    = "SELECT sv.id AS id, sv.product_id AS product_id"
+      sql0 = "SELECT sv.id AS id, sv.product_id AS product_id"
+      sql1 = ""
+      sql2 = " FROM spree_variants AS sv "
+      sql3 = ""
+      sql4 = "WHERE 1 > 0 "
+      sql5 = ""
+
       for hash in filtered_params
-        sql += ", #{hash[:generado]}.name AS #{hash[:option]} "
+        sovv = hash[:sovv]
+        sov = hash[:sov]
+        opt = hash[:option]
+        val = hash[:value]
+        sql1 += ", #{sov}.name AS #{opt}"
+        sql3 += "INNER JOIN spree_option_values_variants AS #{sovv} ON #{sovv}.variant_id = sv.id "
+        sql3 += "INNER JOIN spree_option_values AS #{sov} ON #{sov}.id = #{sovv}.option_value_id "
+        sql5 += "AND #{sov}.name = '#{val}'"
       end
-      sql   += "FROM spree_variants AS sv "
-      for hash in filtered_params
-        g2 = hash[:generado2]
-        g1 = hash[:generado]
-        sql += "INNER JOIN spree_option_values_variants AS #{g2} ON #{g2}.variant_id = sv.id "
-        sql += "INNER JOIN spree_option_values AS #{g1} ON #{g1}.id = #{g2}.option_value_id "
-      end
-      sql   += "WHERE 1 > 0 "
-      for hash in filtered_params
-        sql += "AND #{hash[:generado]}.name = '#{hash[:value]}'"
-      end
+      sql = sql0 + sql1 + sql2 + sql3 + sql4 + sql5
+      puts '------------------------'
       puts sql
+      puts '------------------------'
       list = Spree::Variant.find_by_sql(sql)
       where(:id => [list.map(&:id)])
    end
+
   end
 
 end
