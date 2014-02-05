@@ -4,9 +4,10 @@ module Spree
 
       def update
         @line_item = Spree::LineItem.find(params[:id])
+        puts line_item_params.inspect
         if @line_item.update_attributes(line_item_params)
-          #redirect_to '/cart', notice: 'Pax was successfully updated.'
-          redirect_to root_path
+          redirect_to '/cart', notice: 'Pax was successfully updated.'
+          #redirect_to root_path
         else 
           render action: '/cart', notice: 'Pax was not updated.'
         end

@@ -1,4 +1,4 @@
-<div class="alpha four columns">
+<div class="four columns">
   <%= f.field_container :taxons do %>
     <%= f.label :taxon_ids, Spree.t(:taxons) %>
     <%= f.select :taxon_ids, Spree::Taxon.all.map { |t| [t.name, t.id] }, {}, { :multiple => true, :class => "select2 fullwidth" } %>
