@@ -37,22 +37,27 @@ module Spree
       self.option_values.select{|ov| ov.option_type.name == type}.first.name
     end
 
-    def self.filter_params(params)
-      # TODO: implementar este metodo
-      new_params = params
+    def self.prepare_params(params)
+      # TODO: cambiar el variant hotel por el que venga en params
+      # TODO: optimizar este metoditoc, sobre todo si se mete dentro de un burujon de ciclos anidados lentos
       result = []
-      new_params.each do |option, value|
+      options_to_search = Spree::VariantHotel.get_options_to_search
+      params.each do |option, value|
+        option_hash = options_to_search.find {|h| h[:option] == option}
+        next unless option_hash
+        operator = option_hash[:operator]
         option_type = OptionType.find_by_name(option)
         value =  option_type.name + '-' + value.to_s unless value.to_s.include?('-')
         sov = "sov_" + option_type.name
         sovv = "sovv_" + option_type.name
-        result << {:option => option, :value => value, :sov => sov, :sovv => sovv}
+        result << {:option => option, :value => value, :sov => sov, :sovv => sovv,
+          :option_type_id => option_type.id, :operator => operator}
       end
       result
     end
 
     def self.with_option_values(params)
-      filtered_params = filter_params(params)
+      filtered_params = prepare_params(params)
       sql0 = "SELECT sv.id AS id, sv.product_id AS product_id"
       sql1 = ""
       sql2 = " FROM spree_variants AS sv "
@@ -65,11 +70,15 @@ module Spree
         sov = hash[:sov]
         opt = hash[:option]
         val = hash[:value]
+        otid = hash[:option_type_id]
+        op = hash[:operator]
         sql1 += ", #{sov}.name AS #{opt}"
         sql3 += "INNER JOIN spree_option_values_variants AS #{sovv} ON #{sovv}.variant_id = sv.id "
         sql3 += "INNER JOIN spree_option_values AS #{sov} ON #{sov}.id = #{sovv}.option_value_id "
-        sql5 += "AND #{sov}.name = '#{val}'"
+        sql5 += "AND #{sov}.option_type_id = #{otid} "
+        sql5 += "AND #{sov}.name #{op} '#{val}' "
       end
+
       sql = sql0 + sql1 + sql2 + sql3 + sql4 + sql5
       puts '------------------------'
       puts sql
