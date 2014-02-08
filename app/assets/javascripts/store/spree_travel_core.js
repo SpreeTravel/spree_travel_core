@@ -14,6 +14,7 @@ function update_prices() {
           data_type: 'JSON',
           data: {
 	      product_id: product_id,
+	      taxon: 4, // TODO: coger el taxon del tab activo
 	      start_date: document.getElementById('start_date').value,
 	      end_date: document.getElementById('end_date').value,
 	      adult: document.getElementById('adult').value,
