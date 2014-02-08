@@ -10,10 +10,6 @@ Spree::Product.class_eval do
     exception_class.where(:product_id => self.id)
   end
 
-  def combinations
-    combination_class.where(:product_id => self.id)
-  end
-
   ###############################################################################
   # Inheritable Methods
   ###############################################################################
@@ -26,10 +22,6 @@ Spree::Product.class_eval do
     raise "NOT IMPLEMENTED"
   end
 
-  def combination_class
-    raise "NOT IMPLEMENTED"
-  end
-
   def exception_class
     raise "NOT IMPLEMENTED"
   end
@@ -38,7 +30,7 @@ Spree::Product.class_eval do
     raise "NOT IMPLEMENTED"
   end
 
-  def generate_combinations
+  def generate_variants
     raise "NOT IMPLEMENTED"
   end
 
@@ -130,6 +122,5 @@ Spree::Product.class_eval do
       self.properties << pt unless  self.properties.include?(pt)
     end
   end
-
 
 end
