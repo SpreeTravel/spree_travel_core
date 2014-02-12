@@ -3,4 +3,3 @@ Deface::Override.new(:virtual_path => "spree/admin/products/_form",
                      :remove => "#shipping_specs",
                      :disabled => false
 )
-
