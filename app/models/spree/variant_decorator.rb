@@ -9,6 +9,10 @@ module Spree
       values.to_sentence({ words_connector: "", two_words_connector: "", last_word_connector: "" }).html_safe
     end
 
+    def count_on_hand
+      100
+    end
+
     def long_sku
       self.option_values.order(:position).map(&:name).join('-')
     end
