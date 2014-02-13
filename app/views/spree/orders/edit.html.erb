@@ -48,10 +48,10 @@
   <!--Overlay-->
 
   <div id="line_item_detail" class="back_overlay" >
-  <fieldset id="billing" data-hook>
     <% @order.line_items.each do |li| %>
+    <fieldset id="billing" data-hook>
       <legend align="center"><%= li.product.name %></legend>
-        <%= form_for li, url:line_items_update_path(li) do |li_form| %>
+        <%= form_for li, :url => line_items_update_path(li) do |li_form| %>
           <table>
             <thead>
               <tr>
@@ -62,26 +62,24 @@
               </tr>
             </thead>
             <tbody>
-                <!--TODO revisar esto con peter porque no puedo acceder a estos objectos-->
-                <%#= li_form.fields_for li.variant.option_values.each  do |ov_fields| %>
-                  <%#= ov_fields.text_field :presentation %>
-                <%# end %>
-                <%= li_form.fields_for :paxes do |pax_form| %>
-                  <tr>
-                    <td><%= pax_form.text_field :first_name  %></td>
-                    <td><%= pax_form.text_field :last_name  %></td>
-                    <td><%= pax_form.text_field :sex  %></td>
-                    <td><%= pax_form.text_field :birth , class:"birthdatepicker" %></td>
-                  </tr>
-                <%end%>
+              <!--TODO revisar esto con peter porque no puedo acceder a estos objectos-->
+              <%#= li_form.fields_for li.variant.option_values.each  do |ov_fields| %>
+                <%#= ov_fields.text_field :presentation %>
+              <%# end %>
+              <%= li_form.fields_for :paxes do |pax_form| %>
+                <tr>
+                  <td><%= pax_form.text_field :first_name  %></td>
+                  <td><%= pax_form.text_field :last_name  %></td>
+                  <td><%= pax_form.text_field :sex  %></td>
+                  <td><%= pax_form.text_field :birth , class:"birthdatepicker" %></td>
+                </tr>
+              <%end%>
             </tbody>
           </table>
         <%=li_form.submit%>
-        <% end %>
-
+     <% end %>
+    </fieldset>
     <% end %>
-  </fieldset>
-
 
 
   <a href="#" onclick="closeOverlay('line_item_detail')">close</a>
