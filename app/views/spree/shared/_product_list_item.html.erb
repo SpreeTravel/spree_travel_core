@@ -1,8 +1,12 @@
 <%
    kls = "columns twelve product-item"
+   puts 'params---------' + params.inspect.to_s
    new_params = params.clone
-   new_params.merge!({:controller => :products, :action => :show , :id => product.permalink})
+   puts 'new_params---------' + new_params.inspect.to_s
+   new_params.merge!({:controller => "spree/products", :action => "show" , :id => product.permalink})
+   puts 'new_params.merge---------' + new_params.inspect.to_s
    otro_params = new_params.clone
+   puts '---------------------' + otro_params.inspect.to_s
 %>
 
 <li id="product_<%= product.id %>" class="<%= kls %>" data-hook2="product_<%=product.product_type.prefix%>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
@@ -10,9 +14,9 @@
     <%= link_to small_image(product, :itemprop => "image"), new_params, :itemprop => 'url' %>
   </div>
   <div class="product-title">
-    <erb loud> link_to(otro_params, {:class => 'info', :itemprop => "name", :title => product.name}) do </erb>
-      <%= product.name %>
-    <% end %>
+    <erb loud> link_to(product_path(new_params), :class => 'info', :itemprop => "name", :title => product.name) do</erb>
+        <%= product.name %>
+    <%end%>
   </div>
   <div class="product-mini-description">
     <%= truncate(product.description, :length => 300)%>

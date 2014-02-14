@@ -48,10 +48,6 @@ ul#products li .product-image {
   display: none;
 }
 
-ul#products li a.info{
-  float:left;
-}
-
 #line_item_detail {
     position: fixed;
     top: 10px;
