@@ -1,4 +1,4 @@
-CONFIG = :cesar
+CONFIG = :raul
 ###########################################################################
 case CONFIG
 when :pqr
@@ -9,7 +9,7 @@ when :snc
   SPREE_TRAVEL_PATH = 'file:///media/Data/jaf/spree_travel'
 when :raul
   GEMS_PATH = 'http://localhost/rubygems/'
-  SPREE_TRAVEL_PATH = 'file:///home/raul/RubymineProjects/openjaf'
+  SPREE_TRAVEL_PATH = 'file:///home/raul/RubymineProjects/spree_travel'
 when :cesar
   GEMS_PATH = 'file:///home/cesar/workspace/rails/gems/'
   SPREE_PATH = 'file:///home/cesar/workspace/github/spree'

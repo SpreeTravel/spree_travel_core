@@ -44,7 +44,7 @@ module Spree
     def self.variant_class_from(params)
       klass = self.name
       unless params[:taxon].nil?
-        taxon = Spree::Taxon.find(params[:taxon])
+        taxon = Spree::Taxon.find_by_id(params[:taxon]) || Spree::Taxon.find_by_name(params[:taxon])
         klass += taxon.name unless taxon.nil?
       end
       eval(klass)
