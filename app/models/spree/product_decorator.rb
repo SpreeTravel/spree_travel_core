@@ -3,7 +3,20 @@ Spree::Product.class_eval do
   has_many :product_rate_option_types, :class_name => 'Spree::ProductRateOptionType', :foreign_key => 'product_id'
   has_many :rate_option_types, through: :product_rate_option_types
 
-  before_save :link_with_taxon_and_prototype
+  before_create :absorb_prototype_features
+
+  # TODO: es posible hace el before_save y actualizar el producto
+  def absorb_prototype_features
+    prototype = Spree::Prototype.find(prototype_id)
+    self.taxons = prototype.taxons
+    self.properties = prototype.properties
+    self.option_types = prototype.option_types
+    self.rate_option_types = prototype.rate_option_types
+    self.type = prototype.product_type.name
+  end
+
+  # TODO: poner bonito la seleccion de variantes en la creacion de
+  # productos, parece que es de Spree
 
   ############################################################################
 
@@ -99,33 +112,6 @@ Spree::Product.class_eval do
 
   def base_price
     self.price
-  end
-
-  def product_type_presentation
-    self.product_type.presentation
-  rescue
-    'Product'
-  end
-
-  def default_prototype
-    Spree::Prototype.find_by_name(self.product_type_presentation)
-  end
-
-  def default_taxon
-    Spree::Taxon.find_by_name(self.product_type_presentation)
-  end
-
-  def link_with_taxon_and_prototype
-    taxon = self.default_taxon
-    if self.taxons.to_a & taxon.self_and_descendants.to_a == []
-      self.taxons << taxon
-    end
-    self.default_prototype.option_types.each do |op|
-      self.option_types << op unless  self.option_types.include?(op)
-    end
-    self.default_prototype.properties.each do |pt|
-      self.properties << pt unless  self.properties.include?(pt)
-    end
   end
 
 end
