@@ -1,6 +1,11 @@
 Spree::Product.class_eval do
 
+  has_many :product_rate_option_types, :class_name => 'Spree::ProductRateOptionType', :foreign_key => 'product_id'
+  has_many :rate_option_types, through: :product_rate_option_types
+
   before_save :link_with_taxon_and_prototype
+
+  ############################################################################
 
   def rates
     rate_class.where(:product_id => self.id)
@@ -10,9 +15,9 @@ Spree::Product.class_eval do
     exception_class.where(:product_id => self.id)
   end
 
-  ###############################################################################
+  ############################################################################
   # Inheritable Methods
-  ###############################################################################
+  ############################################################################
 
   def rate_class
     raise "NOT IMPLEMENTED"
