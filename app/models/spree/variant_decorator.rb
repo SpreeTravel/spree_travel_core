@@ -1,6 +1,10 @@
 module Spree
   Variant.class_eval do
 
+    has_many :rates, :class_name => 'Spree::Rate', :foreign_key => 'variant_id'
+
+    #########################################################################
+
     def options_text
       values = self.option_values.joins(:option_type).order("#{Spree::OptionType.table_name}.position asc")
       values.map! do |ov|

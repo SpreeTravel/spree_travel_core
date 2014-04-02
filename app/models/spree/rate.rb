@@ -1,5 +1,5 @@
 module Spree
-  module Rate
-    # aqui van los metodos que tienen todos los rates
+  class Rate < ActiveRecord::Base
+    belongs_to :variant, :class_name => 'Spree::Variant', :foreign_key => 'variant_id'
   end
 end
