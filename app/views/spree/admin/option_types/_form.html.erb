@@ -1,26 +1,35 @@
 <div data-hook="admin_option_type_form_fields" class="align-center row">
   <div class="alpha six columns">
     <%= f.field_container :name do %>
-      <%= f.label :name, Spree.t(:name) %> <span class="required">*</span><br />
-      <%= f.text_field :name, :class => "fullwidth" %>
-      <%= f.error_message_on :name %>
+    <%= f.label :name, Spree.t(:name) %> <span class="required">*</span><br />
+    <%= f.text_field :name, :class => "fullwidth" %>
+    <%= f.error_message_on :name %>
     <% end %>
   </div>
 
   <div class="six columns">
     <%= f.field_container :presentation do %>
-      <%= f.label :presentation, Spree.t(:presentation) %> <span class="required">*</span><br />
-      <%= f.text_field :presentation, :class => "fullwidth" %>
-      <%= f.error_message_on :presentation %>
+    <%= f.label :presentation, Spree.t(:presentation) %> <span class="required">*</span><br />
+    <%= f.text_field :presentation, :class => "fullwidth" %>
+    <%= f.error_message_on :presentation %>
     <% end %>
   </div>
 
-  <!-- TODO: Revisar el select2, que no se ve bonito -->
+  <!-- TODO: Revisar el select2, que no se ve bonito. Ejecutar la funcion de los combos al elemento nuevo -->
+
   <div class="omega four columns">
+    <% if @option_type.new_record? %>
     <%= f.field_container :attr_type do %>
-      <%= f.label :attr_type, Spree.t(:attr_type) %> <span class="required">*</span><br />
-      <%= f.select :attr_type, ['selection', 'float', 'string', 'integer', 'date', 'boolean'], {}, :class => "fullwidth select2" %>
-      <%= f.error_message_on :attr_type %>
+    <%= f.label :attr_type, Spree.t(:attr_type) %> <span class="required">*</span><br />
+    <%= f.select :attr_type, ['selection', 'float', 'string', 'integer', 'date', 'boolean'], {}, :class => "fullwidth select2" %>
+    <%= f.error_message_on :attr_type %>
+    <% end %>
+    <% else %>
+    <%= f.field_container :attr_type do %>
+    <%= f.label :attr_type, Spree.t(:attr_type) %> <span class="required">*</span><br />
+    <%= f.text_field :attr_type, :disabled => true, :class => "fullwidth" %>
+    <%= f.error_message_on :attr_type %>
+    <% end %>
     <% end %>
   </div>
 
