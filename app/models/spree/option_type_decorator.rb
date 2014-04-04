@@ -6,10 +6,10 @@ module Spree
     def default_option_value
       if attr_type != 'selection' && option_values.empty?
         OptionValue.create(
-                           :name => self.name,
-                           :presentation => self.presentation,
-                           :option_type_id => self.id
-                           )
+             :name => self.name,
+             :presentation => self.presentation,
+             :option_type_id => self.id
+         )
       end
     end
 

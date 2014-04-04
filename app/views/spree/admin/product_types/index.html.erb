@@ -1,0 +1,48 @@
+<%= render :partial => 'spree/admin/shared/configuration_menu' %>
+
+<% content_for :page_title do %>
+  <%= Spree.t(:listing_product_types) %>
+<% end %>
+
+<% content_for :page_actions do %>
+  <ul class="actions inline-menu">
+    <li>
+      <%= button_link_to Spree.t(:new_product_type), new_object_url, :icon => 'icon-plus', :id => 'admin_new_product_type_link' %>
+    </li>
+  </ul>
+<% end %>
+
+<table class="index" id='listing_product_types' data-hook>
+  <colgroup>
+    <col style="width: 30%" />
+    <col style="width: 25%" />
+    <col style="width: 10%" />
+    <col style="width: 15%" />
+  </colgroup>
+  <thead>
+  <tr data-hook="product_type_header">
+    <th><%= Spree.t(:name) %></th>
+    <th><%= Spree.t(:presentation) %></th>
+    <th><%= Spree.t(:enabled) %></th>
+    <th class="actions"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @product_types.each do |product_type|
+    @edit_url = edit_admin_product_type_path(product_type)
+    @delete_url = admin_product_type_path(product_type)
+  %>
+    <tr id="<%= spree_dom_id product_type %>" data-hook="product_type_row" class="<%= cycle('odd', 'even')%>">
+      <td><%= product_type.name %></td>
+      <td><%= product_type.presentation %></td>
+      <td><%= product_type.enabled ? 'Yes' : 'No'  %></td>
+      <td class="actions">
+        <%= link_to_edit product_type, :no_text => true %>
+        <%= link_to_delete product_type, :no_text => true %>
+    </tr>
+  <% end %>
+  <% if @product_types.empty? %>
+    <tr data-hook="product_type_none"><td colspan="4"><%= Spree.t(:none) %></td></tr>
+  <% end %>
+  </tbody>
+</table>

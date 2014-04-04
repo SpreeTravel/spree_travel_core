@@ -1,5 +1,4 @@
 module Spree
-
   BaseHelper.class_eval do
 
     def get_option_values(option_type)
@@ -9,5 +8,4 @@ module Spree
     end
 
   end
-
 end
