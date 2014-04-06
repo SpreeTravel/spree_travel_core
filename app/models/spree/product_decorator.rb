@@ -3,23 +3,22 @@ module Spree
 
     has_many :product_rate_option_types, :class_name => 'Spree::ProductRateOptionType', :foreign_key => 'product_id'
     has_many :rate_option_types, through: :product_rate_option_types
+    
+    has_many :product_context_option_types, :class_name => 'Spree::ProductContextOptionType', :foreign_key => 'product_id'
+    has_many :context_option_types, through: :product_context_option_types
   
     before_create :absorb_prototype_features
-  
-    # TODO: es posible hacer el before_save y actualizar el producto
+
     def absorb_prototype_features
       prototype = Spree::Prototype.find(prototype_id)
       self.taxons = prototype.taxons
       self.properties = prototype.properties
       self.option_types = prototype.option_types
       self.rate_option_types = prototype.rate_option_types
+      self.context_option_types = prototype.context_option_types
       self.product_type = prototype.product_type.name
     rescue
-      
-    end
-    
-    def variant_and_rate_option_types
-      option_types + rate_option_types 
+
     end
     
     def rates
@@ -28,30 +27,14 @@ module Spree
   
     # TODO: poner bonito la seleccion de variantes en la creacion de
     # productos, parece que es de Spree
-  
-    ############################################################################
-    # Inheritable Methods
-    ############################################################################
-  
-    def rate_class
-      raise "NOT IMPLEMENTED"
-    end
-  
-    def context_class
-      raise "NOT IMPLEMENTED"
-    end
-  
-    def exception_class
-      raise "NOT IMPLEMENTED"
-    end
-  
-    def calculator_class
-      raise "NOT IMPLEMENTED"
-    end
-  
-    def calculate_price(context)
-      raise "NOT IMPLEMENTED"
-    end
+
+
+
+
+
+
+
+
   
     ###############################################################################
     # Parent/Children Methods
