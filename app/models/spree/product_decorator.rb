@@ -21,19 +21,13 @@ module Spree
     def variant_and_rate_option_types
       option_types + rate_option_types 
     end
+    
+    def rates
+       Spree::Rate.where(:variant_id => self.variant_ids)
+    end
   
     # TODO: poner bonito la seleccion de variantes en la creacion de
     # productos, parece que es de Spree
-  
-    ############################################################################
-  
-    def rates
-      rate_class.where(:product_id => self.id)
-    end
-  
-    def exceptions
-      exception_class.where(:product_id => self.id)
-    end
   
     ############################################################################
     # Inheritable Methods

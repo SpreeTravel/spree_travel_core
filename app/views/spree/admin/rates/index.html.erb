@@ -23,9 +23,12 @@
   </tr>
   </thead>
   <tbody>
-	  <% for rt in @rates %>
+	  <% for rt in @product.rates %>
 	  	<tr>
 	  		<td><%= rt.variant.sku %></td>
+			<% for ot in @product.rate_option_types %>
+			  	<td><%= rt.get_option_value(ot, 'name') %></td>
+			<% end %>	
 			<td class="actions">
 	          <%= link_to_edit(rt, :no_text => true, :class => 'admin_edit_rate') %>
 	          <%= link_to_delete(rt, :no_text => true) %>
