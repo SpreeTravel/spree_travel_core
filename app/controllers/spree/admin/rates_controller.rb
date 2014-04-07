@@ -20,23 +20,23 @@ module Spree
         admin_product_rate_path(:product_id => rate.variant.product.permalink, :id => rate.id)
       end
       
-      ### Check with PQR ###
-      
       def create
+        # TODO: revisar parametro de params[:rate]
         @rate = Spree::Rate.new(:variant_id => params[:rate][:variant_id])
         if @rate.save
           @rate.set_option_values(params)
           flash[:success] = flash_message_for(@rate, :successfully_created)
           redirect_to admin_product_rates_path(params[:product_id])
-          #respond_with(@rate, :status => 201, :default_template => :show)
         else
+          # TODO: revisar como usar bien esto
           invalid_resource!(@rate)
         end
       end
       
       def update
         @rate = Spree::Rate.find(params[:id])
-        if @rate
+        @rate.variant_id = params[:rate][:variant_id]
+        if @rate.save
           @rate.set_option_values(params)
           flash[:success] = flash_message_for(@rate, :successfully_updated)
           redirect_to admin_product_rates_path(params[:product_id])

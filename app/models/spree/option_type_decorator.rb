@@ -12,6 +12,8 @@ module Spree
          )
       end
     end
+    
+    # TODO: poner una restriccion que obligue a que el nombre sea en minuscual y sin espacios
 
   end
 end

@@ -1,7 +1,7 @@
 module Spree
   class Rate < ActiveRecord::Base
     belongs_to :variant, :class_name => 'Spree::Variant', :foreign_key => 'variant_id'
-    has_many :option_values, :class_name => 'Spree::RateOptionValue', :foreign_key => 'rate_id'
+    has_many :option_values, :class_name => 'Spree::RateOptionValue', :foreign_key => 'rate_id', :dependent => :destroy
     
     def set_option_values(params)
       option_types = self.variant.product.rate_option_types
