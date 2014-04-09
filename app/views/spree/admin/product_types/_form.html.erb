@@ -1,12 +1,12 @@
-<div data-hook="admin_product_types_form_fields" class="row">
-  <div class="alpha four columns">
+<div data-hook="admin_product_types_form_fields" class="align-center row">
+  <div class="alpha six columns">
     <%= f.field_container :name do %>
       <%= f.label :name, Spree.t(:name) %>
       <%= f.text_field :name, :class => 'fullwidth' %>
     <% end %>
   </div>
 
-  <div class="four columns">
+  <div class="six columns">
     <%= f.field_container :presentation do %>
       <%= f.label :presentation, Spree.t(:presentation) %>
       <%= f.text_field :presentation, :class => 'fullwidth' %>
@@ -21,20 +21,18 @@
   </div>
 
 </div>
-<div data-hook="admin_product_types_form_fields" class="row">
-  
-  <div class="alpha six columns">
+<div class="align-center row">
+  <div class="alpha eight columns">
     <%= f.field_container :rate_option_type_ids do %>
       <%= f.label :rate_option_type_ids, Spree.t(:rate_option_types) %><br>
       <%= f.select :rate_option_type_ids, Spree::OptionType.all.map { |ot| [ot.presentation, ot.id] }, {}, { :multiple => true, :class => "select2 fullwidth" } %>
     <% end %>
   </div>
   
-  <div class="six columns omega">
+  <div class="eight columns omega">
     <%= f.field_container :context_option_type_ids do %>
       <%= f.label :context_option_type_ids, Spree.t(:context_option_types) %><br>
       <%= f.select :context_option_type_ids, Spree::OptionType.all.map { |ot| [ot.presentation, ot.id] }, {}, { :multiple => true, :class => "select2 fullwidth" } %>
     <% end %>
   </div>
-
-<div>
+</div>

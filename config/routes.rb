@@ -13,11 +13,5 @@ Spree::Core::Engine.routes.draw do
       resources :rates
     end
   end
-  
-  #get 'admin/products/:permalink/rates/' => 'admin/rates#index', :as => 'admin_rates'
-  
-  #get 'admin/products/:permalink/rates/new' => 'admin/rates#new', :as => 'new_admin_rate' 
-  #post 'admin/products/:permalink/rates/create' => 'admin/rates#create', :as => 'create_admin_rate' 
-  #post 'admin/products/:permalink/rates/update' => 'admin/rates#update', :as => 'update_admin_rate'
 
 end

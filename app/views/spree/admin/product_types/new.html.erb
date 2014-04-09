@@ -1,18 +1,10 @@
-<%= render :partial => 'spree/admin/shared/configuration_menu' %>
-
-<% content_for :page_title do %>
-  <%= Spree.t(:new_product_type) %>
-<% end %>
-
-<% content_for :page_actions do %>
-  <li><%= link_to_with_icon 'icon-arrow-left', Spree.t(:back_to_product_types_list), admin_product_types_path, :class => 'button' %></li>
-<% end %>
-
+<%= render :partial => 'spree/admin/shared/product_sub_menu' %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @product_type } %>
 
 <%= form_for [:admin, @product_type] do |f| %>
-  <fieldset class="no-border-top">
+  <fieldset class="no-border-top" >
+  	<legend align="center"><%= Spree.t(:new_product_type) %></legend>
     <%= render :partial => 'form', :locals => { :f => f } %>
     <%= render :partial => 'spree/admin/shared/new_resource_links' %>
   </fieldset>

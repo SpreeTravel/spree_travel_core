@@ -1,17 +1,18 @@
-<%= render :partial => 'spree/admin/shared/configuration_menu' %>
-
 <% content_for :page_title do %>
   <%= Spree.t(:listing_product_types) %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <ul class="actions inline-menu">
-    <li>
-      <%= button_link_to Spree.t(:new_product_type), new_object_url, :icon => 'icon-plus', :id => 'admin_new_product_type_link' %>
+    <li id="new_product_type_link">
+      <%= button_link_to Spree.t(:new_product_type), new_admin_product_type_url, {:icon => 'icon-plus', 'data-update' => 'new_product_type', :id => 'new_product_type_link' }  %>
     </li>
-  </ul>
 <% end %>
 
+<%= render 'spree/admin/shared/product_sub_menu' %>
+
+<div id="new_product_type"></div>
+
+<% if @product_types.any? %>
 <table class="index" id='listing_product_types' data-hook>
   <colgroup>
     <col style="width: 30%" />
@@ -28,21 +29,22 @@
   </tr>
   </thead>
   <tbody>
-  <% @product_types.each do |product_type|
-    @edit_url = edit_admin_product_type_path(product_type)
-    @delete_url = admin_product_type_path(product_type)
-  %>
-    <tr id="<%= spree_dom_id product_type %>" data-hook="product_type_row" class="<%= cycle('odd', 'even')%>">
-      <td><%= product_type.name %></td>
-      <td><%= product_type.presentation %></td>
-      <td><%= product_type.enabled ? 'Yes' : 'No'  %></td>
+  <% @product_types.each do |product_type| %>
+  	<tr id="<%= spree_dom_id product_type %>" data-hook="listing_product_type_row" class="<%= cycle('odd', 'even')%>">
+      <td style="padding-left:1em"><%= product_type.name %></td>
+      <td style="padding-left:1em"><%= product_type.presentation %></td>
+	  <td style="padding-left:1em"><%=  product_type.enabled ? 'Yes' : 'No' %></td>
       <td class="actions">
-        <%= link_to_edit product_type, :no_text => true %>
-        <%= link_to_delete product_type, :no_text => true %>
+        <%= link_to_edit(product_type, :no_text => true) %>
+        <%= link_to_delete(product_type, :no_text => true) %>
+      </td>
     </tr>
-  <% end %>
-  <% if @product_types.empty? %>
-    <tr data-hook="product_type_none"><td colspan="4"><%= Spree.t(:none) %></td></tr>
   <% end %>
   </tbody>
 </table>
+<% else %>
+  <div class="alpha twelve columns no-objects-found">
+    <%= Spree.t(:no_resource_found, resource: I18n.t(:other, scope: 'activerecord.models.spree/product_type')) %>,
+    <%= link_to Spree.t(:add_one), spree.new_admin_product_type_path %>!
+  </div>
+<% end %>
