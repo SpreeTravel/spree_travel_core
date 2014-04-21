@@ -1,6 +1,9 @@
 module Spree
   OptionType.class_eval do
 
+    validates_uniqueness_of :name
+    # TODO: revisar que esto pinche
+    validates_format_of :name, :with => /[a-z_]+/
     after_create :default_option_value
 
     def default_option_value
@@ -12,8 +15,6 @@ module Spree
          )
       end
     end
-    
-    # TODO: poner una restriccion que obligue a que el nombre sea en minuscual y sin espacios
 
   end
 end

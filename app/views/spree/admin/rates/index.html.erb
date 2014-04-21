@@ -3,42 +3,39 @@
 <%= render :partial => 'spree/admin/shared/product_tabs', :locals => {:current => 'Product Rate'} %>
 
 <% content_for :page_title do %>
-  <%= Spree.t(:rate) %>
+<%= Spree.t(:rate) %>
 <% end %>
 
 <% content_for :page_actions do %>
-  <ul class="actions inline-menu">
-    <li>
+<ul class="actions inline-menu">
+  <li>
     <%= button_link_to Spree.t(:new_rate), new_admin_product_rate_path(:permalink => params[:permalink]), :icon => 'icon-plus', :id => 'admin_new_rate_link' %>
-    </li>
-  </ul>
+  </li>
+</ul>
 <% end %>
 
 <table class="index" id='listing_rate_hotels' data-hook>
   <thead>
-  <tr data-hook="rate_hotel_header">
-  	  <th>Variant</th>
+    <tr data-hook="rate_hotel_header">
+      <th>Variant</th>
       <% for ot in @product.rate_option_types %>
-	  	<th><%= ot.name %></th>
-	  <% end %>
+      <th><%= ot.name %></th>
+      <% end %>
       <th class="actions"></th>
-  </tr>
+    </tr>
   </thead>
   <tbody>
-	  <% for rt in @product.rates %>
-	  	<tr>
-	  		<td><%= rt.variant.sku %></td>
-			<% for ot in @product.rate_option_types %>
-			  	<td><%= rt.get_option_value(ot, 'name') %></td>
-			<% end %>	
-			<td class="actions">
-	          <%= link_to_edit(rt, :no_text => true, :class => 'admin_edit_rate') %>
-	          <%= link_to_delete(rt, :no_text => true) %>
-	        </td>
-		</tr>
-	  <% end %>
+    <% for rt in @product.rates %>
+    <tr>
+      <td><%= rt.variant.sku %></td>
+      <% for ot in @product.rate_option_types %>
+      <td><%= rt.get_option_value(ot, 'presentation') %></td>
+      <% end %>
+      <td class="actions">
+	<%= link_to_edit(rt, :no_text => true, :class => 'admin_edit_rate') %>
+	<%= link_to_delete(rt, :no_text => true) %>
+      </td>
+    </tr>
+    <% end %>
   </tbody>
 </table>
-
-
-
