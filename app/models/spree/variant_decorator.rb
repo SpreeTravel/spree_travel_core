@@ -27,12 +27,10 @@ module Spree
       list = Spree::Product.find(product_id).variants.joins(:option_values => :option_type)
       product_type = Spree::ProductType.find_by_name(pt)
       product_type.variant_option_types.each do |ot|
-        puts "ENTRA   AAAA: " + ot.name
         ov = params[pt + '_' + ot.name]
         return nil unless ov
         list = list.where('spree_option_types.name = ? and spree_option_values.id = ?', ot.name, ov)
       end
-      puts "REVISAAAAAAAAAAAAAA: " + list.explain
       if list.count > 1
         raise Exception.new("Revisa, que hay bateo en los datos")
       end
