@@ -27,6 +27,7 @@ module Spree
       ovr.save
     end
 
+    # TODO: incluir caso de asigancios
     def method_missing(method_name, *args)
       method_name = method_name.to_s
       get_option_value(method_name, *args)

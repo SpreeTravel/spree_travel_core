@@ -7,6 +7,7 @@ module Spree
 
     before_create :absorb_prototype_features
 
+    # TODO: verificar si no hace falta copiar properties y option_types
     def absorb_prototype_features
       prototype = Spree::Prototype.find(prototype_id)
       self.properties = prototype.properties
