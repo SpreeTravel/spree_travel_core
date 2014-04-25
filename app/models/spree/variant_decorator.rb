@@ -2,7 +2,6 @@ module Spree
   Variant.class_eval do
 
     has_many :rates, :class_name => 'Spree::Rate', :foreign_key => 'variant_id'
-    #belongs_to :product_type, :through => :product
 
     def options_text
       values = self.option_values.joins(:option_type).order("#{Spree::OptionType.table_name}.position asc")
@@ -14,6 +13,30 @@ module Spree
 
     def count_on_hand
       100
+    end
+
+    # TODO: esto asume que todos los option types de una variante son
+    # de tipo selection
+    def self.variant_from_params(params)
+      pt = params[:product_type]
+      return nil unless pt
+
+      product_id = params[:product_id]
+      return nil unless product_id
+
+      list = Spree::Product.find(product_id).variants.joins(:option_values => :option_type)
+      product_type = Spree::ProductType.find_by_name(pt)
+      product_type.variant_option_types.each do |ot|
+        puts "ENTRA   AAAA: " + ot.name
+        ov = params[pt + '_' + ot.name]
+        return nil unless ov
+        list = list.where('spree_option_types.name = ? and spree_option_values.id = ?', ot.name, ov)
+      end
+      puts "REVISAAAAAAAAAAAAAA: " + list.explain
+      if list.count > 1
+        raise Exception.new("Revisa, que hay bateo en los datos")
+      end
+      list.first
     end
 
   end

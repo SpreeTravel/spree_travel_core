@@ -22,17 +22,24 @@
 
 </div>
 <div class="align-center row">
-  <div class="alpha eight columns">
+  <div class="alpha five columns">
     <%= f.field_container :rate_option_type_ids do %>
       <%= f.label :rate_option_type_ids, Spree.t(:rate_option_types) %><br>
       <%= f.select :rate_option_type_ids, Spree::OptionType.all.map { |ot| [ot.presentation, ot.id] }, {}, { :multiple => true, :class => "select2 fullwidth" } %>
     <% end %>
   </div>
-  
-  <div class="eight columns omega">
+
+  <div class="five columns">
     <%= f.field_container :context_option_type_ids do %>
       <%= f.label :context_option_type_ids, Spree.t(:context_option_types) %><br>
       <%= f.select :context_option_type_ids, Spree::OptionType.all.map { |ot| [ot.presentation, ot.id] }, {}, { :multiple => true, :class => "select2 fullwidth" } %>
+    <% end %>
+  </div>
+
+  <div class="five columns omega">
+    <%= f.field_container :variant_option_type_ids do %>
+      <%= f.label :variant_option_type_ids, Spree.t(:variant_option_types) %><br>
+      <%= f.select :variant_option_type_ids, Spree::OptionType.all.map { |ot| [ot.presentation, ot.id] }, {}, { :multiple => true, :class => "select2 fullwidth" } %>
     <% end %>
   </div>
 </div>

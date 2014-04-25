@@ -1,0 +1,41 @@
+<!-- TODO: validar en caso de que no se puedan repetir los context_option_types y variant_option_types -->
+<!-- TODO: incluir en la vista form el calculator para poder editarlo -->
+<div data-hook="new_product_attrs" class="row">
+      <% unless @product.has_variants? %>
+        <div class="alpha eight columns">
+          <%= f.field_container :sku do %>
+            <%= f.label :sku, Spree.t(:sku) %><br />
+            <%= f.text_field :sku, :size => 16, :class => 'fullwidth' %>
+            <%= f.error_message_on :sku %>
+          <% end %>
+        </div>
+      <% end %>
+      <div class="four columns">
+        <%= f.field_container :price do %>
+          <%= f.label :price, Spree.t(:master_price) %> <span class="required">*</span><br />
+          <%= f.text_field :price, :class => 'fullwidth' %>
+          <%= f.error_message_on :price %>
+        <% end %>
+      </div>
+      <div class="omega four columns">
+        <%= f.field_container :available_on do %>
+          <%= f.label :available_on, Spree.t(:available_on) %>
+          <%= f.error_message_on :available_on %>
+          <%= f.text_field :available_on, :class => 'datepicker fullwidth' %>
+        <% end %>
+      </div>
+</div>
+<div class="row">
+   <div class="alpha four columns">
+        <%= f.field_container :product_type do %>
+          <%= f.label :product_type_id, Spree.t(:product_type) %><br />
+          <%= f.collection_select :product_type_id, Spree::ProductType.all, :id, :presentation, {:include_blank => false}, {:class => 'select2 fullwidth'} %>
+        <% end %>
+      </div>
+   <div class="four columns omega">
+        <%= f.field_container :calculator do %>
+          <%= f.label :calculator_id, Spree.t(:calculator) %><br />
+          <%= f.collection_select :product_type_id, Spree::TravelCalculator.all, :id, :name, {:include_blank => false}, {:class => 'select2 fullwidth'} %>
+        <% end %>
+      </div>
+</div>

@@ -11,7 +11,7 @@
         <% prefix = "#{p.name}_" %>
         <div id=<%="#{prefix}fields"%> class="tab-pane fade active in" >
           <ul class="alpha twelve columns omega" >
-    	    <% p.context_option_types.each do |ot| %>
+    	    <% p.search_box_option_types.each do |ot| %>
               <% tag_name = prefix + ot.name %>
     	      <li class="four columns">
     	        <%= label_tag tag_name, Spree.t(ot.presentation) %>

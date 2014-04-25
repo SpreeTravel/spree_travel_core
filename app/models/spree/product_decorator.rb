@@ -5,14 +5,10 @@ module Spree
     belongs_to :calculator, :class_name => 'Spree::TravelCalculator', :foreign_key => 'calculator_id'
     has_many :rates, :through => :variants
 
-    before_create :absorb_prototype_features
+    before_create :absorb_option_types
 
-    # TODO: verificar si no hace falta copiar properties y option_types
-    def absorb_prototype_features
-      prototype = Spree::Prototype.find(prototype_id)
-      self.properties = prototype.properties
-      self.option_types = prototype.option_types
-      self.product_type_id = prototype.product_type_id
+    def absorb_option_types
+      self.option_types = self.product_type.variant_option_types
     rescue
 
     end
