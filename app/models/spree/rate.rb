@@ -3,6 +3,18 @@ module Spree
     belongs_to :variant, :class_name => 'Spree::Variant', :foreign_key => 'variant_id'
     has_many :option_values, :class_name => 'Spree::RateOptionValue', :foreign_key => 'rate_id', :dependent => :destroy
 
+    def method_missing(method_name, *args)
+      method_name = method_name.to_s
+      if method_name.ends_with?('=')
+        method_name = method_name.slice(0, method_name.length-1)
+        set_option_value(method_name, *args)
+      else
+        get_option_value(method_name, *args)
+      end
+    rescue
+      super
+    end
+
     def set_option_values(params)
       option_types = self.variant.product.rate_option_types
       params.each do |k, v|
@@ -25,14 +37,6 @@ module Spree
         ovr.value = value
       end
       ovr.save
-    end
-
-    # TODO: incluir caso de asigancios
-    def method_missing(method_name, *args)
-      method_name = method_name.to_s
-      get_option_value(method_name, *args)
-    rescue
-      super
     end
 
     def get_option_value(option_type, attr='id')
