@@ -111,16 +111,16 @@ Spree::Product.class_eval do
   end
 
   def link_with_taxon_and_prototype
-    taxon = self.default_taxon
-    if self.taxons.to_a & taxon.self_and_descendants.to_a == []
-      self.taxons << taxon
-    end
-    self.default_prototype.option_types.each do |op|
-      self.option_types << op unless  self.option_types.include?(op)
-    end
-    self.default_prototype.properties.each do |pt|
-      self.properties << pt unless  self.properties.include?(pt)
-    end
+    #taxon = self.default_taxon
+    #if self.taxons.to_a & taxon.self_and_descendants.to_a == []
+    #  self.taxons << taxon
+    #end
+    #self.default_prototype.option_types.each do |op|
+    #  self.option_types << op unless  self.option_types.include?(op)
+    #end
+    #self.default_prototype.properties.each do |pt|
+    #  self.properties << pt unless  self.properties.include?(pt)
+    #end
   end
 
 end
