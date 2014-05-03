@@ -1,6 +1,8 @@
 module Spree
   Variant.class_eval do
 
+    has_many :rates, :class_name => 'Spree::Rate', :foreign_key => 'variant_id'
+
     def options_text
       values = self.option_values.joins(:option_type).order("#{Spree::OptionType.table_name}.position asc")
       values.map! do |ov|
@@ -13,94 +15,27 @@ module Spree
       100
     end
 
-    def long_sku
-      self.option_values.order(:position).map(&:name).join('-')
-    end
+    # TODO: esto asume que todos los option types de una variante son
+    # de tipo selection
+    def self.variant_from_params(params)
+      pt = params[:product_type]
+      return nil unless pt
 
-    def adults
-      self.get_option_value_from_name('adult').split('-').last.to_i
-    end
+      product_id = params[:product_id]
+      return nil unless product_id
 
-    def children
-      self.get_option_value_from_name('child').split('-').last.to_i
-    end
-
-    def start_date
-      self.get_option_value_from_type('start_date')
-    end
-
-    def end_date
-      self.get_option_value_from_type('end_date')
-    end
-
-    def get_option_value_from_name(option)
-      self.option_values.map(&:name).select{|ov| ov.starts_with?(option)}.first
-    end
-
-    def get_option_value_from_type(type)
-      self.option_values.select{|ov| ov.option_type.name == type}.first.name
-    end
-
-    def self.variant_class_from(params)
-      klass = self.name
-      unless params[:taxon].nil?
-        taxon = Spree::Taxon.find_by_id(params[:taxon]) || Spree::Taxon.find_by_name(params[:taxon])
-        klass += taxon.name unless taxon.nil?
+      list = Spree::Product.find(product_id).variants.joins(:option_values => :option_type)
+      product_type = Spree::ProductType.find_by_name(pt)
+      product_type.variant_option_types.each do |ot|
+        ov = params[pt + '_' + ot.name]
+        return nil unless ov
+        list = list.where('spree_option_types.name = ? and spree_option_values.id = ?', ot.name, ov)
       end
-      eval(klass)
-    end
-
-    def self.get_options_to_search
-      [
-        {:option => 'start_date', :operator => '<='},
-        {:option => 'end_date', :operator => '>='},
-        {:option => 'adult', :operator => '='},
-        {:option => 'child', :operator => '='},
-      ]
-    end
-
-    def self.prepare_params(params)
-      result = []
-      options_to_search = variant_class_from(params).get_options_to_search
-      params.each do |option, value|
-        next if value.blank?
-        option_hash = options_to_search.find {|h| h[:option] == option}
-        next unless option_hash
-        option_type = OptionType.find_by_name(option)
-        # TODO: la pregunta correcta es -> unless value sea una fecha
-        value = OptionValue.find(value.to_i).name unless value.to_s.include?('-')
-        result << {
-          :option => option,
-          :value => value,
-          :sov => "sov_" + option_type.name,
-          :sovv => "sovv_" + option_type.name,
-          :option_type_id => option_type.id,
-          :operator => option_hash[:operator]
-        }
+      if list.count > 1
+        raise Exception.new("Revisa, que hay bateo en los datos")
       end
-      result
-    end
-
-    def self.with_option_values(params)
-      filtered_params = prepare_params(params)
-      sql0 = "SELECT sv.id AS id, sv.product_id AS product_id"
-      sql1 = ""
-      sql2 = " FROM spree_variants AS sv "
-      sql3 = ""
-      sql4 = "WHERE 1 > 0 "
-      sql5 = ""
-      for hash in filtered_params
-        sql1 += ", #{hash[:sov]}.name AS #{hash[:option]}"
-        sql3 += "INNER JOIN spree_option_values_variants AS #{hash[:sovv]} ON #{hash[:sovv]}.variant_id = sv.id "
-        sql3 += "INNER JOIN spree_option_values AS #{hash[:sov]} ON #{hash[:sov]}.id = #{hash[:sovv]}.option_value_id "
-        sql5 += "AND #{hash[:sov]}.option_type_id = #{hash[:option_type_id]} "
-        sql5 += "AND #{hash[:sov]}.name #{hash[:operator]} '#{hash[:value]}' "
-      end
-      sql5 += "AND sv.product_id = #{params[:product_id]} " unless params[:product_id].nil?
-      sql = sql0 + sql1 + sql2 + sql3 + sql4 + sql5
-      where(:id => [Spree::Variant.find_by_sql(sql).map(&:id)])
+      list.first
     end
 
   end
-
 end
