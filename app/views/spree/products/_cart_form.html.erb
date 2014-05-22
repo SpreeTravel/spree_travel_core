@@ -4,7 +4,13 @@
 
     <!-- TODO: Revisar como hacer para que salga la moneda junto al precio  -->
     <% if @product.price_in(current_currency) and !@product.price.nil? %>
-     <%= hidden_field_tag :variant, 0, :id => "vp_#{@product.id}"  %>
+      <%# if false %>
+        <%#= hidden_field_tag "variants[variant_id]", 0, :id => "vp_#{@product.id}"  %>
+      <%# else %>
+        <%= hidden_field_tag "products[#{@product.id}]", 0, :id => "vp_#{@product.id}"  %>
+        <%= hidden_field_tag "quantity", 1 %>
+      <%# end %>
+
       <div data-hook="product_price" class="columns five omega">
         <div id="product-price">
           <h6 class="product-section-title"><%= Spree.t(:price) %></h6>
