@@ -36,7 +36,7 @@ function update_prices() {
             type: 'POST',
             url: '/products/get_ajax_price',
             success: function (result) {
-		object.html(result);
+		object.html(result.prices);
             },
             error: function() {
 		object.html('ERROR');
