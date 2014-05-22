@@ -1,0 +1,38 @@
+<div id="cart-form" data-hook="cart_form">
+<%= form_for :order, :url => populate_orders_path do |f| %>
+  <div id="inside-product-cart-form" data-hook="inside_product_cart_form" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+
+    <!-- TODO: Revisar como hacer para que salga la moneda junto al precio  -->
+    <% if @product.price_in(current_currency) and !@product.price.nil? %>
+     <%= hidden_field_tag :variant, 0, :id => "vp_#{@product.id}"  %>
+      <div data-hook="product_price" class="columns five omega">
+        <div id="product-price">
+          <h6 class="product-section-title"><%= Spree.t(:price) %></h6>
+          <div>
+            <span class="price selling ajax-price" itemprop="price" data-product-hook="<%= @product.id %>" <!-- <span class="price selling" itemprop="price"> -->
+	      <%= image_tag 'ajax-loader.gif' %>
+            </span>
+            <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
+          </div>
+
+          <% if @product.master.in_stock? %>
+            <link itemprop="availability" href="http://schema.org/InStock" />
+          <% end %>
+        </div>
+        <div class="add-to-cart">
+          <%= number_field_tag (@product.variants_and_option_values.any? ? :quantity : "variants[#{@product.master.id}]"), 1, :class => 'title', :min => 1 %>
+          <%= button_tag :class => 'large primary', :id => 'add-to-cart-button', :type => :submit do %>
+            <%= Spree.t(:add_to_cart) %>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+        <div id="product-price">
+          <br>
+          <div><span class="price selling" itemprop="price"><%= Spree.t('product_not_available_in_this_currency') %></span></div>
+        </div>
+    <% end %>
+
+  </div>
+<% end %>
+</div>
