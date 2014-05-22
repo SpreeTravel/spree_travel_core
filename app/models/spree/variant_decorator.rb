@@ -15,7 +15,7 @@ module Spree
       100
     end
 
-    # TODO: esto asume que todos los option types de una variante son
+    # NOTE: esto asume que todos los option types de una variante son
     # de tipo selection
     def self.variant_from_params(params)
       pt = params[:product_type]
