@@ -36,10 +36,12 @@ function update_prices() {
             type: 'POST',
             url: '/products/get_ajax_price',
             success: function (result) {
-		object.html(result.prices);
+		      object.html(result.prices);
+              hidden_id = "#vp_" + product_id;
+              $(hidden_id).val(result.variant);
             },
             error: function() {
-		object.html('ERROR');
+		      object.html('ERROR');
             }
         });
     });
