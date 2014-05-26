@@ -23,9 +23,10 @@ module Spree
       # TODO: revisar parametro de params[:rate]
       def create
         @rate = Spree::Rate.new(:variant_id => params[:rate][:variant_id])
+        params[:product_type] = @product.product_type.name
+        @rate.set_option_values(params)
+
         if @rate.save
-          params[:product_type] = @product.product_type.name
-          @rate.set_option_values(params)
           flash[:success] = flash_message_for(@rate, :successfully_created)
           redirect_to admin_product_rates_path(params[:product_id])
         else
@@ -36,9 +37,10 @@ module Spree
       def update
         @rate = Spree::Rate.find(params[:id])
         @rate.variant_id = params[:rate][:variant_id]
+        params[:product_type] = @product.product_type.name
+        @rate.set_option_values(params)
+        # TODO the rate is not updated we don't know why.
         if @rate.save
-          params[:product_type] = @product.product_type.name
-          @rate.set_option_values(params)
           flash[:success] = flash_message_for(@rate, :successfully_updated)
           redirect_to admin_product_rates_path(params[:product_id])
         else

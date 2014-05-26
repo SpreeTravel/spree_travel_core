@@ -27,29 +27,22 @@ module Spree
     def set_option_value(option_type, value)
       ot = get_option_type_object(option_type)
       ovr = self.option_values.find {|ov| ov.option_value.option_type_id == ot.id}
+
       unless ovr
         klass = self.class.to_s
         ovr = "#{klass}OptionValue".constantize.new
-        # attr_id = klass.split('::').last.downcase + "_id"
-        #TODO take out this wire as soon as posible. Sistitud it for dynamic attr assignation
-        if klass == "Spree::Rate"
-          ovr.rate_id = self.id
-        elsif klass == "Spree::Context"
-          ovr.context_id = self.id
-        else
-          raise Exception.new("No es ni Context ni Rate")
-        end
-
+        self.option_values << ovr
       end
+
       if ot.attr_type == 'selection'
         ovr.option_value_id = value
       else
         ovr.option_value_id = ot.option_values.first.id
         ovr.value = value
       end
-      ovr.save
     end
 
+    #TODO devolver el valor en el tipo correcpondiente
     def get_option_value(option_type, attr='id')
       ot = get_option_type_object(option_type)
       ovr = self.option_values.find {|ov| ov.option_value.option_type_id == ot.id}

@@ -5,3 +5,4 @@ en:
   hello: "Hello world"
   spree:
     pax: Pax
+    new_rate: new rate
