@@ -4,9 +4,12 @@ module Spree
     def get_ajax_price
       product = Spree::Product.find(params[:product_id])
       calculator_class = product.calculator.name.constantize
-      prices = calculator_class.calculate_price(params).sort
-      #TODO este método de calcular la variante se llama dos veces
-      variant = calculator_class.calculate_variant(params)
+
+      context = Spree::Context.build_from_params(params)
+
+      variant = Spree::Variant.variant_from_params(params)
+      prices = calculator_class.calculate_price(context, variant).sort
+
       if prices.count > 1
         prices_str = "#{prices[0]} ... #{prices[-1]}"
       else

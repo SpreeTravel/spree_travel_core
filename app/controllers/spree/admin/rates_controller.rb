@@ -24,6 +24,7 @@ module Spree
       def create
         @rate = Spree::Rate.new(:variant_id => params[:rate][:variant_id])
         if @rate.save
+          params[:product_type] = @product.product_type.name
           @rate.set_option_values(params)
           flash[:success] = flash_message_for(@rate, :successfully_created)
           redirect_to admin_product_rates_path(params[:product_id])
@@ -36,6 +37,7 @@ module Spree
         @rate = Spree::Rate.find(params[:id])
         @rate.variant_id = params[:rate][:variant_id]
         if @rate.save
+          params[:product_type] = @product.product_type.name
           @rate.set_option_values(params)
           flash[:success] = flash_message_for(@rate, :successfully_updated)
           redirect_to admin_product_rates_path(params[:product_id])

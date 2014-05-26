@@ -3,7 +3,8 @@
     <div class="alpha four columns fullwidth"><%= label_tag :variant, Spree.t(:variant), :class => 'pull-right' %></div>
     <div class="six columns omega"><%= select_tag 'rate[variant_id]', options_for_select(@product.variants.map { |v| [v.sku, v.id] }, @rate.variant_id), :class => 'select2 fullwidth' %></div>
   </div>
-  <% for ot in @product.rate_option_types %>
+  <% prefix = "#{@product.product_type.name}_" %>
+  <% @product.rate_option_types.each do |ot| %>
   <div class="ten columns row">
     <div class="alpha four columns"><%= label_tag ot.name, Spree.t(ot.presentation), :class => 'pull-right' %></div>
     <div class="six columns omega">
