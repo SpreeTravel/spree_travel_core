@@ -2,21 +2,27 @@
 <%= form_for :order, :url => populate_orders_path do |f| %>
   <div id="inside-product-cart-form" data-hook="inside_product_cart_form" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 
+  <% puts "los params son #{params.inspect}" %>
     <!-- TODO: Revisar como hacer para que salga la moneda junto al precio  -->
     <% if @product.price_in(current_currency) and !@product.price.nil? %>
-      <%# if false %>
-        <%#= hidden_field_tag "variants[variant_id]", 0, :id => "vp_#{@product.id}"  %>
-      <%# else %>
-        <%= hidden_field_tag "products[#{@product.id}]", 0, :id => "vp_#{@product.id}"  %>
-        <%#= hidden_field_tag "quantity", 1 %>
-      <%# end %>
+        <%#= hidden_field_tag "products[#{@product.id}]", 0, :id => "vp_#{@product.id}"  %>
+        <input id="vp_1" type="hidden" value="2" name="products[1]">
+
+        <%= hidden_field_tag "hotel_start_date", "2014-05-26"  %>
+        <%= hidden_field_tag "hotel_end_date", "2014-05-29"  %>
+        <%= hidden_field_tag "hotel_adult", "2" %>
+        <%= hidden_field_tag "hotel_child", "1"  %>
+        <%= hidden_field_tag "product_type", "hotel"  %>
+
+
+
 
       <div data-hook="product_price" class="columns five omega">
         <div id="product-price">
           <h6 class="product-section-title"><%= Spree.t(:price) %></h6>
           <div>
-            <span class="price selling ajax-price" itemprop="price" data-product-hook="<%= @product.id %>" <!-- <span class="price selling" itemprop="price"> -->
-	      <%= image_tag 'ajax-loader.gif' %>
+            <span class="price selling ajax-price" itemprop="price" data-product-hook="<%= @product.id %>"
+              <%= image_tag 'ajax-loader.gif' %>
             </span>
             <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
           </div>
