@@ -1,0 +1,21 @@
+<%
+   kls = "columns twelve product-item"
+   new_params = params.clone
+   new_params.merge!({:controller => :products, :action => :show , :id => product.permalink})
+   otro_params = new_params.clone
+%>
+
+<li id="product_<%= product.id %>" class="<%= kls %>" data-hook2="product_<%=product.product_type%>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
+  <div class="product-image">
+    <%= link_to small_image(product, :itemprop => "image"), new_params, :itemprop => 'url' %>
+  </div>
+  <div class="product-title">
+    <erb loud> link_to product.name, otro_params, {:class => 'info', :itemprop => "name", :title => product.name} </erb>
+  </div>
+  <div class="product-mini-description">
+    <%= truncate(product.description, :length => 300)%>
+  </div>
+  <div id="cart-form" data-hook="cart_form">
+    <%= render :partial => 'cart_form', :locals => {:product => product} %>
+  </div>
+</li>
