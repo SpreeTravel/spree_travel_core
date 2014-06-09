@@ -41,7 +41,7 @@ function update_prices() {
               hidden_id = "#vp_" + product_id;
               $(hidden_id).val(result.variant);
               b = $('#add-to-cart-button');
-              if (prices.indexOf('..') != -1) {
+              if (prices.indexOf('Starting') != -1) {
                 b.attr('disabled', true);
                 b.addClass('disabled');
               } else {
