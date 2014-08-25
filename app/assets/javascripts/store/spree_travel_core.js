@@ -36,10 +36,21 @@ function update_prices() {
             type: 'POST',
             url: '/products/get_ajax_price',
             success: function (result) {
-		object.html(result);
+		      prices = result.prices
+              object.html(prices);
+              hidden_id = "#vp_" + product_id;
+              $(hidden_id).val(result.variant);
+              b = $('#add-to-cart-button');
+              if (prices.indexOf('..') != -1) {
+                b.attr('disabled', true);
+                b.addClass('disabled');
+              } else {
+                b.attr('disabled', false);
+                b.removeClass('disabled');
+              }
             },
             error: function() {
-		object.html('ERROR');
+		      object.html('ERROR');
             }
         });
     });

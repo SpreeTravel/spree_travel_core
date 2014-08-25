@@ -15,19 +15,18 @@ module Spree
       100
     end
 
-    # TODO: esto asume que todos los option types de una variante son
+    # NOTE: esto asume que todos los option types de una variante son
     # de tipo selection
     def self.variant_from_params(params)
       pt = params[:product_type]
       return nil unless pt
-
       product_id = params[:product_id]
       return nil unless product_id
 
       list = Spree::Product.find(product_id).variants.joins(:option_values => :option_type)
       product_type = Spree::ProductType.find_by_name(pt)
       product_type.variant_option_types.each do |ot|
-        ov = params[pt + '_' + ot.name]
+        ov = params[pt + '_' + ot.name] || params[ot.name]
         return nil unless ov
         list = list.where('spree_option_types.name = ? and spree_option_values.id = ?', ot.name, ov)
       end

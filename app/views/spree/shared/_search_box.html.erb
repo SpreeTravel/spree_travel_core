@@ -1,14 +1,22 @@
 
     <ul id="search_box_tabs" class="nav nav-tabs">
-      <% Spree::ProductType.all.each do |p| %>
-        <%= content_tag :li, class: p.name == active ? 'active' : '' do %>
-          <a data-toggle="tab" href=<%="#{p.name}"%> name=<%="#{p.name}"%> ><%= Spree.t(p.name) %></a>
+      <% active = true %>
+      <% Spree::ProductType.enabled.each do |p| %>
+        <% if active
+            active_class = 'active'
+            active = false
+           else
+            active_class = ''
+           end
+        %>
+        <%= content_tag :li, class: active_class  do %>
+          <a data-toggle="tab" href=#<%="#{p.name.downcase}"%>_fields name=<%="#{p.name}"%> ><%= Spree.t(p.name) %></a>
         <% end %>
       <% end %>
     </ul>
     <div id="tabcontent" class="tab-content">
-      <% Spree::ProductType.all.each do |p| %>
-        <% prefix = "#{p.name}_" %>
+      <% Spree::ProductType.enabled.each do |p| %>
+        <% prefix = "#{p.name.downcase}_" %>
         <div id=<%="#{prefix}fields"%> class="tab-pane fade active in" >
           <ul class="alpha twelve columns omega" >
     	    <% p.search_box_option_types.each do |ot| %>
