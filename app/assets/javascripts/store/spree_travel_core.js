@@ -1,4 +1,4 @@
-//= require store/spree_frontend
+//= require spree/frontend
 //= require store/tab
 //= require store/underscore
 //= require store/cart_overlay
