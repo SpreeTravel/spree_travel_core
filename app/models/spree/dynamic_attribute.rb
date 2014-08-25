@@ -27,13 +27,10 @@ module Spree
     def set_option_value(option_type, value)
       ot = get_option_type_object(option_type)
       ovr = self.option_values.find {|ov| ov.option_value.option_type_id == ot.id}
-
       unless ovr
-        klass = self.class.to_s
-        ovr = "#{klass}OptionValue".constantize.new
+        ovr = "#{self.class.to_s}OptionValue".constantize.new
         self.option_values << ovr
       end
-
       if ot.attr_type == 'selection'
         ovr.option_value_id = value
       else
