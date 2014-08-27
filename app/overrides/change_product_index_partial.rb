@@ -4,4 +4,3 @@ Deface::Override.new(:virtual_path => "spree/shared/_products",
                      :partial => "spree/home/product_list_item",
                      :disabled => false
 )
-

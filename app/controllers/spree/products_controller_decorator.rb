@@ -4,7 +4,6 @@ module Spree
     def get_ajax_price
       product = Spree::Product.find(params[:product_id])
       calculator_class = product.calculator.name.constantize
-
       context = Spree::Context.build_from_params(params)
       variant = Spree::Variant.variant_from_params(params)
       prices = calculator_class.calculate_price(context, variant).sort
