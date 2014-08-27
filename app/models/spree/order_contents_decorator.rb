@@ -1,12 +1,14 @@
-Spree::OrderContents.class_eval do
+module Spree
+  OrderContents.class_eval do
 
-    def add_to_line_item(line_item, variant, quantity, currency=nil, shipment=nil)
+    # TODO si en 15 dias no sabesmos para que esto se VA 22/05/2014
+    def add_to_line_item2(line_item, variant, quantity, currency=nil, shipment=nil)
       if line_item
         line_item.target_shipment = shipment
         line_item.quantity += quantity.to_i
         line_item.currency = currency unless currency.nil?
       else
-        line_item = order.line_items.new(quantity: quantity, variant: variant)
+        line_item = order.line_items.new(:quantity => quantity, :variant => variant)
         line_item.target_shipment = shipment
         if currency
           line_item.currency = currency unless currency.nil?
@@ -18,9 +20,10 @@ Spree::OrderContents.class_eval do
 
       line_item.save
       #TODO aqui llega la cantidad de adultos y niños por cada categoría de producto.
-      (variant.get_option_value_from_name('adult')[-1].to_i + variant.get_option_value_from_name('child')[-1].to_i).times{ Spree::Pax.create(line_item_id: line_item.id ) }
+      # (variant.get_option_value_from_name('adult')[-1].to_i + variant.get_option_value_from_name('child')[-1].to_i).times{ Spree::Pax.create(:line_item_id => line_item.id ) }
       order.reload
       line_item
     end
 
+  end
 end

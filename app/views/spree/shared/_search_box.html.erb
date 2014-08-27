@@ -1,0 +1,55 @@
+
+    <ul id="search_box_tabs" class="nav nav-tabs">
+      <% active = true %>
+      <% Spree::ProductType.enabled.each do |p| %>
+        <% if active
+            active_class = 'active'
+            active = false
+           else
+            active_class = ''
+           end
+        %>
+        <%= content_tag :li, class: active_class  do %>
+          <a data-toggle="tab" href=#<%="#{p.name.downcase}"%>_fields name=<%="#{p.name}"%> ><%= Spree.t(p.name) %></a>
+        <% end %>
+      <% end %>
+    </ul>
+    <div id="tabcontent" class="tab-content">
+      <% Spree::ProductType.enabled.each do |p| %>
+        <% prefix = "#{p.name.downcase}_" %>
+        <!-- TODO esto es para poner valores por defecto, pero no creo que est'e bien
+        porque no se adapta a todos los escenarios adem'as de ejecutarce X cada ProductType  -->
+        <%
+          hash = { "#{prefix}start_date" => Time.now.to_date,
+                     "#{prefix}end_date" => Time.now.to_date + 3,
+                     "#{prefix}adult" => 2,
+                     "#{prefix}child" => 0 }
+          function_name = "fill_cart_hiddens(#{@product.id})"
+        %>
+
+        <div id=<%="#{prefix}fields"%> class="tab-pane fade active in" >
+          <ul class="alpha twelve columns omega" >
+    	    <% p.search_box_option_types.each do |ot| %>
+              <% tag_name = prefix + ot.name %>
+    	      <li class="four columns">
+    	        <%= label_tag tag_name, Spree.t(ot.presentation) %>
+    	        <% current_value = hash[tag_name] %>
+	        <% if ot.attr_type == 'selection' %>
+	          <%= select_tag tag_name, options_for_select(ot.option_values.map { |ov| [ov.presentation, ov.id] }, current_value), :class => 'select2', 'onchange' => function_name %>
+	        <% elsif ot.attr_type == 'integer' %>
+	          <%= number_field_tag tag_name, current_value, 'onkeyup' => function_name %>
+	        <% elsif ot.attr_type == 'float' %>
+	          <%= number_field_tag tag_name, current_value, 'onkeyup' => function_name %>
+	        <% elsif ot.attr_type == 'boolean' %>
+	          <%= check_box_tag tag_name, 1, 'onchange' => function_name %>
+	        <% elsif ot.attr_type == 'date' %>
+	          <%= text_field_tag tag_name, current_value, :class => 'datepicker', 'onkeyup' => function_name %>
+	        <% else %>
+	          <%= text_field_tag tag_name, current_value, 'onkeyup' => function_name %>
+	        <% end %>
+    	      </li>
+    	    <% end %>
+          </ul>
+        </div>
+      <% end %>
+    </div>

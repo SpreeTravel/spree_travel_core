@@ -1,4 +1,5 @@
-Spree::Order.class_eval do 
+module Spree
+  Order.class_eval do 
 
     def empty!
       line_items.each do |li|
@@ -7,5 +8,6 @@ Spree::Order.class_eval do
       line_items.destroy_all
       adjustments.destroy_all
     end
-    
+
+  end  
 end
