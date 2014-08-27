@@ -57,6 +57,29 @@ function update_prices() {
     return false;
 }
 
+function fill_cart_hiddens(product_id) {
+    template = $('#template-hidden');
+    console.log(template);
+    data = params_data(product_id);
+    theform = $('#inside-product-cart-form');
+    $.each(data, function(index, val) {
+        index_name = index + "_cart_form";
+        console.log(index_name);
+        new_hidden = $('#'+index_name, theform);
+        if (new_hidden.length == 0) {
+            new_hidden = template.clone();
+            new_hidden.attr('name', index);
+            new_hidden.attr('id', index_name);
+            console.log(new_hidden);
+            theform.append(new_hidden);
+        }
+        new_hidden.val(val);
+        console.log(index + ": " + val);
+        console.log('------');
+    });
+    console.log('#######################################');
+}
+
 $(document).ready(function() {
     update_prices();
     $('#update_price').attr('onclick', 'update_prices()');

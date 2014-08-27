@@ -10,14 +10,20 @@
     </td>
     <td class="cart-item-description" data-hook="cart_item_description">
       <h4><%= link_to variant.product.name, product_path(variant.product) %></h4>
+      <!-- TODO esto hacerlo din;amico con los ContextOptionTypes -->
+      Check In: <%= line_item.context.start_date %> </br>
+      Check Out: <%= line_item.context.end_date %> </br>
       <%= variant.options_text %>
-      <%= Spree.t(:pax) %>: 
+      Plean Plan: <%= line_item.context.plan %> </br>
+
+      <%= Spree.t(:pax) %>:
       <span>
         <%= link_to "#", :onclick=>"paxOverlay('line_item_detail')"   do %>
-           <%= full_pax_count(line_item.paxes) %>/<%= line_item.paxes.count %> 
+          <%= full_pax_count(line_item.paxes) %>/<%= line_item.context.adult.to_i + line_item.context.child.to_i %>
+
         <% end %>
-      </span>   
-      
+      </span>
+
       <% if @order.insufficient_stock_lines.include? line_item %>
         <span class="out-of-stock">
           <%= Spree.t(:out_of_stock) %>&nbsp;&nbsp;<br />
