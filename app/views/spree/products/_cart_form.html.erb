@@ -1,42 +1,25 @@
 <div id="cart-form" data-hook="cart_form">
-<%= form_for :order, :url => populate_orders_path do |f| %>
+<%= form_for :order, :url => populate_orders_path, :html => {:id => 'cart-form'} do |f| %>
   <div id="inside-product-cart-form" data-hook="inside_product_cart_form" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 
-  <% puts "los params son #{params.inspect}" %>
     <!-- TODO: Revisar como hacer para que salga la moneda junto al precio  -->
     <% if @product.price_in(current_currency) and !@product.price.nil? %>
-        <%#= hidden_field_tag "products[#{@product.id}]", 0, :id => "vp_#{@product.id}"  %>
-        <input id="vp_1" type="hidden" value="2" name="products[1]">
+        <%= hidden_field_tag "products[#{@product.id}]", 0, :id => "vp_#{@product.id}"  %>
+        <!-- <input id="vp_1" type="hidden" value="2" name="products[1]"> -->
 
-        <%= hidden_field_tag "hotel_start_date", "2014-05-26"  %>
-        <%= hidden_field_tag "hotel_end_date", "2014-05-29"  %>
-        <%= hidden_field_tag "hotel_adult", "2" %>
-        <%= hidden_field_tag "hotel_child", "1"  %>
-        <%= hidden_field_tag "product_type", "hotel"  %>
-
-
-
+        <input type="hidden" id="template-hidden" >
 
       <div data-hook="product_price" class="columns five omega">
         <div id="product-price">
           <h6 class="product-section-title"><%= Spree.t(:price) %></h6>
-          <div>
-            <span class="price selling ajax-price" itemprop="price" data-product-hook="<%= @product.id %>"
-              <%= image_tag 'ajax-loader.gif' %>
-            </span>
-            <span itemprop="priceCurrency" content="<%= @product.currency %>"></span>
-          </div>
-
-          <% if @product.master.in_stock? %>
-            <link itemprop="availability" href="http://schema.org/InStock" />
-          <% end %>
+          <%= render :partial => 'spree/shared/price', :locals => {:product => @product} %>
         </div>
         <div class="add-to-cart">
         <!-- TODO: revisar bien que pasa cuando haya un producto sin variantes -->
           <%= number_field_tag (@product.variants_and_option_values.any? ? :quantity : "variants[#{@product.master.id}]"), 1, :class => 'title', :min => 1 %>
-  <%= button_tag :class => 'large primary', :id => 'add-to-cart-button', :type => :submit do %>
-    <%= Spree.t(:add_to_cart) %>
-  <% end %>
+          <%= button_tag :class => 'large primary', :id => 'add-to-cart-button', :type => :submit do %>
+            <%= Spree.t(:add_to_cart) %>
+            <% end %>
         </div>
       </div>
     <% else %>

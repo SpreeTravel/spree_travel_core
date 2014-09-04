@@ -1,0 +1,38 @@
+<div id="cart-form" data-hook="cart_form">
+<%= form_for :order, :url => populate_orders_path do |f| %>
+  <div id="inside-product-cart-form" data-hook="inside_product_cart_form" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+
+    <!-- TODO: Revisar como hacer para que salga la moneda junto al precio  -->
+    <% if product.price_in(current_currency) and !product.price.nil? %>
+        <%= hidden_field_tag "products[#{product.id}]", 0, :id => "vp_#{product.id}"  %>
+        <input id="vp_1" type="hidden" value="2" name="products[1]">
+
+        <%= hidden_field_tag "hotel_start_date", "2014-05-26"  %>
+        <%= hidden_field_tag "hotel_end_date", "2014-05-29"  %>
+        <%= hidden_field_tag "hotel_adult", "2" %>
+        <%= hidden_field_tag "hotel_child", "1"  %>
+        <%= hidden_field_tag "hotel_pan", "CP"  %>
+        <%= hidden_field_tag "product_type", "hotel" %>
+
+      <div data-hook="product_price" class="columns five omega">
+        <div id="product-price">
+         <%= render :partial => 'spree/shared/price', :locals => {:product => product} %>
+        </div>
+        <div class="add-to-cart">
+          <!-- TODO: revisar bien que pasa cuando haya un producto sin variantes -->
+          <%= hidden_field_tag (product.variants_and_option_values.any? ? :quantity : "variants[#{product.master.id}]"), 1, :class => 'title', :min => 1 %>
+          <%= button_tag :class => 'large primary', :id => 'add-to-cart-button', :type => :submit do %>
+            <%= Spree.t(:add_to_cart) %>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+        <div id="product-price">
+          <br>
+          <div><span class="price selling" itemprop="price"><%= Spree.t('product_not_available_in_this_currency') %></span></div>
+        </div>
+    <% end %>
+
+  </div>
+<% end %>
+</div>

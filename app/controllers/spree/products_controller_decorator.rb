@@ -9,7 +9,7 @@ module Spree
       prices = calculator_class.calculate_price(context, variant).sort
 
       if prices.count > 1
-        prices_str = "#{prices[0]} ... #{prices[-1]}"
+        prices_str = "#{Spree.t(:starting)} #{prices[0]}"
       else
         prices_str = prices[0].to_s
       end
