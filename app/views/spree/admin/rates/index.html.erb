@@ -9,7 +9,7 @@
 <% content_for :page_actions do %>
 <ul class="actions inline-menu">
   <li>
-    <%= button_link_to Spree.t(:new_rate), new_admin_product_rate_path(:permalink => params[:permalink]), :icon => 'icon-plus', :id => 'admin_new_rate_link' %>
+    <%= button_link_to Spree.t(:new_rate), new_admin_product_rate_path(:slug => params[:slug]), :icon => 'icon-plus', :id => 'admin_new_rate_link' %>
   </li>
 </ul>
 <% end %>
