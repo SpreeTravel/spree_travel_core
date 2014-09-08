@@ -24,7 +24,9 @@
                      "#{prefix}end_date" => Time.now.to_date + 3,
                      "#{prefix}adult" => 2,
                      "#{prefix}child" => 0 }
-          function_name = "fill_cart_hiddens(#{@product.id})"
+          unless @product.nil?
+            function_name = "fill_cart_hiddens(#{@product.id})"
+          end
         %>
 
         <div id=<%="#{prefix}fields"%> class="tab-pane fade active in" >
