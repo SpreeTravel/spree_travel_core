@@ -35,7 +35,8 @@
    <div class="four columns omega">
         <%= f.field_container :calculator do %>
           <%= f.label :calculator_id, Spree.t(:calculator) %><br />
-          <%= f.collection_select :product_type_id, Spree::TravelCalculator.all, :id, :name, {:include_blank => false}, {:class => 'select2 fullwidth'} %>
+          <%= f.collection_select :calculator_id, Spree::TravelCalculator.all, :id, :name, {:include_blank => false}, {:class => 'select2 fullwidth'} %>
         <% end %>
       </div>
 </div>
+
