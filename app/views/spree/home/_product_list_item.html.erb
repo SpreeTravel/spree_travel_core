@@ -1,7 +1,7 @@
 <%
    kls = "columns twelve product-item"
    new_params = params.clone
-   new_params.merge!({:controller => "spree/products", :action => "show" , :id => product.permalink})
+   new_params.merge!({:controller => "spree/products", :action => "show" , :id => product.slug})
    otro_params = new_params.clone
 %>
 

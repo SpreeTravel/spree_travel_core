@@ -1,5 +1,5 @@
 /*
- *= require store/spree_frontend
+ *= require spree/frontend
  *= require jquery.ui.datepicker
  *= require jquery.ui.theme
  *= require store/navs
@@ -83,7 +83,7 @@ ul#products li .product-image {
 }
 
 #submit{
-    margin-bottom: -13px; 
+    margin-bottom: -13px;
     margin-top: 10px;
     text-align: center;
     box-shadow: 0 0 0 15px white;
@@ -91,14 +91,9 @@ ul#products li .product-image {
 }
 
 #update_price{
-    margin-bottom: -13px; 
+    margin-bottom: -13px;
     margin-top: 10px;
     text-align: center;
     box-shadow: 0 0 0 15px white;
     margin-left: 20px;
 }
-
-
-
-
-

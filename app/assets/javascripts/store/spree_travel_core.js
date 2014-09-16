@@ -1,23 +1,23 @@
-//= require store/spree_frontend
+//= require spree/frontend
 //= require store/tab
 //= require store/underscore
 //= require store/cart_overlay
 //= require store/datepicker
 //= require jquery.ui.datepicker
 
-// TODO: poner una clase en los elementos de busqueda y cambiar la busqueda
-// por inputs a busqueda por clase
 function params_data(product_id) {
     product_type = $('ul#search_box_tabs li.active a')[0].name;
     data = {
 	product_id: product_id,
 	product_type: product_type,
     };
-    inputs = $('div#' + product_type + '_fields ul li input');
+    // inputs = $('div#' + product_type + '_fields ul li input');
+    inputs = $('.' + product_type + '_inputs');
     inputs.each(function(index, element) {
 	data[element.id] = element.value;
     });
-    selects = $('div#' + product_type + '_fields ul li select');
+    // selects = $('div#' + product_type + '_fields ul li select');
+    selects = $('.' + product_type + '_selects');
     selects.each(function(index, element) {
 	data[element.id] = element.value;
     });
@@ -36,20 +36,30 @@ function update_prices() {
             type: 'POST',
             url: '/products/get_ajax_price',
             success: function (result) {
-		      prices = result.prices
-              object.html(prices);
-              hidden_id = "#vp_" + product_id;
-              $(hidden_id).val(result.variant);
-              b = $('#add-to-cart-button');
-              if (prices.indexOf('Starting') != -1) {
+              if (result.variant == "none") {
+                b = $('#add-to-cart-button');
                 b.attr('disabled', true);
                 b.addClass('disabled');
+                object.html('No options available.');
               } else {
-                b.attr('disabled', false);
-                b.removeClass('disabled');
-              }
+                prices = result.prices
+                object.html(prices);
+                hidden_id = "#vp_" + product_id;
+                $(hidden_id).val(result.variant);
+                b = $('#add-to-cart-button');
+                if (prices.indexOf('Starting') != -1) {
+                  b.attr('disabled', true);
+                  b.addClass('disabled');
+                } else {
+                  b.attr('disabled', false);
+                  b.removeClass('disabled');
+                }
+              };
             },
             error: function() {
+              b = $('#add-to-cart-button');
+              b.attr('disabled', true);
+              b.addClass('disabled');
 		      object.html('ERROR');
             }
         });
