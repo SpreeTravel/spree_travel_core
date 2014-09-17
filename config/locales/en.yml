@@ -3,6 +3,7 @@
 
 en:
   hello: "Hello world"
+  other_variants: "Other options available for the product."
   spree:
     pax: Pax
     new_rate: new rate

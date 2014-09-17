@@ -103,3 +103,8 @@ button.disabled{
   border-color: #404042;
   color: white;
 }
+
+td.image-holder img{
+  width: 20px;
+  height: 20px;
+}
