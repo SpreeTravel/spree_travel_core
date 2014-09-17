@@ -97,3 +97,9 @@ ul#products li .product-image {
     box-shadow: 0 0 0 15px white;
     margin-left: 20px;
 }
+
+button.disabled{
+  background-color: #404042;
+  border-color: #404042;
+  color: white;
+}

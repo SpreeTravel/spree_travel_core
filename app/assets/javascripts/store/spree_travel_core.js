@@ -37,7 +37,7 @@ function update_prices() {
             url: '/products/get_ajax_price',
             success: function (result) {
               if (result.variant == "none") {
-                b = $('#add-to-cart-button');
+                b = $('#add-to-cart-button' + '_' + result.product_id);
                 b.attr('disabled', true);
                 b.addClass('disabled');
                 object.html('No options available.');
@@ -46,8 +46,8 @@ function update_prices() {
                 object.html(prices);
                 hidden_id = "#vp_" + product_id;
                 $(hidden_id).val(result.variant);
-                b = $('#add-to-cart-button');
-                if (prices.indexOf('Starting') != -1) {
+                b = $('#add-to-cart-button' + '_' + result.product_id);
+                if (prices.indexOf('Starting') != -1 || prices == "") {
                   b.attr('disabled', true);
                   b.addClass('disabled');
                 } else {
@@ -57,8 +57,9 @@ function update_prices() {
               };
             },
             error: function() {
-              b = $('#add-to-cart-button');
+              b = $('#add-to-cart-button' + '_' + result.product_id);
               b.attr('disabled', true);
+              b.attr('hidden', true);
               b.addClass('disabled');
 		      object.html('ERROR');
             }
