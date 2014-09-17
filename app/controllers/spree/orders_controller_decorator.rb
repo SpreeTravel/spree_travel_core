@@ -4,7 +4,8 @@ module Spree
 
     # Adds a new item to the order (creating a new order if none already exists)
     def populate
-      populator = Spree::OrderPopulator.new(current_order(true), current_currency)
+      populator = Spree::OrderPopulator.new(current_order(options: {create_order_if_necessary: true}), current_currency)
+      # populator = Spree::OrderPopulator.new(current_order(true), current_currency)
 
       context = Spree::Context.build_from_params(params)
 
@@ -13,7 +14,7 @@ module Spree
         context.line_item = current_order.line_items.last
 
         variant = false
-        params[:products].each do |product_id,variant_id|
+        params[:products].each do |product_id, variant_id|
             variant = Spree::Variant.find variant_id
         end
 

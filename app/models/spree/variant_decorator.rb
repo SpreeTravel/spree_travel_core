@@ -24,6 +24,9 @@ module Spree
       return nil unless product_id
 
       list = Spree::Product.find(product_id).variants.joins(:option_values => :option_type)
+      Spree::Product.find(product_id).variants.each do |var|
+        puts var.option_values
+      end
       product_type = Spree::ProductType.find_by_name(pt)
       product_type.variant_option_types.each do |ot|
         ov = params[pt + '_' + ot.name] || params[ot.name]
