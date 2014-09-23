@@ -1,5 +1,3 @@
-
-<h6><%= t(:other_variants)%></h6>
 <table>
   <thead>
     <tr data-hook="other_variants_table_header">
@@ -8,20 +6,20 @@
     </tr>
   </thead>
   <tbody data-hook="other_variants_table_body">
-    <% for variant in @product.variants %>
+    <% for children in @childrens %>
         <tr>
           <td class="image-holder">
             <%
-              image = variant.images.first()
+              image = children.images.first()
             %>
             <% if image %>
               <%= image_tag image.attachment.url(:product), :itemprop => "image" %>
             <% else %>
-              <%= product_image(variant, :itemprop => "image") %>
+              <%= product_image(children, :itemprop => "image") %>
             <% end %>
           </td>
           <td>
-            <%= variant.sku %>
+            <%= children.sku %>
           </td>
         </tr>
     <% end %>
