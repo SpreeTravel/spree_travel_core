@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.description = 'Spree Travel Abstract Models, references to abstract Locations, etc.'
   s.required_ruby_version = '>= 1.9.3'
 
-  s.authors   = ['Pedro Quintero', 'Miguel Sancho', 'Cesar Lage', 'Raul Perez-alejo']
+  s.authors   = ['Pedro Quintero', 'Miguel Sancho', 'Cesar Lage', 'Raul Perez-alejo', 'Alejandro Dustet']
   s.email     = 'pqr@openjaf.com'
   s.homepage  = 'http://github.com/openjaf/spree_travel_core'
 
