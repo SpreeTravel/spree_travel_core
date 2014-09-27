@@ -32,8 +32,9 @@
       <td><%= rt.get_option_value(ot, 'presentation') %></td>
       <% end %>
       <td class="actions">
-	<%= link_to_edit(rt, :no_text => true, :class => 'admin_edit_rate') %>
-	<%= link_to_delete(rt, :no_text => true) %>
+      <!-- TODO fix bug regarding the links redirecting to some crazy url -->
+	      <%= link_to_edit(rt, :no_text => true, :class => 'admin_edit_rate') %>
+	      <%= link_to_delete(rt, :no_text => true) %>
       </td>
     </tr>
     <% end %>

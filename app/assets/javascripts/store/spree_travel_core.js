@@ -5,8 +5,6 @@
 //= require store/datepicker
 //= require jquery.ui.datepicker
 
-// TODO: Ver x q la primera vez q carga la pag no actualiza los precios
-
 function params_data(product_id) {
     product_type = $('ul#search_box_tabs li.active a')[0].name;
     data = {
