@@ -1,5 +1,14 @@
 module Spree
   ProductsController.class_eval do
+    before_action :add_childrens_param, only: :show
+
+    def add_childrens_param
+      begin
+        @childrens = @product.childrens || @product.variants
+      rescue
+        @childrens = @product.variants
+      end
+    end
 
     def get_ajax_price
       product = Spree::Product.find(params[:product_id])

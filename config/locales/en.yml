@@ -4,8 +4,10 @@
 en:
   hello: "Hello world"
   other_variants: "Other options available for the product."
+  childrens_label: "Product childrens"
   spree:
     pax: Pax
     new_rate: new rate
     starting: Starting at
     product: Product
+

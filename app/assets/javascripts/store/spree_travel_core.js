@@ -8,19 +8,20 @@
 function params_data(product_id) {
     product_type = $('ul#search_box_tabs li.active a')[0].name;
     data = {
-	product_id: product_id,
-	product_type: product_type,
+	   product_id: product_id,
+	   product_type: product_type,
     };
-    // inputs = $('div#' + product_type + '_fields ul li input');
+
     inputs = $('.' + product_type + '_inputs');
     inputs.each(function(index, element) {
-	data[element.id] = element.value;
+	   data[element.id] = element.value;
     });
-    // selects = $('div#' + product_type + '_fields ul li select');
+
     selects = $('.' + product_type + '_selects');
     selects.each(function(index, element) {
-	data[element.id] = element.value;
+	   data[element.id] = element.value;
     });
+
     return data
 }
 

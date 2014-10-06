@@ -25,36 +25,36 @@
                      "#{prefix}end_date" => Time.now.to_date + 3,
                      "#{prefix}adult" => 2,
                      "#{prefix}child" => 0 }
+
           if p.name.downcase == active_product
             active_tab = 'active'
           else
             active_tab = ''
           end
-
           unless @product.nil?
             function_name = "fill_cart_hiddens(#{@product.id})"
           end
         %>
-        <div id=<%="#{prefix}fields"%> class="tab-pane fade in #{active_tab}" >
+        <div id=<%="#{prefix}fields"%> >
           <ul class="alpha twelve columns omega" >
     	    <% p.search_box_option_types.each do |ot| %>
-              <% tag_name = prefix + ot.name %>
+            <% tag_name = prefix + ot.name %>
     	      <li class="four columns">
     	        <%= label_tag tag_name, Spree.t(ot.presentation) %>
     	        <% current_value = hash[tag_name] %>
-	        <% if ot.attr_type == 'selection' %>
-	          <%= select_tag tag_name, options_for_select(ot.option_values.map { |ov| [ov.presentation, ov.id] }, current_value), :class => "select2 #{prefix}selects", 'onchange' => function_name %>
-	        <% elsif ot.attr_type == 'integer' %>
-	          <%= number_field_tag tag_name, current_value, :class => "#{prefix}inputs", 'onkeyup' => function_name %>
-	        <% elsif ot.attr_type == 'float' %>
-	          <%= number_field_tag tag_name, current_value , :class => "#{prefix}inputs", 'onkeyup' => function_name %>
-	        <% elsif ot.attr_type == 'boolean' %>
-	          <%= check_box_tag tag_name, 1, :class => "#{prefix}inputs", 'onchange' => function_name %>
-	        <% elsif ot.attr_type == 'date' %>
-	          <%= text_field_tag tag_name, current_value, :class => "datepicker #{prefix}inputs", 'onkeyup' => function_name %>
-	        <% else %>
-	          <%= text_field_tag tag_name, current_value, :class => "#{prefix}inputs", 'onkeyup' => function_name %>
-	        <% end %>
+    	        <% if ot.attr_type == 'selection' %>
+    	          <%= select_tag tag_name, options_for_select(ot.option_values.map { |ov| [ov.presentation, ov.id] }, current_value), :class => "select2 #{prefix}selects", 'onchange' => function_name %>
+    	        <% elsif ot.attr_type == 'integer' %>
+    	          <%= number_field_tag tag_name, current_value, :class => "#{prefix}inputs", 'onkeyup' => function_name %>
+    	        <% elsif ot.attr_type == 'float' %>
+    	          <%= number_field_tag tag_name, current_value , :class => "#{prefix}inputs", 'onkeyup' => function_name %>
+    	        <% elsif ot.attr_type == 'boolean' %>
+    	          <%= check_box_tag tag_name, 1, :class => "#{prefix}inputs", 'onchange' => function_name %>
+    	        <% elsif ot.attr_type == 'date' %>
+    	          <%= text_field_tag tag_name, current_value, :class => "datepicker #{prefix}inputs", 'onkeyup' => function_name %>
+    	        <% else %>
+    	          <%= text_field_tag tag_name, current_value, :class => "#{prefix}inputs", 'onkeyup' => function_name %>
+    	        <% end %>
     	      </li>
     	    <% end %>
           </ul>
