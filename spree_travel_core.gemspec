@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.description = 'Spree Travel Abstract Models, references to abstract Locations, etc.'
   s.required_ruby_version = '>= 1.9.3'
 
-  s.authors   = ['Pedro Quintero', 'Miguel Sancho', 'Cesar Lage', 'Raul Perez-alejo']
+  s.authors   = ['Pedro Quintero', 'Miguel Sancho', 'Cesar Lage', 'Raul Perez-alejo', 'Alejandro Dustet']
   s.email     = 'pqr@openjaf.com'
   s.homepage  = 'http://github.com/openjaf/spree_travel_core'
 
@@ -21,8 +21,8 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'spree_core', '~> ' + versions['spree']
-  s.add_dependency 'spree_auth_devise', '~> ' + versions['spree_auth_devise']
+  s.add_dependency 'spree', '~> ' + versions['spree']
+  s.add_dependency 'spree_auth_devise', '~> 2.2.0'
 
   s.add_development_dependency 'capybara', '~> 2.0'
   s.add_development_dependency 'coffee-rails'
