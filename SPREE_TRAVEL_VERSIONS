@@ -1,5 +1,5 @@
 gems:
-  spree: 2.3.1
+  spree: 2.3.3
   spree_travel: 2.3.1
   spree_auth_devise: 2.2.0
   spree_related_products: 3.2.3
