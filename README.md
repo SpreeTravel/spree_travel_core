@@ -7,7 +7,7 @@ The Spree Travel project is a work in progress, and will suffer major changes. P
 
 Requirements
 ------------
- ### Rails and Spree
+### Rails and Spree
 Spree Travel Core now requires Rails version **>= 4.0** and a Spree version **>=2.3**.
 
 Installation
@@ -15,15 +15,15 @@ Installation
 
 Spree Travel Core is not yet distributed as a gem, so it should be used in your app with a git reference or you can download the source and build the gem on your own.
 
-	1. Add the following to your Gemfile
+1. Add the following to your Gemfile
 
-	```ruby
+  ```ruby
 		gem 'spree_travel_core’, :git => 'https://github.com/openjaf/	spree_travel_core.git', :branch => '2-3-stable'
-```
+  ```
 
-	2. Run `bundle install`
+2. Run `bundle install`
 
-	3. To copy and apply migrations run:
+3. To copy and apply migrations run:
 
 	```
 	rails g spree_travel_core:install
