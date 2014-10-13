@@ -1,17 +1,19 @@
 module Spree
   module DynamicAttribute
 
-    def method_missing(method_name, *args)
-      method_name = method_name.to_s
-      if method_name.ends_with?('=')
-        method_name = method_name.slice(0, method_name.length-1)
-        set_option_value(method_name, *args)
-      else
-        get_option_value(method_name, *args)
-      end
-    rescue
-      super
-    end
+    # NOTE: este metodo genera ruido con la creacion
+    # def method_missing(method_name, *args)
+    #   super if self.excluded_list.include?(method_name.to_s)
+    #   method_name = method_name.to_s
+    #   if method_name.ends_with?('=')
+    #     method_name = method_name.slice(0, method_name.length-1)
+    #     set_option_value(method_name, *args)
+    #   else
+    #     get_option_value(method_name, *args)
+    #   end
+    # rescue
+    #   super
+    # end
 
     def set_option_values(params)
       product_type = Spree::ProductType.find_by_name(params["product_type"])
@@ -47,7 +49,9 @@ module Spree
     end
 
     def get_option_type_object(option_type)
-      if option_type.is_a?(String)
+      if option_type.is_a?(Symbol)
+        option_type = Spree::OptionType.find_by_name(option_type)
+      elsif option_type.is_a?(String)
         option_type = Spree::OptionType.find_by_name(option_type)
       elsif option_type.is_a?(Integer)
         option_type = Spree::OptionType.find(option_type)

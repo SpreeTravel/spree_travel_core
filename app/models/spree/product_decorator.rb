@@ -14,7 +14,7 @@ module Spree
     end
 
     def generate_variants
-      variantions(self.option_types) do |array|
+      variations(self.option_types) do |array|
         variant = Spree::Variant.new
         variant.sku = Faker.bothify('???-######').upcase
         variant.price = 0
@@ -37,13 +37,13 @@ module Spree
 
     private
 
-    def variations(option_types, index = 0, array = [], &block)
-      if option_types.length == index
+    def variations(the_option_types, index = 0, array = [], &block)
+      if the_option_types.length == index
         yield array
       else
-        for option_value in options_types[index].option_values
+        for option_value in the_option_types[index].option_values
           array[index] = option_value
-          variations(option_types, index + 1, array, &block)
+          variations(the_option_types, index + 1, array, &block)
         end
       end
     end
