@@ -1,8 +1,26 @@
 module Spree
   ProductsController.class_eval do
+    before_action :add_childrens_param, only: :show
+
+    def add_childrens_param
+      begin
+        @childrens = @product.childrens || @product.variants
+      rescue
+        @childrens = @product.variants
+      end
+    end
 
     def get_ajax_price
       product = Spree::Product.find(params[:product_id])
+      if product.product_type.id != Spree::ProductType.find_by_name(params[:product_type]).id
+        hash = { :product_id => params[:product_id], :variant => "none", :prices => "0.0" }
+        respond_to do |format|
+          number = rand(3)
+          sleep number
+          format.json {render :json => hash }
+        end
+        return
+      end
       calculator_class = product.calculator.name.constantize
       context = Spree::Context.build_from_params(params)
       variant = Spree::Variant.variant_from_params(params)
@@ -10,7 +28,7 @@ module Spree
       #The variant returns with a nil value if there is not one holding a value for
       #the product_type_variant_option_type that defines the product_type per_se
       if variant.nil?
-        hash = { :variant => "none", :prices => "0.0" }
+        hash = { :product_id => params[:product_id], :variant => "none", :prices => "0.0" }
         respond_to do |format|
           number = rand(3)
           sleep number
@@ -23,7 +41,7 @@ module Spree
         else
           prices_str = prices[0].to_s
         end
-        hash = { :variant => variant.id, :prices => prices_str }
+        hash = { :product_id => params[:product_id], :variant => variant.id, :prices => prices_str }
 
         respond_to do |format|
           number = rand(3)

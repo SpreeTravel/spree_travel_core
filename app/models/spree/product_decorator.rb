@@ -13,6 +13,17 @@ module Spree
 
     end
 
+    def generate_variants
+      variations(self.option_types) do |array|
+        variant = Spree::Variant.new
+        variant.sku = Faker.bothify('???-######').upcase
+        variant.price = 0
+        variant.option_values = array
+        variant.product_id = self.id
+        variant.save
+      end
+    end
+
     def rate_option_types
       self.product_type.rate_option_types
     end
@@ -23,6 +34,19 @@ module Spree
 
     # TODO: poner bonito la seleccion de variantes en la creacion de
     # productos, parece que es de Spree
+
+    private
+
+    def variations(the_option_types, index = 0, array = [], &block)
+      if the_option_types.length == index
+        yield array
+      else
+        for option_value in the_option_types[index].option_values
+          array[index] = option_value
+          variations(the_option_types, index + 1, array, &block)
+        end
+      end
+    end
 
   end
 end

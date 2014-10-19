@@ -8,19 +8,20 @@
 function params_data(product_id) {
     product_type = $('ul#search_box_tabs li.active a')[0].name;
     data = {
-	product_id: product_id,
-	product_type: product_type,
+	   product_id: product_id,
+	   product_type: product_type,
     };
-    // inputs = $('div#' + product_type + '_fields ul li input');
+
     inputs = $('.' + product_type + '_inputs');
     inputs.each(function(index, element) {
-	data[element.id] = element.value;
+	   data[element.id] = element.value;
     });
-    // selects = $('div#' + product_type + '_fields ul li select');
+
     selects = $('.' + product_type + '_selects');
     selects.each(function(index, element) {
-	data[element.id] = element.value;
+	   data[element.id] = element.value;
     });
+
     return data
 }
 
@@ -37,7 +38,7 @@ function update_prices() {
             url: '/products/get_ajax_price',
             success: function (result) {
               if (result.variant == "none") {
-                b = $('#add-to-cart-button');
+                b = $('#add-to-cart-button' + '_' + result.product_id);
                 b.attr('disabled', true);
                 b.addClass('disabled');
                 object.html('No options available.');
@@ -46,8 +47,8 @@ function update_prices() {
                 object.html(prices);
                 hidden_id = "#vp_" + product_id;
                 $(hidden_id).val(result.variant);
-                b = $('#add-to-cart-button');
-                if (prices.indexOf('Starting') != -1) {
+                b = $('#add-to-cart-button' + '_' + result.product_id);
+                if (prices.indexOf('Starting') != -1 || prices == "") {
                   b.attr('disabled', true);
                   b.addClass('disabled');
                 } else {
@@ -57,8 +58,9 @@ function update_prices() {
               };
             },
             error: function() {
-              b = $('#add-to-cart-button');
+              b = $('#add-to-cart-button' + '_' + result.product_id);
               b.attr('disabled', true);
+              b.attr('hidden', true);
               b.addClass('disabled');
 		      object.html('ERROR');
             }

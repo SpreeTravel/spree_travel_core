@@ -21,8 +21,14 @@ module Spree
       (context_option_types + variant_option_types).uniq
     end
 
+    # # Original enabled definition, holds the semantic interpretation
+    # def self.enabled
+    #   where(:enabled => true).where.not(:name => "Product")
+    # end
+
+    # Modified enabled definition, to exclude product product_type, for lacking of relevance
     def self.enabled
-      where(:enabled => true)
+      where(:enabled => true).where.not(:name => "Product")
     end
 
   end

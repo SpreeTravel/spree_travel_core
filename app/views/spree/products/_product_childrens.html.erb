@@ -1,0 +1,27 @@
+<table>
+  <thead>
+    <tr data-hook="other_variants_table_header">
+      <th><%=Spree.t(:image)%></th>
+      <th><%=Spree.t(:variant)%></th>
+    </tr>
+  </thead>
+  <tbody data-hook="other_variants_table_body">
+    <% for children in @childrens %>
+        <tr>
+          <td class="image-holder">
+            <%
+              image = children.images.first()
+            %>
+            <% if image %>
+              <%= image_tag image.attachment.url(:product), :itemprop => "image" %>
+            <% else %>
+              <%= product_image(children, :itemprop => "image") %>
+            <% end %>
+          </td>
+          <td>
+            <%= children.sku %>
+          </td>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
