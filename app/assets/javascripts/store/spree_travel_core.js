@@ -39,30 +39,38 @@ function update_prices() {
             success: function (result) {
               if (result.variant == "none") {
                 b = $('#add-to-cart-button' + '_' + result.product_id);
+                selector = "ul#products li#product_"+ result.product_id
                 b.attr('disabled', true);
                 b.addClass('disabled');
                 object.html('No options available.');
+                $(selector).css('display', 'none')
               } else {
+                selector = "ul#products li#product_"+ result.product_id
                 prices = result.prices
                 object.html(prices);
                 hidden_id = "#vp_" + product_id;
                 $(hidden_id).val(result.variant);
+                $(selector).css('display', 'inherit')
                 b = $('#add-to-cart-button' + '_' + result.product_id);
                 if (prices.indexOf('Starting') != -1 || prices == "") {
                   b.attr('disabled', true);
                   b.addClass('disabled');
+                  $(selector).css('display', 'none')
                 } else {
                   b.attr('disabled', false);
                   b.removeClass('disabled');
+                  $(selector).css('display', 'inherit')
                 }
               };
             },
             error: function() {
               b = $('#add-to-cart-button' + '_' + result.product_id);
+              selector = "ul#products li#product_"+ result.product_id
               b.attr('disabled', true);
               b.attr('hidden', true);
               b.addClass('disabled');
 		      object.html('ERROR');
+              $(selector).css('display', 'none')
             }
         });
     });
