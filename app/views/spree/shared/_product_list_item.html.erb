@@ -18,6 +18,6 @@
     <%= truncate(product.description, :length => 300)%>
   </div>
   <div id="cart-form" data-hook="cart_form">
-    <%= render :partial => 'cart_form', :locals => {:product => product} %>
+    <%= render :partial => 'spree/shared/cart_form', :locals => {:product => product} %>
   </div>
 </li>

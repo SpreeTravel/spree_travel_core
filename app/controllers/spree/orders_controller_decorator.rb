@@ -8,6 +8,7 @@ module Spree
       # populator = Spree::OrderPopulator.new(current_order(true), current_currency)
 
       context = Spree::Context.build_from_params(params)
+      bla
 
       if populator.populate(params.slice(:products, :variants, :quantity))
 

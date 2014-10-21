@@ -1,7 +1,7 @@
 /*
  *= require spree/frontend
- *= require jquery.ui.datepicker
- *= require jquery.ui.theme
+ *= require jquery-ui/datepicker
+ *= require jquery-ui/theme
  *= require store/navs
 */
 
