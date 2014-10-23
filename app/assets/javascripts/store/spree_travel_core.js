@@ -31,6 +31,7 @@ function update_prices() {
         object = $(object);
         object.html('<img src="/assets/ajax-loader.gif" >');
         product_id = object.attr('data-product-hook');
+        fill_cart_hiddens(product_id);
         console.debug('getting price for' + product_id);
         $.ajax({
             data_type: 'JSON',
