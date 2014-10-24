@@ -17,6 +17,9 @@ module Spree
       :foreign_key => 'product_type_id',
       :association_foreign_key => 'variant_option_type_id'
 
+    validates_presence_of :name, :presentation
+    validates_uniqueness_of :name
+
     def search_box_option_types
       (context_option_types + variant_option_types).uniq
     end

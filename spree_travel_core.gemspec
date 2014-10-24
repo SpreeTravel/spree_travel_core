@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'spree', '~> ' + versions['spree']
   # s.add_dependency 'spree_auth_devise', '~> 2.2.0'
 
-  s.add_development_dependency 'capybara'
+  s.add_development_dependency 'capybara', '~> 2.2.0.beta'
   s.add_development_dependency 'coffee-rails'
   s.add_development_dependency 'database_cleaner'
   s.add_development_dependency 'factory_girl'
