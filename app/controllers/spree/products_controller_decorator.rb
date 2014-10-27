@@ -39,7 +39,8 @@ module Spree
         if prices.count > 1
           prices_str = "#{Spree.t(:starting)} #{prices[0]}"
         else
-          prices_str = prices[0].to_s
+          # TODO: poner la forma correcta de currency llamando a Spree::Money.new....
+          prices_str = "$ %.2f" % prices[0]
         end
         hash = { :product_id => params[:product_id], :variant => variant.id, :prices => prices_str }
 

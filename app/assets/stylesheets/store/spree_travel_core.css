@@ -5,6 +5,14 @@
  *= require store/navs
 */
 
+.mini-cart .add-to-cart {
+  margin-top: 0px;
+}
+
+.mini-number {
+  width: 60px;
+}
+
 ul#products li {
     text-align: left;
 }
