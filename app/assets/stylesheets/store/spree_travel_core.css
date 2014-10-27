@@ -36,6 +36,10 @@ ul#products li .product-image {
     border: 0;
 }
 
+ul#products li .product-destination {
+
+}
+
 .product-item {
    border: 1px solid #d9d9db;
 }

@@ -14,6 +14,9 @@
         <%= product.name %>
     <%end%>
   </div>
+  <div class="product-destination">
+    <%= link_to product.destination, product.destination_taxon %>
+  </div>
   <div class="product-mini-description">
     <%= truncate(product.description, :length => 300)%>
   </div>
