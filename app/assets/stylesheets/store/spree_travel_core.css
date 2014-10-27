@@ -15,6 +15,19 @@ ul#products li {
     margin-right: 10px;
 }
 
+.search_box_row {
+  padding-top: 10px;
+  vertical-align: middle;
+}
+
+.search_box_left {
+  text-align: right;
+}
+
+.search_box_right select {
+  padding: 4px;
+}
+
 ul#products li a.info {
     overflow: hidden;
     border-bottom: 0;
