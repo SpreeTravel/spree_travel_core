@@ -30,7 +30,7 @@ module Spree
         price = calculator_class.calculate_price(context, variant).sort
 
         line_item = current_order.line_items.last
-        line_item.price = price.first.to_d
+        line_item.price = price.first.to_i
 
         line_item.save
         context.save

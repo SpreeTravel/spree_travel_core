@@ -2,7 +2,6 @@ branch 2.3 de las tres gemas. SpreeTravel(Core, Hotel, Sample)
 
 FrontEnd
 
-(alto)NingÃºn add_to_cart funciona, todos dan palo
 (alto)El buscador de arriba da palo cuando pones "Adams", es el ejemplo que utilicÃ©.
 (bajo) El listado de hoteles en el home#index no se ven bien, organizaciÃ³n
 (medio) En el detalle de producto se puestra el SKU de la habitaciÃ³n, que es un nombre raro.
