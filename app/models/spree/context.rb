@@ -14,7 +14,8 @@ module Spree
       @temporal
     end
 
-    def self.build_from_params(params)
+    def self.build_from_params(params, options = {})
+      raise Exception.new("You must ebe explicit about temporal or not") if options[:temporal].nil?
       context_params = {}
       prefix = "#{params[:product_type]}_"
       params.each do |k, v|
@@ -26,28 +27,28 @@ module Spree
       end
       context = Spree::Context.new
       context.initialize_variables
-      context.set_option_values(context_params, :temporal => true)
+      context.set_option_values(context_params, :temporal => options[:temporal])
       return context
     end
 
-    def start_date
-      get_temporal_option_value(:start_date)
+    def start_date(options = {:temporal => true})
+      get_mixed_option_value(:start_date, options)
     end
 
-    def end_date
-      get_temporal_option_value(:end_date)
+    def end_date(options = {:temporal => true})
+      get_mixed_option_value(:end_date, options)
     end
 
-    def plan
-      get_temporal_option_value(:plan)
+    def plan(options = {:temporal => true})
+      get_mixed_option_value(:plan, options)
     end
 
-    def adult
-      get_temporal_option_value(:adult)
+    def adult(options = {:temporal => true})
+      get_mixed_option_value(:adult, options)
     end
 
-    def child
-      get_temporal_option_value(:child)
+    def child(options = {:temporal => true})
+      get_mixed_option_value(:child, options)
     end
 
   end

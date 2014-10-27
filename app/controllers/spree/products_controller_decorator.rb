@@ -22,7 +22,7 @@ module Spree
         return
       end
       calculator_class = product.calculator.name.constantize
-      context = Spree::Context.build_from_params(params)
+      context = Spree::Context.build_from_params(params, :temporal => true)
       variant = Spree::Variant.variant_from_params(params)
 
       #The variant returns with a nil value if there is not one holding a value for

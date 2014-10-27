@@ -16,6 +16,7 @@ module Spree
     # end
 
     def set_option_values(params, options = {:temporal => false})
+      self.save if options[:temporal] == false && self.new_record?
       prefix = params["product_type"]
       product_type = Spree::ProductType.find_by_name(prefix)
       klass = self.class.to_s
@@ -34,9 +35,12 @@ module Spree
           if options[:temporal]
             set_temporal_option_value(option_type.name, v)
           else
-            set_option_value(option_type, v)
+            set_option_value(option_type.name, v)
           end
         end
+      end
+      if options[:temporal]
+        set_temporal_option_value('product_type', params[:product_type])
       end
     end
 
@@ -62,6 +66,14 @@ module Spree
 
     def set_temporal_option_value(option_type, value)
       @temporal[option_type.to_s] = value
+    end
+
+    def get_mixed_option_value(option_type, options = {:temporal => true})
+      if options[:temporal]
+        get_temporal_option_value(option_type)
+      else
+        get_option_value(option_type)
+      end
     end
 
     def get_option_value(option_type, attr='id')

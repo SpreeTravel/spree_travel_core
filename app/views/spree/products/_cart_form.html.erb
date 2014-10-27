@@ -6,7 +6,7 @@
 
     <!-- TODO: Revisar como hacer para que salga la moneda junto al precio  -->
     <% if product.price_in(current_currency) and !product.price.nil? %>
-        <%= hidden_field_tag "products[#{product.id}]", 0, :id => "vp_#{product.id}"  %>
+        <%= hidden_field_tag "products[#{product.id}]", product.master.id, :id => "vp_#{product.id}"  %>
         <!-- <input id="vp_1" type="hidden" value="2" name="products[1]"> -->
 
         <input type="hidden" id="template-hidden" >

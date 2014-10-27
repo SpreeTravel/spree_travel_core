@@ -11,15 +11,17 @@
     <td class="cart-item-description" data-hook="cart_item_description">
       <h4><%= link_to variant.product.name, product_path(variant.product) %></h4>
       <!-- TODO esto hacerlo din;amico con los ContextOptionTypes -->
-      Check In: <%= line_item.context.start_date %> </br>
-      Check Out: <%= line_item.context.end_date %> </br>
-      <%= variant.options_text %>
-      Plean Plan: <%= line_item.context.plan %> </br>
+      Check In: <%= line_item.context.start_date(:temporal => false) %> </br>
+      Check Out: <%= line_item.context.end_date(:temporal => false) %> </br>
+      <%#= variant.options_text %>
+      Meal Plan: <%= line_item.context.plan(:temporal => false) %> </br>
 
       <%= Spree.t(:pax) %>:
       <span>
         <%= link_to "#", :onclick=>"paxOverlay('line_item_detail')"   do %>
-          <%= full_pax_count(line_item.paxes) %>/<%= line_item.context.adult.to_i + line_item.context.child.to_i %>
+          <%= full_pax_count(line_item.paxes) %>
+          /
+          <%= line_item.context.adult(:temporal => false).to_i + line_item.context.child(:temporal => false).to_i %>
 
         <% end %>
       </span>
