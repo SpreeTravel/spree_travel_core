@@ -1,9 +1,5 @@
 branch 2.3 de las tres gemas. SpreeTravel(Core, Hotel, Sample)
 
-FrontEnd
-
-(medio) En el detalle de producto se puestra el SKU de la habitaciÃ³n, que es un nombre raro.
-
 
 BackEnd
 

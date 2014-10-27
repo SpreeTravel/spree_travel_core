@@ -5,6 +5,28 @@
  *= require store/navs
 */
 
+.child-pair {
+  margin-top: 5px;
+}
+
+.child-key {
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.child-value {
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #00adee;
+}
+
+.child {
+  border: solid 1px #e7e7e7;
+  margin-bottom: 10px;
+}
+
 .mini-cart .add-to-cart {
   margin-top: 0px;
 }
@@ -17,7 +39,7 @@ ul#products li {
     text-align: left;
 }
 
-.product-image {
+.product-image, .child-image {
     max-width: 120px;
     float: left;
     margin-right: 10px;
@@ -53,7 +75,7 @@ ul#products li .product-mini-description {
     font-weight: normal;
 }
 
-ul#products li .product-image {
+ul#products li .product-image, ul li .child-image {
     border: 0;
 }
 
