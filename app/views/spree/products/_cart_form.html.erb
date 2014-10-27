@@ -12,7 +12,7 @@
         <!-- <input id="vp_1" type="hidden" value="2" name="products[1]"> -->
         <input type="hidden" id="template-hidden-<%=product.id%>" >
 
-        <% if mini %>
+        <% if defined?(mini) && mini %>
           <div data-hook="product_price" class="columns eight omega mini-cart row">
             <div class="add-to-cart two columns alpha">
               <div id="product-price">
