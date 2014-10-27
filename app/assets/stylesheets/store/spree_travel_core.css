@@ -1,18 +1,61 @@
 /*
  *= require spree/frontend
- *= require jquery.ui.datepicker
- *= require jquery.ui.theme
+ *= require jquery-ui/datepicker
+ *= require jquery-ui/theme
  *= require store/navs
 */
+
+.child-pair {
+  margin-top: 5px;
+}
+
+.child-key {
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.child-value {
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #00adee;
+}
+
+.child {
+  border: solid 1px #e7e7e7;
+  margin-bottom: 10px;
+}
+
+.mini-cart .add-to-cart {
+  margin-top: 0px;
+}
+
+.mini-number {
+  width: 60px;
+}
 
 ul#products li {
     text-align: left;
 }
 
-.product-image {
+.product-image, .child-image {
     max-width: 120px;
     float: left;
     margin-right: 10px;
+}
+
+.search_box_row {
+  padding-top: 10px;
+  vertical-align: middle;
+}
+
+.search_box_left {
+  text-align: right;
+}
+
+.search_box_right select {
+  padding: 4px;
 }
 
 ul#products li a.info {
@@ -32,8 +75,12 @@ ul#products li .product-mini-description {
     font-weight: normal;
 }
 
-ul#products li .product-image {
+ul#products li .product-image, ul li .child-image {
     border: 0;
+}
+
+ul#products li .product-destination {
+
 }
 
 .product-item {

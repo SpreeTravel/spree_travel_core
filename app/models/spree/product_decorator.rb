@@ -32,6 +32,17 @@ module Spree
       self.product_type.context_option_types
     end
 
+    def destination_taxon
+      destination_taxonomy = Spree::Taxonomy.where(:name => 'Destination').first
+      self.taxons.where(:taxonomy_id => destination_taxonomy.id).first
+    rescue
+      nil
+    end
+
+    def destination
+      destination_taxon.name rescue "no place"
+    end
+
     # TODO: poner bonito la seleccion de variantes en la creacion de
     # productos, parece que es de Spree
 

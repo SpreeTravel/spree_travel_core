@@ -3,7 +3,7 @@
 //= require store/underscore
 //= require store/cart_overlay
 //= require store/datepicker
-//= require jquery.ui.datepicker
+//= require jquery-ui/datepicker
 
 function params_data(product_id) {
     product_type = $('ul#search_box_tabs li.active a')[0].name;
@@ -31,6 +31,8 @@ function update_prices() {
         object = $(object);
         object.html('<img src="/assets/ajax-loader.gif" >');
         product_id = object.attr('data-product-hook');
+        fill_cart_hiddens(product_id);
+        console.debug('getting price for' + product_id);
         $.ajax({
             data_type: 'JSON',
             data: params_data(product_id),
@@ -70,24 +72,24 @@ function update_prices() {
 }
 
 function fill_cart_hiddens(product_id) {
-    template = $('#template-hidden');
+    theform = $('#inside-product-cart-form-'+product_id);
+    template = $('#template-hidden-'+product_id, theform);
+    console.log("---here---");
     console.log(template);
     data = params_data(product_id);
-    theform = $('#inside-product-cart-form');
     $.each(data, function(index, val) {
         index_name = index + "_cart_form";
         console.log(index_name);
-        new_hidden = $('#'+index_name, theform);
+        new_hidden = $('.'+index_name, theform);
         if (new_hidden.length == 0) {
             new_hidden = template.clone();
             new_hidden.attr('name', index);
-            new_hidden.attr('id', index_name);
+            new_hidden.attr('class', index_name);
+            new_hidden.attr('id', index_name + '_' + product_id);
             console.log(new_hidden);
             theform.append(new_hidden);
         }
         new_hidden.val(val);
-        console.log(index + ": " + val);
-        console.log('------');
     });
     console.log('#######################################');
 }

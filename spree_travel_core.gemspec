@@ -24,13 +24,13 @@ Gem::Specification.new do |s|
   s.add_dependency 'spree', '~> ' + versions['spree']
   s.add_dependency 'spree_auth_devise', '~> 2.2.0'
 
-  s.add_development_dependency 'capybara', '~> 2.0'
+  s.add_development_dependency 'capybara', '~> 2.4'
   s.add_development_dependency 'coffee-rails'
   s.add_development_dependency 'database_cleaner'
-  s.add_development_dependency 'factory_girl', '~> 4.2'
+  s.add_development_dependency 'factory_girl', '~> 4.4'
   s.add_development_dependency 'ffaker'
-  s.add_development_dependency 'rspec-rails',  '~> 2.11'
-  s.add_development_dependency 'sass-rails'
+  s.add_development_dependency 'rspec-rails',  '~> 3.0'
+  s.add_development_dependency 'sass-rails', '~> 4.0.2'
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'sqlite3'
