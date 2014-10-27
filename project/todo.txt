@@ -2,7 +2,6 @@ branch 2.3 de las tres gemas. SpreeTravel(Core, Hotel, Sample)
 
 FrontEnd
 
-(alto)Los taxons que tienen asociados productos, dan palo
 (bajo)El buscador no se ve bien.
 (alto)NingÃºn producto en ninguna vista muestra precio. Y por lo tanto el Update Price tampoco funciona.
 (alto)NingÃºn add_to_cart funciona, todos dan palo
