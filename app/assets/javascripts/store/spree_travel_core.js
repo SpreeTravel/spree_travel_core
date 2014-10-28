@@ -5,6 +5,8 @@
 //= require store/datepicker
 //= require jquery.ui.datepicker
 
+var unavailable_products_visibles = true;
+
 function params_data(product_id) {
     product_type = $('ul#search_box_tabs li.active a')[0].name;
     data = {
@@ -43,7 +45,9 @@ function update_prices() {
                 b.attr('disabled', true);
                 b.addClass('disabled');
                 object.html('No options available.');
-                $(selector).css('display', 'none')
+                if (!unavailable_products_visibles) {
+                    $(selector).css('display', 'none')
+                }
               } else {
                 selector = "ul#products li#product_"+ result.product_id
                 prices = result.prices
@@ -55,7 +59,9 @@ function update_prices() {
                 if (prices.indexOf('Starting') != -1 || prices == "") {
                   b.attr('disabled', true);
                   b.addClass('disabled');
-                  $(selector).css('display', 'none')
+                  if (!unavailable_products_visibles) {
+                    $(selector).css('display', 'none')
+                  }
                 } else {
                   b.attr('disabled', false);
                   b.removeClass('disabled');
@@ -69,8 +75,10 @@ function update_prices() {
               b.attr('disabled', true);
               b.attr('hidden', true);
               b.addClass('disabled');
-		      object.html('ERROR');
-              $(selector).css('display', 'none')
+		          object.html('ERROR');
+              if (!unavailable_products_visibles) {
+                $(selector).css('display', 'none')
+              }
             }
         });
     });
@@ -100,7 +108,13 @@ function fill_cart_hiddens(product_id) {
     console.log('#######################################');
 }
 
+function available_visibility_changed(){
+    unavailable_products_visibles = !unavailable_products_visibles;
+    update_prices();
+}
+
 $(document).ready(function() {
     update_prices();
     $('#update_price').attr('onclick', 'update_prices()');
+    $('.visibility_check_box').attr('onclick', 'available_visibility_changed()');
 });
