@@ -20,8 +20,9 @@
               </div>
             </div>
             <div class="alpha two column omega">
-              <%= number_field_tag (product.variants_and_option_values.any? ? :quantity : "variants[#{product.master.id}]"), 1,
+              <%#= number_field_tag (product.variants_and_option_values.any? ? :quantity : "variants[#{product.master.id}]"), 1,
                 :class => 'mini-number', :min => 1 %>
+              <%= hidden_field_tag :quantity, 1 %>
             </div>
             <div class="four columns">
               <%= button_tag :class => 'large primary', :id => 'add-to-cart-button', :type => :submit do %>
@@ -36,7 +37,8 @@
               <%= render :partial => 'spree/shared/price', :locals => {:product => product} %>
             </div>
             <div class="add-to-cart">
-              <%= number_field_tag (product.variants_and_option_values.any? ? :quantity : "variants[#{product.master.id}]"), 1, :class => 'title', :min => 1 %>
+              <%#= number_field_tag (product.variants_and_option_values.any? ? :quantity : "variants[#{product.master.id}]"), 1, :class => 'title', :min => 1 %>
+              <%= hidden_field_tag :quantity, 1 %>
               <%= button_tag :class => 'large primary', :id => 'add-to-cart-button', :type => :submit do %>
                 <%= Spree.t(:add_to_cart) %>
               <% end %>
