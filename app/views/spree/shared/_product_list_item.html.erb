@@ -4,7 +4,7 @@
    new_params.merge!({:controller => "spree/products", :action => "show" , :id => product.slug})
    otro_params = new_params.clone
 %>
-
+<!-- TODO 13/10/2014 Check if the data-hook2 attribute holds the right value -->
 <li id="product_<%= product.id %>" class="<%= kls %>" data-hook2="product_<%=product.product_type%>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
   <div class="product-image">
     <%= link_to small_image(product, :itemprop => "image"), new_params, :itemprop => 'url' %>

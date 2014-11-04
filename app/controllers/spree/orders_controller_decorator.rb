@@ -15,15 +15,18 @@ module Spree
       variant_id = product_hash[product_key]
       quantity = params[:quantity]
 
+        puts "--------------------------- 1 --------------------------------"
       # if populator.populate(params.slice(:products, :variants, :quantity))
       if populator.populate(variant_id, quantity)
-
+        puts "--------------------------- 2 --------------------------------"
         context.line_item = current_order.line_items.last
+        puts "--------------------------- 3 --------------------------------"
 
         variant = false
         params[:products].each do |product_id, variant_id|
             variant = Spree::Variant.find variant_id
         end
+        puts "--------------------------- 4 --------------------------------"
 
         calculator_class = variant.product.calculator.name.constantize
         #TODO aqui hay que asegurarse que solo vaya un solo precio

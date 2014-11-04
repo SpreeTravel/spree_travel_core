@@ -1,6 +1,37 @@
-<% variant = line_item.variant -%>
+<%
+  variant = line_item.variant
+  product = variant.product
+  first_column = []
+  second_column = []
+  index = 0
+  product.context_option_types.each do |cot|
+    index += 1
+    option_type_name = cot.name
+    option_value = line_item.context.get_option_value(option_type_name, :presentation)
+    string = "<b>#{cot.presentation}</b>: #{option_value}"
+    if index.odd?
+      first_column << string
+    else
+      second_column << string
+    end
+  end
+
+  variant.option_values.each do |ov|
+    index += 1
+    option_type_name = ov.option_type.name
+    option_value = ov.presentation
+    string = "<b>#{ov.option_type.presentation}</b>: #{option_value}"
+    if index.odd?
+      first_column << string
+    else
+      second_column << string
+    end
+  end
+-%>
+
 <%= order_form.fields_for :line_items, line_item do |item_form| -%>
   <tr class="<%= cycle('', 'alt') %> line-item">
+
     <td class="cart-item-image" data-hook="cart_item_image">
       <% if variant.images.length == 0 %>
         <%= link_to small_image(variant.product), variant.product %>
@@ -8,14 +39,9 @@
         <%= link_to image_tag(variant.images.first.attachment.url(:small)), variant.product %>
       <% end %>
     </td>
+
     <td class="cart-item-description" data-hook="cart_item_description">
       <h4><%= link_to variant.product.name, product_path(variant.product) %></h4>
-      <!-- TODO esto hacerlo din;amico con los ContextOptionTypes -->
-      Check In: <%= line_item.context.start_date(:temporal => false) %> </br>
-      Check Out: <%= line_item.context.end_date(:temporal => false) %> </br>
-      <%#= variant.options_text %>
-      Meal Plan: <%= line_item.context.plan(:temporal => false) %> </br>
-
       <%= Spree.t(:pax) %>:
       <span>
         <%= link_to "#", :onclick=>"paxOverlay('line_item_detail')"   do %>
@@ -32,13 +58,18 @@
         </span>
       <% end %>
     </td>
-    <td class="cart-item-price" data-hook="cart_item_price">
-      <%= line_item.single_money.to_html %>
+
+    <td>
+      <%= first_column.join("<br>\n").html_safe %>
     </td>
-    <td class="cart-item-quantity" data-hook="cart_item_quantity">
-      <%= item_form.number_field :quantity, :min => 0, :class => "line_item_quantity", :size => 5 %>
+
+    <td>
+      <%= second_column.join("<br>\n").html_safe %>
     </td>
+
     <td class="cart-item-total" data-hook="cart_item_total">
+      <%#= item_form.number_field :quantity, :min => 0, :class => "line_item_quantity", :size => 5 %>
+      <%= item_form.hidden_field :quantity, :class => 'line_item_quantity' %>
       <%= line_item.display_amount.to_html unless line_item.quantity.nil? %>
     </td>
     <td class="cart-item-delete" data-hook="cart_item_delete">

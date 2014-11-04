@@ -76,10 +76,13 @@ module Spree
       end
     end
 
-    def get_option_value(option_type, attr='id')
+    def get_option_value(option_type, attrib='id')
       ot = get_option_type_object(option_type)
       ovr = self.option_values.find {|ov| ov.option_value && ov.option_value.option_type_id == ot.id }
-      (ot.attr_type == 'selection' ? ovr.option_value.send(attr) : ovr.value) if ovr
+      (ot.attr_type == 'selection' ? ovr.option_value.send(attrib) : ovr.value) if ovr
+    end
+
+    def get_option_value_final(option_type, attr="id")
     end
 
     def get_temporal_option_value(option_type)
