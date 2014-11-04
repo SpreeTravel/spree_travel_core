@@ -58,6 +58,9 @@
     	      </li>
     	    <% end %>
           </ul>
+          <%= check_box_tag prefix + 'change_visibility', 'yes', false, class: 'visibility_check_box' %>
+          <%= label_tag prefix + 'change_visibility', Spree.t(:show_only_available_products) %>
         </div>
+
       <% end %>
     </div>

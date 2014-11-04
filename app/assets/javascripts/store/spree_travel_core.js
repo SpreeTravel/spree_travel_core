@@ -5,6 +5,8 @@
 //= require store/datepicker
 //= require jquery-ui/datepicker
 
+var unavailable_products_visibles = true;
+
 function params_data(product_id) {
     product_type = $('ul#search_box_tabs li.active a')[0].name;
     data = {
@@ -40,30 +42,44 @@ function update_prices() {
             success: function (result) {
               if (result.variant == "none") {
                 b = $('#add-to-cart-button' + '_' + result.product_id);
+                selector = "ul#products li#product_"+ result.product_id
                 b.attr('disabled', true);
                 b.addClass('disabled');
                 object.html('No options available.');
+                if (!unavailable_products_visibles) {
+                    $(selector).css('display', 'none')
+                }
               } else {
+                selector = "ul#products li#product_"+ result.product_id
                 prices = result.prices
                 object.html(prices);
                 hidden_id = "#vp_" + product_id;
                 $(hidden_id).val(result.variant);
+                $(selector).css('display', 'inherit')
                 b = $('#add-to-cart-button' + '_' + result.product_id);
                 if (prices.indexOf('Starting') != -1 || prices == "") {
                   b.attr('disabled', true);
                   b.addClass('disabled');
+                  if (!unavailable_products_visibles) {
+                    $(selector).css('display', 'none')
+                  }
                 } else {
                   b.attr('disabled', false);
                   b.removeClass('disabled');
+                  $(selector).css('display', 'inherit')
                 }
               };
             },
             error: function() {
               b = $('#add-to-cart-button' + '_' + result.product_id);
+              selector = "ul#products li#product_"+ result.product_id
               b.attr('disabled', true);
               b.attr('hidden', true);
               b.addClass('disabled');
-		      object.html('ERROR');
+		          object.html('ERROR');
+              if (!unavailable_products_visibles) {
+                $(selector).css('display', 'none')
+              }
             }
         });
     });
@@ -91,7 +107,13 @@ function fill_cart_hiddens(product_id) {
     console.log('#######################################');
 }
 
+function available_visibility_changed(){
+    unavailable_products_visibles = !unavailable_products_visibles;
+    update_prices();
+}
+
 $(document).ready(function() {
     update_prices();
     $('#update_price').attr('onclick', 'update_prices()');
+    $('.visibility_check_box').attr('onclick', 'available_visibility_changed()');
 });
