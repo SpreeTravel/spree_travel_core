@@ -18,9 +18,17 @@ describe Spree::Pax do
     expect(build(:male_pax, sex: nil)).not_to be_valid
   end
 
-  it 'only accept sex values for male and female' do
-    expect(build(:male_pax)).to be_valid
-    expect(build(:female_pax)).to be_valid
-    expect(build(:pax, sex: "other")).not_to be_valid
+  context 'only accept sex values for male and female' do
+    it 'accepts paxes with male sex value' do
+      expect(build(:male_pax)).to be_valid
+    end
+
+    it 'accepts paxes with female sex value' do
+      expect(build(:female_pax)).to be_valid
+    end
+
+    it 'is not valid without a sex value different from male or female' do
+      expect(build(:male_pax, sex: "other")).not_to be_valid
+    end
   end
 end
