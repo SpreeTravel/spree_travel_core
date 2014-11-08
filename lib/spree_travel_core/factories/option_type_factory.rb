@@ -9,6 +9,10 @@ FactoryGirl.define do
       sequence(:name, 'a'){ |n| "selection_option_type_#{n}" }
       sequence(:presentation, 'a'){|n| "Selection Option Type #{n}"}
       attr_type 'selection'
+
+      factory :selection_option_type_with_values do
+        after(:create) {|option_type| option_type.option_values = [create(:option_type_decorated, option_type: option_type)]}
+      end
     end
 
     factory :date_option_type do
@@ -28,12 +32,5 @@ FactoryGirl.define do
       sequence(:presentation, 'a'){|n| "Float Option Type #{n}"}
       attr_type 'float'
     end
-
-    factory :variant_option_type do
-      sequence(:name, 'a'){ |n| "variant_option_type_#{n}" }
-      sequence(:presentation, 'a'){|n| "Variant Option Type #{n}"}
-      attr_type 'selection'
-    end
-
   end
 end
