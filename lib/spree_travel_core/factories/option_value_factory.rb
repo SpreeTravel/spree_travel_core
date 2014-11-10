@@ -1,10 +1,7 @@
 FactoryGirl.define do
   factory :option_value_decorated, class: Spree::OptionValue do
-    option_type_decorated
-    sequence(:name) { |n|
-      presentation = "Option Value ##{n}"
-      "product_type_##{n}"
-    }
-    enabled true
+    sequence(:name) { |n| "product_type_##{n}" }
+    sequence(:presentation) { |n| "Option Value ##{n}" }
+    association :option_type, factory: :option_type_decorated
   end
 end
