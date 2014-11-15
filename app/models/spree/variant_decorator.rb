@@ -23,7 +23,8 @@ module Spree
       product_id = params['product_id']
       return nil unless product_id
 
-      list = Spree::Product.find(product_id).variants.joins(:option_values => :option_type)
+      product = Spree::Product.find(product_id)
+      list = product.variants.joins(:option_values => :option_type)
       Spree::Product.find(product_id).variants.each do |var|
         puts var.option_values
       end
@@ -33,10 +34,14 @@ module Spree
         return nil unless ov
         list = list.where('spree_option_types.name = ? and spree_option_values.id = ?', ot.name, ov)
       end
-      if list.count > 1
+      case list.count
+      when 0
+        return product.master
+      when 1
+        return list.first
+      else
         raise Exception.new("Revisa, que hay bateo en los datos")
       end
-      list.first
     end
 
   end
