@@ -3,6 +3,7 @@
   active = true
 %>
 
+
 <ul id="search_box_tabs" class="nav nav-tabs">
   <% Spree::ProductType.enabled.each do |p| %>
     <%
@@ -20,6 +21,8 @@
     <% end %>
   <% end %>
 </ul>
+
+<input type="hidden" id="the_product_type" name="product_type" value="<%= active_product %>">
 
     <div id="tabcontent" class="tab-content">
       <% Spree::ProductType.enabled.each do |p| %>
