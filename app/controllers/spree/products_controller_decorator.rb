@@ -23,7 +23,9 @@ module Spree
       end
       calculator_class = product.calculator.name.constantize
       context = Spree::Context.build_from_params(params, :temporal => true)
+      puts context.inspect
       variant = Spree::Variant.variant_from_params(params)
+      puts variant.inspect
 
       #The variant returns with a nil value if there is not one holding a value for
       #the product_type_variant_option_type that defines the product_type per_se

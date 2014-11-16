@@ -1,20 +1,29 @@
-    <% active_product = '' %>
-    <ul id="search_box_tabs" class="nav nav-tabs">
-      <% active = true %>
-      <% Spree::ProductType.enabled.each do |p| %>
-        <% if active
-            active_product = p.name.downcase
-            active_class = 'active'
-            active = false
-           else
-            active_class = ''
-           end
-        %>
-        <%= content_tag :li, class: active_class  do %>
-          <a data-toggle="tab" href=#<%="#{p.name.downcase}"%>_fields name=<%="#{p.name}"%> ><%= Spree.t(p.name) %></a>
-        <% end %>
-      <% end %>
-    </ul>
+<%
+  active_product = ''
+  active = true
+%>
+
+
+<ul id="search_box_tabs" class="nav nav-tabs">
+  <% Spree::ProductType.enabled.each do |p| %>
+    <%
+      prefix = "#{p.name.downcase}_"
+      if active
+        active_product = p.name.downcase
+        active_class = 'active'
+        active = false
+      else
+        active_class = ''
+      end
+    %>
+    <%= content_tag :li, class: active_class, role: 'presentation'  do %>
+      <a data-toggle="tab" role="tab" href='#<%="#{prefix}"%>fields' name=<%="#{p.name}"%> ><%= Spree.t(p.name) %></a>
+    <% end %>
+  <% end %>
+</ul>
+
+<input type="hidden" id="the_product_type" name="product_type" value="<%= active_product %>">
+
     <div id="tabcontent" class="tab-content">
       <% Spree::ProductType.enabled.each do |p| %>
         <% prefix = "#{p.name.downcase}_" %>
@@ -35,7 +44,7 @@
             function_name = "fill_cart_hiddens(#{@product.id})"
           end
         %>
-        <div id=<%="#{prefix}fields"%> >
+        <div id='<%="#{prefix}fields"%>' class="tab-pane <%= active_tab %>" role="tabpanel">
           <ul class="alpha twelve columns omega" >
     	    <% p.search_box_option_types.each do |ot| %>
             <% tag_name = prefix + ot.name %>

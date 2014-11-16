@@ -94,7 +94,11 @@ function fill_cart_hiddens(product_id) {
     console.log('#######################################');
 }
 
+
 $(document).ready(function() {
     update_prices();
+    $('#search_box_tabs li a').on('click', function(event) {
+        $('#the_product_type').val(($(event.target).attr('name')));
+    });
     $('#update_price').attr('onclick', 'update_prices()');
 });
