@@ -1,5 +1,8 @@
 <% active_product = params[:product_type] %>
+<%# active = Spree::Product.find_by_slug(params[:id]).product_type.name %>
 
+<div id="search_box" class="twelve columns">
+  <%= form_tag({:controller => :home, :action => :index}, {:method => :get, :id => :home_search_box}) do %>
 
 <ul id="search_box_tabs" class="nav nav-tabs">
   <% Spree::ProductType.enabled.each do |p| %>
@@ -17,7 +20,7 @@
       end
     %>
     <%= content_tag :li, class: active_class, role: 'presentation'  do %>
-      <a data-toggle="tab" role="tab" href='#<%="#{prefix}"%>fields' name=<%="#{p.name}"%> ><%= Spree.t(p.name) %></a>
+      <a data-toggle="tab" role="tab" href='#<%="#{prefix}"%>fields' name=<%="#{p.name}"%> ><%= Spree.t(p.presentation) %></a>
     <% end %>
   <% end %>
 </ul>
@@ -46,6 +49,14 @@
         %>
         <div id='<%="#{prefix}fields"%>' class="tab-pane <%= active_tab %>" role="tabpanel">
           <ul class="alpha twelve columns omega" >
+            <li class="eleven columns search_box_row">
+              <div class="two columns search_box_left">
+                <%= label_tag :the_keywords, Spree.t(:keywords) %>
+              </div>
+              <div class="eight columns search_box_right">
+                <%= text_field_tag :keywords, params[:keywords], :placeholder => 'Search', :class => "#{prefix}inputs" %>
+              </div>
+            </li>
     	    <% p.search_box_option_types.each do |ot| %>
             <% tag_name = prefix + ot.name %>
     	      <li class="eleven columns search_box_row">
@@ -56,6 +67,8 @@
       	        <% current_value = hash[tag_name] %>
       	        <% if ot.attr_type == 'selection' %>
       	          <%= select_tag tag_name, options_for_select(ot.option_values.map { |ov| [ov.presentation, ov.id] }, current_value), :class => "select2 #{prefix}selects", 'onchange' => function_name %>
+                <% elsif ot.attr_type == 'destination' %>
+                  <%= select_tag tag_name, options_for_select(Spree::Taxonomy.find_by_name('Destination').root.children.map { |ov| [ov.name, ov.id] }, (params[:taxon].id rescue nil)), :class => "select2 #{prefix}selects" %>
       	        <% elsif ot.attr_type == 'integer' %>
       	          <%= number_field_tag tag_name, current_value, :class => "#{prefix}inputs", 'onchange' => function_name %>
       	        <% elsif ot.attr_type == 'float' %>
@@ -82,3 +95,7 @@
 
       <% end %>
     </div>
+    <%= submit_tag Spree.t('search'), :id => :submit %>
+    <input type="button" value="Update Price" id='update_price' />
+  <% end %>
+</div>

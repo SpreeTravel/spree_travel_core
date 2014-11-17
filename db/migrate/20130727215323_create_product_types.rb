@@ -8,12 +8,6 @@ class CreateProductTypes < ActiveRecord::Migration
 
       t.timestamps
     end
-
-    pt = Spree::ProductType.new
-    pt.name = 'Product'
-    pt.presentation = 'Product'
-    pt.enabled = true
-    pt.save
   end
 
   def down
