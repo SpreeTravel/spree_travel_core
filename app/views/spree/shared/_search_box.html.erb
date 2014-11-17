@@ -70,9 +70,14 @@
               </div>
     	      </li>
     	    <% end %>
+          <li class="eleven columns search_box_row">
+            <div class="two columns search_box_left">
+              <%= check_box_tag prefix + 'change_visibility', 'yes', false, class: 'visibility_check_box' %>
+            </div>
+            <div class="eight columns search_box_right">
+              <%= label_tag prefix + 'change_visibility', Spree.t(:show_only_available_products) %>
+            </div>
           </ul>
-          <%= check_box_tag prefix + 'change_visibility', 'yes', false, class: 'visibility_check_box' %>
-          <%= label_tag prefix + 'change_visibility', Spree.t(:show_only_available_products) %>
         </div>
 
       <% end %>
