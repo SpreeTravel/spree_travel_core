@@ -9,6 +9,10 @@
   margin-top: 5px;
 }
 
+ul.taxons-list ul.taxons-list li {
+  margin-left: 15px;
+}
+
 .child-key {
   font-size: 14px;
   text-transform: uppercase;
