@@ -1,5 +1,8 @@
 <% active_product = params[:product_type] %>
+<%# active = Spree::Product.find_by_slug(params[:id]).product_type.name %>
 
+<div id="search_box" class="twelve columns">
+  <%= form_tag({:controller => :home, :action => :index}, {:method => :get, :id => :home_search_box}) do %>
 
 <ul id="search_box_tabs" class="nav nav-tabs">
   <% Spree::ProductType.enabled.each do |p| %>
@@ -82,3 +85,7 @@
 
       <% end %>
     </div>
+    <%= submit_tag Spree.t('search'), :id => :submit %>
+    <input type="button" value="Update Price" id='update_price' />
+  <% end %>
+</div>

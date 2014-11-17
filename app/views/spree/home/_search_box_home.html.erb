@@ -1,7 +1,1 @@
-<div id="search_box" class="twelve columns">
-  <%= form_tag({:controller => :home, :action => :index}, {:method => :get, :id => :home_search_box}) do %>
     <%= render :partial => "spree/shared/search_box"  %>
-    <%= submit_tag Spree.t('search'), :id => :submit %>
-    <input type="button" value="Update Price" id='update_price' />
-  <% end %>
-</div>
