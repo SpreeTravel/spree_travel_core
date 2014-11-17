@@ -31,53 +31,69 @@ module Spree
         end
 
         protected
-          def get_base_scope
-            base_scope = Spree::Product.active
-            base_scope = base_scope.in_taxon(taxon) unless taxon.blank?
-            base_scope = get_products_conditions_for(base_scope, keywords)
-            base_scope = add_search_scopes(base_scope)
-            base_scope = add_eagerload_scopes(base_scope)
-            base_scope
-          end
 
-          def add_eagerload_scopes scope
-            if include_images
-              scope.includes({master: [:prices, :images]})
+        def get_base_scope
+          base_scope = Spree::Product.active
+          base_scope = base_scope.in_taxon(taxon) unless taxon.blank?
+          base_scope = get_products_conditions_for(base_scope, keywords)
+          base_scope = get_product_by_product_type(base_scope) if product_type
+          base_scope = add_search_scopes(base_scope)
+          base_scope = add_eagerload_scopes(base_scope)
+          base_scope
+        end
+
+        def get_product_by_product_type(base_scope)
+          base_scope = base_scope.where(:product_type_id => product_type.id)
+          base_scope
+        end
+
+        def add_eagerload_scopes(base_scope)
+          if include_images
+            base_scope.includes({master: [:prices, :images]})
+          else
+            base_scope.includes(master: :prices)
+          end
+        end
+
+        def add_search_scopes(base_scope)
+          search.each do |name, scope_attribute|
+            scope_name = name.to_sym
+            if base_scope.respond_to?(:search_scopes) && base_scope.search_scopes.include?(scope_name.to_sym)
+              base_scope = base_scope.send(scope_name, *scope_attribute)
             else
-              scope.includes(master: :prices)
+              base_scope = base_scope.merge(Spree::Product.ransack({scope_name => scope_attribute}).result)
             end
-          end
+          end if search
+          base_scope
+        end
 
-          def add_search_scopes(base_scope)
-            search.each do |name, scope_attribute|
-              scope_name = name.to_sym
-              if base_scope.respond_to?(:search_scopes) && base_scope.search_scopes.include?(scope_name.to_sym)
-                base_scope = base_scope.send(scope_name, *scope_attribute)
-              else
-                base_scope = base_scope.merge(Spree::Product.ransack({scope_name => scope_attribute}).result)
-              end
-            end if search
-            base_scope
+        # method should return new scope based on base_scope
+        def get_products_conditions_for(base_scope, query)
+          unless query.blank?
+            base_scope = base_scope.like_any([:name, :description], query.split)
           end
+          base_scope
+        end
 
-          # method should return new scope based on base_scope
-          def get_products_conditions_for(base_scope, query)
-            unless query.blank?
-              base_scope = base_scope.like_any([:name, :description], query.split)
-            end
-            base_scope
-          end
+        def prepare(params)
+          @properties[:taxon] = params[:taxon].blank? ? nil : Spree::Taxon.find(params[:taxon])
+          @properties[:keywords] = params[:keywords]
+          @properties[:search] = params[:search]
+          @properties[:include_images] = params[:include_images]
+          @properties[:product_type] = product_type = Spree::ProductType.find_by_name(params[:product_type])
 
-          def prepare(params)
-            @properties[:taxon] = params[:taxon].blank? ? nil : Spree::Taxon.find(params[:taxon])
-            @properties[:keywords] = params[:keywords]
-            @properties[:search] = params[:search]
-            @properties[:include_images] = params[:include_images]
+          #TODO: ver que hay que hacer aqui si esto da null
+          product_type.context_option_types.each do |ptcot|
+            prefix = params[:product_type]
+            short_name = ptcot.name
+            large_name = prefix + "_" + short_name
+            @properties[short_name] = params[large_name]
+          end if product_type
 
-            per_page = params[:per_page].to_i
-            @properties[:per_page] = per_page > 0 ? per_page : Spree::Config[:products_per_page]
-            @properties[:page] = (params[:page].to_i <= 0) ? 1 : params[:page].to_i
-          end
+          per_page = params[:per_page].to_i
+          @properties[:per_page] = per_page > 0 ? per_page : Spree::Config[:products_per_page]
+          @properties[:page] = (params[:page].to_i <= 0) ? 1 : params[:page].to_i
+        end
       end
     end
   end
