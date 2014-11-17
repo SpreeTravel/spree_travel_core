@@ -44,5 +44,13 @@ module Spree
     def second_child
       get_option_value(:second_child)
     end
+
+    def one_adult
+      get_option_value(:one_adult).to_i
+    end
+
+    def one_child
+      get_option_value(:one_child).to_i
+    end
   end
 end

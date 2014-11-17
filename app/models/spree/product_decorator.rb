@@ -4,7 +4,7 @@ module Spree
 
     belongs_to :product_type
     belongs_to :calculator, :class_name => 'Spree::TravelCalculator', :foreign_key => 'calculator_id'
-    has_many :rates, :through => :variants
+    has_many :rates, :through => :variants_including_master
 
     before_create :absorb_option_types
 

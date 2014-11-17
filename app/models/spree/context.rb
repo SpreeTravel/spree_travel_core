@@ -15,7 +15,7 @@ module Spree
     end
 
     def self.build_from_params(params, options = {})
-      raise Exception.new("You must ebe explicit about temporal or not") if options[:temporal].nil?
+      raise Exception.new("You must be explicit about temporal or not") if options[:temporal].nil?
       context_params = {}
       prefix = "#{params[:product_type]}_"
       params.each do |k, v|
