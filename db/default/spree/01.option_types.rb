@@ -4,6 +4,7 @@ option_types = [
   {:name => "end_date", :presentation => "End Date", :attr_type => 'date'},
   {:name => "adult", :presentation => "Adult", :attr_type => 'integer'},
   {:name => "child", :presentation => "Child", :attr_type => 'integer'},
+  {:name => "destination", :presentation => "Destination", :attr_type => 'destination'},
 ]
 
 ### Creating Option Types
