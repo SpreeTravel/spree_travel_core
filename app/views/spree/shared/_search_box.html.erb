@@ -49,6 +49,14 @@
         %>
         <div id='<%="#{prefix}fields"%>' class="tab-pane <%= active_tab %>" role="tabpanel">
           <ul class="alpha twelve columns omega" >
+            <li class="eleven columns search_box_row">
+              <div class="two columns search_box_left">
+                <%= label_tag :keywords, Spree.t(:keywords) %>
+              </div>
+              <div class="eight columns search_box_right">
+                <%= text_field_tag :keywords, params[:keywords], :placeholder => 'Search', :class => "#{prefix}inputs" %>
+              </div>
+            </li>
     	    <% p.search_box_option_types.each do |ot| %>
             <% tag_name = prefix + ot.name %>
     	      <li class="eleven columns search_box_row">

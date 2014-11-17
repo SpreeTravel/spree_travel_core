@@ -43,6 +43,10 @@ ul#products li {
     text-align: left;
 }
 
+input#keywords {
+  margin-top: 0px !important;
+}
+
 .product-image, .child-image {
     max-width: 120px;
     float: left;
