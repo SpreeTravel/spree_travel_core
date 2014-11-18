@@ -11,7 +11,7 @@ FactoryGirl.define do
       attr_type 'selection'
 
       factory :selection_option_type_with_values do
-        after(:create) {|option_type| option_type.option_values = [create(:option_type_decorated, option_type: option_type)]}
+        after(:create) {|option_type| option_type.option_values = [create(:option_value_decorated, option_type: option_type)]}
       end
     end
 
