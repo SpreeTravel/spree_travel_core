@@ -34,16 +34,23 @@ module Spree
 
         def get_base_scope
           base_scope = Spree::Product.active
-          base_scope = base_scope.in_taxon(taxon) unless taxon.blank?
+          base_scope = get_product_by_taxons(base_scope)
           base_scope = get_products_conditions_for(base_scope, keywords)
-          base_scope = get_product_by_product_type(base_scope) if product_type
+          base_scope = get_product_by_product_type(base_scope)
           base_scope = add_search_scopes(base_scope)
           base_scope = add_eagerload_scopes(base_scope)
           base_scope
         end
 
+        def get_product_by_taxons(base_scope)
+          destination_taxon = Spree::Taxon.find(destination) if destination
+          base_scope = base_scope.in_taxon(taxon) unless taxon.blank?
+          base_scope = base_scope.in_taxon(destination_taxon) unless destination_taxon.blank?
+          base_scope
+        end
+
         def get_product_by_product_type(base_scope)
-          base_scope = base_scope.where(:product_type_id => product_type.id)
+          base_scope = base_scope.where(:product_type_id => product_type.id) if product_type
           base_scope
         end
 
@@ -81,6 +88,7 @@ module Spree
           @properties[:search] = params[:search]
           @properties[:include_images] = params[:include_images]
           @properties[:product_type] = product_type = Spree::ProductType.find_by_name(params[:product_type])
+          @properties[:destination] = nil # esto hace falta abajo
 
           #TODO: ver que hay que hacer aqui si esto da null
           product_type.context_option_types.each do |ptcot|
@@ -93,6 +101,7 @@ module Spree
           per_page = params[:per_page].to_i
           @properties[:per_page] = per_page > 0 ? per_page : Spree::Config[:products_per_page]
           @properties[:page] = (params[:page].to_i <= 0) ? 1 : params[:page].to_i
+          puts @properties.inspect
         end
       end
     end

@@ -68,7 +68,9 @@
       	        <% if ot.attr_type == 'selection' %>
       	          <%= select_tag tag_name, options_for_select(ot.option_values.map { |ov| [ov.presentation, ov.id] }, current_value), :class => "select2 #{prefix}selects", 'onchange' => function_name %>
                 <% elsif ot.attr_type == 'destination' %>
-                  <%= select_tag tag_name, options_for_select(Spree::Taxonomy.find_by_name('Destination').root.children.map { |ov| [ov.name, ov.id] }, (params[:taxon].id rescue nil)), :class => "select2 #{prefix}selects" %>
+                  <% destinations = %>
+                  <%= select_tag tag_name,
+                    options_for_select(Spree::Taxonomy.find_by_name('Destination').root.children.map { |ov| [ov.name, ov.id] }, (params[:taxon].id rescue nil)), :class => "select2 #{prefix}selects" %>
       	        <% elsif ot.attr_type == 'integer' %>
       	          <%= number_field_tag tag_name, current_value, :class => "#{prefix}inputs", 'onchange' => function_name %>
       	        <% elsif ot.attr_type == 'float' %>
