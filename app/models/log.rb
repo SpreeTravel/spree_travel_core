@@ -9,7 +9,7 @@ class Log
     options = {}
     options[:prefix] = "DEBUG".green
     options[:message] = message
-    option[:level] = DEBUG
+    options[:level] = DEBUG
     write(options)
   end
 
@@ -17,7 +17,7 @@ class Log
     options = {}
     options[:prefix] = "INFO".blue
     options[:message] = message
-    option[:level] = INFO
+    options[:level] = INFO
     write(options)
   end
 
@@ -25,7 +25,7 @@ class Log
     options = {}
     options[:prefix] = "WARNING".yellow
     options[:message] = message
-    option[:level] = WARNING
+    options[:level] = WARNING
     write(options)
   end
 
@@ -33,7 +33,7 @@ class Log
     options = {}
     options[:prefix] = "ERROR".red
     options[:message] = message
-    option[:level] = ERROR
+    options[:level] = ERROR
     write(options)
   end
 
@@ -44,8 +44,8 @@ class Log
     level = options[:level] || DEBUG
     timestamp = Time.now.to_i.to_s.cyan
 
-    log = File.open(Rails.root + "/log/debug.log", "w")
-    log.write("#{timestamp} #{prefix}: #{message}")
+    log = File.open(Rails.root.to_s + "/log/debug.log", "a")
+    log.write("#{timestamp} #{prefix}: #{message}\n")
     log.close
   end
 end
