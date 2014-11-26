@@ -66,7 +66,11 @@
               <div class="eight columns search_box_right">
       	        <% current_value = hash[tag_name] %>
       	        <% if ot.attr_type == 'selection' %>
-      	          <%= select_tag tag_name, options_for_select(ot.option_values.map { |ov| [ov.presentation, ov.id] }, current_value), :class => "select2 #{prefix}selects", 'onchange' => function_name %>
+                  <% options = ot.option_values.map { |ov| [ov.presentation, ov.id] } %>
+      	          <%= select_tag tag_name, options_for_select(options, current_value),
+                    :class => "select2 #{prefix}selects",
+                    :prompt => "-- Select #{ot.presentation}--",
+                    'onchange' => function_name %>
                 <% elsif ot.attr_type == 'destination' %>
                   <% dests = Spree::Taxonomy.find_by_name('Destination').root.children.map { |ov| [ov.name, ov.id] } %>
                   <% dest_id = params[tag_name] %>

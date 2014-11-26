@@ -23,7 +23,7 @@ module Spree
       end
       calculator_class = product.calculator.name.constantize
       context = Spree::Context.build_from_params(params, :temporal => true)
-      puts context.inspect
+      Log.debug("CONTEXT: " + context.inspect)
       variant = Spree::Variant.variant_from_params(params)
       puts variant.inspect
 
