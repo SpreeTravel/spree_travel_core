@@ -39,18 +39,19 @@ function update_prices() {
             url: '/products/get_ajax_price',
             success: function (result) {
               console.debug(result);
-              if (result.variant == "none") {
+              if (result.prices.length == 0) {
                 b = $('#add-to-cart-button' + '_' + result.product_id);
                 b.attr('disabled', true);
                 b.addClass('disabled');
-                object.html('No options available.');
+                object.html('No prices available');
               } else {
                 prices = result.prices
-                object.html(prices);
+                prices_str = "" + prices[0] + " .. " + prices[prices.length-1];
+                object.html(prices_str);
                 hidden_id = "#vp_" + product_id;
                 $(hidden_id).val(result.variant);
                 b = $('#add-to-cart-button' + '_' + result.product_id);
-                if (prices.indexOf('Starting') != -1 || prices == "") {
+                if (prices.length == 0) {
                   b.attr('disabled', true);
                   b.addClass('disabled');
                 } else {
