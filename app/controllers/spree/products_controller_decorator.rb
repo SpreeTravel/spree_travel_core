@@ -23,7 +23,6 @@ module Spree
       end
       calculator_class = product.calculator.name.constantize
       context = Spree::Context.build_from_params(params, :temporal => true)
-      Log.debug("CONTEXT: " + context.inspect)
       variant = Spree::Variant.variant_from_params(params)
       puts variant.inspect
 
@@ -38,6 +37,7 @@ module Spree
         end
       else
         prices = calculator_class.calculate_price(context, variant).sort
+        Log.debug("PRICES: #{prices.inspect}")
         if prices.count > 1
           prices_str = "#{Spree.t(:starting)} #{prices[0]}"
         else
