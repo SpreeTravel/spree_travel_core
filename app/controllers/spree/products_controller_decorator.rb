@@ -39,7 +39,7 @@ module Spree
         prices = calculator_class.calculate_price(context, variant).sort
         Log.debug("PRICES: #{prices.inspect}")
         if prices.count > 1
-          prices_str = "#{Spree.t(:starting)} #{prices[0]}"
+          prices_str = "#{prices.first} .. #{prices.last}"
         else
           # TODO: poner la forma correcta de currency llamando a Spree::Money.new....
           prices_str = "$ %.2f" % prices[0]
