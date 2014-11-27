@@ -5,6 +5,7 @@ module Spree
     belongs_to :product_type
     belongs_to :calculator, :class_name => 'Spree::TravelCalculator', :foreign_key => 'calculator_id'
     has_many :rates, :through => :variants_including_master
+    has_many :combinations, :class_name => 'Spree::Combinations', :foreign_key => 'product_id'
 
     before_create :absorb_option_types
 
