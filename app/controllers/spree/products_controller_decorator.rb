@@ -12,9 +12,8 @@ module Spree
 
     def get_ajax_price
       product = Spree::Product.find(params[:product_id])
-      calculator_class = product.calculator.name.constantize
       context = Spree::Context.build_from_params(params, :temporal => true)
-      prices = calculator_class.calculate_price(context, product).sort
+      prices = product.calculate_price(context)
       hash = { :product_id => params[:product_id], :prices => prices }
 
       respond_to do |format|

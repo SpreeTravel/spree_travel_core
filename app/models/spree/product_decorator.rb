@@ -15,6 +15,19 @@ module Spree
 
     end
 
+    def calculator_class
+      self.calculator.name.constantize
+    end
+
+    def calculate_price(context)
+      prices = self.calculator_class.calculate_price(context, self).sort
+      prices
+    end
+
+    def generate_combinations
+      calculator_class.generate_combinations(self)
+    end
+
     def generate_variants
       variations(self.option_types) do |array|
         variant = Spree::Variant.new
