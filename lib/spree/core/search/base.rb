@@ -43,7 +43,7 @@ module Spree
         end
 
         def get_product_by_taxons(base_scope)
-          destination_taxon = Spree::Taxon.find(destination) if destination
+          destination_taxon = Spree::Taxon.find(destination) unless destination.blank?
           base_scope = base_scope.in_taxon(taxon) unless taxon.blank?
           base_scope = base_scope.in_taxon(destination_taxon) unless destination_taxon.blank?
           base_scope
@@ -95,13 +95,15 @@ module Spree
             prefix = params[:product_type]
             short_name = ptcot.name
             large_name = prefix + "_" + short_name
-            @properties[short_name] = params[large_name]
+            @properties[short_name.to_sym] = params[large_name]
+            #Log.debug("#{short_name} => #{large_name} => #{params[large_name]}")
           end if product_type
 
           per_page = params[:per_page].to_i
           @properties[:per_page] = per_page > 0 ? per_page : Spree::Config[:products_per_page]
           @properties[:page] = (params[:page].to_i <= 0) ? 1 : params[:page].to_i
-          puts @properties.inspect
+          Log.debug("PARAMS: " + params.inspect)
+          Log.debug("PROPERTIES: " + @properties.inspect)
         end
       end
     end

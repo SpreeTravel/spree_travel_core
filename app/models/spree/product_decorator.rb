@@ -5,6 +5,7 @@ module Spree
     belongs_to :product_type
     belongs_to :calculator, :class_name => 'Spree::TravelCalculator', :foreign_key => 'calculator_id'
     has_many :rates, :through => :variants_including_master
+    has_many :combinations, :class_name => 'Spree::Combinations', :foreign_key => 'product_id'
 
     before_create :absorb_option_types
 
@@ -12,6 +13,19 @@ module Spree
       self.option_types = self.product_type.variant_option_types
     rescue
 
+    end
+
+    def calculator_class
+      self.calculator.name.constantize
+    end
+
+    def calculate_price(context)
+      prices = self.calculator_class.calculate_price(context, self).sort
+      prices
+    end
+
+    def generate_combinations
+      calculator_class.generate_combinations(self)
     end
 
     def generate_variants

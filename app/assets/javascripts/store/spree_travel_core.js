@@ -32,25 +32,26 @@ function update_prices() {
         object.html('<img src="/assets/ajax-loader.gif" >');
         product_id = object.attr('data-product-hook');
         fill_cart_hiddens(product_id);
-        console.debug('getting price for' + product_id);
         $.ajax({
             data_type: 'JSON',
             data: params_data(product_id),
             type: 'POST',
             url: '/products/get_ajax_price',
             success: function (result) {
-              if (result.variant == "none") {
+              console.debug(result);
+              if (result.prices.length == 0) {
                 b = $('#add-to-cart-button' + '_' + result.product_id);
                 b.attr('disabled', true);
                 b.addClass('disabled');
-                object.html('No options available.');
+                object.html('No prices available');
               } else {
                 prices = result.prices
-                object.html(prices);
+                prices_str = "" + prices[0] + " .. " + prices[prices.length-1];
+                object.html(prices_str);
                 hidden_id = "#vp_" + product_id;
                 $(hidden_id).val(result.variant);
                 b = $('#add-to-cart-button' + '_' + result.product_id);
-                if (prices.indexOf('Starting') != -1 || prices == "") {
+                if (prices.length == 0) {
                   b.attr('disabled', true);
                   b.addClass('disabled');
                 } else {
@@ -74,24 +75,19 @@ function update_prices() {
 function fill_cart_hiddens(product_id) {
     theform = $('#inside-product-cart-form-'+product_id);
     template = $('#template-hidden-'+product_id, theform);
-    console.log("---here---");
-    console.log(template);
     data = params_data(product_id);
     $.each(data, function(index, val) {
         index_name = index + "_cart_form";
-        console.log(index_name);
         new_hidden = $('.'+index_name, theform);
         if (new_hidden.length == 0) {
             new_hidden = template.clone();
             new_hidden.attr('name', index);
             new_hidden.attr('class', index_name);
             new_hidden.attr('id', index_name + '_' + product_id);
-            console.log(new_hidden);
             theform.append(new_hidden);
         }
         new_hidden.val(val);
     });
-    console.log('#######################################');
 }
 
 
