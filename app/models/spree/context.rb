@@ -51,5 +51,9 @@ module Spree
       get_mixed_option_value(:child, options)
     end
 
+    def room(options = {:temporal => true})
+      get_mixed_option_value(:room, options)
+    end
+
   end
 end
