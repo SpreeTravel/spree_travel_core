@@ -10,22 +10,28 @@ module Spree
     before_create :absorb_option_types
 
     def absorb_option_types
-      self.option_types = self.product_type.variant_option_types
+      option_types = self.product_type.variant_option_types
     rescue
-
     end
 
-    def calculator_class
-      self.calculator.name.constantize
+    def calculator_instance
+      calculator.name.constantize.new
     end
 
     def calculate_price(context)
-      prices = self.calculator_class.calculate_price(context, self).sort
-      prices
+      calculator_instance.calculate_price(context, self).sort
     end
 
-    def generate_combinations
-      calculator_class.generate_combinations(self)
+    def generate_all_combinations
+      calculator_instance.generate_all_combinations(self)
+    end
+
+    def generate_combinations(rate)
+      calculator_instance.generate_combinations(rate)
+    end
+
+    def destroy_combinations(rate)
+      calculator_instance.destroy_combinations(rate)
     end
 
     def generate_variants
