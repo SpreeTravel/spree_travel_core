@@ -9,11 +9,11 @@ module Spree
 
     def generate_combinations(rate)
       product = rate.variant.product
-      old_combinations  = product.combinations.pluck(:id)
+      old_combinations  = rate.combinations.pluck(:id)
       keep_combinations = []
       new_combinations  = []
-      for adults in 1..MAX_ADULTS
-        for children in 1..MAX_CHILDREN
+      for adults in 1..max_adults
+        for children in 1..max_children
           price = get_rate_price(rate, adults, children)
           combination = Spree::Combinations.where(:rate_id => rate.id)
           combination = combination.where(:product_id => product.id)
@@ -33,13 +33,17 @@ module Spree
       end
       deleted_combinations = old_combinations - keep_combinations
       Spree::Combinations.where(:id => deleted_combinations).delete_all
-
-      {
+      array = [rate.id, old_combinations.count, new_combinations.count, keep_combinations.count, deleted_combinations.count]
+      Log.debug("Generating Combinations for rate %d: old=%d created=%d kept=%d delete=%d" % array)
+      return {
         :original => old_combinations,
         :created => new_combinations,
         :deleted => deleted_combinations,
         :kept => keep_combinations,
       }
+    rescue Exception => ex
+      Log.exception(ex)
+      Log.error("Couln't create combinations for rate #{rate.id}")
     end
 
     def destroy_combinations(rate)

@@ -16,10 +16,13 @@ module Spree
 
     def generate_combinations
       variant.product.generate_combinations(self)
+    rescue Exception => ex
+      Log.exception(ex)
     end
 
     def destroy_combinations
       variant.product.destroy_combinations(self)
+    rescue
     end
 
     # TODO: poner una restriccion para evitar solapamiento de fechas o al menos evitar que las

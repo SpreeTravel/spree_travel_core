@@ -1,9 +1,10 @@
 class Log
 
-  DEBUG = 0
-  INFO = 1
-  WARNING = 2
-  ERROR = 3
+  DEBUG    = 0
+  INFO     = 1
+  WARNING  = 2
+  ERROR    = 3
+  CRITICAL = 4
 
   def self.debug(message)
     options = {}
@@ -35,6 +36,19 @@ class Log
     options[:message] = message
     options[:level] = ERROR
     write(options)
+  end
+
+  def self.exception(ex)
+    options = {}
+    options[:prefix] = "EXCEPTION:".magenta
+    options[:message] = ex.message
+    options[:level] = CRITICAL
+    write(options)
+    write(:message => "=== BEGIN EXCEPTION ===")
+    ex.backtrace[0..9].each_with_index do |line, index|
+      write(:message => line, :prefix => index)
+    end
+    write(:message => "=== END EXCEPTION ===")
   end
 
   # TODO: implementar lo de que solo salga del LEVEL hacia abajo
