@@ -12,8 +12,8 @@ module Spree
       old_combinations  = rate.combinations.pluck(:id)
       keep_combinations = []
       new_combinations  = []
-      for adults in 1..max_adults
-        for children in 1..max_children
+      for adults in adults_range
+        for children in children_range
           price = get_rate_price(rate, adults, children)
           combination = Spree::Combinations.where(:rate_id => rate.id)
           combination = combination.where(:product_id => product.id)
@@ -21,7 +21,7 @@ module Spree
           combination = combination.where(:end_date => rate.end_date.to_date)
           combination = combination.where(:adults => adults)
           combination = combination.where(:children => children)
-          combination = combination.where(:other => combination_string(rate))
+          combination = combination.where(:other => combination_string_for_generation(rate))
           the_combination = combination.first
           if the_combination
             keep_combinations << the_combination.id

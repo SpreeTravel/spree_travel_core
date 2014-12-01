@@ -19,10 +19,11 @@ module Spree
       context_params = {}
       prefix = "#{params[:product_type]}_"
       params.each do |k, v|
-      	if k.starts_with?(prefix)
-      	  context_params[k.gsub(prefix, '')] = v
+        key = k.to_s
+      	if key.starts_with?(prefix)
+      	  context_params[key.gsub(prefix, '')] = v
       	else
-      	  context_params[k] = v
+      	  context_params[key] = v
       	end
       end
       context = Spree::Context.new

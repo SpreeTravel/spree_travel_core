@@ -22,6 +22,26 @@ module Spree
       calculator_instance.calculate_price(context, self).sort
     end
 
+    def self.calculator_instance_for(product_type)
+      product_type.calculator.name.constantize.new
+    end
+
+    def self.with_price(params)
+      context = Context.build_from_params(params, :temporal => true)
+      product_type = Spree::ProductType.find_by_name(context[:product_type])
+      string = calculator_instance_for(product_type).combination_string_for_search(context) if product_type
+      list = Spree::Product.active
+      list = list.where(:product_type_id => product_type.id) if product_type
+      list = list.joins(:combinations)
+      list = list.where('spree_combinations.start_date <= ?', context[:start_date]) if context[:start_date].present?
+      list = list.where('spree_combinations.end_date >= ?', context[:end_date]) if context[:end_date].present?
+      list = list.where('spree_combinations.adults' => context[:adult]) if context[:adult].present?
+      list = list.where('spree_combinations.children' => context[:child]) if context[:child].present?
+      list = list.where('spree_combinations.other like ?', string) if product_type
+      list = list.group('spree_products.id')
+      list
+    end
+
     def generate_all_combinations
       calculator_instance.generate_all_combinations(self)
     end
