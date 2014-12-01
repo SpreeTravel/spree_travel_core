@@ -16,6 +16,9 @@ module Spree
       :class_name => 'Spree::OptionType',
       :foreign_key => 'product_type_id',
       :association_foreign_key => 'variant_option_type_id'
+    has_one :calculator,
+      :class_name => 'Spree::TravelCalculator',
+      :foreign_key => 'product_type_id'
 
     validates_presence_of :name, :presentation
     validates_uniqueness_of :name

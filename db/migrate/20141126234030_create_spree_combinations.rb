@@ -3,7 +3,7 @@ class CreateSpreeCombinations < ActiveRecord::Migration
     create_table :spree_combinations do |t|
       t.integer :product_id
       t.date :start_date
-      t.date :end_end
+      t.date :end_date
       t.integer :adults
       t.integer :children
       t.string :other
