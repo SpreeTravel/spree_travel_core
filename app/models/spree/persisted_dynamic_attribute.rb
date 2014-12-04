@@ -1,5 +1,5 @@
 module Spree
-  module DynamicAttribute
+  module PersistedDynamicAttribute
 
     # NOTE: este metodo genera ruido con la creacion
     # def method_missing(method_name, *args)
