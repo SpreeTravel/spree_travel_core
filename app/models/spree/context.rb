@@ -32,6 +32,10 @@ module Spree
       return context
     end
 
+    def product_type(options = {:temporal => true})
+      get_mixed_option_value(:product_type, options)
+    end
+
     def start_date(options = {:temporal => true})
       get_mixed_option_value(:start_date, options)
     end

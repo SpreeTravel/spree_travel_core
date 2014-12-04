@@ -39,6 +39,12 @@ module Spree
           base_scope = get_product_by_product_type(base_scope)
           base_scope = add_search_scopes(base_scope)
           base_scope = add_eagerload_scopes(base_scope)
+          base_scope = filter_products_by_searcher(base_scope)
+          base_scope
+        end
+
+        def filter_products_by_searcher(base_scope)
+          base_scope = base_scope.with_price(context) if context.present?
           base_scope
         end
 
@@ -89,6 +95,7 @@ module Spree
           @properties[:include_images] = params[:include_images]
           @properties[:product_type] = product_type = Spree::ProductType.find_by_name(params[:product_type])
           @properties[:destination] = nil # esto hace falta abajo
+          @properties[:context] = Context.build_from_params(params, :temporal => true)
 
           #TODO: ver que hay que hacer aqui si esto da null
           product_type.context_option_types.each do |ptcot|

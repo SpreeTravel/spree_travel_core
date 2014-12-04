@@ -17,18 +17,27 @@ module Spree
 
     def set_option_values(params, options = {:temporal => false})
       self.save if options[:temporal] == false && self.new_record?
-      prefix = params["product_type"]
-      product_type = Spree::ProductType.find_by_name(prefix)
       klass = self.class.to_s
-      attr_option_types = klass.split('::').last.downcase + "_option_types"
-      option_types = product_type.send(attr_option_types)
+      prefix = params["product_type"]
+      if prefix
+        product_type = Spree::ProductType.find_by_name(prefix)
+        attr_option_types = klass.split('::').last.downcase + "_option_types"
+        option_types = product_type.send(attr_option_types)
+      else
+        # TODO: esto es para cuando hagamos la busqueda general
+        option_types = [:start_date, :end_date, :adult, :child]
+      end
       params.each do |k, v|
         option_type = option_types.find do |ot|
-          if k.index(prefix) == 0
-            part = k[prefix.length+1..-1]
-            part == ot.name
+          if prefix
+            if k.index(prefix) == 0
+              part = k[prefix.length+1..-1]
+              part == ot.name
+            else
+              ot.name == k
+            end
           else
-            ot.name == k
+            false
           end
         end
         if option_type
@@ -39,7 +48,7 @@ module Spree
           end
         end
       end
-      if options[:temporal]
+      if prefix && options[:temporal]
         set_temporal_option_value('product_type', params[:product_type])
       end
     end
