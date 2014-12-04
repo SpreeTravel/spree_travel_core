@@ -2,6 +2,7 @@ module Spree
   module DynamicAttribute
 
     def option_types_and_values_from_params(params)
+      Log.debug("PARAMS: #{params.inspect}")
       prefix = params["product_type"]
       hash = {}
       if prefix
@@ -13,15 +14,17 @@ module Spree
         # TODO: esto es para cuando hagamos la busqueda general
         option_types = [:start_date, :end_date, :adult, :child]
       end
+      Log.debug("OPTIONS: #{option_types.inspect}")
       params.each do |key, value|
         option_type = option_types.find do |ot|
-          name = ot
+          name = key
           name = key[prefix.length+1 .. -1] if prefix && key.index(prefix) == 0
-          (name == key)
+          (name == ot)
         end
         hash[key.to_s] = value if option_type
       end
       hash['product_type'] = prefix
+      Log.debug("HASH: #{hash.inspect}")
       hash
     end
 

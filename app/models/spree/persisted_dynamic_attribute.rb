@@ -23,7 +23,7 @@ module Spree
       ovr.save
     end
 
-    def get_option_value(option_type, attrib='id')
+    def get_persisted_option_value(option_type, attrib='id')
       ot = get_option_type_object(option_type)
       ovr = self.option_values.find {|ov| ov.option_value && ov.option_value.option_type_id == ot.id }
       (ot.attr_type == 'selection' ? ovr.option_value.send(attrib) : ovr.value) if ovr
