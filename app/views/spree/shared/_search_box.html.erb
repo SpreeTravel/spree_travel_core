@@ -33,10 +33,10 @@
         <!-- TODO esto es para poner valores por defecto, pero no creo que est'e bien
         porque no se adapta a todos los escenarios adem'as de ejecutarce X cada ProductType  -->
         <%
-          hash = { "#{prefix}start_date" => Time.now.to_date,
-                     "#{prefix}end_date" => Time.now.to_date + 3,
-                     "#{prefix}adult" => 2,
-                     "#{prefix}child" => 0 }
+          params["#{prefix}start_date"] ||= Time.now.to_date
+          params["#{prefix}end_date"] ||= Time.now.to_date + 3
+          params["#{prefix}adult"] ||= 2
+          params["#{prefix}child"] ||= 1
 
           if p.name.downcase == active_product
             active_tab = 'active'
@@ -64,7 +64,7 @@
     	          <%= label_tag tag_name, Spree.t(ot.presentation) %>
               </div>
               <div class="eight columns search_box_right">
-      	        <% current_value = hash[tag_name] %>
+      	        <% current_value = params[tag_name] %>
       	        <% if ot.attr_type == 'selection' %>
                   <% options = ot.option_values.map { |ov| [ov.presentation, ov.id] } %>
       	          <%= select_tag tag_name, options_for_select(options, current_value),
