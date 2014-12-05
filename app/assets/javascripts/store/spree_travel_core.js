@@ -99,7 +99,16 @@ $(document).ready(function() {
     update_prices();
     $('#search_box_tabs li a').on('click', function(event) {
         var v = $(event.target).attr('name');
+        var v2 = $("#the_default_product_type").val();
         $('#the_product_type').val(v);
+        console.debug("" + v + " <> " + v2);
+        if (v != v2) {
+          $('#update_price').attr('disabled', true);
+          $('#update_price').addClass('disabled');
+        } else {
+          $('#update_price').attr('disabled', false);
+          $('#update_price').removeClass('disabled');
+        }
     });
     $('#update_price').attr('onclick', 'update_prices()');
 });
