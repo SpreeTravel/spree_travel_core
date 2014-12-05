@@ -1,7 +1,7 @@
 module Spree
   class Rate <  ActiveRecord::Base
 
-    include Spree::DynamicAttribute
+    include Spree::PersistedDynamicAttribute
 
     def self.excluded_list
       ['variant_id', 'variant=']
@@ -11,8 +11,16 @@ module Spree
     has_many :option_values, :class_name => 'Spree::RateOptionValue', :foreign_key => 'rate_id', :dependent => :destroy
     has_many :combinations, :class_name => 'Spree::Combinations', :foreign_key => 'rate_id'
 
-    after_save :generate_combinations
+    after_save :generate_combinations, :unless => :first_time?
     before_destroy :destroy_combinations
+
+    def first_time!
+      @first_time = true
+    end
+
+    def first_time?
+      @first_time
+    end
 
     def generate_combinations
       variant.product.generate_combinations(self)
@@ -29,43 +37,43 @@ module Spree
     # que se solapen tengan el mismo position
 
     def start_date
-      get_option_value(:start_date)
+      get_persisted_option_value(:start_date)
     end
 
     def end_date
-      get_option_value(:end_date)
+      get_persisted_option_value(:end_date)
     end
 
     def plan
-      get_option_value(:plan)
+      get_persisted_option_value(:plan)
     end
 
     def simple
-      get_option_value(:simple)
+      get_persisted_option_value(:simple)
     end
 
     def double
-      get_option_value(:double)
+      get_persisted_option_value(:double)
     end
 
     def triple
-      get_option_value(:triple)
+      get_persisted_option_value(:triple)
     end
 
     def first_child
-      get_option_value(:first_child)
+      get_persisted_option_value(:first_child)
     end
 
     def second_child
-      get_option_value(:second_child)
+      get_persisted_option_value(:second_child)
     end
 
     def one_adult
-      get_option_value(:one_adult).to_i
+      get_persisted_option_value(:one_adult).to_i
     end
 
     def one_child
-      get_option_value(:one_child).to_i
+      get_persisted_option_value(:one_child).to_i
     end
   end
 end

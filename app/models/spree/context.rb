@@ -1,7 +1,8 @@
 module Spree
   class Context < ActiveRecord::Base
 
-    include Spree::DynamicAttribute
+    include PersistedDynamicAttribute
+    include TemporalDynamicAttribute
 
     belongs_to :line_item, :class_name => 'Spree::LineItem', :foreign_key => 'line_item_id'
     has_many :option_values, :class_name => 'Spree::ContextOptionValue', :foreign_key => 'context_id', :dependent => :destroy
@@ -16,20 +17,19 @@ module Spree
 
     def self.build_from_params(params, options = {})
       raise Exception.new("You must be explicit about temporal or not") if options[:temporal].nil?
-      context_params = {}
-      prefix = "#{params[:product_type]}_"
-      params.each do |k, v|
-        key = k.to_s
-      	if key.starts_with?(prefix)
-      	  context_params[key.gsub(prefix, '')] = v
-      	else
-      	  context_params[key] = v
-      	end
-      end
       context = Spree::Context.new
       context.initialize_variables
-      context.set_option_values(context_params, :temporal => options[:temporal])
+      context_params = context.option_types_and_values_from_params(params)
+      if options[:temporal]
+        context.set_temporal_option_values(context_params)
+      else
+        context.set_persisted_option_values(context_params)
+      end
       return context
+    end
+
+    def product_type(options = {:temporal => true})
+      get_mixed_option_value(:product_type, options)
     end
 
     def start_date(options = {:temporal => true})
@@ -56,5 +56,8 @@ module Spree
       get_mixed_option_value(:room, options)
     end
 
+    def departure_date(options = {:temporal => true})
+      get_mixed_option_value(:departure_date, options)
+    end
   end
 end

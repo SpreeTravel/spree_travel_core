@@ -46,12 +46,16 @@ function update_prices() {
                 object.html('No prices available');
               } else {
                 prices = result.prices
-                prices_str = "" + prices[0] + " .. " + prices[prices.length-1];
+                if (prices.length > 1) {
+                    prices_str = "" + prices[0] + " .. " + prices[prices.length-1];
+                } else {
+                    prices_str = prices[0];
+                }
                 object.html(prices_str);
                 hidden_id = "#vp_" + product_id;
                 $(hidden_id).val(result.variant);
                 b = $('#add-to-cart-button' + '_' + result.product_id);
-                if (prices.length == 0) {
+                if (prices.length != 1) {
                   b.attr('disabled', true);
                   b.addClass('disabled');
                 } else {
@@ -94,7 +98,17 @@ function fill_cart_hiddens(product_id) {
 $(document).ready(function() {
     update_prices();
     $('#search_box_tabs li a').on('click', function(event) {
-        $('#the_product_type').val(($(event.target).attr('name')));
+        var v = $(event.target).attr('name');
+        var v2 = $("#the_default_product_type").val();
+        $('#the_product_type').val(v);
+        console.debug("" + v + " <> " + v2);
+        if (v != v2) {
+          $('#update_price').attr('disabled', true);
+          $('#update_price').addClass('disabled');
+        } else {
+          $('#update_price').attr('disabled', false);
+          $('#update_price').removeClass('disabled');
+        }
     });
     $('#update_price').attr('onclick', 'update_prices()');
 });

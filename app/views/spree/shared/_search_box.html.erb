@@ -20,12 +20,16 @@
       end
     %>
     <%= content_tag :li, class: active_class, role: 'presentation'  do %>
-      <a data-toggle="tab" role="tab" href='#<%="#{prefix}"%>fields' name=<%="#{p.name}"%> ><%= Spree.t(p.presentation) %></a>
+      <a data-toggle="tab" role="tab" href='#<%="#{prefix}"%>fields' name=<%="#{p.name}"%> >
+        <%#= Spree.t(p.presentation) %>
+        <%= p.presentation %>
+      </a>
     <% end %>
   <% end %>
 </ul>
 
 <input type="hidden" id="the_product_type" name="product_type" value="<%= active_product %>">
+<input type="hidden" id="the_default_product_type" name="" value="<%= active_product %>">
 
     <div id="tabcontent" class="tab-content">
       <% Spree::ProductType.enabled.each do |p| %>
@@ -33,10 +37,10 @@
         <!-- TODO esto es para poner valores por defecto, pero no creo que est'e bien
         porque no se adapta a todos los escenarios adem'as de ejecutarce X cada ProductType  -->
         <%
-          hash = { "#{prefix}start_date" => Time.now.to_date,
-                     "#{prefix}end_date" => Time.now.to_date + 3,
-                     "#{prefix}adult" => 2,
-                     "#{prefix}child" => 0 }
+          params["#{prefix}start_date"] ||= Time.now.to_date
+          params["#{prefix}end_date"] ||= Time.now.to_date + 3
+          params["#{prefix}adult"] ||= 2
+          params["#{prefix}child"] ||= 1
 
           if p.name.downcase == active_product
             active_tab = 'active'
@@ -64,12 +68,12 @@
     	          <%= label_tag tag_name, Spree.t(ot.presentation) %>
               </div>
               <div class="eight columns search_box_right">
-      	        <% current_value = hash[tag_name] %>
+      	        <% current_value = params[tag_name] %>
       	        <% if ot.attr_type == 'selection' %>
                   <% options = ot.option_values.map { |ov| [ov.presentation, ov.id] } %>
       	          <%= select_tag tag_name, options_for_select(options, current_value),
                     :class => "select2 #{prefix}selects",
-                    :prompt => "-- Select #{ot.presentation}--",
+                    :prompt => "-- Select #{ot.presentation} --",
                     'onchange' => function_name %>
                 <% elsif ot.attr_type == 'destination' %>
                   <% dests = Spree::Taxonomy.find_by_name('Destination').root.children.map { |ov| [ov.name, ov.id] } %>

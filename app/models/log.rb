@@ -45,7 +45,7 @@ class Log
     options[:level] = CRITICAL
     write(options)
     write(:message => "=== BEGIN EXCEPTION ===")
-    ex.backtrace[0..9].each_with_index do |line, index|
+    ex.backtrace.each_with_index do |line, index|
       write(:message => line, :prefix => index)
     end
     write(:message => "=== END EXCEPTION ===")

@@ -153,7 +153,8 @@ ul#products li .product-destination {
     margin-left: 20px;
 }
 
-button.disabled{
+button.disabled,
+#update_price.disabled {
   background-color: #404042;
   border-color: #404042;
   color: white;

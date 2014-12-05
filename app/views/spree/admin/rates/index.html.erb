@@ -29,7 +29,7 @@
     <tr>
       <td><%= rt.variant.sku %></td>
       <% for ot in @product.rate_option_types %>
-      <td><%= rt.get_option_value(ot, 'presentation') %></td>
+      <td><%= rt.get_persisted_option_value(ot, 'presentation') %></td>
       <% end %>
       <td class="actions">
       <!-- TODO fix bug regarding the links redirecting to some crazy url -->
