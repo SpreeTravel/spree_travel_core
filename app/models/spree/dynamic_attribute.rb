@@ -16,12 +16,12 @@ module Spree
       end
       Log.debug("OPTIONS: #{option_types.inspect}")
       params.each do |key, value|
+        name = key
         option_type = option_types.find do |ot|
-          name = key
           name = key[prefix.length+1 .. -1] if prefix && key.index(prefix) == 0
           (name == ot)
         end
-        hash[key.to_s] = value if option_type
+        hash[name.to_s] = value if option_type
       end
       hash['product_type'] = prefix
       Log.debug("HASH: #{hash.inspect}")
