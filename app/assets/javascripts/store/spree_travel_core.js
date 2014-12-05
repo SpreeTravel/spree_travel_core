@@ -46,12 +46,16 @@ function update_prices() {
                 object.html('No prices available');
               } else {
                 prices = result.prices
-                prices_str = "" + prices[0] + " .. " + prices[prices.length-1];
+                if (prices.length > 1) {
+                    prices_str = "" + prices[0] + " .. " + prices[prices.length-1];
+                } else {
+                    prices_str = prices[0];
+                }
                 object.html(prices_str);
                 hidden_id = "#vp_" + product_id;
                 $(hidden_id).val(result.variant);
                 b = $('#add-to-cart-button' + '_' + result.product_id);
-                if (prices.length == 0) {
+                if (prices.length != 1) {
                   b.attr('disabled', true);
                   b.addClass('disabled');
                 } else {
