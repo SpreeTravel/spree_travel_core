@@ -56,5 +56,8 @@ module Spree
       get_mixed_option_value(:room, options)
     end
 
+    def departure_date(options = {:temporal => true})
+      get_mixed_option_value(:departure_date, options)
+    end
   end
 end

@@ -11,8 +11,16 @@ module Spree
     has_many :option_values, :class_name => 'Spree::RateOptionValue', :foreign_key => 'rate_id', :dependent => :destroy
     has_many :combinations, :class_name => 'Spree::Combinations', :foreign_key => 'rate_id'
 
-    after_save :generate_combinations
+    after_save :generate_combinations, :unless => :first_time?
     before_destroy :destroy_combinations
+
+    def first_time!
+      @first_time = true
+    end
+
+    def first_time?
+      @first_time
+    end
 
     def generate_combinations
       variant.product.generate_combinations(self)
