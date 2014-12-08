@@ -114,9 +114,9 @@ $(document).ready(function() {
         set_button_disabled(v != v2);
     });
 
-    $('#the_search_box').on('click', function(event) {
-        //$('#the_search_box');
-        //set_button_disabled(true);
+    $('#the_check_box').on('click', function(event) {
+        var v = $('#the_check_box').is(':checked');
+        set_button_disabled(v);
     });
 
     $('#update_price').attr('onclick', 'update_prices()');
