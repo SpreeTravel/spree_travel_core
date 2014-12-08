@@ -95,17 +95,17 @@
               </div>
     	      </li>
     	    <% end %>
-          <li class="eleven columns search_box_row">
-            <div class="two columns search_box_left">
-              <%= check_box_tag prefix + 'change_visibility', 'yes', false, class: 'visibility_check_box' %>
-            </div>
-            <div class="eight columns search_box_right">
-              <%= label_tag prefix + 'change_visibility', Spree.t(:show_only_available_products) %>
-            </div>
           </ul>
         </div>
-
       <% end %>
+        <div class="eleven columns search_box_row check_box_row">
+          <div class="two columns search_box_left">
+            <%= check_box_tag 'change_visibility', 'yes', false, class: 'visibility_check_box', :id => 'the_check_box' %>
+          </div>
+          <div class="eight columns search_box_right">
+            <%= label_tag 'change_visibility', Spree.t(:show_only_available_products) %>
+          </div>
+        </div>
     </div>
     <%= submit_tag Spree.t('search'), :id => :submit %>
     <input type="button" value="Update Price" id='update_price' />
