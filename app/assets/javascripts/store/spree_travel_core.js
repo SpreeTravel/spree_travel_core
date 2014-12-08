@@ -119,5 +119,11 @@ $(document).ready(function() {
         set_button_disabled(v);
     });
 
+    $('#the_keywords_box').on('change keyup', function (event) {
+        var v = $('#the_keywords_box').val();
+        var v2 =$('#the_keywords_box').data('default');
+        set_button_disabled(v != v2);
+    });
+
     $('#update_price').attr('onclick', 'update_prices()');
 });
