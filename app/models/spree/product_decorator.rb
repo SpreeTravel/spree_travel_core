@@ -7,11 +7,12 @@ module Spree
     has_many :rates, :through => :variants_including_master
     has_many :combinations, :class_name => 'Spree::Combinations', :foreign_key => 'product_id'
 
-    before_create :absorb_option_types
+    after_create :absorb_option_types
 
     def absorb_option_types
       option_types = self.product_type.variant_option_types
-    rescue
+    rescue Exception => ex
+      Log.exception(ex)
     end
 
     def calculator_instance
@@ -30,34 +31,15 @@ module Spree
       product_type = Spree::ProductType.find_by_name(context.product_type)
       string = calculator_instance_for(product_type).combination_string_for_search(context) if product_type
       list = Spree::Product.where('1 > 0')
-      Log.debug("1: #{list.count}")
-      Log.debug(list.explain)
       list = list.where(:product_type_id => product_type.id) if product_type
-      Log.debug("2: #{list.count}")
-      Log.debug(list.explain)
       list = list.joins(:combinations)
-      Log.debug("3: #{list.count}")
-      Log.debug(list.explain)
       list = list.where('spree_combinations.start_date <= ?', context.start_date) if context.start_date.present?
-      Log.debug("START: " + context.start_date.inspect)
-      Log.debug("4: #{list.count}")
-      Log.debug(list.explain)
       list = list.where('spree_combinations.end_date >= ?', context.end_date) if context.end_date.present?
-      Log.debug("5: #{list.count}")
-      Log.debug(list.explain)
       list = list.where('spree_combinations.adults' => context.adult) if context.adult.present?
-      Log.debug("6: #{list.count}")
-      Log.debug(list.explain)
       list = list.where('spree_combinations.children' => context.child) if context.child.present?
-      Log.debug("7: #{list.count}")
-      Log.debug(list.explain)
       list = list.where('spree_combinations.other like ?', string) if product_type
-      Log.debug("8: #{list.count}")
-      Log.debug(list.explain)
       #list = list.group('spree_products.id')
       list = list.uniq
-      Log.debug("9: #{list.count}")
-      Log.debug(list.explain)
       list
     end
 
@@ -74,13 +56,17 @@ module Spree
     end
 
     def generate_variants
-      variations(self.option_types) do |array|
+      variations do |array|
         variant = Spree::Variant.new
         variant.sku = Faker.bothify('???-######').upcase
         variant.price = 0
-        variant.option_values = array
         variant.product_id = self.id
         variant.save
+        for ov in array
+          opt_name = ov.option_type.name
+          opt_value = ov.value
+          variant.set_option_value(opt_name, opt_value)
+        end
       end
     end
 
@@ -106,15 +92,19 @@ module Spree
     # TODO: poner bonito la seleccion de variantes en la creacion de
     # productos, parece que es de Spree
 
-    private
+    def variations
+      the_array = []
+      recursive_variations(self.option_types, the_array)
+      the_array
+    end
 
-    def variations(the_option_types, index = 0, array = [], &block)
+    def recursive_variations(the_option_types, the_big_array, index = 0, array = [])
       if the_option_types.length == index
-        yield array
+        the_big_array << array
       else
         for option_value in the_option_types[index].option_values
           array[index] = option_value
-          variations(the_option_types, index + 1, array, &block)
+          recursive_variations(the_option_types, the_big_array, index + 1, array)
         end
       end
     end

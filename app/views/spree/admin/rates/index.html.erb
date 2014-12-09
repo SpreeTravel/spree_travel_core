@@ -17,9 +17,11 @@
 <table class="index" id='listing_rate_hotels' data-hook>
   <thead>
     <tr data-hook="rate_hotel_header">
-      <th>Variant</th>
+      <% for ot in @product.option_types %>
+        <th><%= ot.name %></th>
+      <% end %>
       <% for ot in @product.rate_option_types %>
-      <th><%= ot.name %></th>
+        <th><%= ot.name %></th>
       <% end %>
       <th class="actions"></th>
     </tr>
@@ -27,9 +29,11 @@
   <tbody>
     <% for rt in @product.rates %>
     <tr>
-      <td><%= rt.variant.sku %></td>
+      <% for ot in @product.option_types %>
+        <td><%= rt.variant.option_values.where(:option_type_id => ot.id).first.value %></td>
+      <% end %>
       <% for ot in @product.rate_option_types %>
-      <td><%= rt.get_persisted_option_value(ot, 'presentation') %></td>
+        <td><%= rt.get_persisted_option_value(ot, 'presentation') %></td>
       <% end %>
       <td class="actions">
       <!-- TODO fix bug regarding the links redirecting to some crazy url -->
