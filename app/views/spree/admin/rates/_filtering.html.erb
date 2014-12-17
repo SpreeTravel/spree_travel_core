@@ -1,0 +1,34 @@
+<h3>Filter:</h3>
+
+<% for ot in @product.rate_option_types %>
+  <div>
+    <b> <%= ot.presentation %> :</b>
+    <div>
+
+      <%
+        values = []
+        for rt in @product.rates
+          values << rt.get_option_value(ot, 'presentation')
+        end
+      %>
+
+      <% if ot.attr_type == 'date' %>
+        <b> between </b>
+        <%= select_tag "#{ot.name}_from", options_for_select(values), class: 'select2' %>
+        <b> and </b>
+        <%= select_tag "#{ot.name}_to", options_for_select(values), class: 'select2' %>
+      <% elsif ot.attr_type == 'integer' %>
+        <%= select_tag ot.name + '_comparison', options_for_select(['Greater Than', 'Less Than', 'Equal']), class: 'select2' %>
+        <%= select_tag "#{ot.name}", options_for_select(values), class: 'select2' %>
+      <% elsif ot.attr_type == 'float' %>
+        <%= select_tag ot.name + '_comparison', options_for_select(['Greater Than', 'Less Than', 'Equal']), class: 'select2' %>
+        <%= select_tag "#{ot.name}", options_for_select(values), class: 'select2' %>
+      <% elsif ot.attr_type == 'selection' %>
+        <%= select_tag "#{ot.name}", options_for_select(values), class: 'select2' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<div class="alpah-two-columns">
+  <button class="icon-plus button" name"filter" id="filter_button">Filter</button>
+</div>

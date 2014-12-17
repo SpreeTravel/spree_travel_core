@@ -14,6 +14,8 @@
 </ul>
 <% end %>
 
+<%= render :partial => 'spree/admin/rates/filtering' %>
+
 <table class="index" id='listing_rate_hotels' data-hook>
   <thead>
     <tr data-hook="rate_hotel_header">
@@ -26,10 +28,10 @@
   </thead>
   <tbody>
     <% for rt in @product.rates %>
-    <tr>
+    <tr id="<%= rt.id %>" >
       <td><%= rt.variant.sku %></td>
       <% for ot in @product.rate_option_types %>
-      <td><%= rt.get_option_value(ot, 'presentation') %></td>
+        <td><%= rt.get_option_value(ot, 'presentation') %></td>
       <% end %>
       <td class="actions">
       <!-- TODO fix bug regarding the links redirecting to some crazy url -->
