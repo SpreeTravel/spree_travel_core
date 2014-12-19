@@ -4,10 +4,6 @@ module Spree
 
       before_filter :load_product
 
-      def index
-        @filter_ot = @product.rate_option_types.map{ |ot| [ot.name.html_safe , ot.attr_type.html_safe] }
-      end
-
       def load_product
         @product = Spree::Product.find_by_slug(params[:product_id])
       end
