@@ -7,6 +7,13 @@ module Spree
         @product.generate_variants
       end
 
+      def delete_rates
+        puts params[:rates]
+        flash[:success] = t(:successfully_deleted_rates)
+        respond_to do |format|
+          format.js
+        end
+      end
     end
   end
 end

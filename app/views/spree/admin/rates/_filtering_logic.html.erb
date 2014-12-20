@@ -1,6 +1,5 @@
 <script type="text/javascript">
   var filter = {};
-
   function add_to_filter() {
     switch (this.getAttribute('data-type')) {
       case "date":
@@ -52,7 +51,6 @@
               to_date = filter[name][1];
               check_value = this.innerHTML;
               date_check = check_value.split("/");
-              console.log(date_check);
               check = new Date(date_check[0], date_check[1]-1, date_check[2]);
               passes = passes && (check >= from && check <= to);
             }
@@ -63,19 +61,19 @@
               criteria = filter[name][0];
               switch (criteria) {
                 case ">":
-                  passes = passes &&  parseFloat(this.innerHTML) > filter[name][1];
+                  passes = passes &&  parseFloat(this.innerHTML) > parseFloat(filter[name][1]);
                   break;
                 case "<":
-                  passes = passes &&  parseFloat(this.innerHTML) < filter[name][1];
+                  passes = passes &&  parseFloat(this.innerHTML) < parseFloat(filter[name][1]);
                   break;
                 case "<=":
-                  passes = passes &&  parseFloat(this.innerHTML) <= filter[name][1];
+                  passes = passes &&  parseFloat(this.innerHTML) <= parseFloat(filter[name][1]);
                   break;
                 case ">=":
-                  passes = passes &&  parseFloat(this.innerHTML) >= filter[name][1];
+                  passes = passes &&  parseFloat(this.innerHTML) >= parseFloat(filter[name][1]);
                   break;
                 default:
-                  passes = passes &&  parseFloat(this.innerHTML) == filter[name][1];
+                  passes = passes &&  parseFloat(this.innerHTML) == parseFloat(filter[name][1]);
                   break;
               }
             }
@@ -98,9 +96,19 @@
     }
   }
 
+  function update_rates_list_to_delete(){
+    var rates_ids = [];
+    $('#listing_rates tbody tr').each(function(){
+      console.log(this.getAttribute("id"));
+      rates_ids.push(this.getAttribute("id"));
+    });
+    $('#rates').val(rates_ids);
+  }
+
   function start_filter () {
     $('.filter_wrapper').each(add_to_filter);
     $('#listing_rates tbody tr').each(execute_filter);
+    update_rates_list_to_delete();
   }
 
   function reset_values(){
