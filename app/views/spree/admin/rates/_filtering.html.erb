@@ -35,6 +35,6 @@
   <button class="icon-plus button" name="filter" id="clear_filter_button">Clear Filters</button>
   <%= form_tag(delete_rates_admin_product_path(@product), :method => :post, :remote => true) do %>
     <%= hidden_field_tag(:rates, []) %>
-    <button class="button icon-delete" name="delete_rates" id="delete_rates_button">Delete Rates</button>
+    <button class="button icon-delete" name="delete_rates" id="delete_rates_button" data-confirm="Are you sure??">Delete Rates</button>
   <%end%>
 </div>

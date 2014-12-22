@@ -86,8 +86,6 @@
         }
       }
     });
-    console.log(this);
-    console.log(passes);
     if (!passes) {
       this.style.display= "none";
     }
@@ -99,8 +97,10 @@
   function update_rates_list_to_delete(){
     var rates_ids = [];
     $('#listing_rates tbody tr').each(function(){
-      console.log(this.getAttribute("id"));
-      rates_ids.push(this.getAttribute("id"));
+      attrib = this.style.display;
+      if (attrib != 'none') {
+        rates_ids.push(this.getAttribute("id"));
+      };
     });
     $('#rates').val(rates_ids);
   }
@@ -137,12 +137,14 @@
       this.style.display= "table-row";
     });
     filter = {};
+    update_rates_list_to_delete();
   }
 
   $(document).ready(function() {
     $('.filter_wrapper').each(reset_values);
     $('#filter_button').attr('onclick', 'start_filter()');
     $('#clear_filter_button').attr('onclick', 'clear_filters()');
+    update_rates_list_to_delete();
   });
 
 </script>

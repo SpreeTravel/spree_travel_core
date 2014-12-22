@@ -8,7 +8,10 @@ module Spree
       end
 
       def delete_rates
-        puts params[:rates]
+        rates_array = params[:rates].split(',')
+        rates_array.each do |rate_id|
+          Spree::Rate.find(rate_id).destroy
+        end
         flash[:success] = t(:successfully_deleted_rates)
         respond_to do |format|
           format.js
