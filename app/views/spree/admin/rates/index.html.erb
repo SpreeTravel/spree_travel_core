@@ -14,25 +14,22 @@
 </ul>
 <% end %>
 
-<table class="index" id='listing_rate_hotels' data-hook>
+<table class="index" id='listing_rates'>
   <thead>
-    <tr data-hook="rate_hotel_header">
       <th>Variant</th>
       <% for ot in @product.rate_option_types %>
       <th><%= ot.name %></th>
       <% end %>
       <th class="actions"></th>
-    </tr>
   </thead>
   <tbody>
     <% for rt in @product.rates %>
-    <tr>
+    <tr id="<%= rt.id %>" >
       <td><%= rt.variant.sku %></td>
       <% for ot in @product.rate_option_types %>
-      <td><%= rt.get_persisted_option_value(ot, 'presentation') %></td>
+      <td data-id="<%=ot.name%>" data-type="<%=ot.attr_type%>"><%= rt.get_persisted_option_value(ot, 'presentation') %></td>
       <% end %>
       <td class="actions">
-      <!-- TODO fix bug regarding the links redirecting to some crazy url -->
 	      <%= link_to_edit(rt, :no_text => true, :class => 'admin_edit_rate') %>
 	      <%= link_to_delete(rt, :no_text => true) %>
       </td>
