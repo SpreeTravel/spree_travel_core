@@ -14,6 +14,8 @@
 </ul>
 <% end %>
 
+<%= render :partial => 'spree/admin/rates/filtering' %>
+
 <table class="index" id='listing_rates'>
   <thead>
       <th>Variant</th>
@@ -37,3 +39,5 @@
     <% end %>
   </tbody>
 </table>
+
+<%= render :partial => 'spree/admin/rates/filtering_logic'%>
