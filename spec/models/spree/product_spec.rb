@@ -12,6 +12,8 @@ describe Spree::Product do
     prod = create(:travel_product, product_type: prod_type)
     prod.generate_variants
     variant = prod.variants.first
+    puts variant.option_values.count
+    puts prod_type.variant_option_types.first.option_values.first.presentation
     expect(variant.option_values.first.id).to be_equal(prod.option_types.first.option_values.first.id)
   end
 end
