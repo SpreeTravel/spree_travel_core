@@ -10,7 +10,11 @@ module Spree
     before_create :absorb_option_types
 
     def absorb_option_types
-      option_types = self.product_type.variant_option_types
+      # TODO --> Revisar que el valor de option_types debe ser a mi parecer asignado a self, en los tests no sirve si no se hace así --> dustet 30/12/2014
+      # Cambiado el 2/1/2015 de:
+      # option_types = self.product_type.variant_option_types
+      # a:
+      self.option_types = self.product_type.variant_option_types
     rescue
     end
 
