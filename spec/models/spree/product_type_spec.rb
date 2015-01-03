@@ -28,6 +28,13 @@ describe Spree::ProductType do
     expect(base_prod.product_type.name).to be_equal(product_product_type.name)
   end
 
+  it 'responds to its attributes' do
+    product_type = create(:product_type)
+    expect(product_type).to respond_to(:enabled)
+    expect(product_type).to respond_to(:name)
+    expect(product_type).to respond_to(:presentation)
+  end
+
   # it 'responds to its associations' do
 
   # end
