@@ -30,7 +30,7 @@
     <% for rt in @product.rates %>
     <tr>
       <% for ot in @product.option_types %>
-        <td><%= rt.variant.option_values.where(:option_type_id => ot.id).first.value %></td>
+        <td><%= rt.variant.option_value(ot.name).presentation %></td>
       <% end %>
       <% for ot in @product.rate_option_types %>
         <td><%= rt.get_persisted_option_value(ot, 'presentation') %></td>

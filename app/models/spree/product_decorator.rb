@@ -10,7 +10,8 @@ module Spree
     after_create :absorb_option_types
 
     def absorb_option_types
-      option_types = self.product_type.variant_option_types
+      Log.debug("absorbing option types")
+      self.option_types = self.product_type.variant_option_types
     rescue Exception => ex
       Log.exception(ex)
     end
@@ -32,14 +33,22 @@ module Spree
       string = calculator_instance_for(product_type).combination_string_for_search(context) if product_type
       list = Spree::Product.where('1 > 0')
       list = list.where(:product_type_id => product_type.id) if product_type
+      #Log.debug("after product_type (#{context.product_type.inspect}): #{list.count}")
       list = list.joins(:combinations)
+      #Log.debug("after combinations: #{list.count}")
       list = list.where('spree_combinations.start_date <= ?', context.start_date) if context.start_date.present?
+      #Log.debug("after start_date (#{context.start_date.inspect}): #{list.count}")
       list = list.where('spree_combinations.end_date >= ?', context.end_date) if context.end_date.present?
+      #Log.debug("after end_date (#{context.end_date.inspect}): #{list.count}")
       list = list.where('spree_combinations.adults' => context.adult) if context.adult.present?
+      #Log.debug("after adults (#{context.adult.inspect}): #{list.count}")
       list = list.where('spree_combinations.children' => context.child) if context.child.present?
+      #Log.debug("after children (#{context.child.inspect}): #{list.count}")
       list = list.where('spree_combinations.other like ?', string) if product_type
+      #Log.debug("after other (#{string.inspect}): #{list.count}")
       #list = list.group('spree_products.id')
       list = list.uniq
+      #Log.debug("after uniq: #{list.count}")
       list
     end
 
@@ -56,17 +65,21 @@ module Spree
     end
 
     def generate_variants
-      variations do |array|
+      variations.each do |array|
         variant = Spree::Variant.new
         variant.sku = Faker.bothify('???-######').upcase
         variant.price = 0
         variant.product_id = self.id
         variant.save
+        string = "PRODUCT:".red + " #{self.name}: "
         for ov in array
           opt_name = ov.option_type.name
-          opt_value = ov.value
+          opt_value = ov.name
+          string += "#{opt_name.upcase.green}: #{opt_value}, "
           variant.set_option_value(opt_name, opt_value)
         end
+        Log.debug(string)
+        variant.save
       end
     end
 
@@ -100,7 +113,7 @@ module Spree
 
     def recursive_variations(the_option_types, the_big_array, index = 0, array = [])
       if the_option_types.length == index
-        the_big_array << array
+        the_big_array << array.clone
       else
         for option_value in the_option_types[index].option_values
           array[index] = option_value

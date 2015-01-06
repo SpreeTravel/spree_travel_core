@@ -3,7 +3,7 @@ module Spree
 
     def generate_all_combinations(product)
       product.rates.each do |rate|
-        result = generate_combination(rate)
+        result = generate_combinations(rate)
       end
     end
 
