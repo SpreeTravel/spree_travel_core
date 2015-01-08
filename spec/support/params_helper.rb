@@ -1,3 +1,4 @@
+# Given a product returns the 'params' parameter to completely build a dynamic attribute from the method option_types_and_values_from_params
 def params_for_dynamic_attribute(product)
   context_params = {}
   context_params['product_type'] = product.product_type.name
