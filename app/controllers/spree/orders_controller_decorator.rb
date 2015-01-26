@@ -30,7 +30,9 @@ module Spree
 
         calculator_class = variant.product.calculator.name.constantize
         #TODO aqui hay que asegurarse que solo vaya un solo precio
-        price = calculator_class.calculate_price(context, variant).sort
+
+        product = variant.product
+        price = product.calculate_price(context).sort
 
         line_item = current_order.line_items.last
         line_item.price = price.first.to_i

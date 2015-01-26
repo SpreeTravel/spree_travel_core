@@ -164,3 +164,8 @@ td.image-holder img{
   width: 20px;
   height: 20px;
 }
+
+#check_box_row {
+  padding-top: 0px;
+  margin-bottom: 20px;
+}

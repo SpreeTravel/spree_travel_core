@@ -14,10 +14,14 @@
 </ul>
 <% end %>
 
-<table class="index" id='listing_rate_hotels' data-hook>
+<%= render :partial => 'spree/admin/rates/filtering' %>
+
+<table class="index" id='listing_rates'>
   <thead>
     <tr data-hook="rate_hotel_header">
-      <th>Variant</th>
+      <% for ot in @product.option_types %>
+        <th><%= ot.name %></th>
+      <% end %>
       <% for ot in @product.rate_option_types %>
       <th><%= ot.name %></th>
       <% end %>
@@ -27,9 +31,11 @@
   <tbody>
     <% for rt in @product.rates %>
     <tr>
-      <td><%= rt.variant.sku %></td>
+      <% for ot in @product.option_types %>
+        <td><%= rt.variant.option_value(ot.name).presentation %></td>
+      <% end %>
       <% for ot in @product.rate_option_types %>
-      <td><%= rt.get_persisted_option_value(ot, 'presentation') %></td>
+        <td><%= rt.get_persisted_option_value(ot, 'presentation') %></td>
       <% end %>
       <td class="actions">
       <!-- TODO fix bug regarding the links redirecting to some crazy url -->
@@ -40,3 +46,5 @@
     <% end %>
   </tbody>
 </table>
+
+<%= render :partial => 'spree/admin/rates/filtering_logic'%>

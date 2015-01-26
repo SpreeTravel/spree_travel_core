@@ -7,11 +7,13 @@ module Spree
     has_many :rates, :through => :variants_including_master
     has_many :combinations, :class_name => 'Spree::Combinations', :foreign_key => 'product_id'
 
-    before_create :absorb_option_types
+    after_create :absorb_option_types
 
     def absorb_option_types
-      option_types = self.product_type.variant_option_types
-    rescue
+      Log.debug("absorbing option types")
+      self.option_types = self.product_type.variant_option_types
+    rescue Exception => ex
+      Log.exception(ex)
     end
 
     def calculator_instance
@@ -74,12 +76,20 @@ module Spree
     end
 
     def generate_variants
-      variations(self.option_types) do |array|
+      variations.each do |array|
         variant = Spree::Variant.new
         variant.sku = Faker.bothify('???-######').upcase
         variant.price = 0
-        variant.option_values = array
         variant.product_id = self.id
+        variant.save
+        string = "PRODUCT:".red + " #{self.name}: "
+        for ov in array
+          opt_name = ov.option_type.name
+          opt_value = ov.name
+          string += "#{opt_name.upcase.green}: #{opt_value}, "
+          variant.set_option_value(opt_name, opt_value)
+        end
+        Log.debug(string)
         variant.save
       end
     end
@@ -106,15 +116,19 @@ module Spree
     # TODO: poner bonito la seleccion de variantes en la creacion de
     # productos, parece que es de Spree
 
-    private
+    def variations
+      the_array = []
+      recursive_variations(self.option_types, the_array)
+      the_array
+    end
 
-    def variations(the_option_types, index = 0, array = [], &block)
+    def recursive_variations(the_option_types, the_big_array, index = 0, array = [])
       if the_option_types.length == index
-        yield array
+        the_big_array << array.clone
       else
         for option_value in the_option_types[index].option_values
           array[index] = option_value
-          variations(the_option_types, index + 1, array, &block)
+          recursive_variations(the_option_types, the_big_array, index + 1, array)
         end
       end
     end

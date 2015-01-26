@@ -8,5 +8,9 @@ FactoryGirl.define do
       after(:create) {|product_type| product_type.variant_option_types = [create(:selection_option_type_with_values)]}
     end
 
+    factory :product_type_with_context_option_types do
+      after(:create) {|product_type| product_type.context_option_types = [create(:selection_option_type_with_values)]}
+    end
+
   end
 end
