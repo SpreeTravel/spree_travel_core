@@ -39,10 +39,9 @@ function update_prices() {
             url: '/products/get_ajax_price',
             success: function (result) {
               console.debug(result);
+              button_id = $('#add-to-cart-button-' + result.product_id);
               if (result.prices.length == 0) {
-                b = $('#add-to-cart-button' + '_' + result.product_id);
-                b.attr('disabled', true);
-                b.addClass('disabled');
+                set_button_disabled(button_id, true);
                 object.html('No prices available');
               } else {
                 prices = result.prices
@@ -54,14 +53,7 @@ function update_prices() {
                 object.html(prices_str);
                 hidden_id = "#vp_" + product_id;
                 $(hidden_id).val(result.variant);
-                b = $('#add-to-cart-button' + '_' + result.product_id);
-                if (prices.length != 1) {
-                  b.attr('disabled', true);
-                  b.addClass('disabled');
-                } else {
-                  b.attr('disabled', false);
-                  b.removeClass('disabled');
-                }
+                set_button_disabled(button_id, prices.length != 1);
               };
             },
             error: function() {
@@ -94,13 +86,13 @@ function fill_cart_hiddens(product_id) {
     });
 }
 
-function set_button_disabled(bool) {
+function set_button_disabled(item_id, bool) {
     if (bool) {
-      $('#update_price').attr('disabled', true);
-      $('#update_price').addClass('disabled');
+      $(item_id).attr('disabled', true);
+      $(item_id).addClass('disabled');
     } else {
-      $('#update_price').attr('disabled', false);
-      $('#update_price').removeClass('disabled');
+      $(item_id).attr('disabled', false);
+      $(item_id).removeClass('disabled');
     }
 }
 
@@ -111,18 +103,18 @@ $(document).ready(function() {
         var v2 = $("#the_default_product_type").val();
         $('#the_product_type').val(v);
         console.debug("" + v + " <> " + v2);
-        set_button_disabled(v != v2);
+        set_button_disabled('#update_price', v != v2);
     });
 
     $('#the_check_box').on('click', function(event) {
         var v = $('#the_check_box').is(':checked');
-        set_button_disabled(v);
+        set_button_disabled('#update_price', v);
     });
 
     $('#the_keywords_box').on('change keyup', function (event) {
         var v = $('#the_keywords_box').val();
         var v2 =$('#the_keywords_box').data('default');
-        set_button_disabled(v != v2);
+        set_button_disabled('#update_price', v != v2);
     });
 
     $('#update_price').attr('onclick', 'update_prices()');
