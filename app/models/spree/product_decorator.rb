@@ -32,23 +32,34 @@ module Spree
       product_type = Spree::ProductType.find_by_name(context.product_type)
       string = calculator_instance_for(product_type).combination_string_for_search(context) if product_type
       list = Spree::Product.where('1 > 0')
+      Log.debug("1: #{list.count}")
+      Log.debug(list.explain)
       list = list.where(:product_type_id => product_type.id) if product_type
-      #Log.debug("after product_type (#{context.product_type.inspect}): #{list.count}")
+      Log.debug("2: #{list.count}")
+      Log.debug(list.explain)
       list = list.joins(:combinations)
-      #Log.debug("after combinations: #{list.count}")
+      Log.debug("3: #{list.count}")
+      Log.debug(list.explain)
       list = list.where('spree_combinations.start_date <= ?', context.start_date) if context.start_date.present?
-      #Log.debug("after start_date (#{context.start_date.inspect}): #{list.count}")
+      Log.debug("START: " + context.start_date.inspect)
+      Log.debug("4: #{list.count}")
+      Log.debug(list.explain)
       list = list.where('spree_combinations.end_date >= ?', context.end_date) if context.end_date.present?
-      #Log.debug("after end_date (#{context.end_date.inspect}): #{list.count}")
+      Log.debug("5: #{list.count}")
+      Log.debug(list.explain)
       list = list.where('spree_combinations.adults' => context.adult) if context.adult.present?
-      #Log.debug("after adults (#{context.adult.inspect}): #{list.count}")
+      Log.debug("6: #{list.count}")
+      Log.debug(list.explain)
       list = list.where('spree_combinations.children' => context.child) if context.child.present?
-      #Log.debug("after children (#{context.child.inspect}): #{list.count}")
+      Log.debug("7: #{list.count}")
+      Log.debug(list.explain)
       list = list.where('spree_combinations.other like ?', string) if product_type
-      #Log.debug("after other (#{string.inspect}): #{list.count}")
+      Log.debug("8: #{list.count}")
+      Log.debug(list.explain)
       #list = list.group('spree_products.id')
       list = list.uniq
-      #Log.debug("after uniq: #{list.count}")
+      Log.debug("9: #{list.count}")
+      Log.debug(list.explain)
       list
     end
 

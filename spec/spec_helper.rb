@@ -23,13 +23,24 @@ require 'ffaker'
 Dir[File.join(File.dirname(__FILE__), 'support/**/*.rb')].each { |f| require f }
 
 # Requires factories defined in spree_core
-require 'spree/testing_support/factories'
-require 'spree/testing_support/controller_requests'
 require 'spree/testing_support/authorization_helpers'
+require 'spree/testing_support/factories'
+require 'spree/testing_support/preferences'
+require 'spree/testing_support/controller_requests'
+require 'spree/testing_support/flash'
 require 'spree/testing_support/url_helpers'
+require 'spree/testing_support/order_walkthrough'
+require 'spree/testing_support/capybara_ext'
+
+require 'paperclip/matchers'
+
+Capybara.javascript_driver = :poltergeist
 
 # Requires factories defined in lib/spree_travel_core/factories.rb
 require 'spree_travel_core/factories'
+Dir["#{File.dirname(__FILE__)}/support/**"].each do |f|
+  require File.expand_path(f)
+end
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods

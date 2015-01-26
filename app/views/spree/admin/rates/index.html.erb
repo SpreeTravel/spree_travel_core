@@ -14,14 +14,16 @@
 </ul>
 <% end %>
 
-<table class="index" id='listing_rate_hotels' data-hook>
+<%= render :partial => 'spree/admin/rates/filtering' %>
+
+<table class="index" id='listing_rates'>
   <thead>
     <tr data-hook="rate_hotel_header">
       <% for ot in @product.option_types %>
         <th><%= ot.name %></th>
       <% end %>
       <% for ot in @product.rate_option_types %>
-        <th><%= ot.name %></th>
+      <th><%= ot.name %></th>
       <% end %>
       <th class="actions"></th>
     </tr>
@@ -44,3 +46,5 @@
     <% end %>
   </tbody>
 </table>
+
+<%= render :partial => 'spree/admin/rates/filtering_logic'%>
