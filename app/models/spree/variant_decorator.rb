@@ -5,10 +5,11 @@ module Spree
 
     def options_text
       values = self.option_values.joins(:option_type).order("#{Spree::OptionType.table_name}.position asc")
+      array = []
       values.map do |ov|
-        "#{ov.option_type.presentation}: #{ov.presentation}</br>"
+       array << "#{ov.option_type.presentation}: #{ov.presentation}</br>"
       end
-      values.to_sentence({ words_connector: "", two_words_connector: "", last_word_connector: "" }).html_safe
+      array.to_sentence({ words_connector: "", two_words_connector: "", last_word_connector: "" }).html_safe
     end
 
     def count_on_hand

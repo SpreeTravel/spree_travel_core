@@ -83,9 +83,9 @@
                     :prompt => "-- Select #{ot.presentation} --",
                     :class => "select2 #{prefix}selects" %>
       	        <% elsif ot.attr_type == 'integer' %>
-      	          <%= number_field_tag tag_name, current_value, :class => "#{prefix}inputs", 'onchange' => function_name %>
+      	          <%= number_field_tag tag_name, current_value, :class => "#{prefix}inputs", 'onchange' => function_name, :min => 0 %>
       	        <% elsif ot.attr_type == 'float' %>
-      	          <%= number_field_tag tag_name, current_value , :class => "#{prefix}inputs", 'onchange' => function_name %>
+      	          <%= number_field_tag tag_name, current_value , :class => "#{prefix}inputs", 'onchange' => function_name, :min => 0.0 %>
       	        <% elsif ot.attr_type == 'boolean' %>
       	          <%= check_box_tag tag_name, 1, :class => "#{prefix}inputs", 'onchange' => function_name %>
       	        <% elsif ot.attr_type == 'date' %>

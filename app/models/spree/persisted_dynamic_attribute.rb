@@ -1,6 +1,8 @@
 module Spree
   module PersistedDynamicAttribute
 
+    include Spree::DynamicAttribute
+
     def set_persisted_option_values(params)
       option_types_and_values_from_params(params).each do |key, value|
         set_persisted_option_value(key, value) 
