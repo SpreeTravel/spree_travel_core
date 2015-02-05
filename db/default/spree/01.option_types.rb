@@ -11,3 +11,7 @@ option_types = [
 option_types.each do |ot|
   Spree::OptionType.where(:name => ot[:name]).first_or_create(:presentation => ot[:presentation], :attr_type => ot[:attr_type])
 end
+
+### Creating Destination Taxonomy
+Spree::Taxonomy.first_or_create( :name => "Destination")
+

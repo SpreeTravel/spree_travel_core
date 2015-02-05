@@ -14,7 +14,9 @@
 </ul>
 <% end %>
 
-<%= render :partial => 'spree/admin/rates/filtering' %>
+<% if !@product.rates.empty? %>
+  <%= render :partial => 'spree/admin/rates/filtering' %>
+<% end %>
 
 <table class="index" id='listing_rates'>
   <thead>
@@ -32,7 +34,7 @@
     <% for rt in @product.rates %>
     <tr>
       <% for ot in @product.option_types %>
-        <td><%= rt.variant.option_value(ot.name).presentation %></td>
+        <td><%= rt.variant.option_value(ot.name) %></td>
       <% end %>
       <% for ot in @product.rate_option_types %>
         <td><%= rt.get_persisted_option_value(ot, 'presentation') %></td>
