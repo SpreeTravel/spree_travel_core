@@ -87,7 +87,7 @@ module Spree
           opt_name = ov.option_type.name
           opt_value = ov.name
           string += "#{opt_name.upcase.green}: #{opt_value}, "
-          variant.set_persisted_option_value(opt_name, opt_value)
+          variant.set_option_value(opt_name, opt_value)
         end
         Log.debug(string)
         variant.save

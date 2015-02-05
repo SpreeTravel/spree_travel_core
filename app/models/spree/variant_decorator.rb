@@ -1,6 +1,8 @@
 module Spree
   Variant.class_eval do
 
+    include PersistedDynamicAttribute
+
     has_many :rates, :class_name => 'Spree::Rate', :foreign_key => 'variant_id'
 
     def options_text
