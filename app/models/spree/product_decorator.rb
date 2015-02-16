@@ -53,7 +53,7 @@ module Spree
       list = list.where('spree_combinations.children' => context.child) if context.child.present?
       Log.debug("7: #{list.count}")
       Log.debug(list.explain)
-      list = list.where('spree_combinations.other like ?', string) if product_type
+      list = list.where('spree_combinations.other like ?', string) if product_type && string
       Log.debug("8: #{list.count}")
       Log.debug(list.explain)
       #list = list.group('spree_products.id')
