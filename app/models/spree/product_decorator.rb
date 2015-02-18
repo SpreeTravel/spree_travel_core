@@ -20,8 +20,8 @@ module Spree
       calculator.name.constantize.new
     end
 
-    def calculate_price(context)
-      calculator_instance.calculate_price(context, self).sort
+    def calculate_price(context, options)
+      calculator_instance.calculate_price(context, self, options).sort
     end
 
     def self.calculator_instance_for(product_type)

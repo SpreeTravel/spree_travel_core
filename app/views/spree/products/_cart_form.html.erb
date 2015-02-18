@@ -5,9 +5,8 @@
     <div id="inside-product-cart-form-<%=product.id%>" data-hook="inside_product_cart_form"
          itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 
-      <!-- TODO: Revisar como hacer para que salga la moneda junto al precio  -->
       <% if product.price_in(current_currency) and !product.price.nil? %>
-
+          <!--TODO this is extemaly RARO the value of the master variant is not shown-->
         <%= hidden_field_tag "products[#{product.id}]", product.master.id, :id => "vp_#{product.id}"  %>
         <!-- <input id="vp_1" type="hidden" value="2" name="products[1]"> -->
         <input type="hidden" id="template-hidden-<%=product.id%>" >

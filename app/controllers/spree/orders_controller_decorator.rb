@@ -32,7 +32,7 @@ module Spree
         #TODO aqui hay que asegurarse que solo vaya un solo precio
 
         product = variant.product
-        price = product.calculate_price(context).sort
+        price = product.calculate_price(context, :temporal => false).sort
 
         line_item = current_order.line_items.last
         line_item.price = price.first.to_i
