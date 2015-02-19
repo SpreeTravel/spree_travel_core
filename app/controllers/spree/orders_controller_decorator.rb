@@ -41,6 +41,8 @@ module Spree
         context.save
 
         current_order.ensure_updated_shipments
+        # TODO, esto es un cable extremo, no se si esto deba ser así aqui, tengo dudas con relación al "0"
+        current_order.contents.update_cart(:line_items_attributes=>{"0"=>{"quantity"=>params[:quantity], "id"=>current_order.line_items.last.id}})
 
         # fire_event('spree.cart.add')
         # fire_event('spree.order.contents_changed')
