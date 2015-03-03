@@ -15,4 +15,6 @@ en:
     keywords: 'Keywords'
     filter: "Filter"
     rates: "Rates"
+    order_state:
+      pax: Pax
 
