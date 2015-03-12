@@ -9,11 +9,12 @@ module Spree
     def paxes_count
       count = self.line_items.first.context.adult(:temporal => false).to_i + self.line_items.first.context.child(:temporal => false).to_i
       if paxes.empty?
-        count.times {
-          s = Spree::Pax.new
-          s.line_item_id = self.line_items.first.id
-          self.line_items.first.paxes << s
-          }
+        count.times { paxes.new }
+        # {
+        #   s = Spree::Pax.new
+        #   s.line_item_id = self.line_items.first.id
+        #   self.line_items.first.paxes << s
+        #   }
       end
     end
 

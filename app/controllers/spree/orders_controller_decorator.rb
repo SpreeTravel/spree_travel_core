@@ -20,6 +20,8 @@ module Spree
       # if populator.populate(params.slice(:products, :variants, :quantity))
       if populator.populate(variant_id, quantity, context)
         context.line_item = current_order.line_items.last
+        # TODO es probable que esto sea "la meerrrr" en frances, hay que discutirlo y revisarlo
+        context.save
 
         variant = false
         params[:products].each do |product_id, variant_id|
@@ -35,8 +37,7 @@ module Spree
         line_item.price = price.first.to_i
 
         line_item.save
-        # TODO es probable que esto sea "la meerrrr" en frances, hay que discutirlo y revisarlo
-        context.save
+
 
 
         #TODO cuando se añade un al carrito un producto igual con un contexto diferente se debe añadir como otro line item.....
