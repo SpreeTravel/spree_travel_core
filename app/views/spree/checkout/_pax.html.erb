@@ -10,11 +10,11 @@
 <% @order.line_items.first.paxes.each_with_index do |pax, index| %>
     <p class="columns alpha six field" id="bfirstname">
       <%= label_tag :first_name, t('first_name') %><span class="req">*</span><br />
-      <%= text_field_tag "order[paxes_attributes][#{index}][first_name]", nil, :class => 'required' %>
+      <%= text_field_tag "order[line_items_attributes][paxes_attributes][#{index}][first_name]", nil, :class => 'required' %>
     </p>
     <p class="columns omega six field" id="blastname">
       <%= label_tag :last_name, t('last_name') %><span class="req">*</span><br />
-      <%= text_field_tag "order[paxes_attributes][#{index}][last_name]", nil ,:class => 'required' %>
+      <%= text_field_tag "order[line_items_attributes][paxes_attributes][#{index}][last_name]", nil ,:class => 'required' %>
     </p>
 
 <% end %>
