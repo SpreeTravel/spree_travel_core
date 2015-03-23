@@ -253,9 +253,15 @@ module Spree
               end
 
               if attributes["line_items_attributes"]
-                temporal = attributes["line_items_attributes"].delete("paxes_attributes")
-                self.line_items.first.update_attributes("paxes_attributes" => temporal)
-                success = self.update_attributes(attributes)
+                attributes["line_items_attributes"].each do |key, value|
+                  temporal =  attributes["line_items_attributes"][key].delete("paxes_attributes")
+                  #TODO, this is a patch because i don't know why 'update_attributes' in next line
+                  #TODO, adds new paxes and does not update existing.
+                  puts temporal.inspect
+                  self.line_items[key.to_i].paxes.delete_all
+                  self.line_items[key.to_i].update_attributes("paxes_attributes" => temporal)
+                  success = true
+                end
               else
                 success = self.update_attributes(attributes)
               end
