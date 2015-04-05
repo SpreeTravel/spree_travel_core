@@ -32,15 +32,17 @@
 <input type="hidden" id="the_default_product_type" name="" value="<%= active_product %>">
 
     <div id="tabcontent" class="tab-content">
-      <div class="eleven columns search_box_row" id="keywords_row">
-        <div class="two columns search_box_left">
-          <%= label_tag :the_keywords, Spree.t(:keywords) %>
+      <% if params[:controller] != 'spree/products' && params[:action] != 'show' %>
+        <div class="eleven columns search_box_row" id="keywords_row">
+          <div class="two columns search_box_left">
+            <%= label_tag :the_keywords, Spree.t(:keywords) %>
+          </div>
+          <div class="eight columns search_box_right">
+            <%= text_field_tag :keywords, params[:keywords], :placeholder => 'Search',
+              :data => {:default => params[:keywords]}, :id => 'the_keywords_box' %>
+          </div>
         </div>
-        <div class="eight columns search_box_right">
-          <%= text_field_tag :keywords, params[:keywords], :placeholder => 'Search',
-            :data => {:default => params[:keywords]}, :id => 'the_keywords_box' %>
-        </div>
-      </div>
+      <% end %>
       <% Spree::ProductType.enabled.each do |p| %>
         <% prefix = "#{p.name.downcase}_" %>
         <!-- TODO esto es para poner valores por defecto, pero no creo que est'e bien
@@ -62,7 +64,7 @@
         %>
         <div id='<%="#{prefix}fields"%>' class="tab-pane <%= active_tab %>" role="tabpanel">
           <ul class="alpha twelve columns omega" >
-    	    <% p.search_box_option_types.each do |ot| %>
+    	    <% p.search_box_option_types(params).each do |ot| %>
             <% tag_name = prefix + ot.name %>
     	      <li class="eleven columns search_box_row">
               <div class="two columns search_box_left">
