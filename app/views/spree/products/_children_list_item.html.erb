@@ -4,14 +4,11 @@
   </div>
   <div class="child-title">
     <% child.option_values.each do |ov|%>
-      <div class="child-pair">
-        <span class="child-key"><%= ov.option_type.presentation %>:</span>
-        <span class="child-value"><%= ov.presentation %></span>
-      </div>
+        <div class="child-pair">
+          <span class="child-key"><%= ov.option_type.presentation %>:</span>
+          <span class="child-value"><%= ov.presentation %></span>
+        </div>
+        <%= render 'cart_form', :room=>true, :option_value_id => ov.id %>
     <% end %>
-    <div class="child-pair">
-      <span class="child-key">SKU:</span>
-      <span class="child-value"><%= child.sku %></span>
-    </div>
   </div>
 </li>

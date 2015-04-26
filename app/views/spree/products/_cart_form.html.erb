@@ -2,59 +2,76 @@
 
 <div id="cart-form" data-hook="cart_form">
   <%= form_for :order, :url => populate_orders_path, :html => {:id => 'cart-form'} do |f| %>
-    <div id="inside-product-cart-form-<%=product.id%>" data-hook="inside_product_cart_form"
-         itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+      <div id="inside-product-cart-form-<%=product.id%>" data-hook="inside_product_cart_form"
+           itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 
-      <% if product.price_in(current_currency) and !product.price.nil? %>
-          <!--TODO this is extemaly RARO the value of the master variant is not shown-->
-        <%= hidden_field_tag "products[#{product.id}]", product.master.id, :id => "vp_#{product.id}"  %>
-        <!-- <input id="vp_1" type="hidden" value="2" name="products[1]"> -->
-        <input type="hidden" id="template-hidden-<%=product.id%>" >
+        <% if product.price_in(current_currency) and !product.price.nil? %>
+            <!--TODO this is extemaly RARO the value of the master variant is not shown-->
+            <%= hidden_field_tag "products[#{product.id}]", product.master.id, :id => "vp_#{product.id}"  %>
+            <!-- <input id="vp_1" type="hidden" value="2" name="products[1]"> -->
+            <input type="hidden" id="template-hidden-<%=product.id%>" >
 
-        <% if defined?(mini) && mini %>
-          <div data-hook="product_price" class="columns eight omega mini-cart row">
-            <div class="add-to-cart three columns alpha">
-              <div id="product-price">
-                <%= render :partial => 'spree/shared/price', :locals => {:product => product} %>
-              </div>
-            </div>
-            <div class="alpha two column omega">
-              <%#= number_field_tag (product.variants_and_option_values.any? ? :quantity : "variants[#{product.master.id}]"), 1,
-                :class => 'mini-number', :min => 1 %>
-              <%= hidden_field_tag :quantity, 1 %>
-            </div>
-            <div class="four columns">
-              <%= button_tag :class => 'large primary', 
-                :id => "add-to-cart-button-#{product.id}", :type => :submit do %>
-                <%= Spree.t(:add_to_cart) %>
-              <% end %>
-            </div>
-          </div>
+            <% if defined?(mini) && mini %>
+                <div data-hook="product_price" class="columns eight omega mini-cart row">
+                  <div class="add-to-cart three columns alpha">
+                    <div id="product-price">
+                      <%= render :partial => 'spree/shared/price', :locals => {:product => product} %>
+                    </div>
+                  </div>
+                  <div class="alpha two column omega">
+                    <%= hidden_field_tag :quantity, 1 %>
+                  </div>
+                  <div class="four columns">
+                    <%= button_tag :class => 'large primary', :id => "add-to-cart-button-#{product.id}", :type => :submit do %>
+                        <%= Spree.t(:add_to_cart) %>
+                    <% end %>
+                  </div>
+                </div>
+            <% elsif defined?(room) && room %>
+              <span class="inside-room-cart-form-<%=option_value_id%>" >
+                <input type="hidden" id="template-hidden-<%=option_value_id%>" >
+              </span>
+                <div data-hook="product_price" class="columns eight omega mini-cart row">
+                  <div class="add-to-cart three columns alpha">
+                    <div id="product-price" >
+                      <%= render :partial => 'spree/shared/price_room', :locals => {:product => product, :option_value_id => option_value_id} %>
+                    </div>
+                  </div>
+                  <div class="four columns">
+                    <%= button_tag :class => 'large primary', :id => "add-to-cart-button-#{product.id}", :type => :submit do %>
+                        <%= Spree.t(:add_to_cart) %>
+                    <% end %>
+                  </div>
+                  <%= hidden_field_tag :quantity, 1 %>
+                  <% if defined?(option_value_id) && option_value_id %>
+                      <%= hidden_field_tag :hotel_room, option_value_id, :id => "hotel_room_cart_form_#{product.id}" %>
+                  <% end %>
+                </div>
+            <% else %>
+                <div data-hook="product_price" class="columns five omega">
+                  <div id="product-price">
+                    <h6 class="product-section-title"><%= Spree.t(:price) %></h6>
+                    <%= render :partial => 'spree/shared/price', :locals => {:product => product} %>
+                  </div>
+                  <div class="add-to-cart">
+                    <%#= number_field_tag (product.variants_and_option_values.any? ? :quantity : "variants[#{product.master.id}]"), 1, :class => 'title', :min => 1 %>
+                    <%= hidden_field_tag :quantity, 1 %>
+                    <%= button_tag :class => 'large primary', :id => 'add-to-cart-button', :type => :submit do %>
+                        <%= Spree.t(:add_to_cart) %>
+                    <% end %>
+                  </div>
+                </div>
+            <% end %>
+
         <% else %>
-          <div data-hook="product_price" class="columns five omega">
+
             <div id="product-price">
-              <h6 class="product-section-title"><%= Spree.t(:price) %></h6>
-              <%= render :partial => 'spree/shared/price', :locals => {:product => product} %>
+              <br>
+              <div><span class="price selling" itemprop="price"><%= Spree.t('product_not_available_in_this_currency') %></span></div>
             </div>
-            <div class="add-to-cart">
-              <%#= number_field_tag (product.variants_and_option_values.any? ? :quantity : "variants[#{product.master.id}]"), 1, :class => 'title', :min => 1 %>
-              <%= hidden_field_tag :quantity, 1 %>
-              <%= button_tag :class => 'large primary', :id => 'add-to-cart-button', :type => :submit do %>
-                <%= Spree.t(:add_to_cart) %>
-              <% end %>
-            </div>
-          </div>
+
         <% end %>
 
-      <% else %>
-
-          <div id="product-price">
-            <br>
-            <div><span class="price selling" itemprop="price"><%= Spree.t('product_not_available_in_this_currency') %></span></div>
-          </div>
-
-      <% end %>
-
-    </div>
+      </div>
   <% end %>
 </div>

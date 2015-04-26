@@ -1,7 +1,11 @@
 <% active_product = params[:product_type] %>
 <%# active = Spree::Product.find_by_slug(params[:id]).product_type.name %>
 
-<div id="search_box" class="twelve columns">
+<div id="search_box" class=<%= if controller.controller_name == 'home'
+                                  "twelve columns"
+                                else
+                                 "ten alpha columns"
+                                end%> >
   <%= form_tag({:controller => :home, :action => :index}, {:method => :get, :id => :home_search_box}) do %>
 
 <ul id="search_box_tabs" class="nav nav-tabs">
@@ -33,16 +37,17 @@
 
     <div id="tabcontent" class="tab-content">
       <% if params[:controller] != 'spree/products' && params[:action] != 'show' %>
-        <div class="eleven columns search_box_row" id="keywords_row">
-          <div class="two columns search_box_left">
-            <%= label_tag :the_keywords, Spree.t(:keywords) %>
+
+          <div class="eleven columns search_box_row" id="keywords_row">
+            <div class="two columns search_box_left">
+              <%= label_tag :the_keywords, Spree.t(:keywords) %>
+            </div>
+            <div class="eight columns search_box_right">
+              <%= text_field_tag :keywords, params[:keywords], :placeholder => 'Search',
+                :data => {:default => params[:keywords]}, :id => 'the_keywords_box' %>
+            </div>
           </div>
-          <div class="eight columns search_box_right">
-            <%= text_field_tag :keywords, params[:keywords], :placeholder => 'Search',
-              :data => {:default => params[:keywords]}, :id => 'the_keywords_box' %>
-          </div>
-        </div>
-      <% end %>
+      <%end%>
       <% Spree::ProductType.enabled.each do |p| %>
         <% prefix = "#{p.name.downcase}_" %>
         <!-- TODO esto es para poner valores por defecto, pero no creo que est'e bien
@@ -111,6 +116,11 @@
         </div>
     </div>
     <%= submit_tag Spree.t('search'), :id => :submit %>
-    <input type="button" value="Update Price" id='update_price' />
+      <% if params && params[:controller] == 'spree/products' && params[:action] == 'show'  %>
+          <% id = 'update_price_room'%>
+      <%else%>
+          <% id = 'update_price'%>
+      <%end%>
+       <input type="button" value="Update Price" id=<%=id%> />
   <% end %>
 </div>

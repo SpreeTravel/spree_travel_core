@@ -1,5 +1,11 @@
 <ul id="product-children">
+  <!--#TODO I can iterate over this in the hotel/show, so variant are no longer importante, but the iteration-->
+  <!--#TODO is not show in the view, now i dont know why-->
+  <%# @product.option_types.first.option_values do |child| %>
+  <%#= child.presentation child %>
+  <%#end%>
+
   <% @childrens.each do |child| %>
-    <%= render :partial => 'children_list_item', :locals => {:child => child} %>
+      <%= render :partial => 'children_list_item', :locals => {:child => child} %>
   <% end %>
 </ul>
