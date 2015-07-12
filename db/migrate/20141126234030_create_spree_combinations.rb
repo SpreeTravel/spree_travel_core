@@ -6,7 +6,9 @@ class CreateSpreeCombinations < ActiveRecord::Migration
       t.date :end_date
       t.integer :adults
       t.integer :children
-      t.string :other
+      t.integer :room
+      t.integer :plan
+
 
       t.timestamps
     end
