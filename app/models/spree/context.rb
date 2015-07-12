@@ -52,6 +52,12 @@ module Spree
       get_mixed_option_value(:child, options)
     end
 
+    #this is for the amount of rooms
+    def rooms(options = {:temporal => true})
+      get_mixed_option_value(:rooms, options)
+    end
+
+    #this is for the room type (Sweet, Junio Sweet, etc.....)
     def room(options = {:temporal => true})
       get_mixed_option_value(:room, options)
     end
