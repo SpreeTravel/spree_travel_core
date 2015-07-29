@@ -7,9 +7,10 @@
 
         <% if product.price_in(current_currency) and !product.price.nil? %>
             <!--TODO this is extemaly RARO the value of the master variant is not shown-->
-            <%= hidden_field_tag "products[#{product.id}]", product.master.id, :id => "vp_#{product.id}"  %>
-            <!-- <input id="vp_1" type="hidden" value="2" name="products[1]"> -->
+            <%#= hidden_field_tag "products[#{product.id}]", product.master.id, :id => "vp_#{product.id}"  %>
             <input type="hidden" id="template-hidden-<%=product.id%>" >
+            <%= hidden_field_tag :quantity, 1 %>
+
 
             <% if defined?(mini) && mini %>
                 <div data-hook="product_price" class="columns eight omega mini-cart row">
@@ -18,9 +19,6 @@
                       <%= render :partial => 'spree/shared/price', :locals => {:product => product} %>
                     </div>
                   </div>
-                  <div class="alpha two column omega">
-                    <%= hidden_field_tag :quantity, 1 %>
-                  </div>
                   <div class="four columns">
                     <%= button_tag :class => 'large primary', :id => "add-to-cart-button-#{product.id}", :type => :submit do %>
                         <%= Spree.t(:add_to_cart) %>
@@ -28,25 +26,29 @@
                   </div>
                 </div>
             <% elsif defined?(room) && room %>
-              <span class="inside-room-cart-form-<%=option_value_id%>" >
-                <input type="hidden" id="template-hidden-<%=option_value_id%>" >
+              <span class="inside-room-cart-form-<%=variant_id%>" >
+                <input type="hidden" id="template-hidden-<%=variant_id%>" >
               </span>
-                <div data-hook="product_price" class="columns eight omega mini-cart row">
-                  <div class="add-to-cart three columns alpha">
-                    <div id="product-price" >
-                      <%= render :partial => 'spree/shared/price_room', :locals => {:product => product, :option_value_id => option_value_id} %>
-                    </div>
-                  </div>
-                  <div class="four columns">
-                    <%= button_tag :class => 'large primary', :id => "add-to-cart-button-#{product.id}", :type => :submit do %>
-                        <%= Spree.t(:add_to_cart) %>
-                    <% end %>
-                  </div>
-                  <%= hidden_field_tag :quantity, 1 %>
-                  <% if defined?(option_value_id) && option_value_id %>
-                      <%= hidden_field_tag :hotel_room, option_value_id, :id => "hotel_room_cart_form_#{product.id}" %>
-                  <% end %>
-                </div>
+              <div data-hook="product_price" class="columns eight omega mini-cart row">
+
+              <div class="four columns">
+                <%= button_tag :class => 'large primary', :id => "add-to-cart-button-#{product.id}", :type => :submit do %>
+                    <%= Spree.t(:add_to_cart) %>
+                <% end %>
+              </div>
+              <% if defined?(variant_id) && variant_id %>
+                  <%= hidden_field_tag :variant_id, variant_id, :id => "hotel_room_cart_form_#{product.id}" %>
+              <% end %>
+                <% if defined?(combination) && combination %>
+                    <% price = combination.price * (params[:hotel_end_date].to_date - params[:hotel_start_date].to_date).to_i * params[:hotel_rooms].to_i %>
+                  <%= hidden_field_tag :price, price %>
+              <% end %>
+
+                <script type="text/javascript">
+                    fill_cart_hiddens_room(<%= product.id %>, <%= variant_id %>)
+                </script>
+
+            </div>
             <% else %>
                 <div data-hook="product_price" class="columns five omega">
                   <div id="product-price">
@@ -55,7 +57,6 @@
                   </div>
                   <div class="add-to-cart">
                     <%#= number_field_tag (product.variants_and_option_values.any? ? :quantity : "variants[#{product.master.id}]"), 1, :class => 'title', :min => 1 %>
-                    <%= hidden_field_tag :quantity, 1 %>
                     <%= button_tag :class => 'large primary', :id => 'add-to-cart-button', :type => :submit do %>
                         <%= Spree.t(:add_to_cart) %>
                     <% end %>
