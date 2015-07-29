@@ -21,7 +21,8 @@ module Spree
     end
 
     def calculate_price(context, options)
-      calculator_instance.calculate_price(context, self, options).sort
+      # calculator_instance.calculate_price(context, self, options).sort
+      calculator_instance.calculate_price(context, self, options)
     end
 
     def self.calculator_instance_for(product_type)
@@ -30,7 +31,6 @@ module Spree
 
     def self.with_price(context)
       product_type = Spree::ProductType.find_by_name(context.product_type)
-      string = calculator_instance_for(product_type).combination_string_for_search(context, :temporal => true) if product_type
       list = Spree::Product.where('1 > 0')
       list = list.where(:product_type_id => product_type.id) if product_type
       list = list.joins(:combinations)
