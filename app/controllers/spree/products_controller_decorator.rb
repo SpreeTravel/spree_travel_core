@@ -13,7 +13,8 @@ module Spree
     def get_ajax_price
       product = Spree::Product.find(params[:product_id])
       context = Spree::Context.build_from_params(params, :temporal => true)
-      prices = product.calculate_price(context)
+      prices = product.calculate_price(context, :temporal => true )
+      Log.debug(prices.inspect)
       hash = { :product_id => params[:product_id], :prices => prices }
 
       respond_to do |format|

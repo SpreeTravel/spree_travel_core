@@ -19,16 +19,18 @@ module Spree
         def permitted_checkout_attributes
           permitted_attributes.checkout_attributes + [
             :bill_address_attributes => permitted_address_attributes,
-            :ship_address_attributes => permitted_address_attributes,
+            # :ship_address_attributes => permitted_address_attributes,
             :payments_attributes => permitted_payment_attributes,
-            :shipments_attributes => permitted_shipment_attributes
+            # :shipments_attributes => permitted_shipment_attributes
+            :line_items_attributes => permitted_line_item_attributes
           ]
         end
 
         def permitted_order_attributes
-          permitted_checkout_attributes + [
-            :line_items_attributes => permitted_line_item_attributes
-          ]
+          permitted_checkout_attributes
+          # + [
+          #   :line_items_attributes => permitted_line_item_attributes
+          # ]
         end
         
         def permitted_line_item_attributes

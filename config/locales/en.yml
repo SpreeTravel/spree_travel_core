@@ -14,4 +14,7 @@ en:
     show_only_available_products: "Show only available products"
     keywords: 'Keywords'
     filter: "Filter"
+    rates: "Rates"
+    order_state:
+      pax: Pax
 

@@ -1,0 +1,22 @@
+<% @order.line_items.each_with_index do |line_item, index1| %>
+    <fieldset id="billing" data-hook="">
+
+      <legend align="center"><%= line_item.product.name %></legend>
+      <%= line_item.variant_id %>
+
+      <% line_item.paxes.each_with_index do |pax, index| %>
+          <h5 class="columns alpha eight">Pax #<%= index +1 %></h5>
+            <p class="columns alpha four" id="bfirstname">
+              <%= label_tag :first_name, t('first_name') %><span class="req">*</span><br />
+              <%= text_field_tag "order[line_items_attributes][#{index1}][paxes_attributes][][first_name]", nil, :class => 'required' %>
+            </p>
+            <p class="columns omega four" id="blastname">
+              <%= label_tag :last_name, t('last_name') %><span class="req">*</span><br />
+              <%= text_field_tag "order[line_items_attributes][#{index1}][paxes_attributes][][last_name]", nil ,:class => 'required' %>
+            </p>
+            <%#= hidden_field_tag "order[line_items_attributes][#{index}][paxes_attributes][][id]", pax.id %>
+      <% end %>
+    </fieldset>
+<% end %>
+<%= submit_tag 'Save and Continue' %>
+

@@ -20,8 +20,9 @@ module Spree
       calculator.name.constantize.new
     end
 
-    def calculate_price(context)
-      calculator_instance.calculate_price(context, self).sort
+    def calculate_price(context, options)
+      # calculator_instance.calculate_price(context, self, options).sort
+      calculator_instance.calculate_price(context, self, options)
     end
 
     def self.calculator_instance_for(product_type)
@@ -30,36 +31,17 @@ module Spree
 
     def self.with_price(context)
       product_type = Spree::ProductType.find_by_name(context.product_type)
-      string = calculator_instance_for(product_type).combination_string_for_search(context) if product_type
       list = Spree::Product.where('1 > 0')
-      Log.debug("1: #{list.count}")
-      Log.debug(list.explain)
       list = list.where(:product_type_id => product_type.id) if product_type
-      Log.debug("2: #{list.count}")
-      Log.debug(list.explain)
       list = list.joins(:combinations)
-      Log.debug("3: #{list.count}")
-      Log.debug(list.explain)
       list = list.where('spree_combinations.start_date <= ?', context.start_date) if context.start_date.present?
-      Log.debug("START: " + context.start_date.inspect)
-      Log.debug("4: #{list.count}")
-      Log.debug(list.explain)
       list = list.where('spree_combinations.end_date >= ?', context.end_date) if context.end_date.present?
-      Log.debug("5: #{list.count}")
-      Log.debug(list.explain)
       list = list.where('spree_combinations.adults' => context.adult) if context.adult.present?
-      Log.debug("6: #{list.count}")
-      Log.debug(list.explain)
       list = list.where('spree_combinations.children' => context.child) if context.child.present?
-      Log.debug("7: #{list.count}")
-      Log.debug(list.explain)
-      list = list.where('spree_combinations.other like ?', string) if product_type
-      Log.debug("8: #{list.count}")
-      Log.debug(list.explain)
+      list = list.where('spree_combinations.room' => context.room) if context.room.present?
+      list = list.where('spree_combinations.plan'=> context.plan) if context.plan.present?
       #list = list.group('spree_products.id')
       list = list.uniq
-      Log.debug("9: #{list.count}")
-      Log.debug(list.explain)
       list
     end
 

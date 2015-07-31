@@ -23,8 +23,16 @@ module Spree
     validates_presence_of :name, :presentation
     validates_uniqueness_of :name
 
-    def search_box_option_types
-      (context_option_types + variant_option_types).uniq
+
+    def search_box_option_types(params = nil)
+
+      if params && params[:controller] == 'spree/products' && params[:action] == 'show'
+        (context_option_types).uniq
+      else
+        (context_option_types).uniq
+      end
+
+
     end
 
     # # Original enabled definition, holds the semantic interpretation
