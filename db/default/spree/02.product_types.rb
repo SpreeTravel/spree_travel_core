@@ -12,5 +12,6 @@ Spree::ProductType.where(:name => 'product').first_or_create(
    :presentation => 'All Products',
    :rate_option_types => rate_option_types,
    :context_option_types => context_option_types,
-   :variant_option_types => variant_option_types
+   :variant_option_types => variant_option_types,
+   :enable => false
 )
