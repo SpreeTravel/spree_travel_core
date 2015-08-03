@@ -6,7 +6,7 @@
   <%= %>
 
   <div class="child-title">
-    <% child.option_values.includes(:translations).each do |option_value|%>
+    <% child.option_values.each do |option_value|%>
         <div class="child-pair">
           <span class="child-keye"><%= option_value.option_type.presentation %>:</span>
           <span class="child-value"><%= option_value.presentation %></span>
