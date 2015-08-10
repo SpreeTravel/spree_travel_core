@@ -2,9 +2,9 @@ module Spree
   class Combinations < ActiveRecord::Base
 
     #TODO aqui hay que borrarlo en cascada
-    belongs_to :product, :class => 'Spree::Product', :foreign_key => 'product_id'
-    belongs_to :rate, :class => 'Spree::Rate', :foreign_key => 'rate_id'
-    belongs_to :variant, :class => 'Spree::Variant', :foreign_key => 'variant_id'
+    belongs_to :product, :class_name => 'Spree::Product', :foreign_key => 'product_id'
+    belongs_to :rate, :class_name => 'Spree::Rate', :foreign_key => 'rate_id'
+    belongs_to :variant, :class_name => 'Spree::Variant', :foreign_key => 'variant_id'
 
 
     def product
