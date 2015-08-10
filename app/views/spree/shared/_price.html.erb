@@ -1,7 +1,7 @@
 <div>
   <span class="price selling" itemprop="price" data-product-hook="<%= product.id %>"
         <% if params[:controller] == 'spree/products' && params[:action] == 'show' %>
-            data-room-hook="<%= option_value_id  %>"
+            data-room-hook="<%#= option_value_id  %>"
         <%end%> >
     <%#= image_tag 'ajax-loader.gif' %>
     <%combination = display_combination_price(product)%>
