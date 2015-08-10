@@ -56,6 +56,7 @@ input#keywords {
 .search_box_row {
   padding-top: 10px;
   vertical-align: middle;
+  list-style-type: none;
 }
 
 .search_box_left {
@@ -93,6 +94,7 @@ ul#products li .product-destination {
 
 .product-item {
    border: 1px solid #d9d9db;
+   list-style-type: none;
 }
 
 .product-item:hover {

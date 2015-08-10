@@ -13,7 +13,7 @@
 
 
             <% if defined?(mini) && mini %>
-                <div data-hook="product_price" class="columns eight omega mini-cart row">
+                <div data-hook="product_price" class="col-md-8 mini-cart row">
                   <div class="add-to-cart three columns alpha">
                     <div id="product-price">
                       <%= render :partial => 'spree/shared/price', :locals => {:product => product} %>
@@ -29,7 +29,7 @@
               <span class="inside-room-cart-form-<%=variant_id%>" >
                 <input type="hidden" id="template-hidden-<%=variant_id%>" >
               </span>
-              <div data-hook="product_price" class="columns eight omega mini-cart row">
+              <div data-hook="product_price" class="col-md-8 mini-cart row">
 
               <div class="four columns">
                 <%= button_tag :class => 'large primary', :id => "add-to-cart-button-#{product.id}", :type => :submit do %>

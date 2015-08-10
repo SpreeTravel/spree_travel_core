@@ -1,27 +1,29 @@
 <%
-   kls = "columns twelve product-item"
+   kls = "col-md-12 product-item"
    new_params = params.clone
    new_params.merge!({:controller => "spree/products", :action => "show" , :id => product.slug})
    otro_params = new_params.clone
 %>
 <!-- TODO 13/10/2014 Check if the data-hook2 attribute holds the right value -->
 <li id="product_<%= product.id %>" class="<%= kls %>" data-hook2="product_<%=product.product_type%>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
-  <div class="product-image">
+  <div class="col-md-2">
     <%= link_to small_image(product, :itemprop => "image"), params, :itemprop => 'url' %>
   </div>
-  <div class="product-title">
-    <!--#TODO un misterio aqui sobre porque no se poner el params igual que en la imagen......-->
-    <erb loud> link_to(root_path, :class => 'info', :itemprop => "name", :title => product.name) do </erb>
-        <%= product.name %>
-    <%end%>
-  </div>
-  <div class="product-destination">
-    <%= link_to product.destination, product.destination_taxon %>
-  </div>
-  <div class="product-mini-description">
-    <%= truncate(product.description, :length => 300)%>
-  </div>
-  <div id="cart-form" data-hook="cart_form">
-    <%= render :partial => 'spree/products/cart_form', :locals => {:product => product, :mini => true} %>
+  <div class="col-md-10">
+      <div class="product-title">
+        <!--#TODO un misterio aqui sobre porque no se poner el params igual que en la imagen......-->
+        <erb loud> link_to(root_path, :class => 'info', :itemprop => "name", :title => product.name) do </erb>
+            <%= product.name %>
+        <%end%>
+      </div>
+      <div class="product-destination">
+        <%= link_to product.destination, product.destination_taxon %>
+      </div>
+      <div class="product-mini-description">
+        <%= truncate(product.description, :length => 300)%>
+      </div>
+      <div id="cart-form" data-hook="cart_form">
+        <%= render :partial => 'spree/products/cart_form', :locals => {:product => product, :mini => true} %>
+      </div>
   </div>
 </li>
