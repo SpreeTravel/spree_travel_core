@@ -14,12 +14,12 @@
 
             <% if defined?(mini) && mini %>
                 <div data-hook="product_price" class="col-md-8 mini-cart row">
-                  <div class="add-to-cart three columns alpha">
+                  <div class="add-to-cart col-md-3">
                     <div id="product-price">
                       <%= render :partial => 'spree/shared/price', :locals => {:product => product} %>
                     </div>
                   </div>
-                  <div class="four columns">
+                  <div class="col-md-5">
                     <%= button_tag :class => 'large primary', :id => "add-to-cart-button-#{product.id}", :type => :submit do %>
                         <%= Spree.t(:add_to_cart) %>
                     <% end %>
@@ -31,7 +31,7 @@
               </span>
               <div data-hook="product_price" class="col-md-8 mini-cart row">
 
-              <div class="four columns">
+              <div class="col-md-5">
                 <%= button_tag :class => 'large primary', :id => "add-to-cart-button-#{product.id}", :type => :submit do %>
                     <%= Spree.t(:add_to_cart) %>
                 <% end %>
@@ -50,7 +50,7 @@
 
             </div>
             <% else %>
-                <div data-hook="product_price" class="columns five omega">
+                <div data-hook="product_price" class="col-md-5">
                   <div id="product-price">
                     <h6 class="product-section-title"><%= Spree.t(:price) %></h6>
                     <%= render :partial => 'spree/shared/price', :locals => {:product => product} %>

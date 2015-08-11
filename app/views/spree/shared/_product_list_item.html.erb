@@ -7,7 +7,7 @@
 <!-- TODO 13/10/2014 Check if the data-hook2 attribute holds the right value -->
 <li id="product_<%= product.id %>" class="<%= kls %>" data-hook2="product_<%=product.product_type%>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
   <div class="col-md-2">
-    <%= link_to small_image(product, :itemprop => "image"), params, :itemprop => 'url' %>
+    <%= link_to small_image(product, :itemprop => "image"),  new_params, :itemprop => 'url' %>
   </div>
   <div class="col-md-10">
       <div class="product-title">

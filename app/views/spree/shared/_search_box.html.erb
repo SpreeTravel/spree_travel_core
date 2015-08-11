@@ -4,7 +4,7 @@
 <div id="search_box" class=<%= if controller.controller_name == 'home'
                                   "col-md-12"
                                 else
-                                 "col-md-10"
+                                 "col-md-8"
                                 end%> >
   <%= form_tag({:controller => :products, :action => :index}, {:method => :get, :id => :home_search_box}) do %>
 

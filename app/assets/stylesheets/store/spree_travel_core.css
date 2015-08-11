@@ -29,6 +29,9 @@ ul.taxons-list ul.taxons-list li {
 .child {
   border: solid 1px #e7e7e7;
   margin-bottom: 10px;
+  list-style-type: none;
+
+
 }
 
 .mini-cart .add-to-cart {
