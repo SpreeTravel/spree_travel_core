@@ -1,4 +1,4 @@
-<%= render :partial => 'spree/admin/shared/product_sub_menu' %>
+<%#= render :partial => 'spree/admin/shared/product_sub_menu' %>
 
 <%= render :partial => 'spree/admin/shared/product_tabs', :locals => {:current => 'Product Rate'} %>
 
@@ -18,7 +18,7 @@
   <%= render :partial => 'spree/admin/rates/filtering' %>
 <% end %>
 
-<table class="index" id='listing_rates'>
+<table class="table" id='listing_rates'>
   <thead>
     <tr data-hook="rate_hotel_header">
       <% for ot in @product.option_types %>
