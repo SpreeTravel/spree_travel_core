@@ -22,8 +22,30 @@
       <div class="product-mini-description">
         <%= truncate(product.description, :length => 300)%>
       </div>
-      <div id="cart-form" data-hook="cart_form">
-        <%= render :partial => 'spree/products/cart_form', :locals => {:product => product, :mini => true} %>
+
+    <div>
+  <span class="price selling" itemprop="price" data-product-hook="<%= product.id %>"
+        <% if params[:controller] == 'spree/products' && params[:action] == 'show' %>
+            data-room-hook="<%#= option_value_id  %>"
+        <%end%> >
+    <%#= image_tag 'ajax-loader.gif' %>
+    <%combination = display_combination_price(product)%>
+    Price: <%= combination.first[:price] * (params[:hotel_end_date].to_date - params[:hotel_start_date].to_date).to_i * params[:hotel_rooms].to_i %>
+    <span itemprop="priceCurrency" content="<%= product.currency %>"><%= product.currency %></span>
+    <br/>
+
+    Meal Plan: <%= Spree::OptionValue.find( combination.first.rate.plan).presentation%><br/>
+    Room: <%= combination.first.rate.variant.option_values.first.presentation %><br/>
+    <%= hidden_field_tag "variant_id", combination.first.rate.variant.id %>
+
+
+  </span>
+
+    </div>
+
+
+    <div id="cart-form" data-hook="cart_form">
+        <%= render :partial => 'spree/products/cart_form', :locals => {:product => product, :variant_id => combination.first.rate.variant.id, :mini => true} %>
       </div>
   </div>
 </li>
