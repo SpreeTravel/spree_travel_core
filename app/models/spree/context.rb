@@ -24,6 +24,7 @@ module Spree
         context.set_temporal_option_values(context_params)
       else
         context.set_persisted_option_values(context_params)
+        context.save
       end
       return context
     end

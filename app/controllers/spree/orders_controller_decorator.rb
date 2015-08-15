@@ -7,7 +7,7 @@ module Spree
         context = Spree::Context.build_from_params(params, :temporal => false)
         quantity = params[:quantity].to_i
         options  = params[:options] || {}
-        
+
         #Only one service at a time
         if quantity.between?(1, 1)
           begin

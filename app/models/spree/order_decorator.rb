@@ -27,12 +27,5 @@ Spree::Order.class_eval do
       adjustments.destroy_all
     end
 
-    def find_line_item_by_variant(variant, context, options = {})
-      line_items.detect { |line_item|
-        line_item.variant_id == variant.id &&
-        context.line_item_id == line_item.id &&
-            line_item_options_match(line_item, options)
-      }
-    end
 
 end
