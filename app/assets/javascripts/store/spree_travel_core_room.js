@@ -63,9 +63,9 @@ function update_prices_room() {
     return false;
 }
 
-function fill_cart_hiddens_room(product_id, room_id) {
-    theform = $('.inside-room-cart-form-'+room_id);
-    template = $('#template-hidden-'+room_id, theform);
+function fill_cart_hiddens_room(product_id, room_id, combination_id) {
+    theform = $('.inside-room-cart-form-'+room_id+'-'+combination_id);
+    template = $('#template-hidden-'+room_id+'-'+combination_id, theform);
     data = params_data_room(product_id, room_id);
     $.each(data, function(index, val) {
         index_name = index + "_cart_form";
