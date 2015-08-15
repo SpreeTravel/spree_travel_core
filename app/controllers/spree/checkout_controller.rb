@@ -1,51 +1,5 @@
 module Spree
-  # This is somewhat contrary to standard REST convention since there is not
-  # actually a Checkout object. There's enough distinct logic specific to
-  # checkout which has nothing to do with updating an order that this approach
-  # is waranted.
   class CheckoutController < Spree::StoreController
-    ssl_required
-
-    before_action :load_order_with_lock
-    before_filter :ensure_valid_state_lock_version, only: [:update]
-    before_filter :set_state_if_present
-
-    before_action :ensure_order_not_completed
-    before_action :ensure_checkout_allowed
-    before_action :ensure_sufficient_stock_lines
-    before_action :ensure_valid_state
-
-    before_action :associate_user
-    before_action :check_authorization
-    before_action :apply_coupon_code
-
-    before_action :setup_for_current_state
-
-    helper 'spree/orders'
-
-    rescue_from Spree::Core::GatewayError, :with => :rescue_from_spree_gateway_error
-
-    # Updates the order and advances to the next state (when possible.)
-    def update
-      if @order.update_from_params(params, permitted_checkout_attributes, request.headers.env)
-        @order.temporary_address = !params[:save_user_address]
-        unless @order.next
-          flash[:error] = @order.errors.full_messages.join("\n")
-          redirect_to checkout_state_path(@order.state) and return
-        end
-
-        if @order.completed?
-          @current_order = nil
-          flash.notice = Spree.t(:order_processed_successfully)
-          flash['order_completed'] = true
-          redirect_to completion_route
-        else
-          redirect_to checkout_state_path(@order.state)
-        end
-      else
-        render :edit
-      end
-    end
 
     private
       def ensure_valid_state
