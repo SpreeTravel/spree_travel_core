@@ -11,7 +11,7 @@ module Spree
     private
 
     def add_to_line_item(variant, context, quantity, options = {})
-      line_item = grab_line_item_by_variant(variant, false, options)
+      line_item = grab_line_item_by_variant(variant, context, false, options)
 
       opts = { currency: order.currency }.merge ActionController::Parameters.new(options).
                                                     permit(Spree::PermittedAttributes.line_item_attributes)
