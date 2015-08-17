@@ -5,7 +5,6 @@
   <% combinations = display_combination_price(@product)%>
 
   <div class="child-title">
-    <%# child.option_values.each do |option_value|%>
         <div class="child-pair">
           <span class="child-keye"><%= child.option_values.first.option_type.presentation %>:</span>
           <span class="child-value"><%= child.option_values.first.presentation %></span>
@@ -19,16 +18,11 @@
         %>
         <% match.each do |c|%>
             <div class="col-md-10">
-                Meal Plan: <%=Spree::OptionValue.find (c.rate.plan).presentation%></br>
+                Meal Plan: <%= Spree::OptionValue.find(c.rate.plan).presentation%></br>
                 Price: <span class="combination-price-<%=c.id%>"> <%= c.price * (params[:hotel_end_date].to_date - params[:hotel_start_date].to_date).to_i * params[:hotel_rooms].to_i %></span><br/>
                 <%= render 'cart_form', :room=>true, :variant_id => child.id, :combination => c %>
 
             </div>
         <% end %>
-
-    <%# end %>
-
-
-
   </div>
 </li>
