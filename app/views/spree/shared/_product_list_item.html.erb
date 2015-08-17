@@ -11,8 +11,7 @@
   </div>
   <div class="col-md-10">
       <div class="product-title">
-        <!--#TODO un misterio aqui sobre porque no se poner el params igual que en la imagen......-->
-        <erb loud> link_to(root_path, :class => 'info', :itemprop => "name", :title => product.name) do </erb>
+        <%= link_to(new_params, :class => 'info', :itemprop => "name", :title => product.name) do %>
             <%= product.name %>
         <%end%>
       </div>
