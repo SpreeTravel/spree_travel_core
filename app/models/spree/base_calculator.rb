@@ -21,10 +21,13 @@ module Spree
           combination = combination.where(:end_date => rate.end_date.to_date)
           combination = combination.where(:adults => adults)
           combination = combination.where(:children => children)
-          #TODO make shure that rooms are the first option of the variant
-          combination = combination.where(:room => rate.variant.option_values.first.id) 
-          combination = combination.where(:plan => rate.plan)
+	  if product.hotel?
+            #TODO make shure that rooms are the first option of the variant
+            combination = combination.where(:room => rate.variant.option_values.first.id) 
+            combination = combination.where(:plan => rate.plan)
+	  end
           combination = combination.where(:variant_id => rate.variant.id)
+
           the_combination = combination.first
           if the_combination
             keep_combinations << the_combination.id
