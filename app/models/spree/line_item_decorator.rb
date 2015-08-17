@@ -9,7 +9,7 @@ module Spree
     def copy_price
       if variant
 
-        combinations = product.calculate_price(self.context, :temporal => false )
+        combinations = product.calculate_price(context, :temporal => false )
 
         match = []
         combinations = combinations.where(variant_id: variant.id)
@@ -19,8 +19,7 @@ module Spree
           end
         end
 
-
-        price = match.first[:price] * (self.context.option_values[1].value.to_date - self.context.option_values[0].value.to_date).to_i * self.context.option_values[5].value.to_i
+        price = match.first[:price] * (context.end_date(temporal:false).to_date - context.start_date(temporal:false).to_date).to_i * context.rooms(temporal:false).to_i
 
         self.price = price
         self.cost_price = variant.cost_price if cost_price.nil?

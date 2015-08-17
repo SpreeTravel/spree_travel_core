@@ -29,6 +29,7 @@
             <% elsif defined?(room) && room %>
               <span class="inside-room-cart-form-<%=variant_id%>-<%=combination.id%>" >
                 <input type="hidden" id="template-hidden-<%=variant_id%>-<%=combination.id%>" >
+                <%= hidden_field_tag :hotel_plan, combination.rate.option_values[2].option_value_id, id: "hotel_plan_cart_form_#{product.id}", class:"hotel_plan_cart_form" %>
               </span>
               <div data-hook="product_price" class="col-md-8 mini-cart row">
 

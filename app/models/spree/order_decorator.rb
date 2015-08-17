@@ -12,11 +12,6 @@ Spree::Order.class_eval do
           count.times { line_item.paxes.new }
         end
       end
-        # {
-        #   s = Spree::Pax.new
-        #   s.line_item_id = self.line_items.first.id
-        #   self.line_items.first.paxes << s
-        #   }
     end
 
     def empty!

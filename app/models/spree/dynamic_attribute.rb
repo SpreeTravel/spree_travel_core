@@ -10,6 +10,11 @@ module Spree
         attr_option_types = self.class.to_s.split('::').last.downcase + "_option_types"
         option_types_objects = product_type.send(attr_option_types)
         option_types = option_types_objects.map(&:name)
+        #TODO this is a path we have to fix to have the MEALPLAN as part of the context but not in the searcher
+        if prefix == 'hotel'
+          option_types << 'plan'
+        end
+
       else
         # TODO: esto es para cuando hagamos la busqueda general
         option_types = [:start_date, :end_date, :adult, :child]
