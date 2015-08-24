@@ -43,7 +43,7 @@ function update_prices() {
               button_id = $('#add-to-cart-button-' + result.product_id);
               if (result.prices.length == 0) {
                 set_button_disabled(button_id, true);
-                object.html('No prices available');
+                object.html('No prices');
               } else {
                 prices = result.prices
                 if (prices.length > 1) {

@@ -2,7 +2,8 @@
 
 $(function(){
     $(".datepicker").datepicker({
-        dateFormat: 'yy-mm-dd'
+        dateFormat: 'yy-mm-dd',
+        minDate: '0',
     })
 });
 

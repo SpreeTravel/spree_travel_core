@@ -16,10 +16,16 @@ module Spree
           @products = get_base_scope
           curr_page = page || 1
 
-          unless Spree::Config.show_products_without_price
-            @products = @products.where("spree_prices.amount IS NOT NULL").where("spree_prices.currency" => current_currency)
+          # unless Spree::Config.show_products_without_price
+          #   @products = @products.where("spree_prices.amount IS NOT NULL").where("spree_prices.currency" => current_currency)
+          # end
+          # @products = @products.page(curr_page).per(per_page)
+          if @products.class == Array
+            @products = Kaminari.paginate_array(@products).page(curr_page).per(per_page)
+          else
+            @products = @products.page(curr_page).per(per_page)
           end
-          @products = @products.page(curr_page).per(per_page)
+
         end
 
         def method_missing(name)

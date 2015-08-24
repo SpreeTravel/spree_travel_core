@@ -9,7 +9,7 @@ module Spree
         product_type = Spree::ProductType.find_by_name(prefix)
         attr_option_types = self.class.to_s.split('::').last.downcase + "_option_types"
         option_types_objects = product_type.send(attr_option_types)
-        option_types = option_types_objects.map(&:name)
+        option_types = option_types_objects.includes(:translations).map(&:name)
       else
         # TODO: esto es para cuando hagamos la busqueda general
         option_types = [:start_date, :end_date, :adult, :child]
