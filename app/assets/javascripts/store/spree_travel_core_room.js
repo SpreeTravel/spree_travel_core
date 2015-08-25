@@ -19,53 +19,10 @@ function params_data_room(product_id, room_id) {
     return data
 }
 
-function update_prices_room() {
-    list = $('.ajax-price-room');
-    $.each(list, function(index, object) {
-        object = $(object);
-        object.html('<img src="/assets/ajax-loader.gif" >');
-        product_id = object.attr('data-product-hook');
-        room_id = object.attr('data-room-hook');
-        fill_cart_hiddens_room(product_id, room_id);
-        $.ajax({
-            data_type: 'JSON',
-            data: params_data_room(product_id, room_id),
-            type: 'POST',
-            url: '/products/get_ajax_price',
-            success: function (result) {
-                console.debug(result);
-                button_id = $('#add-to-cart-button-' + result.product_id);
-                if (result.prices.length == 0) {
-                    set_button_disabled(button_id, true);
-                    object.html('No prices available');
-                } else {
-                    prices = result.prices
-                    if (prices.length > 1) {
-                        prices_str = "" + prices[0] + " .. " + prices[prices.length-1];
-                    } else {
-                        prices_str = prices[0];
-                    }
-                    object.html(prices_str);
-                    hidden_id = "#vp_" + product_id;
-                    $(hidden_id).val(result.variant);
-                    set_button_disabled(button_id, prices.length != 1);
-                };
-            },
-            error: function() {
-                b = $('#add-to-cart-button' + '_' + result.product_id);
-                b.attr('disabled', true);
-                b.attr('hidden', true);
-                b.addClass('disabled');
-                object.html('ERROR');
-            }
-        });
-    });
-    return false;
-}
 
-function fill_cart_hiddens_room(product_id, room_id, combination_id) {
-    theform = $('.inside-room-cart-form-'+room_id+'-'+combination_id);
-    template = $('#template-hidden-'+room_id+'-'+combination_id, theform);
+function fill_cart_hiddens_room(product_id, room_id, rate_id) {
+    theform = $('.inside-room-cart-form-'+room_id+'-'+rate_id);
+    template = $('#template-hidden-'+room_id+'-'+rate_id, theform);
     data = params_data_room(product_id, room_id);
     $.each(data, function(index, val) {
         index_name = index + "_cart_form";
