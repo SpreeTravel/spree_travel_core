@@ -4,7 +4,9 @@ module Spree
     include PersistedDynamicAttribute
 
     has_many :rates, :class_name => 'Spree::Rate', :foreign_key => 'variant_id'
-    has_many :combinations, :class_name => 'Spree::Combination', :foreign_key => 'variant_id'
+    # has_many :combinations, :class_name => 'Spree::Combination', :foreign_key => 'variant_id'
+    belongs_to :calculator, :class_name => 'Spree::TravelCalculator', :foreign_key => 'calculator_id'
+
 
     def options_text
       values = self.option_values.joins(:option_type).order("#{Spree::OptionType.table_name}.position asc")
@@ -46,6 +48,19 @@ module Spree
       else
         raise Exception.new("Revisa, que hay bateo en los datos")
       end
+    end
+
+    def calculator_instance
+      calculator.name.constantize.new
+    end
+
+    def calculate_price(context, options)
+      # calculator_instance.calculate_price(context, self, options).sort
+      calculator_instance.calculate_price(context, self, options)
+    end
+
+    def self.calculator_instance_for(product_type)
+      product_type.calculator.name.constantize.new
     end
 
   end

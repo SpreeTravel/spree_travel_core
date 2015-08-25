@@ -5,7 +5,6 @@ module Spree
     belongs_to :product_type
     belongs_to :calculator, :class_name => 'Spree::TravelCalculator', :foreign_key => 'calculator_id'
     has_many :rates, :through => :variants_including_master
-    has_many :combinations, :class_name => 'Spree::Combinations', :foreign_key => 'product_id'
 
     after_create :absorb_option_types
 
@@ -27,34 +26,6 @@ module Spree
 
     def self.calculator_instance_for(product_type)
       product_type.calculator.name.constantize.new
-    end
-
-    def self.with_price(context)
-      product_type = Spree::ProductType.find_by_name(context.product_type)
-      list = Spree::Product.where('1 > 0')
-      list = list.where(:product_type_id => product_type.id) if product_type
-      list = list.joins(:combinations)
-      list = list.where('spree_combinations.start_date <= ?', context.start_date) if context.start_date.present?
-      list = list.where('spree_combinations.end_date >= ?', context.end_date) if context.end_date.present?
-      list = list.where('spree_combinations.adults' => context.adult) if context.adult.present?
-      list = list.where('spree_combinations.children' => context.child) if context.child.present?
-      list = list.where('spree_combinations.room' => context.room) if context.room.present?
-      list = list.where('spree_combinations.plan'=> context.plan) if context.plan.present?
-      #list = list.group('spree_products.id')
-      list = list.uniq
-      list
-    end
-
-    def generate_all_combinations
-      calculator_instance.generate_all_combinations(self)
-    end
-
-    def generate_combinations(rate)
-      calculator_instance.generate_combinations(rate)
-    end
-
-    def destroy_combinations(rate)
-      calculator_instance.destroy_combinations(rate)
     end
 
     def generate_variants

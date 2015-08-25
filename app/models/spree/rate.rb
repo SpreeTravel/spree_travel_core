@@ -9,10 +9,6 @@ module Spree
 
     belongs_to :variant, :class_name => 'Spree::Variant', :foreign_key => 'variant_id'
     has_many :option_values, :class_name => 'Spree::RateOptionValue', :foreign_key => 'rate_id', :dependent => :delete_all
-    has_many :combinations, :class_name => 'Spree::Combinations', :foreign_key => 'rate_id', :dependent => :destroy
-
-    after_save :generate_combinations, :unless => :first_time?
-    before_destroy :destroy_combinations
 
     def first_time!
       @first_time = true
@@ -20,17 +16,6 @@ module Spree
 
     def first_time?
       @first_time
-    end
-
-    def generate_combinations
-      variant.product.generate_combinations(self)
-    rescue Exception => ex
-      Log.exception(ex)
-    end
-
-    def destroy_combinations
-      variant.product.destroy_combinations(self)
-    rescue
     end
 
     # TODO: poner una restriccion para evitar solapamiento de fechas o al menos evitar que las
