@@ -34,6 +34,7 @@ module Spree
         variant.sku = Faker.bothify('???-######').upcase
         variant.price = 0
         variant.product_id = self.id
+        variant.calulator = self.product_type.calculator
         variant.save
         string = "PRODUCT:".red + " #{self.name}: "
         for ov in array
