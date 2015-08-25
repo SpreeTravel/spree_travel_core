@@ -54,6 +54,16 @@ module Spree
       price
     end
 
+    def grab_line_item_by_variant(rate, context, raise_error = false, options = {})
+      line_item = order.find_line_item_by_variant(rate, context, options)
+
+      if !line_item.present? && raise_error
+        raise ActiveRecord::RecordNotFound, "Line item not found for variant #{variant.sku}"
+      end
+
+      line_item
+    end
+
 
 
 
