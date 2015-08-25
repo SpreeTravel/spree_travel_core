@@ -39,7 +39,7 @@ module Spree
           base_scope = get_product_by_product_type(base_scope)
           base_scope = add_search_scopes(base_scope)
           base_scope = add_eagerload_scopes(base_scope)
-          base_scope = filter_products_by_searcher(base_scope)
+#          base_scope = filter_products_by_searcher(base_scope)
           base_scope
         end
 
