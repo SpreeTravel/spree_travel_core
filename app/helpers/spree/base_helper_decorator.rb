@@ -21,4 +21,13 @@ Spree::BaseHelper.class_eval do
       price
     end
 
+
+    def get_package_price(rate, adults, children)
+      adults = adults.to_i
+      children = children.to_i
+      price = adults * rate.one_adult.to_i + children * rate.one_child.to_i
+      price
+    end
+
+
 end

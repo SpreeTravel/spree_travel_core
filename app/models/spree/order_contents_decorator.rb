@@ -34,6 +34,7 @@ module Spree
         line_item = order.line_items.new(quantity: quantity, variant: rate.variant, options: opts)
         line_item.context = context
         line_item.price = get_rate_price(rate, context.adult(temporal:false), context.child(temporal:false))
+        # line_item.price = eval('Spree::Calculator'+ rate.variant.product.product_type.name.to_s.capitalize)
         line_item.cost_price = rate.variant.cost_price if line_item.cost_price.nil?
         line_item.currency = rate.variant.currency if line_item.currency.nil?
       end
