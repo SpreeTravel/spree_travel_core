@@ -8,7 +8,7 @@
         <% if product.price_in(current_currency) and !product.price.nil? %>
             <!--TODO this is extemaly RARO the value of the master variant is not shown-->
             <%#= hidden_field_tag "variant_id", @product.master.id %>
-            <input type="hidden" id="template-hidden-<%=product.id%>" >
+            <!--<input type="hidden" id="template-hidden-<%#=product.id%>" >-->
             <%= hidden_field_tag :quantity, 1 %>
 
             <% if defined?(mini) && mini %>

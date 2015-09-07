@@ -10,7 +10,11 @@ module Spree
     #   TODO look into this method, is empty because the logic is in
     #   'add_to_line_item' in the OrderContentDecorator
     #   i could not pass the 'rate' to this method
-
+      if variant
+        self.price = variant.calculate_price(context, :temporal => true )
+        self.cost_price = variant.cost_price if cost_price.nil?
+        self.currency = variant.currency if currency.nil?
+      end
     end
 
 

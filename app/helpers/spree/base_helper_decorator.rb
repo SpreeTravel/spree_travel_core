@@ -7,8 +7,7 @@ Spree::BaseHelper.class_eval do
     #TODO hay que tener en cuenta aqui la tasa de cambio como está en el método de arriba
     def display_the_price(variant)
       context = Spree::Context.build_from_params(params.merge!(product_type: variant.product.product_type.name), :temporal => true)
-      prices = variant.calculate_price(context, :temporal => true )
-      prices
+      variant.calculate_price(context, :temporal => true )
     end
 
     def get_rate_price(rate, adults, children)
@@ -20,14 +19,5 @@ Spree::BaseHelper.class_eval do
       price += rate.second_child.to_f if children == 2
       price
     end
-
-
-    def get_package_price(rate, adults, children)
-      adults = adults.to_i
-      children = children.to_i
-      price = adults * rate.one_adult.to_i + children * rate.one_child.to_i
-      price
-    end
-
 
 end

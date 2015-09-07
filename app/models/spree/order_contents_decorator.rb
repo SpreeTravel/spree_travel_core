@@ -22,10 +22,13 @@ module Spree
           line_item.currency = currency unless currency.nil?
           line_item.context = context
         else
+          # TODO discutir con cesar si pasarle al LineItem, la variante o el Rate
           line_item = order.line_items.new(quantity: quantity, variant: rate.variant, options: opts)
-          line_item.price = get_rate_price(rate, context.adult(temporal:false), context.child(temporal:false))
-          line_item.cost_price = rate.variant.cost_price if line_item.cost_price.nil?
-          line_item.currency = rate.variant.currency if line_item.currency.nil?
+          line_item.context = context
+
+          # line_item.price = get_rate_price(rate, context.adult(temporal:false), context.child(temporal:false))
+          # line_item.cost_price = rate.variant.cost_price if line_item.cost_price.nil?
+          # line_item.currency = rate.variant.currency if line_item.currency.nil?
         end
       else
         if line_item
@@ -33,10 +36,6 @@ module Spree
         end
         line_item = order.line_items.new(quantity: quantity, variant: rate.variant, options: opts)
         line_item.context = context
-        line_item.price = get_rate_price(rate, context.adult(temporal:false), context.child(temporal:false))
-        # line_item.price = eval('Spree::Calculator'+ rate.variant.product.product_type.name.to_s.capitalize)
-        line_item.cost_price = rate.variant.cost_price if line_item.cost_price.nil?
-        line_item.currency = rate.variant.currency if line_item.currency.nil?
       end
       line_item.target_shipment = options[:shipment] if options.has_key? :shipment
       line_item.save!
