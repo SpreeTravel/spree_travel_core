@@ -22,20 +22,31 @@ module Spree
           line_item.currency = currency unless currency.nil?
           line_item.context = context
         else
-          # TODO discutir con cesar si pasarle al LineItem, la variante o el Rate
-          line_item = order.line_items.new(quantity: quantity, variant: rate.variant, options: opts)
-          line_item.context = context
-
-          # line_item.price = get_rate_price(rate, context.adult(temporal:false), context.child(temporal:false))
-          # line_item.cost_price = rate.variant.cost_price if line_item.cost_price.nil?
-          # line_item.currency = rate.variant.currency if line_item.currency.nil?
+          if rate.variant.product.hotel?
+            context.rooms(options).to_i.times do
+              line_item = order.line_items.new(quantity: quantity, variant: rate.variant, rate: rate, options: opts)
+              line_item.context = context
+            end
+          else
+            line_item = order.line_items.new(quantity: quantity, variant: rate.variant, rate: rate, options: opts)
+            line_item.context = context
+          end
         end
       else
+        # TODO tener en cuenta la cantidad de rooms a agregar y a;adir esta logica para la gema de hotel....
         if line_item
           line_item.destroy
         end
-        line_item = order.line_items.new(quantity: quantity, variant: rate.variant, options: opts)
-        line_item.context = context
+        if rate.variant.product.hotel?
+          context.rooms(options).to_i.times do
+            line_item = order.line_items.new(quantity: quantity, variant: rate.variant, rate: rate, options: opts)
+            line_item.context = context
+          end
+        else
+          line_item = order.line_items.new(quantity: quantity, variant: rate.variant, rate: rate, options: opts)
+          line_item.context = context
+        end
+
       end
       line_item.target_shipment = options[:shipment] if options.has_key? :shipment
       line_item.save!

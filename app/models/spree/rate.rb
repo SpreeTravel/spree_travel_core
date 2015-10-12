@@ -9,6 +9,7 @@ module Spree
 
     belongs_to :variant, :class_name => 'Spree::Variant', :foreign_key => 'variant_id'
     has_many :option_values, :class_name => 'Spree::RateOptionValue', :foreign_key => 'rate_id', :dependent => :delete_all
+    has_many :line_items, class_name: 'Spree::LineItem'
 
     def first_time!
       @first_time = true
