@@ -2,7 +2,7 @@
 //= require store/tab
 //= require store/underscore
 //= require store/cart_overlay
-//= require store/datepicker
+// require store/datepicker
 //= require jquery-ui/datepicker
 //= require store/spree_travel_core_room
 
