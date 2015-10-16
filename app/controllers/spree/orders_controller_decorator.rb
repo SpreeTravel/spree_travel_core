@@ -3,7 +3,7 @@ module Spree
 
       def populate
         order    = current_order(create_order_if_necessary: true)
-        raise "WE NEED A VARIANT ID HERE" unless params[:variant_id]
+        #raise "PQR: WE NEED A VARIANT_ID HERE" unless params[:variant_id]
         variant  = Spree::Variant.find(params[:variant_id])
         rate  = Spree::Rate.find(params[:rate_id])
         context = Spree::Context.build_from_params(params, :temporal => false)
