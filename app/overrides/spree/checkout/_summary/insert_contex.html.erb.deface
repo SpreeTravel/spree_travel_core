@@ -1,0 +1,9 @@
+<!-- insert_before "[data-hook='item_total']" -->
+<% order.line_items.each_with_index do |li,index| %>
+  <tr data-hook="item_total">
+    <td><strong><%= Spree.t(:room) %> <%= index +1 %>:</strong></td>
+    <td>adults</td>
+    <td><%= li.price%></td>
+  </tr>
+<% end %>
+
