@@ -50,14 +50,14 @@ module Spree
 
         def get_product_by_taxons(base_scope)
           #TODO check if taxons has an index with name
-          destination_taxon = Spree::Taxon.find_by_name(destination) unless destination.blank?
+      #    destination_taxon = Spree::Taxon.find_by_name(destination) unless destination.blank?
           base_scope = base_scope.in_taxon(taxon) unless taxon.blank?
-          base_scope = base_scope.in_taxon(destination_taxon) unless destination_taxon.blank?
+      #    base_scope = base_scope.in_taxon(destination_taxon) unless destination_taxon.blank?
           base_scope
         end
 
         def get_product_by_product_type(base_scope)
-          base_scope = base_scope.where(:product_type_id => product_type.id) if product_type
+     #     base_scope = base_scope.where(:product_type_id => product_type.id) if product_type
           base_scope
         end
 
