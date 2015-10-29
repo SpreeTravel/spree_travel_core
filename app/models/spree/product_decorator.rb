@@ -74,5 +74,23 @@ module Spree
       end
     end
 
+
+    # def self.with_price(context)
+    #   product_type = Spree::ProductType.find_by_name(context.product_type)
+    #   string = calculator_instance_for(product_type).combination_string_for_search(context) if product_type
+    #   list = Spree::Product.where('1 > 0')
+    #   list = list.where(:product_type_id => product_type.id) if product_type
+    #   list = list.joins(:combinations)
+    #   list = list.where('spree_combinations.start_date <= ?', context.start_date) if context.start_date.present?
+    #   list = list.where('spree_combinations.end_date >= ?', context.end_date) if context.end_date.present?
+    #   list = list.where('spree_combinations.adults' => context.adult) if context.adult.present?
+    #   list = list.where('spree_combinations.children' => context.child) if context.child.present?
+    #   list = list.where('spree_combinations.other like ?', string) if product_type && string
+    #   list = list.uniq
+    #   list
+    # end
+
+
+
   end
 end
