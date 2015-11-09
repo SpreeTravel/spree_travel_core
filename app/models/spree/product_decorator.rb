@@ -2,6 +2,9 @@ module Spree
   Product.class_eval do
     require 'ffaker'
 
+    # Add new attrs for query params (search options) in the request.
+    self.whitelisted_ransackable_associations << 'taxons'
+
     belongs_to :product_type
     belongs_to :calculator, :class_name => 'Spree::TravelCalculator', :foreign_key => 'calculator_id'
     has_many :rates, :through => :variants_including_master
