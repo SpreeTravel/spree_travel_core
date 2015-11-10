@@ -15,4 +15,12 @@ Spree::Core::Engine.routes.draw do
     end
   end
 
+  # Adjusting spree api routes.
+  namespace :api do
+    # Route to preflight check to allow cross-domain access.
+    match '*path' => 'cross_domain#preflight_check', via: [:options]
+    # Route to authenticate and return a new token for api key.
+    post 'users/token' => 'users#token'
+  end
+
 end
