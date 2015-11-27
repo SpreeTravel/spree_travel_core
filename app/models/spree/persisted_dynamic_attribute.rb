@@ -23,7 +23,12 @@ module Spree
       end
       if ot
         if ot.attr_type == 'selection'
-          ovr.option_value_id = value
+					if ot.option_values.map {|o| o.id}.include?(value)
+	          ovr.option_value_id = value
+					else
+						# no se bien que hacer aqui, por el momento voy a lanzar una excepcion, para enterarme la menos
+						raise Exception.new("Something wrong: invalid value for a [selection] option type")
+					end
         else
           ovr.option_value_id = ot.option_values.first.id
           ovr.value = value
