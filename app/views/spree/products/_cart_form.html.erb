@@ -21,7 +21,7 @@
                   <script type="text/javascript">
                       fill_cart_hiddens_room(<%= product.id %>, <%= variant_id %>,<%=rate_id%>)
                   </script>
-                    <%= button_tag :class => 'large primary', :id => "add-to-cart-button-#{product.id}", :type => :submit do %>
+                    <%= button_tag :class => 'btn btn-success', :id => "add-to-cart-button-#{product.id}", :type => :submit do %>
                         <%= Spree.t(:add_to_cart) %>
                     <% end %>
                 </div>
@@ -32,7 +32,7 @@
                     <%= render :partial => 'spree/shared/price', :locals => {:product => product} %>
                   </div>
                   <div class="add-to-cart">
-                    <%= button_tag :class => 'large primary', :id => 'add-to-cart-button', :type => :submit do %>
+                    <%= button_tag :class => 'btn btn-success', :id => 'add-to-cart-button', :type => :submit do %>
                         <%= Spree.t(:add_to_cart) %>
                     <% end %>
                   </div>

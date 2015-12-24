@@ -1,10 +1,10 @@
 <% active_product = params[:product_type] %>
 <%# active = Spree::Product.find_by_slug(params[:id]).product_type.name %>
 
-<div id="search_box" class=<%= if controller.controller_name == 'home'
-                                  "col-md-12"
+<div id="search_box" class=<%= if controller.controller_name == 'product' && controller.action_name == 'show'
+                                  "col-md-8"
                                 else
-                                 "col-md-8"
+                                 "col-md-12"
                                 end%> >
   <%= form_tag({:controller => :products, :action => :index}, {:method => :get, :id => :home_search_box}) do %>
 
@@ -60,11 +60,9 @@
           <ul class="col-md-12" >
     	    <% p.search_box_option_types(params).each do |ot| %>
             <% tag_name = prefix + ot.name %>
-    	      <li class="col-md-11 search_box_row">
-              <div class="col-md-2 search_box_left">
-    	          <%= label_tag tag_name, Spree.t(ot.presentation) %>
-              </div>
-              <div class="col-md-8 search_box_right">
+    	      <li class="search_box_row form-group">
+              <%= label_tag tag_name, Spree.t(ot.presentation) %>
+              <div class="search_box_right">
       	        <% current_value = params[tag_name] %>
       	        <% if ot.attr_type == 'selection' %>
                   <% options = ot.option_values.map { |ov| [ov.presentation, ov.id] } %>
@@ -74,17 +72,17 @@
                     'onchange' => function_name %>
                 <% elsif ot.attr_type == 'destination' %>
                     <!-- TODO here there must be and autocomplete from Taxon Destinations-->
-                  <%= text_field_tag tag_name, current_value, :class => "#{prefix}inputs" %>
+                  <%= text_field_tag tag_name, current_value, :class => "#{prefix}inputs form-control" %>
       	        <% elsif ot.attr_type == 'integer' %>
-      	          <%= number_field_tag tag_name, current_value, :class => "#{prefix}inputs", 'onchange' => function_name, :min => 0 %>
+      	          <%= number_field_tag tag_name, current_value, :class => "#{prefix}inputs form-control", 'onchange' => function_name, :min => 0 %>
       	        <% elsif ot.attr_type == 'float' %>
-      	          <%= number_field_tag tag_name, current_value , :class => "#{prefix}inputs", 'onchange' => function_name, :min => 0.0 %>
+      	          <%= number_field_tag tag_name, current_value , :class => "#{prefix}inputs form-control", 'onchange' => function_name, :min => 0.0 %>
       	        <% elsif ot.attr_type == 'boolean' %>
-      	          <%= check_box_tag tag_name, 1, :class => "#{prefix}inputs", 'onchange' => function_name %>
+      	          <%= check_box_tag tag_name, 1, :class => "#{prefix}inputs form-control", 'onchange' => function_name %>
       	        <% elsif ot.attr_type == 'date' %>
-      	          <%= text_field_tag tag_name, current_value, :class => "datepicker #{prefix}inputs", 'onchange' => function_name %>
+      	          <%= text_field_tag tag_name, current_value, :class => "datepicker #{prefix}inputs form-control", 'onchange' => function_name %>
       	        <% else %>
-      	          <%= text_field_tag tag_name, current_value, :class => "#{prefix}inputs", 'onchange' => function_name %>
+      	          <%= text_field_tag tag_name, current_value, :class => "#{prefix}inputs form-control", 'onchange' => function_name %>
       	        <% end %>
 
               </div>
@@ -93,21 +91,9 @@
           </ul>
         </div>
       <% end %>
-        <div class="col-md-11 search_box_row" id="check_box_row">
-          <div class="col-md-2 search_box_left">
-            <%= check_box_tag 'change_visibility', 'yes', false, class: 'visibility_check_box', :id => 'the_check_box' %>
-          </div>
-          <div class="col-md-8 search_box_right">
-            <%= label_tag 'change_visibility', Spree.t(:show_only_available_products) %>
-          </div>
-        </div>
+
     </div>
-    <%= submit_tag Spree.t('search'), :id => :submit %>
-      <% if params && params[:controller] == 'spree/products' && params[:action] == 'show'  %>
-          <% id = 'update_price_room'%>
-      <%else%>
-          <% id = 'update_price'%>
-      <%end%>
-       <input type="button" value="Update Price" id=<%=id%> />
+    <%= submit_tag Spree.t('search'), :id => :submit, :class => 'btn btn-success' %>
+
   <% end %>
 </div>
