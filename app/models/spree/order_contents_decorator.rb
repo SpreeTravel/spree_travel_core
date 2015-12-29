@@ -34,9 +34,7 @@ module Spree
         end
       else
         # TODO tener en cuenta la cantidad de rooms a agregar y a;adir esta logica para la gema de hotel....
-        if line_item
-          line_item.destroy
-        end
+        order.line_items.destroy_all
         if rate.variant.product.hotel?
           context.rooms(options).to_i.times do
             line_item = order.line_items.new(quantity: quantity, variant: rate.variant, rate: rate, options: opts)

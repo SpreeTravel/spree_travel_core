@@ -1,11 +1,9 @@
 <% active_product = params[:product_type] %>
 <%# active = Spree::Product.find_by_slug(params[:id]).product_type.name %>
 
-<div id="search_box" class=<%= if controller.controller_name == 'product' && controller.action_name == 'show'
-                                  "col-md-8"
-                                else
-                                 "col-md-12"
-                                end%> >
+
+<div id="search_box" class= "">
+
   <%= form_tag({:controller => :products, :action => :index}, {:method => :get, :id => :home_search_box}) do %>
 
 <ul id="search_box_tabs" class="nav nav-tabs">
