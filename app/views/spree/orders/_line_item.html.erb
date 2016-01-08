@@ -7,7 +7,7 @@
   product.context_option_types.each do |cot|
     index += 1
     option_type_name = cot.name
-    option_value = line_item.context.get_persisted_option_value(option_type_name, :presentation)
+    option_value = line_item.context.get_persisted_option_value(option_type_name, :presentation) if line_item.context.present?
     string = "<b>#{cot.presentation}</b>: #{option_value}"
     if index.odd?
       first_column << string

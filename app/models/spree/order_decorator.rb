@@ -1,7 +1,7 @@
 Spree::Order.class_eval do
 
     remove_checkout_step :delivery
-    insert_checkout_step :pax, :after => :address
+    insert_checkout_step :pax, :before => :address
 
     Spree::Order.state_machine.before_transition :to => :pax, :do => :paxes_count
 
