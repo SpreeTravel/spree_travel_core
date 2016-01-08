@@ -57,7 +57,8 @@ module Spree
         end
 
         def get_product_by_product_type(base_scope)
-     #     base_scope = base_scope.where(:product_type_id => product_type.id) if product_type
+            product_type = Spree::ProductType.find_by_name(@properties['search-type'])
+            base_scope = base_scope.where(:product_type_id => product_type.id) if product_type
           base_scope
         end
 
