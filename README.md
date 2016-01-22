@@ -1,3 +1,32 @@
+After adding into Gemfile 'spree' and 'spree_auth_devise' gems, add:
+
+
+gem 'spree_travel_core', github: 'openjaf/spree_travel_core', branch: '3-0-stable'
+gem 'spree_travel_cruise', github: 'openjaf/spree_travel_cruise', branch: '3-0-stable'
+gem 'spree_travel_hotel', github: 'openjaf/spree_travel_hotel', branch: '3-0-stable'
+gem 'spree_travel_tour', github: 'openjaf/spree_travel_tour', branch: '3-0-stable'
+gem 'spree_travel_car', github: 'openjaf/spree_travel_car', branch: '3-0-stable'
+gem 'spree_travel_sample', github: 'openjaf/spree_travel_sample', branch: '3-0-stable'
+
+Run this command in this order:
+
+bundle install
+rake db:drop
+rake db:create
+rake db:rake railties:install:migrations
+rake db:migrate
+rake db:seed
+rake spree_travel_core:load
+rake spree_travel_hotel:load
+rake spree_travel_car:load
+rake spree_travel_cruise:load
+rake spree_travel_tour:load
+rake spree_travel_sample:load PRODUCT_TYPE=hotels
+rake spree_travel_sample:load PRODUCT_TYPE=cars
+rake spree_travel_sample:load PRODUCT_TYPE=tours
+rake spree_travel_sample:load PRODUCT_TYPE=cruises
+
+
 Spree Travel Core
 =========
 Spree Travel Core is intended to be a part of [Spree Travel](https://github.com/openjaf/spree_travel/), providing spree e-commerce platform with the essential functionalities to behave as a travel agency management platform. This means that this spree extension will add new models, behaviors, views, etc… to spree, and will modify some of the definition it holds.
