@@ -1,6 +1,6 @@
 <div data-hook="admin_product_rates_form_fields" class="col-md-12">
   <div class="form-group row">
-     <%= label_tag :variant, Spree.t(:variant), :class => 'pull-right' %>
+     <%= label_tag :variant, Spree.t(:variant), :class => '' %>
      <%= select_tag 'rate[variant_id]', options_for_select(@product.variants.map { |v| [v.sku, v.id] }, @rate.variant_id), :class => 'select2 fullwidth' %>
   </div>
   <% prefix = "#{@product.product_type.name}_" %>

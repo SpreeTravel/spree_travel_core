@@ -1,4 +1,4 @@
-<%= render :partial => 'spree/admin/shared/product_sub_menu' %>
+<%#= render :partial => 'spree/admin/shared/product_sub_menu' %>
 
 <%= render :partial => 'spree/admin/shared/product_tabs', :locals => {:current => 'Product Rate'} %>
 
@@ -7,7 +7,7 @@
 <% end %>
 
 <% content_for :page_actions do %>
-  <li><%= link_to_with_icon 'icon-arrow-left', Spree.t(:back_to_rates_list), admin_product_rates_path(@product), :class => 'button' %></li>
+  <%= link_to_with_icon 'arrow-left', Spree.t(:back_to_resource_list, resource: Spree::Rate.model_name.human), admin_product_rates_path, class: 'btn btn-default' %>
 <% end %>
 
 <%= render :partial => 'spree/shared/error_messages', :locals => { :target => @rate } %>

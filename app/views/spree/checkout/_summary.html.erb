@@ -3,13 +3,12 @@
 <table class="table" data-hook="order_summary">
   <tbody>
     <%order.line_items.each_with_index do |li,index | %>
-      <tr data-hook="item_total">
-
-        <td><strong><%= Spree.t(:room) %> <%= index +1 %>:</strong></td>
-        <td><%#= li.context.adult(temporal:false)%> adults</td>
-        <td><%= li.price%></td>
-      </tr>
-
+      <%if li.product.hotel?%>
+        <tr data-hook="item_total">
+          <td><strong><%= Spree.t(:room) %> <%= index +1 %>:</strong></td>
+          <td><%= li.price%></td>
+        </tr>
+      <%end%>
     <%end%>
 
     <tr data-hook="item_total">
