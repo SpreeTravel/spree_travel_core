@@ -44,6 +44,7 @@ module Spree
         end
 
         def filter_products_by_searcher(base_scope)
+          # TODO  Here we must filter not to show products that does not have Price
           base_scope = base_scope.calculate_price(context, options) if context.present
           base_scope
         end
