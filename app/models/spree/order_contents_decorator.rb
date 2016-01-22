@@ -17,13 +17,14 @@ module Spree
                                                     permit(Spree::PermittedAttributes.line_item_attributes)
 
       if Spree::Config.use_cart
-        if line_item
-          line_item.quantity += quantity.to_i
-          line_item.currency = currency unless currency.nil?
-          line_item.context = context
-        else
+        # TODO VERY important.... Fix this to be able to support adding to the car, Spree clasical products and Travel productos
+        # if line_item
+        #   line_item.quantity += quantity.to_i
+        #   line_item.currency = currency unless currency.nil?
+        #   line_item.context = context
+        # else
           if rate.variant.product.hotel?
-            context.rooms(options).to_i.times do
+            context.room_count(options).to_i.times do
               line_item = order.line_items.new(quantity: quantity, variant: rate.variant, rate: rate, options: opts)
               line_item.context = context
             end
@@ -31,12 +32,12 @@ module Spree
             line_item = order.line_items.new(quantity: quantity, variant: rate.variant, rate: rate, options: opts)
             line_item.context = context
           end
-        end
+        # end
       else
         # TODO tener en cuenta la cantidad de rooms a agregar y a;adir esta logica para la gema de hotel....
         order.line_items.destroy_all
         if rate.variant.product.hotel?
-          context.rooms(options).to_i.times do
+          context.room_count(options).to_i.times do
             line_item = order.line_items.new(quantity: quantity, variant: rate.variant, rate: rate, options: opts)
             line_item.context = context
           end
@@ -52,16 +53,6 @@ module Spree
     end
 
     private
-
-    def get_rate_price(rate, adults, children)
-      adults = adults.to_i
-      children = children.to_i
-      adults_hash = {1 => 'simple', 2 => 'double', 3 => 'triple'}
-      price = adults * rate.send(adults_hash[adults]).to_f
-      price += rate.first_child.to_f if children >= 1
-      price += rate.second_child.to_f if children == 2
-      price
-    end
 
     def grab_line_item_by_variant(rate, context, raise_error = false, options = {})
       line_item = order.find_line_item_by_variant(rate, context, options)
