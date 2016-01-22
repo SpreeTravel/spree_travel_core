@@ -1,5 +1,5 @@
-function params_data_room(product_id, room_id) {
-    product_type = $('ul#search_box_tabs li.active a')[0].name;
+function params_data_room(product_id, room_id, product_type) {
+    product_type = $('ul#search_box_tabs li a[name="' + product_type + '"]')[0].name;
     data = {
         product_id: product_id,
         product_type: product_type,
@@ -20,10 +20,10 @@ function params_data_room(product_id, room_id) {
 }
 
 
-function fill_cart_hiddens_room(product_id, room_id, rate_id) {
+function fill_cart_hiddens_room(product_id, room_id, rate_id, product_type) {
     theform = $('.inside-room-cart-form-'+room_id+'-'+rate_id);
     template = $('#template-hidden-'+room_id+'-'+rate_id, theform);
-    data = params_data_room(product_id, room_id);
+    data = params_data_room(product_id, room_id, product_type);
     $.each(data, function(index, val) {
         index_name = index + "_cart_form";
         new_hidden = $('.'+index_name, theform);
