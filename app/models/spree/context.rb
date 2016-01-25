@@ -4,7 +4,7 @@ module Spree
     include PersistedDynamicAttribute
     include TemporalDynamicAttribute
 
-    has_many :line_item, :class_name => 'Spree::LineItem', :foreign_key => 'line_item_id'
+    has_many :line_items, :class_name => 'Spree::LineItem', :foreign_key => 'context_id'
     has_many :option_values, :class_name => 'Spree::ContextOptionValue', :foreign_key => 'context_id', :dependent => :destroy
 
     def initialize_variables
