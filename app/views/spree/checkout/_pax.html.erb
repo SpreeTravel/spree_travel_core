@@ -3,15 +3,10 @@
 <% @order.line_items.each_with_index do |line_item, index1| %>
 
   <div class="row">
-    <% if line_item.product.hotel?%>
-      <strong><%= Spree.t(:room) %> <%= index1 +1 %>:</strong></td>
-    <%else%>
       <strong><%= line_item.product.name %>:</strong></td>
-    <%end%>
   </div>
-
+    <div class="row">
   <% line_item.paxes.each_with_index do |pax, index| %>
-
     <div class="col-sm-6" data-hook="billing_fieldset_wrapper">
       <div class="panel panel-default" id="billing" data-hook>
         <div class="panel-heading">
@@ -30,7 +25,7 @@
       </div>
     </div>
   <%end%>
-
+</div>
 <% end %>
 
 </div>
