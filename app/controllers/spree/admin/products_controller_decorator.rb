@@ -4,7 +4,7 @@ module Spree
       after_action :after_save, only: :create
 
       def after_save
-        @product.generate_variants
+          @product.generate_variants if !@product.product_type.nil?
       end
 
       def delete_rates

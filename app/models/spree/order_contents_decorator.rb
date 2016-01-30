@@ -1,17 +1,17 @@
 module Spree
   OrderContents.class_eval do
 
-    def add(rate, context, quantity = 1, options = {})
+    def add(variant, quantity = 1,rate=nil, context=nil, options = {})
       timestamp = Time.now
-      line_item = add_to_line_item(rate, context, quantity, options)
+      line_item = add_to_line_item(variant, quantity, rate, context, options)
       options[:line_item_created] = true if timestamp <= line_item.created_at
       after_add_or_remove(line_item, options)
     end
 
     private
 
-    def add_to_line_item(rate, context, quantity, options = {})
-      line_item = grab_line_item_by_variant(rate, context, false, options)
+    def add_to_line_item(variant, quantity, rate=nil, context=nil, options = {})
+      line_item = grab_line_item_by_variant(variant, rate, context, false, options)
 
       opts = { currency: order.currency }.merge ActionController::Parameters.new(options).
                                                     permit(Spree::PermittedAttributes.line_item_attributes)
@@ -23,30 +23,35 @@ module Spree
         #   line_item.currency = currency unless currency.nil?
         #   line_item.context = context
         # else
-          if rate.variant.product.hotel?
+          if variant.product.product_type && variant.product.hotel? && context
             context.room_count(options).to_i.times do
-              line_item = order.line_items.new(quantity: quantity, variant: rate.variant, rate: rate, options: opts)
+              line_item = order.line_items.new(quantity: quantity, variant: variant, rate: rate, options: opts)
               line_item.context = context
             end
-          else
-            line_item = order.line_items.new(quantity: quantity, variant: rate.variant, rate: rate, options: opts)
+          elsif variant.product.product_type && context
+            line_item = order.line_items.new(quantity: quantity, variant: variant, rate: rate, options: opts)
             line_item.context = context
+          else
+            line_item = order.line_items.new(quantity: quantity,
+                                             variant: variant,
+                                             options: opts)
           end
         # end
       else
-        # TODO tener en cuenta la cantidad de rooms a agregar y a;adir esta logica para la gema de hotel....
+        # TODO take into account rooms count and diferent context per room and have this login into hotel gem
         order.line_items.destroy_all
-        if rate.variant.product.hotel?
+        if variant.product.product_type && variant.product.hotel? && context
           context.room_count(options).to_i.times do
-            line_item = order.line_items.new(quantity: quantity, variant: rate.variant, rate: rate, options: opts)
+            line_item = order.line_items.new(quantity: quantity, variant: variant, rate: rate, options: opts)
             line_item.context = context
           end
-        else
-          line_item = order.line_items.new(quantity: quantity, variant: rate.variant, rate: rate, options: opts)
+        elsif variant.product.product_type && context
+          line_item = order.line_items.new(quantity: quantity, variant: variant, rate: rate, options: opts)
           line_item.context = context
+        else
+          line_item = order.line_items.new(quantity: quantity, variant: variant, options: opts)
         end
-
-      end
+       end
       line_item.target_shipment = options[:shipment] if options.has_key? :shipment
       line_item.save!
       line_item
@@ -54,8 +59,8 @@ module Spree
 
     private
 
-    def grab_line_item_by_variant(rate, context, raise_error = false, options = {})
-      line_item = order.find_line_item_by_variant(rate, context, options)
+    def grab_line_item_by_variant(variant, rate=nil, context=nil, raise_error = false, options = {})
+      line_item = order.find_line_item_by_variant(variant, rate, context, options)
 
       if !line_item.present? && raise_error
         raise ActiveRecord::RecordNotFound, "Line item not found for variant #{variant.sku}"

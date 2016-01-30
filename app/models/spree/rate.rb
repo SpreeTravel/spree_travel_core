@@ -1,3 +1,4 @@
+# TODO relate this model with Spree::Price for having multicurrency support
 module Spree
   class Rate <  ActiveRecord::Base
 
@@ -19,8 +20,7 @@ module Spree
       @first_time
     end
 
-    # TODO: poner una restriccion para evitar solapamiento de fechas o al menos evitar que las
-    # que se solapen tengan el mismo position
+    # TODO: add restriction over dates overlapsed
 
     def start_date
       get_persisted_option_value(:start_date)

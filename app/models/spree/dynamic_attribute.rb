@@ -16,7 +16,6 @@ module Spree
         end
 
       else
-        # TODO: esto es para cuando hagamos la busqueda general
         option_types = [:start_date, :end_date, :adult, :child]
       end
       #Log.debug("OPTIONS: #{option_types.inspect}")
