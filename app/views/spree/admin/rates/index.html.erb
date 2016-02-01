@@ -7,11 +7,9 @@
 <% end %>
 
 <% content_for :page_actions do %>
-<ul class="actions inline-menu">
-  <li>
-    <%= button_link_to Spree.t(:new_rate), new_admin_product_rate_path(:slug => params[:slug]), :icon => 'icon-plus', :id => 'admin_new_rate_link' %>
-  </li>
-</ul>
+  <span id="new_product_type_link">
+      <%= button_link_to Spree.t(:new_rate), new_admin_product_rate_path, { class: "btn-success", icon: 'add', id: 'admin_new_rate_link' }  %>
+    </span>
 <% end %>
 
 <% if !@product.rates.empty? %>
@@ -20,12 +18,12 @@
 
 <table class="table" id='listing_rates'>
   <thead>
-    <tr data-hook="rate_hotel_header">
+    <tr data-hook="rate_<%=@product.product_type.name %>_header">
       <% for ot in @product.option_types %>
         <th><%= ot.name %></th>
       <% end %>
       <% for ot in @product.rate_option_types %>
-      <th><%= ot.name %></th>
+      <th><%= ot.presentation %></th>
       <% end %>
       <th class="actions"></th>
     </tr>

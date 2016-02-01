@@ -20,7 +20,7 @@ module Spree
         admin_product_rate_path(:product_id => rate.variant.product.slug, :id => rate.id)
       end
 
-      # TODO: revisar parametro de params[:rate]
+      # TODO: review params[:rate]
       def create
         @rate = Spree::Rate.new(:variant_id => params[:rate][:variant_id])
         params[:product_type] = @product.product_type.name

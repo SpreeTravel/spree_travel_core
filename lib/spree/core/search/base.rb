@@ -34,22 +34,23 @@ module Spree
 
         def get_base_scope
           base_scope = Spree::Product.active
+          base_scope = get_product_by_product_type(base_scope)
           base_scope = get_product_by_taxons(base_scope)
           base_scope = get_products_conditions_for(base_scope, keywords)
-          base_scope = get_product_by_product_type(base_scope)
           base_scope = add_search_scopes(base_scope)
           base_scope = add_eagerload_scopes(base_scope)
-#          base_scope = filter_products_by_searcher(base_scope)
+         # base_scope = filter_products_by_searcher(base_scope)
           base_scope
         end
 
         def filter_products_by_searcher(base_scope)
-          base_scope = base_scope.with_price(context) if context.present?
+          # TODO  Here we must filter not to show products that does not have Price
+          base_scope = base_scope.calculate_price(context, options) if context.present
           base_scope
         end
 
         def get_product_by_taxons(base_scope)
-          #TODO check if taxons has an index with name
+          #TODO take into account that the destination may be and id
           destination_taxon = Spree::Taxon.find_by_name(destination) unless destination.blank?
           base_scope = base_scope.in_taxon(taxon) unless taxon.blank?
           base_scope = base_scope.in_taxon(destination_taxon) unless destination_taxon.blank?
@@ -97,6 +98,7 @@ module Spree
           @properties[:product_type] = product_type = Spree::ProductType.find_by_name(params[:product_type])
           @properties[:destination] = nil # esto hace falta abajo
           @properties[:context] = Context.build_from_params(params, :temporal => true)
+          @properties[:options] = []
 
           #TODO: ver que hay que hacer aqui si esto da null
           product_type.context_option_types.each do |ptcot|

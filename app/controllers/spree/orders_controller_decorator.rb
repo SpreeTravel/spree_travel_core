@@ -4,15 +4,17 @@ module Spree
       def populate
         order    = current_order(create_order_if_necessary: true)
         variant  = Spree::Variant.find(params[:variant_id])
-        rate  = Spree::Rate.find(params[:rate_id])
-        context = Spree::Context.build_from_params(params, :temporal => false)
+        if params[:rate_id]
+          rate     = Spree::Rate.find(params[:rate_id])
+          context  = Spree::Context.build_from_params(params, :temporal => false)
+        end
         quantity = params[:quantity].to_i
         options  = params[:options] || {}
 
-        #Only one service at a time
-        if quantity.between?(1, 1)
+        # 2,147,483,647 is crazy. See issue #2695.
+        if quantity.between?(1, 2_147_483_647)
           begin
-            order.contents.add(rate, context, quantity, options)
+            order.contents.add(variant, quantity, rate, context,  options)
           rescue ActiveRecord::RecordInvalid => e
             error = e.record.errors.full_messages.join(", ")
           end

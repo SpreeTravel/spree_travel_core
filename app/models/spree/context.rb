@@ -4,7 +4,7 @@ module Spree
     include PersistedDynamicAttribute
     include TemporalDynamicAttribute
 
-    belongs_to :line_item, :class_name => 'Spree::LineItem', :foreign_key => 'line_item_id'
+    has_many :line_items, :class_name => 'Spree::LineItem', :foreign_key => 'context_id'
     has_many :option_values, :class_name => 'Spree::ContextOptionValue', :foreign_key => 'context_id', :dependent => :destroy
 
     def initialize_variables
@@ -33,7 +33,7 @@ module Spree
       get_mixed_option_value(:product_type, options)
     end
 
-      def start_date(options = {:temporal => true})
+    def start_date(options = {:temporal => true})
       get_mixed_option_value(:start_date, options)
     end
 
@@ -54,8 +54,12 @@ module Spree
     end
 
     #this is for the amount of rooms
-    def rooms(options = {:temporal => true})
-      get_mixed_option_value(:rooms, options)
+    def room_count(options = {:temporal => true})
+      get_mixed_option_value(:room_count, options)
+    end
+
+    def cabin_count(options = {:temporal => true})
+      get_mixed_option_value(:cabin_count, options)
     end
 
     #this is for the room type (Sweet, Junio Sweet, etc.....)

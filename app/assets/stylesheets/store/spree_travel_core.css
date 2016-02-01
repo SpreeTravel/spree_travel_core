@@ -98,6 +98,7 @@ ul#products li .product-destination {
 .product-item {
    border: 1px solid #d9d9db;
    list-style-type: none;
+   margin-bottom: 15px  ;
 }
 
 .product-item:hover {
@@ -147,7 +148,7 @@ ul#products li .product-destination {
     margin-top: 10px;
     text-align: center;
     box-shadow: 0 0 0 15px white;
-    margin-left: 250px;
+    margin-left: 50%;
 }
 
 #update_price{
