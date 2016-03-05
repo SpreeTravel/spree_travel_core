@@ -93,4 +93,4 @@ guidelines:
 
 License
 -------
-Copyright © 2015 OpenJAF, released under the New BSD License.
+Copyright © 2016 OpenJAF, released under the New BSD License.
