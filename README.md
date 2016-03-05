@@ -25,10 +25,10 @@ Run this command in this order:
 - rails g spree_travel_car:install
 - rails g spree_travel_cruise:install
 - rails g spree_travel_tour:install
-- rake spree_travel_sample:load PRODUCT_TYPE=hotels ##this one will take a while, please look at the console
+- rake spree_travel_sample:load PRODUCT_TYPE=hotels
 - rake spree_travel_sample:load PRODUCT_TYPE=cars
 - rake spree_travel_sample:load PRODUCT_TYPE=tours
-- rake spree_travel_sample:load PRODUCT_TYPE=cruises ##this product has fixed season datea in year 2016
+- rake spree_travel_sample:load PRODUCT_TYPE=cruises ##this product has fixed season date in year 2016
 
 
 Spree Travel Core
