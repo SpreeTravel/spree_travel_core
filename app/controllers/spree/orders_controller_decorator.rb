@@ -4,10 +4,8 @@ module Spree
       def populate
         order    = current_order(create_order_if_necessary: true)
         variant  = Spree::Variant.find(params[:variant_id])
-        if params[:rate_id]
-          rate     = Spree::Rate.find(params[:rate_id])
-          context  = Spree::Context.build_from_params(params, :temporal => false)
-        end
+        rate     = Spree::Rate.find(params[:rate_id]) if params[:rate_id]
+        context  = Spree::Context.build_from_params(params, :temporal => false)
         quantity = params[:quantity].to_i
         options  = params[:options] || {}
 

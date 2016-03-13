@@ -1,5 +1,4 @@
 function params_data_room(product_id, room_id, product_type) {
-    product_type = $('ul#search_box_tabs li a[name="' + product_type + '"]')[0].name;
     data = {
         product_id: product_id,
         product_type: product_type,
@@ -49,26 +48,3 @@ function set_button_disabled(item_id, bool) {
     }
 }
 
-//$(document).ready(function() {
-//    update_prices_room();
-//    $('#search_box_tabs li a').on('click', function(event) {
-//        var v = $(event.target).attr('name');
-//        var v2 = $("#the_default_product_type").val();
-//        $('#the_product_type').val(v);
-//        console.debug("" + v + " <> " + v2);
-//        set_button_disabled('#update_price', v != v2);
-//    });
-//
-//    $('#the_check_box').on('click', function(event) {
-//        var v = $('#the_check_box').is(':checked');
-//        set_button_disabled('#update_price', v);
-//    });
-//
-//    $('#the_keywords_box').on('change keyup', function (event) {
-//        var v = $('#the_keywords_box').val();
-//        var v2 =$('#the_keywords_box').data('default');
-//        set_button_disabled('#update_price', v != v2);
-//    });
-//
-//    $('#update_price_room').attr('onclick', 'update_prices_room()');
-//});
