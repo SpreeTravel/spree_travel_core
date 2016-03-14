@@ -3,7 +3,7 @@ module Spree
 
     include PersistedDynamicAttribute
 
-    has_many :rates, :class_name => 'Spree::Rate', :foreign_key => 'variant_id'
+    has_many :rates, :class_name => 'Spree::Rate', :foreign_key => 'variant_id', :dependent => :destroy
     # has_many :combinations, :class_name => 'Spree::Combination', :foreign_key => 'variant_id'
     belongs_to :calculator, :class_name => 'Spree::TravelCalculator', :foreign_key => 'calculator_id'
 

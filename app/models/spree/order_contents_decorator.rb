@@ -23,7 +23,9 @@ module Spree
         #   line_item.currency = currency unless currency.nil?
         #   line_item.context = context
         # else
-          if variant.product.product_type && variant.product.hotel? && context
+
+          if variant.product.product_type && variant.product.product_type == Spree::ProductType.find_by_name('hotel') && context
+            # TODO this logic may be moved to travel_hotel gem becuase is particular for tha PT
             context.room_count(options).to_i.times do
               line_item = order.line_items.new(quantity: quantity, variant: variant, rate: rate, options: opts)
               line_item.context = context
