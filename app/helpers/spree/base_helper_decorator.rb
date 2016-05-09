@@ -10,6 +10,8 @@ Spree::BaseHelper.class_eval do
         context = Spree::Context.build_from_params(params.merge!(product_type: product_or_variant.product_type.name), :temporal => true)
         product_or_variant.calculate_price(context, product_or_variant.variants.first, :temporal => true )
       elsif product_or_variant.class == Spree::Variant
+        puts 'the params...........................'
+        puts params.inspect
         context = Spree::Context.build_from_params(params.merge!(product_type: product_or_variant.product.product_type.name), :temporal => true)
         product_or_variant.product.calculate_price(context, product_or_variant, :temporal => true )
       end

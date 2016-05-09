@@ -11,7 +11,13 @@ module Spree
       if variant
         if variant.product.product_type
           # TODO take into account here the currency change, i am not taking it now
-          self.price = variant.product.calculate_price(context, variant, temporal:false).first[:price]
+          # TODO this has to be improved, regarding the comparinson with the rate.
+          variant.product.calculate_price(context, variant, temporal:false).each do |s|
+            if self.rate.id == s[:rate]
+              self.price = s[:price]
+            end
+          end
+          # self.price = variant.product.calculate_price(context, variant, temporal:false).first[:price]
           self.cost_price =  variant.cost_price if cost_price.nil?
           self.currency =  variant.currency if currency.nil?
         else
