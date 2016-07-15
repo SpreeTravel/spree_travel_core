@@ -35,14 +35,9 @@ module Spree
 
     end
 
-    # # Original enabled definition, holds the semantic interpretation
-    # def self.enabled
-    #   where(:enabled => true).where.not(:name => "Product")
-    # end
-
     # Modified enabled definition, to exclude product product_type, for lacking of relevance
     def self.enabled
-      where(:enabled => true)#.where.not(:name => "Product")
+      where(:enabled => true)
     end
 
   end

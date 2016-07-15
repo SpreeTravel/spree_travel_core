@@ -27,12 +27,6 @@ Spree::Order.class_eval do
         line_item.variant_id == variant.id &&
           line_item_options_match(line_item, options)
       }
-
-      # line_items.detect { |line_item|
-      #   line_item.variant_id == rate.variant.id &&
-      #       line_item_options_match(line_item, options)
-      #   line_item.context = context
-      # }
     end
 
 
