@@ -8,6 +8,8 @@ module Spree
 
     after_create :absorb_option_types
 
+    self.whitelisted_ransackable_attributes << 'product_type_id'
+
     def absorb_option_types
       Log.debug("absorbing option types")
       self.option_types = self.product_type.variant_option_types
@@ -85,6 +87,11 @@ module Spree
           recursive_variations(the_option_types, the_big_array, index + 1, array)
         end
       end
+    end
+
+    private
+    def self.ransackable_scopes(auth_object = nil)
+      [:product_type_id]
     end
 
 
