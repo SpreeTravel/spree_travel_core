@@ -1,0 +1,10 @@
+<div class="col-md-12">
+  <div class="field checkbox">
+    <% Spree::ProductType.all.each do |pt| %>
+        <label>
+          <%= check_box_tag('q[product_type_id_eq_any][]', pt.id) %>
+          <%= pt.presentation %>
+        </label>
+    <%end%>
+  </div>
+</div>
