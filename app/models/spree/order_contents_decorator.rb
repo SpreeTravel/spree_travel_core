@@ -8,6 +8,13 @@ module Spree
       after_add_or_remove(line_item, options)
     end
 
+    # def add(variant, quantity = 1, options = {})
+    #   timestamp = Time.now
+    #   line_item = add_to_line_item(variant, quantity, options)
+    #   options[:line_item_created] = true if timestamp <= line_item.created_at
+    #   after_add_or_remove(line_item, options)
+    # end
+
     private
 
     def add_to_line_item(variant, quantity, rate=nil, context=nil, options = {})
@@ -17,13 +24,10 @@ module Spree
                                                     permit(Spree::PermittedAttributes.line_item_attributes)
 
       if Spree::Config.use_cart
-        # TODO VERY important.... Fix this to be able to support adding to the car, Spree clasical products and Travel productos
-        # if line_item
-        #   line_item.quantity += quantity.to_i
-        #   line_item.currency = currency unless currency.nil?
-        #   line_item.context = context
-        # else
-
+        if line_item
+          line_item.quantity += quantity.to_i
+          line_item.currency = currency unless currency.nil?
+        else
           if variant.product.product_type && variant.product.product_type == Spree::ProductType.find_by_name('hotel') && context
             # TODO this logic may be moved to travel_hotel gem becuase is particular for tha PT
             context.room_count(options).to_i.times do
@@ -34,11 +38,13 @@ module Spree
             line_item = order.line_items.new(quantity: quantity, variant: variant, rate: rate, options: opts)
             line_item.context = context
           else
+            opts = { currency: order.currency }.merge ActionController::Parameters.new(options).
+                permit(PermittedAttributes.line_item_attributes)
             line_item = order.line_items.new(quantity: quantity,
                                              variant: variant,
                                              options: opts)
           end
-        # end
+        end
       else
         # TODO take into account rooms count and diferent context per room and have this login into hotel gem
         order.line_items.destroy_all
@@ -53,7 +59,7 @@ module Spree
         else
           line_item = order.line_items.new(quantity: quantity, variant: variant, options: opts)
         end
-       end
+      end
       line_item.target_shipment = options[:shipment] if options.has_key? :shipment
       line_item.save!
       line_item

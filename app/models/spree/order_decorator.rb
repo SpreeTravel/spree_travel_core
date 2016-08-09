@@ -7,9 +7,11 @@ Spree::Order.class_eval do
 
     def paxes_count
       self.line_items.each do |line_item|
-        count = line_item.context.adult(:temporal => false).to_i + line_item.context.child(:temporal => false).to_i
-        if line_item.paxes.empty?
-          count.times { line_item.paxes.new }
+        if !line_item.context.nil?
+          count = line_item.context.adult(:temporal => false).to_i + line_item.context.child(:temporal => false).to_i
+          if line_item.paxes.empty?
+            count.times { line_item.paxes.new }
+          end
         end
       end
     end
