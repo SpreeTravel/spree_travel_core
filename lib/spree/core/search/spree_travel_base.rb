@@ -1,7 +1,7 @@
 module Spree
   module Core
     module Search
-      class Base
+      class SpreeTravelBase
         attr_accessor :properties
         attr_accessor :current_user
         attr_accessor :current_currency
