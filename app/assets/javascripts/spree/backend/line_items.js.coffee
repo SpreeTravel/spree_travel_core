@@ -11,11 +11,11 @@ $(document).ready ->
     line_item_id = save.data('line-item-id')
     quantity = parseInt(save.parents('tr').find('input.line_item_quantity').val())
     product_type = parseInt(save.parents().find('input#product_type_' + line_item_id).val())
-    context_option_values= parseInt(save.parents().find('.' + product_type + '_inputs'))
-
-    data = {};
-    context_option_values.each ->
-      data[element.id] = element.value;
+#    context_option_values= parseInt(save.parents().find('.' + product_type + '_inputs'))
+#
+#    data = {};
+#    context_option_values.each ->
+#      data[element.id] = element.value;
 
 
     toggleItemEdit()
