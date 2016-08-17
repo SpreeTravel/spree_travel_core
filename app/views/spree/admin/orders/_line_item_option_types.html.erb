@@ -1,6 +1,7 @@
 <table class="table table-bordered line-items" data-hook="line-items">
   <thead>
   <th colspan="2"><%= Spree.t(:name) %></th>
+  <th class="text-center"><%= Spree.t(:pax) %></th>
   <th class="text-center"><%= Spree.t(:price) %></th>
   <th class="text-center"><%= Spree.t(:quantity) %></th>
   <th class="text-center"><%= Spree.t(:total_price) %></th>
@@ -15,28 +16,40 @@
         <td class="line-item-name text-center" style="text-align: left;">
           <%= item.variant.product.name %><br><%= "(" + variant_options(item.variant) + ")" unless item.variant.option_values.empty? %>
           <%if item.variant.product.product_type %>
-            <%product_type = item.product.product_type.name%>
-            <%= hidden_field_tag 'product_type_' + item.id.to_s, product_type%>
-            <%item.product.product_type.context_option_types.each do |cot|%>
-              <div>
-                <strong><%= cot.presentation%></strong>:
-                <span class="context-option-type-show" data-attribute="<%=cot.name%>">
-                  <%= item.context.get_mixed_option_value(cot.name, temporal:false)%><br/>
-                </span>
-                <span class="context-option-type-edit is-hidden" data-attribute="<%=cot.name%>">
-                  <% tag_name = product_type + '_' + cot.name.to_s + '_' + item.id.to_s%>
-                  <% if cot.attr_type == 'date' %>
-                    <%= text_field_tag tag_name, item.context.get_mixed_option_value(cot.name, temporal:false), class: "#{product_type}_inputs datepicker"%><br/>
-                  <% elsif cot.attr_type == 'integer'%>
-                    <%= number_field_tag tag_name, item.context.get_mixed_option_value(cot.name, temporal:false), class: "#{product_type}_inputs", :min => 0 %><br/>
-                  <%else%>
-                    <%= text_field_tag tag_name, item.context.get_mixed_option_value(cot.name, temporal:false), class: "#{product_type}_inputs"%><br/>
-                  <%end%>
-                </span>
-              </div>
-            <%end%>
+              <%product_type = item.product.product_type.name%>
+              <%= hidden_field_tag 'product_type_' + item.id.to_s, product_type%>
+              <%item.product.product_type.context_option_types.each do |cot|%>
+                  <div>
+                    <strong><%= cot.presentation%></strong>:
+              <span class="context-option-type-show" data-attribute="<%=cot.name%>">
+                <%= item.context.get_mixed_option_value(cot.name, temporal:false)%><br/>
+              </span>
+              <span class="context-option-type-edit is-hidden" data-attribute="<%=cot.name%>">
+                <% tag_name = product_type + '_' + cot.name.to_s + '_' + item.id.to_s%>
+                <% if cot.attr_type == 'date' %>
+                  <%= text_field_tag tag_name, item.context.get_mixed_option_value(cot.name, temporal:false), class: "#{product_type}_inputs datepicker"%><br/>
+                <% elsif cot.attr_type == 'integer'%>
+                  <%= number_field_tag tag_name, item.context.get_mixed_option_value(cot.name, temporal:false), class: "#{product_type}_inputs", :min => 0 %><br/>
+                <%else%>
+                  <%= text_field_tag tag_name, item.context.get_mixed_option_value(cot.name, temporal:false), class: "#{product_type}_inputs"%><br/>
+                <%end%>
+              </span>
+                  </div>
+              <%end%>
 
-      <%end%>
+          <%end%>
+        </td>
+        <td class="line-item-pax text-center">
+          <%if item.variant.product.product_type %>
+              <% item.paxes.each do |p| %>
+                  <div>
+                    <%= p.first_name %>
+                    <%= p.last_name %>
+                    <%= link_to_with_icon 'delete', Spree.t('delete'), "#", :class => 'delete-line-item btn btn-danger btn-sm', :data => { 'line-item-id' => item.id, :action => 'remove'}, :title => Spree.t('delete'), :no_text => true %>
+                  </div>
+              <% end %>
+              <%= link_to_with_icon 'add', Spree.t('add'), "#", :class => 'add-line-item btn btn-success btn-sm', :data => { 'line-item-id' => item.id, :action => 'add'}, :title => Spree.t('add'), :no_text => true %>
+          <%end%>
         </td>
         <td class="line-item-price text-center"><%= item.single_money.to_html %></td>
         <td class="line-item-qty-show text-center">
@@ -55,28 +68,6 @@
           <% end %>
         </td>
       </tr>
-      <%if item.variant.product.product_type %>
-          <%product_type = item.product.product_type.name%>
-          <%= hidden_field_tag 'product_type_' + item.id.to_s, product_type%>
-          <tr id="context-<%= item.id %>">
-            <td colspan="3">
-              <div><strong><%= Spree.t(:pax) %></strong></div>
-              <% item.paxes.each do |p| %>
-                  <div data-object="pax" data-url="/paxes/<%=p.id %>">
-                  <span class="rest-in-place" data-attribute="first_name" data-formtype="input" data-class="datepicker">
-                    <%= p.first_name %>
-                  </span>
-                  <span class="rest-in-place" data-attribute="last_name" data-formtype="input">
-                    <%= p.last_name %><br>
-                  </span>
-                  </div>
-                  <%= link_to_with_icon 'delete', Spree.t('delete'), "#", :class => 'delete-line-item btn btn-danger btn-sm', :data => { 'line-item-id' => item.id, :action => 'remove'}, :title => Spree.t('delete'), :no_text => true %>
-            <% end %>
-              <%= link_to_with_icon 'add', Spree.t('add'), "#", :class => 'add-line-item btn btn-success btn-sm', :data => { 'line-item-id' => item.id, :action => 'add'}, :title => Spree.t('add'), :no_text => true %>
-            </td>
-
-          </tr>
-      <%end%>
   <% end %>
   </tbody>
 </table>
