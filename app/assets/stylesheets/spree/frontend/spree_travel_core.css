@@ -2,7 +2,7 @@
  *= require spree/frontend
  *= require jquery-ui/datepicker
  *= require jquery-ui/theme
- *= require store/navs
+ *= require spree/frontend/navs
 */
 
 .child-pair {

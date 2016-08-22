@@ -1,10 +1,9 @@
 //= require spree/frontend
-//= require store/tab
-//= require store/underscore
-//= require store/cart_overlay
-//= require store/datepicker
+//= require spree/frontend/tab
+//= require spree/frontend/cart_overlay
+//= require spree/frontend/datepicker
 //= require jquery-ui/datepicker
-//= require store/spree_travel_core_room
+//= require spree/frontend/spree_travel_core_room
 
 function params_data(product_id) {
     product_type = $('ul#search_box_tabs li.active a')[0].name;
