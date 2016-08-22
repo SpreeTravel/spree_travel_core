@@ -17,7 +17,12 @@ module Spree
 
     def self.build_from_params(params, options = {})
       raise Exception.new("You must be explicit about temporal or not") if options[:temporal].nil?
-      context = Spree::Context.new
+      if !options[:line_item_id].nil?
+        context = Spree::LineItem.find(options[:line_item_id]).context
+      else
+        context = Spree::Context.new
+      end
+
       context.initialize_variables
       context_params = context.option_types_and_values_from_params(params)
       if options[:temporal]

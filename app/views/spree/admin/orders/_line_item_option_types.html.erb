@@ -25,9 +25,9 @@
                 <%= item.context.get_mixed_option_value(cot.name, temporal:false)%><br/>
               </span>
               <span class="context-option-type-edit is-hidden" data-attribute="<%=cot.name%>">
-                <% tag_name = product_type + '_' + cot.name.to_s + '_' + item.id.to_s%>
+                <% tag_name = product_type + '_' + cot.name.to_s%>
                 <% if cot.attr_type == 'date' %>
-                  <%= text_field_tag tag_name, item.context.get_mixed_option_value(cot.name, temporal:false), class: "#{product_type}_inputs datepicker"%><br/>
+                  <%= text_field_tag tag_name, item.context.get_mixed_option_value(cot.name, temporal:false), class: "#{product_type}_inputs admin_datepicker"%><br/>
                 <% elsif cot.attr_type == 'integer'%>
                   <%= number_field_tag tag_name, item.context.get_mixed_option_value(cot.name, temporal:false), class: "#{product_type}_inputs", :min => 0 %><br/>
                 <%else%>
@@ -41,14 +41,16 @@
         </td>
         <td class="line-item-pax text-center">
           <%if item.variant.product.product_type %>
+              <ul class=""  style="list-style-type: none">
               <% item.paxes.each do |p| %>
-                  <div>
+                  <li class="pax-<%p.id%>">
                     <%= p.first_name %>
                     <%= p.last_name %>
-                    <%= link_to_with_icon 'delete', Spree.t('delete'), "#", :class => 'delete-line-item btn btn-danger btn-sm', :data => { 'line-item-id' => item.id, :action => 'remove'}, :title => Spree.t('delete'), :no_text => true %>
-                  </div>
+                    <%= link_to_with_icon 'delete', Spree.t('delete'), "#", :class => 'delete-pax btn btn-danger btn-sm', :data => { 'line-item-id' => item.id, 'pax-id' => p.id, :action => 'remove'}, :title => Spree.t('delete'), :no_text => true %>
+                  </li>
               <% end %>
-              <%= link_to_with_icon 'add', Spree.t('add'), "#", :class => 'add-line-item btn btn-success btn-sm', :data => { 'line-item-id' => item.id, :action => 'add'}, :title => Spree.t('add'), :no_text => true %>
+              </ul>
+              <%= link_to_with_icon 'add', Spree.t('add'), "#", :class => 'add-pax btn btn-success btn-sm', :data => { 'line-item-id' => item.id, :action => 'add'}, :title => Spree.t('add'), :no_text => true %>
           <%end%>
         </td>
         <td class="line-item-price text-center"><%= item.single_money.to_html %></td>

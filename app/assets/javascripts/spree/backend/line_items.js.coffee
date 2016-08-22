@@ -10,16 +10,18 @@ $(document).ready ->
     save = $ this
     line_item_id = save.data('line-item-id')
     quantity = parseInt(save.parents('tr').find('input.line_item_quantity').val())
-    product_type = parseInt(save.parents().find('input#product_type_' + line_item_id).val())
-#    context_option_values= parseInt(save.parents().find('.' + product_type + '_inputs'))
-#
-#    data = {};
-#    context_option_values.each ->
-#      data[element.id] = element.value;
+    product_type = save.parents('tr').find('input#product_type_' + line_item_id).val()
+    context_option_values= save.parents().find('.' + product_type + '_inputs')
 
+    if product_type && context_option_values
+      context = {
+        product_type: product_type
+      };
+      context_option_values.each (index, element) ->
+        context[element.id] = element.value;
 
     toggleItemEdit()
-    adjustLineItem(line_item_id, quantity)
+    adjustLineItem(line_item_id, quantity, context)
     false
 
   # handle delete click
@@ -30,6 +32,21 @@ $(document).ready ->
 
       toggleItemEdit()
       deleteLineItem(line_item_id)
+
+  $('a.delete-pax').click ->
+    if confirm(Spree.translations.are_you_sure_delete)
+      del = $(this);
+      pax_id = del.data('pax-id');
+
+      toggleItemEdit()
+      deletePax(pax_id)
+
+  $('a.add-pax').click ->
+    del = $(this);
+    line_item_id = del.data('line-item-id');
+
+    toggleItemEdit()
+    addPax(line_item_id)
 
 toggleLineItemEdit = ->
   link = $(this);
@@ -47,7 +64,10 @@ toggleLineItemEdit = ->
 lineItemURL = (line_item_id) ->
   url = Spree.routes.orders_api + "/" + order_number + "/line_items/" + line_item_id + ".json"
 
-adjustLineItem = (line_item_id, quantity) ->
+paxURL = (pax_id) ->
+  url = Spree.routes.paxes_api + "/" + pax_id
+  
+adjustLineItem = (line_item_id, quantity, context={}) ->
   url = lineItemURL(line_item_id)
   $.ajax(
     type: "PUT",
@@ -55,6 +75,7 @@ adjustLineItem = (line_item_id, quantity) ->
     data:
       line_item:
         quantity: quantity
+        context: context
       token: Spree.api_key
   ).done (msg) ->
     window.Spree.advanceOrder()
@@ -70,4 +91,15 @@ deleteLineItem = (line_item_id) ->
     $('#line-item-' + line_item_id).remove()
     if $('.line-items tr.line-item').length == 0
       $('.line-items').remove()
+    window.Spree.advanceOrder()
+
+deletePax = (pax_id) ->
+  url = paxURL(pax_id)
+  $.ajax(
+    type: "DELETE"
+    url: Spree.url(url)
+    data:
+      token: Spree.api_key
+  ).done (msg) ->
+    $('pax-' + pax_id).remove()
     window.Spree.advanceOrder()
