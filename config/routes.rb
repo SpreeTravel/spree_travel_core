@@ -15,4 +15,8 @@ Spree::Core::Engine.routes.draw do
     end
   end
 
+  namespace :api, defaults: { format: 'json' } do
+    resources :paxes
+  end
+
 end
