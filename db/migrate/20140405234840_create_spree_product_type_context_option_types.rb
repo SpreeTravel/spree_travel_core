@@ -1,4 +1,4 @@
-class CreateSpreeProductTypeContextOptionTypes < ActiveRecord::Migration
+class CreateSpreeProductTypeContextOptionTypes < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_product_type_context_option_types, :index => false do |t|
       t.integer :context_option_type_id

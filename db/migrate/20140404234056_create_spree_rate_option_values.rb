@@ -1,4 +1,4 @@
-class CreateSpreeRateOptionValues < ActiveRecord::Migration
+class CreateSpreeRateOptionValues < ActiveRecord::Migration[4.2]
   def change
     create_table :spree_rate_option_values do |t|
       t.integer :rate_id

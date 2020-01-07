@@ -1,4 +1,4 @@
-class CreateProductTypes < ActiveRecord::Migration
+class CreateProductTypes < ActiveRecord::Migration[4.2]
 
   def up
     create_table :spree_product_types do |t|
