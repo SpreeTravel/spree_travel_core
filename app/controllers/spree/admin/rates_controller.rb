@@ -2,7 +2,7 @@ module Spree
   module Admin
     class RatesController < ResourceController
 
-      before_filter :load_product
+      before_action :load_product
 
       def load_product
         @product = Spree::Product.find_by_slug(params[:product_id])
@@ -30,7 +30,11 @@ module Spree
           flash[:success] = flash_message_for(@rate, :successfully_created)
           redirect_to admin_product_rates_path(params[:product_id])
         else
-          invalid_resource!(@rate)
+          invoke_callbacks(:create, :fails)
+          respond_with(@object) do |format|
+            format.html { render action: :new }
+            format.js { render layout: false }
+          end
         end
       end
 
@@ -44,7 +48,7 @@ module Spree
           flash[:success] = flash_message_for(@rate, :successfully_updated)
           redirect_to admin_product_rates_path(params[:product_id])
         else
-          invalid_resource!(@rate)
+          invoke_callbacks(:update, :fails)
         end
       end
 

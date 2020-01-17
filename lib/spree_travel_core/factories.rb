@@ -1,10 +1,14 @@
-FactoryGirl.define do
-  # Define your Spree extensions Factories within this file to enable applications, and other extensions to use and override them.
-  #
-  # Example adding this to your spec_helper will load these Factories for use:
-  # require 'spree_travel_core/factories'
+FactoryBot.define do
+  GEM_ROOT = File.dirname(File.dirname(File.dirname(__FILE__)))
 
-  Dir["#{File.dirname(__FILE__)}/factories/**"].each do |f|
-    require File.expand_path(f)
+  p "#{Dir[File.join(GEM_ROOT, 'spec', 'factories', '**', '*.rb')]}"
+
+  Dir[File.join(GEM_ROOT, 'spec', 'factories', '**', '*.rb')].each do |factory|
+    require(factory)
   end
+
+  # Dir["#{File.dirname(__FILE__)}/factories/**"].each do |f|
+  #   require File.expand_path(f)
+  # end
+
 end

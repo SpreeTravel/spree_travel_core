@@ -1,6 +1,5 @@
-module Spree
-  OrdersHelper.class_eval do
+module Spree::OrdersHelperDecorator
 
-  end
 end
 
+Spree::OrdersHelper.prepend Spree::OrdersHelperDecorator

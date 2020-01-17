@@ -5,18 +5,15 @@ module Spree
 
     def set_persisted_option_values(params)
       option_types_and_values_from_params(params).each do |key, value|
-        # byebug
         set_persisted_option_value(key, value)
       end
     end
 
     def set_persisted_option_value(option_type, value)
-      # byebug
       ot = get_option_type_object(option_type)
       ovr = nil
       if ot
         ovr = self.option_values.find do |ov|
-          # byebug
           ov.option_value_id.present? && ov.option_value.option_type_id == ot.id
         end 
       end
@@ -40,6 +37,7 @@ module Spree
 
     def get_persisted_option_value(option_type, attrib='id')
       ot = get_option_type_object(option_type)
+      return if ot.nil?
       ovr = self.option_values.find {|ov| ov.option_value && ov.option_value.option_type_id == ot.id }
       (ot.attr_type == 'selection' ? ovr.option_value.send(attrib) : ovr.value) if ovr
     end

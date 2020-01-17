@@ -1,6 +1,11 @@
+<%
+  #because a javascript in app/assets/javascripts/spree/frontend/product.js:102
+  #we may need to create another JS for the list view or search results view
+%>
+
 <% product ||= @product %>
 
-<%= form_for :order, :url => populate_orders_path, :html => {:id => 'cart-form'} do |f| %>
+<%= form_for :order, html: { id: 'add-to-cart-form' } do |f| %>
   <div id="inside-product-cart-form-<%=product.id%>" data-hook="inside_product_cart_form" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
 
     <% if product.price_in(current_currency) and !product.price.nil? %>
@@ -22,10 +27,14 @@
       </div>
     <% else %>
       <div id="product-price">
-        <br>
-        <div><span class="price selling" itemprop="price"><%= Spree.t('product_not_available_in_this_currency') %></span></div>
+        <div>
+          <span class="price selling" itemprop="price">
+            <%= Spree.t('product_not_available_in_this_currency') %>
+          </span>
+        </div>
       </div>
     <% end %>
 
     </div>
 <% end %>
+

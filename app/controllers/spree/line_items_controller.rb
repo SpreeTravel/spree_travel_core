@@ -1,5 +1,4 @@
-module Spree
-  class LineItemsController < Spree::StoreController
+module Spree::LineItemsControllerDecorator
 
     def update
       @line_item = Spree::LineItem.find(params[:id])
@@ -12,13 +11,13 @@ module Spree
 
     private
       
-      def line_item_params
+    def line_item_params
         if params[:line_item]
           params[:line_item].permit(*permitted_line_item_attributes)
         else
           {}
         end
       end
-
-  end
 end
+
+Spree::LineItemsController.prepend Spree::LineItemsControllerDecorator

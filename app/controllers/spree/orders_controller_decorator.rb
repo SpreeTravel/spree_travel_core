@@ -1,5 +1,4 @@
-module Spree
-    OrdersController.class_eval do
+module Spree::OrdersControllerDecorator
 
       def populate
         order    = current_order(create_order_if_necessary: true)
@@ -24,18 +23,17 @@ module Spree
           flash[:error] = error
           redirect_back_or_default(spree.root_path)
         else
-          if Spree::Config.use_cart
-            respond_with(order) do |format|
-              format.html { redirect_to cart_path }
-            end
-          else
+          # if Spree::Config.use_cart
+          #   respond_with(order) do |format|
+          #     format.html { redirect_to cart_path }
+          #   end
+          # else
             @order = current_order
             params.merge!('checkout'=>'')
             self.update
-          end
+          # end
         end
       end
-
-
-  end
 end
+
+Spree::OrdersController.prepend Spree::OrdersControllerDecorator

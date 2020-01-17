@@ -1,6 +1,8 @@
 # Run Coverage report
 require 'simplecov'
 SimpleCov.start do
+  add_filter "/test/"
+  add_filter "/spec/"
   add_group 'Controllers', 'app/controllers'
   add_group 'Helpers', 'app/helpers'
   add_group 'Mailers', 'app/mailers'
@@ -17,6 +19,11 @@ require File.expand_path('../dummy/config/environment.rb',  __FILE__)
 require 'rspec/rails'
 require 'database_cleaner'
 require 'ffaker'
+require 'factory_bot_rails'
+require 'byebug'
+require 'shoulda/matchers'
+
+# require 'support/factory_bot'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -32,18 +39,25 @@ require 'spree/testing_support/url_helpers'
 require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/capybara_ext'
 
-require 'paperclip/matchers'
+# require 'paperclip/matchers'
 
 Capybara.javascript_driver = :poltergeist
 
 # Requires factories defined in lib/spree_travel_core/factories.rb
-require 'spree_travel_core/factories'
+# require 'spree_travel_core/factories'
 Dir["#{File.dirname(__FILE__)}/support/**"].each do |f|
   require File.expand_path(f)
 end
 
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+  end
+end
+
 RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
+
+  config.include FactoryBot::Syntax::Methods
 
   # == URL Helpers
   #
@@ -89,4 +103,14 @@ RSpec.configure do |config|
   end
 
   config.fail_fast = ENV['FAIL_FAST'] || false
+
+  config.expect_with :rspec do |expectations|
+    expectations.include_chain_clauses_in_custom_matcher_descriptions = true
+  end
+
+  config.mock_with :rspec do |mocks|
+    mocks.verify_partial_doubles = true
+  end
+  config.shared_context_metadata_behavior = :apply_to_host_groups
+
 end

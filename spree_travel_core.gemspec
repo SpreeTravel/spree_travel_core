@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.version     = versions['spree_travel']
   s.summary     = 'Spree Travel Core'
   s.description = 'Spree Travel Abstract Models, references to abstract Locations, etc.'
-  s.required_ruby_version = '>= 1.9.3'
+  # s.required_ruby_version = '>= 1.9.3'
 
   s.authors   = ['Pedro Quintero', 'Miguel Sancho', 'Cesar Lage', 'Raul Perez-alejo']
   s.email     = 'info@openjaf.com'
@@ -23,14 +23,16 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'spree', '~> ' + versions['spree']
 
-  s.add_development_dependency 'capybara', '~> 2.4'
+  s.add_development_dependency 'capybara'
   s.add_development_dependency 'coffee-rails'
   s.add_development_dependency 'database_cleaner'
-  s.add_development_dependency 'factory_girl', '~> 4.4'
+  s.add_development_dependency 'factory_bot_rails'
   s.add_development_dependency 'ffaker'
-  s.add_development_dependency 'rspec-rails',  '~> 3.0'
-  s.add_development_dependency 'sass-rails', '~> 4.0.2'
+  s.add_development_dependency 'rspec-rails'
+  s.add_development_dependency 'sass-rails'
   s.add_development_dependency 'selenium-webdriver'
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'sqlite3'
+  s.add_development_dependency 'byebug'
+  s.add_development_dependency 'shoulda-matchers'
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::ProductType do
+RSpec.describe 'Spree::ProductType' do
 
   it 'haves a valid factory' do
     expect(build(:product_type)).to be_valid
@@ -24,6 +24,7 @@ describe Spree::ProductType do
   it 'associates correctly with other products' do
     base_prod = create(:base_product)
     product_product_type = create(:product_type)
+    byebug
     base_prod.product_type = product_product_type
     expect(base_prod.product_type.name).to be_equal(product_product_type.name)
   end
@@ -34,9 +35,5 @@ describe Spree::ProductType do
     expect(product_type).to respond_to(:name)
     expect(product_type).to respond_to(:presentation)
   end
-
-  # it 'responds to its associations' do
-
-  # end
 
 end

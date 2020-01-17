@@ -32,7 +32,7 @@ module Spree
       hash
     end
 
-    def get_mixed_option_value(option_type, options = {:temporal => true})
+    def get_mixed_option_value(option_type, options = {temporal: true})
       if options[:temporal]
         get_temporal_option_value(option_type)
       else

@@ -5,5 +5,6 @@ Deface::Override.new(
     :partial => "spree/products/product_type_selector",
     :disabled => false
 )
+# this is the partial that render the different product types.....
 
 

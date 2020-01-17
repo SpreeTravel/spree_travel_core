@@ -8,7 +8,7 @@ class Log
 
   def self.debug(message)
     options = {}
-    options[:prefix] = "DEBUG".green
+    options[:prefix] = "DEBUG"
     options[:message] = message
     options[:level] = DEBUG
     write(options)
@@ -16,7 +16,7 @@ class Log
 
   def self.info(message)
     options = {}
-    options[:prefix] = "INFO".blue
+    options[:prefix] = "INFO"
     options[:message] = message
     options[:level] = INFO
     write(options)
@@ -24,7 +24,7 @@ class Log
 
   def self.warning(message)
     options = {}
-    options[:prefix] = "WARNING".yellow
+    options[:prefix] = "WARNING"
     options[:message] = message
     options[:level] = WARNING
     write(options)
@@ -32,7 +32,7 @@ class Log
 
   def self.error(message)
     options = {}
-    options[:prefix] = "ERROR".red
+    options[:prefix] = "ERROR"
     options[:message] = message
     options[:level] = ERROR
     write(options)
@@ -40,7 +40,7 @@ class Log
 
   def self.exception(ex)
     options = {}
-    options[:prefix] = "EXCEPTION:".magenta
+    options[:prefix] = "EXCEPTION:"
     options[:message] = ex.message
     options[:level] = CRITICAL
     write(options)
@@ -56,7 +56,7 @@ class Log
     prefix = options[:prefix] || 'LOG'
     message = options[:message] || 'debugging ...'
     level = options[:level] || DEBUG
-    timestamp = Time.now.to_i.to_s.cyan
+    timestamp = Time.now.to_i.to_s
 
     log = File.open(Rails.root.to_s + "/log/debug.log", "a")
     log.write("#{timestamp} #{prefix}: #{message}\n")

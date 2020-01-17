@@ -1,6 +1,6 @@
 <% active_product = params[:product_type] %>
 
-<div id="search_box" class= "">
+<div id="search_box" class="">
   <ul id="search_box_tabs" class="nav nav-tabs">
     <% Spree::ProductType.enabled.each do |p| %>
       <%
@@ -16,8 +16,8 @@
           active_product = p.name.downcase
         end
       %>
-      <%= content_tag :li, class: active_class, role: 'presentation'  do %>
-        <a data-toggle="tab" role="tab" href='#<%="#{prefix}"%>fields' name=<%="#{p.name}"%> >
+      <%= content_tag :li, class: "nav-item #{active_class}", role: 'presentation'  do %>
+        <a data-toggle="tab" role="tab" class=<%="nav-link #{active_class}"%> href='#<%="#{prefix}"%>fields' name=<%="#{p.name}"%>  >
           <%#= Spree.t(p.presentation) %>
           <%= p.presentation %>
         </a>

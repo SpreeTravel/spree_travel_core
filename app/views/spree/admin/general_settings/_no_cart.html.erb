@@ -1,19 +1,25 @@
-<div class="panel panel-default security">
-  <div class="panel-heading">
-    <h1 class="panel-title">
-      <%= Spree.t(:no_cart)%>
-    </h1>
-  </div>
+<div class="col-12 col-lg-6">
 
-  <div class="panel-body">
-    <% @preferences_cart.each do |key|
-      type = Spree::Config.preference_type(key) %>
+  <%#-------------------------------------------------%>
+  <%# Cart Setting                               %>
+  <%#-------------------------------------------------%>
+  <div class="card mb-3" id="general-settings-cart" data-hook="general_settings_cart">
+    <div class="card-header">
+      <h1 class="card-title mb-0 h5">
+        <%= Spree.t(:no_cart)%>
+      </h1>
+    </div>
+
+    <div class="card-body">
+      <% @preferences_cart.each do |key|
+        type = Spree::Config.preference_type(key) %>
         <div class="checkbox">
           <%= label_tag key do %>
-              <%= preference_field_tag(key, Spree::Config[key], type: type) %>
-              <%= Spree.t(key) %>
+            <%= preference_field_tag(key, Spree::Config[key], type: type) %>
+            <%= Spree.t(key) %>
           <% end %>
         </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>

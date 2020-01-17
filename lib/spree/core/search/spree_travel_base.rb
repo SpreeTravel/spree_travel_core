@@ -68,7 +68,7 @@ module Spree
           base_scope
         end
 
-        def add_eagerload_scopes scope
+        def add_eagerload_scopes(scope)
           # TL;DR Switch from `preload` to `includes` as soon as Rails starts honoring
           # `order` clauses on `has_many` associations when a `where` constraint
           # affecting a joined table is present (see
@@ -84,20 +84,23 @@ module Spree
           # separate queries most of the time but opt for a join as soon as any
           # `where` constraints affecting joined tables are added to the search;
           # which is the case as soon as a taxon is added to the base scope.
+          scope = scope.preload(:tax_category)
           scope = scope.preload(master: :prices)
           scope = scope.preload(master: :images) if include_images
           scope
         end
 
         def add_search_scopes(base_scope)
-          search.each do |name, scope_attribute|
-            scope_name = name.to_sym
-            if base_scope.respond_to?(:search_scopes) && base_scope.search_scopes.include?(scope_name.to_sym)
-              base_scope = base_scope.send(scope_name, *scope_attribute)
-            else
-              base_scope = base_scope.merge(Spree::Product.ransack({scope_name => scope_attribute}).result)
+          if search.is_a?(ActionController::Parameters)
+            search.each do |name, scope_attribute|
+              scope_name = name.to_sym
+              base_scope = if base_scope.respond_to?(:search_scopes) && base_scope.search_scopes.include?(scope_name.to_sym)
+                             base_scope.send(scope_name, *scope_attribute)
+                           else
+                             base_scope.merge(Spree::Product.ransack(scope_name => scope_attribute).result)
+                           end
             end
-          end if search
+          end
           base_scope
         end
 

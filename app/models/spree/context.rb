@@ -4,8 +4,11 @@ module Spree
     include PersistedDynamicAttribute
     include TemporalDynamicAttribute
 
-    has_many :line_items, :class_name => 'Spree::LineItem', :foreign_key => 'context_id'
-    has_many :option_values, :class_name => 'Spree::ContextOptionValue', :foreign_key => 'context_id', :dependent => :destroy
+    has_many :line_items, class_name: 'Spree::LineItem',
+                          foreign_key:'context_id'
+    has_many :option_values, class_name: 'Spree::ContextOptionValue',
+                             foreign_key: 'context_id',
+                             dependent: :destroy
 
     def initialize_variables
       @temporal = {}
@@ -16,12 +19,12 @@ module Spree
     end
 
     def self.build_from_params(params, options = {})
-      raise Exception.new("You must be explicit about temporal or not") if options[:temporal].nil?
-      if !options[:line_item_id].nil?
-        context = Spree::LineItem.find(options[:line_item_id]).context
-      else
-        context = Spree::Context.new
-      end
+      raise StandardError.new("You must be explicit about temporal or not") if options[:temporal].nil?
+      context = if !options[:line_item_id].nil?
+                  Spree::LineItem.find(options[:line_item_id]).context
+                else
+                  Spree::Context.new
+                end
 
       context.initialize_variables
       context_params = context.option_types_and_values_from_params(params)

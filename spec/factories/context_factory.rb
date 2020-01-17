@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :context, class: Spree::Context do
     after(:create) do |context|
@@ -9,7 +9,7 @@ FactoryGirl.define do
   end
 
   factory :context_option_value, class: Spree::ContextOptionValue do
-    option_value create(:option_value_decorated)
+    option_value {create(:option_value_decorated)}
   end
 
 end

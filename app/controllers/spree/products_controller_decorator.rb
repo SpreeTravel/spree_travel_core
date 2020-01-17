@@ -1,6 +1,7 @@
-module Spree
-  ProductsController.class_eval do
-    before_action :add_childrens_param, only: :show
+module Spree::ProductsControllerDecorator
+  def self.prepended(base)
+    base.before_action :add_childrens_param, only: :show
+  end
 
     def add_childrens_param
       begin
@@ -9,6 +10,7 @@ module Spree
         @childrens = @product.variants
       end
     end
-
-  end
 end
+
+
+Spree::ProductsController.prepend Spree::ProductsControllerDecorator
