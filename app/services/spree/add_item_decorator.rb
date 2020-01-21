@@ -1,4 +1,4 @@
-    module AddItemDecorator
+    module Spree::AddItemDecorator
       prepend Spree::ServiceModule::Base
 
       def call(order:, variant:, context:, rate: nil, quantity: nil, options: {})
@@ -43,4 +43,4 @@
     end
 
 
-Spree::Cart::AddItem.prepend AddItemDecorator
+Spree::Cart::AddItem.prepend Spree::AddItemDecorator

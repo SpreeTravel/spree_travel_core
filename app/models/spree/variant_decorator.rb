@@ -5,18 +5,7 @@ module Spree::VariantDecorator
     include Spree::PersistedDynamicAttribute
 
     base.has_many :rates, :class_name => 'Spree::Rate', :foreign_key => 'variant_id', :dependent => :destroy
-    # has_many :combinations, :class_name => 'Spree::Combination', :foreign_key => 'variant_id'
     base.belongs_to :calculator, :class_name => 'Spree::TravelCalculator', :foreign_key => 'calculator_id'
-  end
-
-
-  def options_text
-    values = self.option_values.joins(:option_type).order("#{Spree::OptionType.table_name}.position asc")
-    array = []
-    values.map do |ov|
-     array << "#{ov.option_type.presentation}: #{ov.presentation}</br>"
-    end
-    array.to_sentence({ words_connector: "", two_words_connector: "", last_word_connector: "" }).html_safe
   end
 
   def count_on_hand

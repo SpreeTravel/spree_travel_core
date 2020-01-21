@@ -1,12 +1,15 @@
 module Spree::OrderDecorator
   def self.prepended(base)
-    # byebug
     base.remove_checkout_step :delivery
-    base.insert_checkout_step :pax, after: :address
 
+    states = base.state_machine.states.map &:name
+    unless states.include?(:pax)
+      base.insert_checkout_step :pax, after: :address
+    end
+
+    base.state_machine.before_transition to: :pax, do: :paxes_count
   end
 
-  Spree::Order.state_machine.before_transition to: :pax, do: :paxes_count
 
     def paxes_count
       self.line_items.each do |line_item|

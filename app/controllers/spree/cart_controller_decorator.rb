@@ -1,5 +1,4 @@
-
-module CartControllerDecorator
+module Spree::CartControllerDecorator
 
   def add_item
     variant = Spree::Variant.find(params[:variant_id])
@@ -24,4 +23,4 @@ module CartControllerDecorator
 
 end
 
-Spree::Api::V2::Storefront::CartController.prepend CartControllerDecorator
+Spree::Api::V2::Storefront::CartController.prepend Spree::CartControllerDecorator
