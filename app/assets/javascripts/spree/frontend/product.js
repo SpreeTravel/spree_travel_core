@@ -98,65 +98,69 @@ Spree.ready(function ($) {
 })
 
 Spree.ready(function () {
-  var addToCartForm = document.getElementById('add-to-cart-form')
-  var addToCartButton = document.getElementById('add-to-cart-button')
+  // var addToCartForm = document.getElementById('add-to-cart-form')
+  var addToCartFormCollection = document.querySelectorAll("[id^='add-to-cart-form-']")
+  // var addToCartButton = document.getElementById('add-to-cart-button')
+  var addToCartButtonCollection = document.querySelectorAll(("[id^='add-to-cart-button-']"))
 
-  if (addToCartForm) {
-    // enable add to cart button
-    if (addToCartButton) {
-      addToCartButton.removeAttribute('disabled')
+    for (let i = 0; i < addToCartFormCollection.length; i++) {
+        var addToCartForm = addToCartFormCollection[i]
+        var addToCartButton = addToCartButtonCollection[i]
+
+        if (addToCartForm) {
+            // enable add to cart button
+            if (addToCartButton) {
+                addToCartButton.removeAttribute('disabled')
+            }
+
+            addToCartForm.addEventListener('submit', function (event) {
+                event.preventDefault()
+                var form = event.target
+                // prevent multiple clicks
+                if (addToCartButton) {
+                    addToCartButton.setAttribute('disabled', 'disabled')
+                }
+                //TODO: This Should be dynamic because if ContextOptionType in the ProductType Change then this code will not work
+                var variantId = form.elements.namedItem('variant_id').value;
+                var quantity = parseInt(form.elements.namedItem('quantity').value, 10);
+                var rateId = form.elements.namedItem('rate_id').value;
+                var productId = form.elements.namedItem('product_id').value;
+                var productType = form.elements.namedItem('product_type').value;
+
+                var container = document.querySelector(".inside-room-cart-form-"+ variantId + "-" + rateId);
+                var context_options =  container.querySelectorAll("input[name^='" + productType + "']");
+                var context_options_array = Array.from(context_options);
+
+                var context_options_object = {};
+
+                context_options_array.forEach(function(e){ context_options_object[e.name] = e.value });
+
+                // we need to ensure that we have an existing cart we want to add the item to
+                // if we have already a cart assigned to this guest / user this won't create
+                // another one
+                Spree.ensureCart(
+                    function () {
+                        SpreeAPI.Storefront.addToCart(
+                            variantId,
+                            quantity,
+                            productType,
+                            rateId,
+                            productId,
+                            context_options_object,
+                            {}, // options hash - you can pass additional parameters here, your backend
+                            // needs to be aware of those, see API docs:
+                            // https://github.com/spree/spree/blob/master/api/docs/v2/storefront/index.yaml#L42
+                            function () {
+                                // redirect with `variant_id` is crucial for analytics tracking
+                                // provided by `spree_analytics_trackers` extension
+                                window.location = Spree.routes.cart + '?variant_id=' + variantId.toString()
+                            },
+                            function (error) { alert(error) } // failure callback for 422 and 50x errors
+                        )
+                    }
+                )
+            })
+        }
     }
 
-    addToCartForm.addEventListener('submit', function (event) {
-      event.preventDefault()
-
-      // prevent multiple clicks
-      if (addToCartButton) {
-        addToCartButton.setAttribute('disabled', 'disabled')
-      }
-      //TODO: This Should be dynamic because if ContextOptionType in the ProductType Change then this code will not work
-      var variantId = addToCartForm.elements.namedItem('variant_id').value;
-      var quantity = parseInt(addToCartForm.elements.namedItem('quantity').value, 10);
-      var rateId = addToCartForm.elements.namedItem('rate_id').value;
-      var productId = addToCartForm.elements.namedItem('product_id').value;
-      var productType = addToCartForm.elements.namedItem('product_type').value;
-      var categoryId = addToCartForm.elements.namedItem(productType + '_category').value;
-      var carPickupDate = addToCartForm.elements.namedItem(productType + '_pickup_date').value;
-      var carReturnDate = addToCartForm.elements.namedItem(productType + '_return_date').value;
-      var carPickupDestination = addToCartForm.elements.namedItem(productType + '_pickup_destination').value;
-      var carReturnDestination = addToCartForm.elements.namedItem(productType + '_return_destination').value;
-      var adult = addToCartForm.elements.namedItem(productType + '_adult').value;
-
-
-      // we need to ensure that we have an existing cart we want to add the item to
-      // if we have already a cart assigned to this guest / user this won't create
-      // another one
-      Spree.ensureCart(
-        function () {
-          SpreeAPI.Storefront.addToCart(
-            variantId,
-            quantity,
-            productType,
-            rateId,
-            productId,
-            categoryId,
-            carPickupDate,
-            carReturnDate,
-            carPickupDestination,
-            carReturnDestination,
-            adult,
-            {}, // options hash - you can pass additional parameters here, your backend
-            // needs to be aware of those, see API docs:
-            // https://github.com/spree/spree/blob/master/api/docs/v2/storefront/index.yaml#L42
-            function () {
-              // redirect with `variant_id` is crucial for analytics tracking
-              // provided by `spree_analytics_trackers` extension
-              window.location = Spree.routes.cart + '?variant_id=' + variantId.toString()
-            },
-            function (error) { alert(error) } // failure callback for 422 and 50x errors
-          )
-        }
-      )
-    })
-  }
 })

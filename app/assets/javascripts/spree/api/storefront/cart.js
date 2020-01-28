@@ -22,26 +22,21 @@ SpreeAPI.Storefront.createCart = function (successCallback, failureCallback) {
   })
 }
 
-SpreeAPI.Storefront.addToCart = function (variantId, quantity, productType, rateId, productId,
-                                          categoryId, carPickupDate, carReturnDate, carPickupDestination, carReturnDestination,
-                                          adult, options, successCallback, failureCallback) {
+SpreeAPI.Storefront.addToCart = function (variantId, quantity, productType, rateId, productId, context_options, options, successCallback, failureCallback) {
+    let params = {
+        variant_id: variantId,
+        quantity: quantity,
+        product_type: productType,
+        rate_id: rateId,
+        product_id: productId,
+        options: options
+    };
+    $.extend(params, context_options);
+
   fetch(Spree.routes.api_v2_storefront_cart_add_item, {
     method: 'POST',
     headers: SpreeAPI.prepareHeaders({ 'X-Spree-Order-Token': SpreeAPI.orderToken }),
-    body: JSON.stringify({
-      variant_id: variantId,
-      quantity: quantity,
-      product_type: productType,
-      rate_id: rateId,
-      product_id: productId,
-      category_id:  categoryId,
-      car_pickup_date: carPickupDate,
-      car_return_date: carReturnDate,
-      car_pickup_destination: carPickupDestination,
-      car_return_destination: carReturnDestination,
-      adult:  adult,
-      options: options
-    })
+    body: JSON.stringify(params)
   }).then(function (response) {
     switch (response.status) {
       case 422:
