@@ -1,6 +1,5 @@
 module Spree::LineItemDecorator
   def self.prepended(base)
-    # byebug
     base.has_many :paxes, class_name: "Spree::Pax", dependent: :destroy
     base.belongs_to :context, class_name: "Spree::Context"
     base.belongs_to :rate, class_name: "Spree::Rate"
@@ -10,12 +9,12 @@ module Spree::LineItemDecorator
 
   def copy_price
     if variant
-      if variant.product.product_type
+      if variant.product.product_type.present?
         # TODO take into account here the currency change, i am not taking it now
         # TODO this has to be improved, regarding the comparinson with the rate.
-        variant.product.calculate_price(context, variant, temporal:false).each do |s|
-          if self.rate.id == s[:rate]
-            self.price = s[:price]
+        variant.product.calculate_price(context, variant, temporal:false).each do |hash|
+          if self.rate.id == hash[:rate]
+            self.price = hash[:price]
           end
         end
         # self.price = variant.product.calculate_price(context, variant, temporal:false).first[:price]

@@ -9,14 +9,19 @@ module Spree::ProductDecorator
     base.after_create :absorb_option_types
     base.whitelisted_ransackable_attributes << 'product_type_id'
 
+    base.delegate :rate_option_types, to: :product_type, prefix: false, allow_nil: true
+    base.delegate :context_option_types, to: :product_type, prefix: false, allow_nil: true
+    base.delegate :variant_option_types, to: :product_type, prefix: false, allow_nil: true
   end
 
   # self.whitelisted_ransackable_attributes << 'product_type_id'
 
   def absorb_option_types
-    #TODO this method may be executed only if a Travel Prodcut Prototype is selected
-    self.option_types = self.product_type.variant_option_types
-    self.generate_variants if !self.product_type.nil?
+    if product_type.present?
+      #TODO this method may be executed only if a Travel Prodcut Prototype is selected
+      self.option_types = self.product_type.variant_option_types
+      self.generate_variants if !self.product_type.nil?
+    end
   rescue Exception => ex
     p ex
     # Log.exception(ex)
@@ -51,14 +56,6 @@ module Spree::ProductDecorator
       end
       variant.save
     end
-  end
-
-  def rate_option_types
-    self.product_type.rate_option_types
-  end
-
-  def context_option_types
-    self.product_type.context_option_types
   end
 
   def destination_taxon

@@ -19,4 +19,8 @@ en:
       pax: Pax
     no_cart: No Cart Settings
     product_type: Product Type
-
+    start_date: Start Date
+    end_date: End Date
+    three_six_days: Three Six Days
+    seven_thirteen_days: Seven Thirteen Days
+    fourteen_tuentynine_days: Fourteen Tuentynine Days

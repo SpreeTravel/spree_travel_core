@@ -25,7 +25,6 @@ module Spree
 
 
     def search_box_option_types(params = nil)
-
       if params && params[:controller] == 'spree/products' && params[:action] == 'show'
         (context_option_types).uniq
       else

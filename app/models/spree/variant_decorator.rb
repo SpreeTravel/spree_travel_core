@@ -4,8 +4,8 @@ module Spree::VariantDecorator
 
     include Spree::PersistedDynamicAttribute
 
-    base.has_many :rates, :class_name => 'Spree::Rate', :foreign_key => 'variant_id', :dependent => :destroy
-    base.belongs_to :calculator, :class_name => 'Spree::TravelCalculator', :foreign_key => 'calculator_id'
+    base.has_many :rates, class_name: 'Spree::Rate', foreign_key: 'variant_id', dependent: :destroy
+    base.belongs_to :calculator, class_name:'Spree::TravelCalculator', foreign_key: 'calculator_id'
   end
 
   def count_on_hand
