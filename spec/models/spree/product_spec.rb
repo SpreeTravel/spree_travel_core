@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Spree::Product do
+
+  it { expect(Spree::Product.new.respond_to?(:product_type)).to eq true }
+  it { expect(Spree::Product.new.respond_to?(:rates)).to eq true }
+
   it 'associates correctly with product type' do
     travel_prod = build(:travel_product)
     expect(travel_prod).to be_valid
@@ -8,7 +12,7 @@ describe Spree::Product do
   end
 
   it 'creates variants for each product_type variant_option_type' do
-    prod_type = create(:product_type_with_variant_option_types)
+    prod_type = create(:product_type, :with_variant_option_types)
     prod = create(:travel_product, product_type: prod_type)
     prod.generate_variants
     variant = prod.variants.first

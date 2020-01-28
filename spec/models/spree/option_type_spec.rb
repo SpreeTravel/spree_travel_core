@@ -2,24 +2,24 @@ require 'spec_helper'
 
 describe Spree::OptionType do
 
-  it 'haves a valid default factory' do
+  it 'has a valid default factory' do
     expect(build(:option_type_decorated)).to be_valid
   end
 
-  it 'haves a valid selection_type factory' do
-    expect(build(:selection_option_type)).to be_valid
+  it 'has a valid selection_type factory' do
+    expect(build(:option_type_decorated, :with_selection_option_type_and_values)).to be_valid
   end
 
-  it 'haves a valid date_type factory' do
-    expect(build(:date_option_type)).to be_valid
+  it 'has a valid date_type factory' do
+    expect(build(:option_type_decorated, :with_date_option_type)).to be_valid
   end
 
-  it 'haves a valid integer_type factory' do
-    expect(build(:integer_option_type)).to be_valid
+  it 'has a valid integer_type factory' do
+    expect(build(:option_type_decorated, :with_integer_option_type)).to be_valid
   end
 
-  it 'haves a valid float_type factory' do
-    expect(build(:float_option_type)).to be_valid
+  it 'has a valid float_type factory' do
+    expect(build(:option_type_decorated, :with_float_option_type)).to be_valid
   end
 
   it 'does no allow duplicate names' do
@@ -33,7 +33,7 @@ describe Spree::OptionType do
   end
 
   it 'creates a default option_value if it is not of type selection' do
-    opt_type = create(:date_option_type)
+    opt_type = create(:option_type_decorated, :with_date_option_type)
     expect(opt_type.option_values.count).to be_equal(1)
   end
 end

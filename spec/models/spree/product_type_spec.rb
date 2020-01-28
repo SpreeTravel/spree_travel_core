@@ -2,10 +2,15 @@ require 'spec_helper'
 
 RSpec.describe 'Spree::ProductType' do
 
+  it { expect(Spree::ProductType.new.respond_to?(:rate_option_types)).to eq true }
+  it { expect(Spree::ProductType.new.respond_to?(:context_option_types)).to eq true }
+  it { expect(Spree::ProductType.new.respond_to?(:variant_option_types)).to eq true }
+  it { expect(Spree::ProductType.new.respond_to?(:calculator)).to eq true }
+
+
   it 'haves a valid factory' do
     expect(build(:product_type)).to be_valid
   end
-
 
 # TODO 24/10/2014 Check why the have syntax does not work properly
   it 'is not valid without a name' do
@@ -24,7 +29,7 @@ RSpec.describe 'Spree::ProductType' do
   it 'associates correctly with other products' do
     base_prod = create(:base_product)
     product_product_type = create(:product_type)
-    byebug
+
     base_prod.product_type = product_product_type
     expect(base_prod.product_type.name).to be_equal(product_product_type.name)
   end

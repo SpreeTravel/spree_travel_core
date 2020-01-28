@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :rate, class: Spree::Rate do
-    variant { |v| v.association(:travel_variant) }
+    association :variant, factory: :travel_variant
   end
 end

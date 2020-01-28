@@ -5,14 +5,12 @@ FactoryBot.define do
     position          { 0 }
     attr_type         {'selection'}
 
-    factory :selection_option_type do
+    trait :with_selection_option_type_and_values do
       sequence(:name, 'a'){ |n| "selection_option_type_#{n}" }
       sequence(:presentation, 'a'){|n| "Selection Option Type #{n}"}
       attr_type {'selection'}
 
-      factory :selection_option_type_with_values do
-        after(:create) {|option_type| option_type.option_values = [create(:option_value_decorated, option_type: option_type)]}
-      end
+      after(:create) {|option_type| option_type.option_values = [create(:option_value_decorated, option_type: option_type)]}
     end
 
     trait :with_date_option_type do

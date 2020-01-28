@@ -8,6 +8,7 @@ FactoryBot.define do
     deleted_at            { nil }
     shipping_category     { |r| Spree::ShippingCategory.first || r.association(:shipping_category) }
 
-    product_type
+    association :product_type, factory: :product_type
+
   end
 end

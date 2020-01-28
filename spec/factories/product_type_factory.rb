@@ -5,7 +5,7 @@ FactoryBot.define do
     enabled                       { true }
 
     trait :with_variant_option_types do
-      after(:create) {|product_type| product_type.variant_option_types = [create(:selection_option_type_with_values)]}
+      after(:create) {|product_type| product_type.variant_option_types = [create(:option_type_decorated, :with_selection_option_type_and_values)]}
     end
 
     trait :with_context_option_types do

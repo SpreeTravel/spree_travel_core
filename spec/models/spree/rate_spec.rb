@@ -2,12 +2,19 @@ require 'spec_helper'
 
 describe Spree::Rate do
 
-  it 'haves a valid factory' do
+  it { expect(Spree::Rate.new.respond_to?(:variant)).to eq true }
+  it { expect(Spree::Rate.new.respond_to?(:option_values)).to eq true }
+  it { expect(Spree::Rate.new.respond_to?(:line_items)).to eq true }
+
+  it 'has a valid factory' do
     expect(build(:rate)).to be_valid
   end
 
   it 'respond to the attributes' do
-    rate = create(:rate)
+    product_type = create(:product_type, :with_variant_option_types)
+    product = create(:travel_product, product_type: product_type)
+    rate = create(:rate, variant: product.variants.first)
+
     expect(rate).to respond_to(:start_date)
     expect(rate).to respond_to(:end_date)
     expect(rate).to respond_to(:plan)
