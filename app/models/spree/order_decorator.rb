@@ -7,11 +7,11 @@ module Spree::OrderDecorator
       base.insert_checkout_step :pax, after: :address
     end
 
-    base.state_machine.before_transition to: :pax, do: :paxes_count
+    base.state_machine.before_transition to: :pax, do: :generate_paxes
   end
 
 
-    def paxes_count
+    def generate_paxes
       self.line_items.each do |line_item|
         if !line_item.context.nil?
           count = line_item.context.adult(:temporal => false).to_i + line_item.context.child(:temporal => false).to_i
