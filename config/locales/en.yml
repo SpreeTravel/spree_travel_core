@@ -23,4 +23,6 @@ en:
     end_date: End Date
     three_six_days: Three Six Days
     seven_thirteen_days: Seven Thirteen Days
-    fourteen_tuentynine_days: Fourteen Tuentynine Days
+    fourteen_twentynine_days: Fourteen Twentynine Days
+    attr_type: Attribute type
+    travel: Is a Travel property?

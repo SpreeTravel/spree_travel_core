@@ -6,7 +6,7 @@ module Spree::OptionTypeDecorator
   end
 
   def default_option_value
-    if attr_type != 'selection' && option_values.empty?
+    if attr_type != 'selection' && option_values.empty? && travel == true
       Spree::OptionValue.create(name: self.name,
                                 presentation: self.presentation,
                                 option_type_id: self.id
