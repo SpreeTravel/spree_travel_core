@@ -22,9 +22,6 @@ module Spree::ProductDecorator
       self.option_types = self.product_type.variant_option_types
       self.generate_variants if !self.product_type.nil?
     end
-  rescue Exception => ex
-    p ex
-    # Log.exception(ex)
   end
 
   def calculator_instance
@@ -34,10 +31,6 @@ module Spree::ProductDecorator
   def calculate_price(context, variant, options)
     # calculator_instance.calculate_price(context, self, options).sort
     calculator_instance.calculate_price(context, self, variant, options)
-  end
-
-  def self.calculator_instance_for(product_type)
-    product_type.calculator.name.constantize.new
   end
 
   def generate_variants
@@ -110,9 +103,14 @@ module Spree::ProductDecorator
   #   list
   # end
 
-
-
-
 end
 
 Spree::Product.prepend Spree::ProductDecorator
+
+module Spree::ProductDecoratorClassMethod
+  def calculator_instance_for(product_type)
+    product_type.calculator.name.constantize.new
+  end
+end
+
+Spree::Product.singleton_class.send :prepend, Spree::ProductDecoratorClassMethod
