@@ -1,5 +1,5 @@
 module Spree
-  class Context < ActiveRecord::Base
+  class Context < Spree::Base
 
     include PersistedDynamicAttribute
     include TemporalDynamicAttribute
@@ -37,46 +37,66 @@ module Spree
       return context
     end
 
-    def product_type(options = {:temporal => true})
+    def product_type(options = {temporal: true})
       get_mixed_option_value(:product_type, options)
     end
 
-    def start_date(options = {:temporal => true})
+    def start_date(options = {temporal: true})
       get_mixed_option_value(:start_date, options)
     end
 
-    def end_date(options = {:temporal => true})
+    def end_date(options = {temporal: true})
       get_mixed_option_value(:end_date, options)
     end
 
-    def plan(options = {:temporal => true})
+    def plan(options = {temporal: true})
       get_mixed_option_value(:plan, options)
     end
 
-    def adult(options = {:temporal => true})
+    def adult(options = {temporal: true})
       get_mixed_option_value(:adult, options)
     end
 
-    def child(options = {:temporal => true})
+    def child(options = {temporal: true})
       get_mixed_option_value(:child, options)
     end
 
     #this is for the amount of rooms
-    def room_count(options = {:temporal => true})
+    def room_count(options = {temporal: true})
       get_mixed_option_value(:room_count, options)
     end
 
-    def cabin_count(options = {:temporal => true})
+    def cabin_count(options = {temporal: true})
       get_mixed_option_value(:cabin_count, options)
     end
 
     #this is for the room type (Sweet, Junio Sweet, etc.....)
-    def room(options = {:temporal => true})
+    def room(options = {temporal: true})
       get_mixed_option_value(:room, options)
     end
 
-    def departure_date(options = {:temporal => true})
+    def departure_date(options = {temporal: true})
       get_mixed_option_value(:departure_date, options)
+    end
+
+    def category(options = {temporal: true})
+      get_mixed_option_value(:category, options)
+    end
+
+    def pickup_destination(options = {temporal: true})
+      get_mixed_option_value(:pickup_destination, options)
+    end   
+    
+    def return_destination(options = {temporal: true})
+      get_mixed_option_value(:return_destination, options)
+    end
+
+    def pickup_date(options = {temporal: true})
+      get_mixed_option_value(:pickup_date, options)
+    end
+
+    def return_date(options = {temporal: true})
+      get_mixed_option_value(:return_date, options)
     end
   end
 end

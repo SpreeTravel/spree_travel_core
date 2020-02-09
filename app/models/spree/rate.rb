@@ -1,6 +1,6 @@
 # TODO relate this model with Spree::Price for having multicurrency support
 module Spree
-  class Rate <  ActiveRecord::Base
+  class Rate < Spree::Base
 
     include Spree::PersistedDynamicAttribute
 
