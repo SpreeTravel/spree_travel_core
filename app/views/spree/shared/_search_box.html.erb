@@ -6,11 +6,7 @@
       <%
         prefix = "#{p.name.downcase}_"
         if active_product
-          if active_product == p.name.downcase
-            active_class = 'active'
-          else
-            active_class = ''
-          end
+          active_class = active_product == p.name.downcase ? 'active' : ''
         else
           active_class = 'active'
           active_product = p.name.downcase
@@ -18,7 +14,6 @@
       %>
       <%= content_tag :li, class: "nav-item #{active_class}", role: 'presentation'  do %>
         <a data-toggle="tab" role="tab" class=<%="nav-link #{active_class}"%> href='#<%="#{prefix}"%>fields' name=<%="#{p.name}"%>  >
-          <%#= Spree.t(p.presentation) %>
           <%= p.presentation %>
         </a>
       <% end %>
@@ -28,8 +23,13 @@
   <div id="tabcontent" class="tab-content">
     <% Spree::ProductType.enabled.each do |p| %>
       <% prefix = "#{p.name.downcase}_" %>
-      <%= render partial: "spree/shared/#{p.name.to_s}_search_box", locals: {prefix: prefix, p: p, product: @product, active_product: active_product} %>
+      <%= render partial: "spree/shared/#{p.name.to_s}_search_box", locals: {prefix: prefix, p: p,
+                                                                             product: @product,
+                                                                             active_product: active_product} %>
     <% end %>
   </div>
-
+</div>
+<div class="alert alert-success" role="alert">
+  For <%= active_product + 's'%> start date is <%= Spree::Product.send("#{active_product}s").first.rates.first.start_date%>
+  and end date is <%= Spree::Product.send("#{active_product}s").last.rates.last.end_date %>
 </div>
