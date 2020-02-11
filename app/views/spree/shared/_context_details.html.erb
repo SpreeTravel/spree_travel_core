@@ -3,6 +3,7 @@
   <h4><%= Spree.t(:paxes) %></h4>
   <% item.paxes.each do |p| %>
     <%= p.first_name %>
+    <%= p.last_name %>
   <% end %>
   <br/>
   <h4><%= Spree.t(:reservation_details) %></h4>
