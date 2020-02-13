@@ -1,20 +1,31 @@
 module Spree::VariantDecorator
-
   def self.prepended(base)
 
     include Spree::PersistedDynamicAttribute
 
     base.has_many :rates, class_name: 'Spree::Rate', foreign_key: 'variant_id', dependent: :destroy
     base.belongs_to :calculator, class_name:'Spree::TravelCalculator', foreign_key: 'calculator_id'
+    base.delegate :product_type, to: :product
+  end
+
+  def option_values_presentation
+    option_types_ids = product_type.variant_option_types.pluck(:id)
+    option_values.where(option_type_id: option_types_ids).pluck(:presentation)
   end
 
   def count_on_hand
+    byebug
     100
   end
+end
 
+Spree::Variant.prepend Spree::VariantDecorator
+
+module Spree::VariantDecoratorClassMethod
   # NOTE: esto asume que todos los option types de una variante son
   # de tipo selection
-  def self.variant_from_params(params)
+  def variant_from_params(params)
+    byebug
     pt = params['product_type']
     return nil unless pt
     product_id = params['product_id']
@@ -41,7 +52,6 @@ module Spree::VariantDecorator
     end
   end
 
-
 end
 
-Spree::Variant.prepend Spree::VariantDecorator
+Spree::Variant.singleton_class.send :prepend, Spree::VariantDecoratorClassMethod
