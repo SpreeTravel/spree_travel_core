@@ -41,4 +41,9 @@ RSpec.describe 'Spree::ProductType' do
     expect(product_type).to respond_to(:presentation)
   end
 
+  it 'should show enabled product type only' do
+    expect(Spree::ProductType).to receive(:where).with(enabled: true)
+    Spree::ProductType.enabled
+  end
+
 end

@@ -10,7 +10,10 @@ FactoryBot.define do
 
     trait :with_context_option_types do
       after(:create) {|product_type| product_type.context_option_types = [create(:option_type_decorated, :with_date_option_type)]}
-      # after(:create) {|product_type| product_type.context_option_types = [create(:selection_option_type_with_values)]}
+    end
+
+    trait :with_rate_option_types do
+      after(:create) {|product_type| product_type.rate_option_types = [create(:option_type_decorated, :with_date_option_type)]}
     end
 
   end
