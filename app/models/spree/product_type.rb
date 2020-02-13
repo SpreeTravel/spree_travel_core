@@ -1,5 +1,6 @@
 module Spree
   class ProductType < Spree::Base
+    default_scope { where(enabled: true) }
 
     has_and_belongs_to_many :rate_option_types,
       join_table: :spree_product_type_rate_option_types,
@@ -25,6 +26,7 @@ module Spree
 
 
     def search_box_option_types(params = nil)
+      byebug
       if params && params[:controller] == 'spree/products' && params[:action] == 'show'
         (context_option_types).uniq
       else
