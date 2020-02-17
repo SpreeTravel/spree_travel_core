@@ -21,7 +21,7 @@
           <% product_type_params = params.select {|k| k.start_with?(product_type + '_') }%>
           <% product_type_params.each do |param| %>
              <%= hidden_field_tag param[0], param[1] %>
-            <%end%>
+          <%end%>
         </span>
         <%= button_tag :class => 'btn btn-success', :id => "add-to-cart-button-#{product.id}", :type => :submit do %>
             <%= Spree.t(:add_to_cart) %>
