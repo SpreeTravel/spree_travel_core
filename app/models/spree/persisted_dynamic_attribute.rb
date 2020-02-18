@@ -22,7 +22,7 @@ module Spree
         self.option_values << ovr
       end
       if ot
-        if ot.attr_type == 'selection'
+        if ot.attr_type == 'selection' || ot.attr_type == 'destination'
           ovr.option_value_id = value
         else
           ovr.option_value_id = ot.option_values.first.id
@@ -39,7 +39,7 @@ module Spree
       ot = get_option_type_object(option_type)
       return if ot.nil?
       ovr = self.option_values.find {|ov| ov.option_value && ov.option_value.option_type_id == ot.id }
-      (ot.attr_type == 'selection' ? ovr.option_value.send(attrib) : ovr.value) if ovr
+      (%w(selection destination).include?(ot.attr_type) ? ovr.option_value.send(attrib) : ovr.value) if ovr
     end
 
     def get_option_type_object(option_type)
