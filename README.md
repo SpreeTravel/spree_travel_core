@@ -2,8 +2,8 @@ Make a normal Spree instalation as followed:
 
 add to the Gemfile:
 
-- gem 'spree', github: 'spree/spree', branch: '3-0-stable'
-- gem 'spree_auth_devise', github: 'spree/spree_auth_devise', :branch => '3-0-stable'
+- gem 'spree', github: 'spree/spree', branch: '4-0-stable'
+- gem 'spree_auth_devise', github: 'spree/spree_auth_devise', :branch => '4-0-stable'
 
 then:
 
@@ -11,12 +11,12 @@ rails g spree:install
 
 after testing the instalation and everything goes right, add to the Gemfile this dependencies for SpreeTravel:
 
-- gem 'spree_travel_core', github: 'openjaf/spree_travel_core', branch: '3-0-stable'
-- gem 'spree_travel_cruise', github: 'openjaf/spree_travel_cruise', branch: '3-0-stable'
-- gem 'spree_travel_hotel', github: 'openjaf/spree_travel_hotel', branch: '3-0-stable'
-- gem 'spree_travel_tour', github: 'openjaf/spree_travel_tour', branch: '3-0-stable'
-- gem 'spree_travel_car', github: 'openjaf/spree_travel_car', branch: '3-0-stable'
-- gem 'spree_travel_sample', github: 'openjaf/spree_travel_sample', branch: '3-0-stable'
+- gem 'spree_travel_core', github: 'openjaf/spree_travel_core', branch: '4-0-stable'
+- gem 'spree_travel_cruise', github: 'openjaf/spree_travel_cruise', branch: '4-0-stable'
+- gem 'spree_travel_hotel', github: 'openjaf/spree_travel_hotel', branch: '4-0-stable'
+- gem 'spree_travel_tour', github: 'openjaf/spree_travel_tour', branch: '4-0-stable'
+- gem 'spree_travel_car', github: 'openjaf/spree_travel_car', branch: '4-0-stable'
+- gem 'spree_travel_sample', github: 'openjaf/spree_travel_sample', branch: '4-0-stable'
 
 Run this command in this order:
 
@@ -51,7 +51,7 @@ Spree Travel Core is not yet distributed as a gem, so it should be used in your 
 1. Add the following to your Gemfile
 
   ```ruby
-		gem 'spree_travel_core’, :github => 'openjaf/spree_travel_core.git', :branch => '3-0-stable'
+		gem 'spree_travel_core’, :github => 'openjaf/spree_travel_core.git', :branch => '4-0-stable'
   ```
 
 2. Run `bundle install`
