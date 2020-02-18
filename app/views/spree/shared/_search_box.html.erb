@@ -30,6 +30,6 @@
   </div>
 </div>
 <div class="alert alert-success" role="alert">
-  For <%= active_product + 's'%> start date is <%= Spree::Product.send("#{active_product}s").first.rates.first.start_date%>
-  and end date is <%= Spree::Product.send("#{active_product}s").last.rates.last.end_date %>. Just for 29 days window
+  For <%= active_product + 's'%> start date is <%= Spree::Rate.where(created_at: Spree::Rate.minimum(:created_at)).first.start_date%>
+  and end date is <%= Spree::Rate.where(created_at: Spree::Rate.maximum(:created_at)).first.end_date %>. Just for 29 days window
 </div>
