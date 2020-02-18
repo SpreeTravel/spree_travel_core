@@ -18,9 +18,7 @@ module Spree::ProductDecorator
 
   def absorb_option_types
     if product_type.present?
-      #TODO this method may be executed only if a Travel Prodcut Prototype is selected
       self.option_types = self.product_type.variant_option_types
-      self.generate_variants if !self.product_type.nil?
     end
   end
 
