@@ -20,6 +20,12 @@ module Spree
       @first_time
     end
 
+    # Spree::ProductType.all.map {|pt| pt.rate_option_types.pluck(:name)}.flatten.each do |rate_option_type|
+    #   define_method rate_option_type do
+    #     get_persisted_option_value(rate_option_type)
+    #   end
+    # end
+
     # TODO: add restriction over dates overlapsed
 
     def start_date
@@ -58,8 +64,5 @@ module Spree
       get_persisted_option_value(:one_adult).to_i
     end
 
-    def one_child
-      get_persisted_option_value(:one_child).to_i
-    end
   end
 end
