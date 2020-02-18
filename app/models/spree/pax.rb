@@ -2,6 +2,6 @@ module Spree
   class Pax < Spree::Base
     belongs_to :line_item
 
-    validates_presence_of :first_name, :last_name
+    # validates_presence_of :first_name, :last_name
   end
 end
