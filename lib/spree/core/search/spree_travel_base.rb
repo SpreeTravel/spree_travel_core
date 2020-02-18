@@ -33,20 +33,20 @@ module Spree
         protected
 
         def get_base_scope
-          base_scope = Spree::Product.active
-          base_scope = get_product_by_product_type(base_scope)
+          base_scope = get_products_by_product_type
           base_scope = get_product_by_taxons(base_scope)
           base_scope = get_products_conditions_for(base_scope, keywords)
           base_scope = add_search_scopes(base_scope)
           base_scope = add_eagerload_scopes(base_scope)
-         # base_scope = filter_products_by_searcher(base_scope)
           base_scope
         end
 
-        def filter_products_by_searcher(base_scope)
-          # TODO  Here we must filter not to show products that does not have Price
-          base_scope = base_scope.calculate_price(context, options) if context.present
-          base_scope
+        def get_products_by_product_type
+          product_ids = Spree::Product.joins(variants: :rates)
+                                      .where(product_type_id: product_type.id)
+                                      .group(:products).having('COUNT(spree_rates.variant_id) > 0')
+                                      .pluck(:id)
+          Spree::Product.where(id: product_ids).active
         end
 
         def get_product_by_taxons(base_scope)
