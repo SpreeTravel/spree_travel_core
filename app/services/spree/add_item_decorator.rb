@@ -11,6 +11,7 @@
       private
 
       def add_to_line_item(order:, variant:, context:, rate: nil, quantity: nil, options: {})
+        # we used to have here a use_cart configuration to have cars or not, can be seen on brnach 3-0-stable
         options ||= {}
         quantity ||= 1
 
