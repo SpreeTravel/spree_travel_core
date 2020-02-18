@@ -8,11 +8,11 @@ describe Spree::Pax do
     expect(build(:pax)).to be_valid
   end
 
-  it 'is not valid without a first name' do
-    expect(build(:pax, first_name: nil)).not_to be_valid
-  end
-
-  it 'is not valid without a last name' do
-    expect(build(:pax, last_name: nil)).not_to be_valid
-  end
+  # it 'is not valid without a first name' do
+  #   expect(build(:pax, first_name: nil)).not_to be_valid
+  # end
+  #
+  # it 'is not valid without a last name' do
+  #   expect(build(:pax, last_name: nil)).not_to be_valid
+  # end
 end

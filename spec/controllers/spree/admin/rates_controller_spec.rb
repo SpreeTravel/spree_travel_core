@@ -1,14 +1,27 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Spree::Admin::RatesController do
+RSpec.describe Spree::Admin::RatesController, type: :controller do
 
-  it 'loads correctly the product' do
-    prod_type = create(:product_type_with_variant_option_types)
-    prod = create(:travel_product, product_type: prod_type)
-    params = {}
-    params[:product_id] = prod.id
-    spree_get :index
-    expect(assigns(:product)).to eq product
+  describe '#index' do
+    let(:product_type) { create(:product_type, :with_variant_option_types) }
+    let(:product) { create(:travel_product, product_type: product_type) }
+    let(:rate) { create(:rate, variant: product.variants.first) }
+
+    it 'show the index of rates' do
+      get :index, product_id: product.id
+      expect(response.status).to eq(200)
+    end
   end
 
+  describe '#create' do
+
+  end
+
+  describe '#update' do
+
+  end
+
+  describe '#destroy' do
+
+  end
 end
