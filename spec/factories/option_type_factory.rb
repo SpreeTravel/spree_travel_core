@@ -3,8 +3,9 @@ FactoryBot.define do
     sequence(:name, 'a'){ |n| "option_type_#{n}" }
     sequence(:presentation, 'a'){|n| "Option Type #{n}"}
     position          { 0 }
-    attr_type         {'selection'}
-    travel            {true}
+    attr_type         { 'selection' }
+    travel            { true }
+    preciable         { false }
 
     trait :with_selection_option_type_and_values do
       sequence(:name, 'a'){ |n| "selection_option_type_#{n}" }

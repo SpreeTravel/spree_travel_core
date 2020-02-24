@@ -9,17 +9,21 @@ describe Spree::PersistedDynamicAttribute do
       @context.extend(Spree::PersistedDynamicAttribute)
 
       option_types = [
-          {name: 'category', presentation: 'Category', attr_type: 'selection'},
-          {name: 'pickup_date', presentation: 'Pickup Date', attr_type: 'date'},
-          {name: 'return_date', presentation: 'Return Date', attr_type: 'date'},
-          {name: 'pickup_destination', presentation: 'Pickup Destination', attr_type: 'destination'},
-          {name: 'return_destination', presentation: 'Return Destination', attr_type: 'destination'},
-          {name: 'adult', presentation: 'Adult', attr_type: 'integer', short: 'Adult'},
+          {name: 'category', presentation: 'Category', attr_type: 'selection', travel: true, preciable: false},
+          {name: 'pickup_date', presentation: 'Pickup Date', attr_type: 'date', travel: true, preciable: false},
+          {name: 'return_date', presentation: 'Return Date', attr_type: 'date', travel: true, preciable: false},
+          {name: 'pickup_destination', presentation: 'Pickup Destination', attr_type: 'destination', travel: true, preciable: false},
+          {name: 'return_destination', presentation: 'Return Destination', attr_type: 'destination', travel: true, preciable: false},
+          {name: 'adult', presentation: 'Adult', attr_type: 'integer', short: 'Adult', travel: true, preciable: false},
       ]
       car_product_type = create(:product_type, name: 'car', presentation: 'Car')
 
       option_types.each do |cot|
-        option_type = create(:option_type_decorated, name: cot[:name], presentation: cot[:presentation], attr_type: cot[:attr_type])
+        option_type = create(:option_type_decorated, name: cot[:name],
+                                                     presentation: cot[:presentation],
+                                                     attr_type: cot[:attr_type],
+                                                     travel: cot[:travel],
+                                                     preciable: cot[:preciable])
         car_product_type.context_option_types << option_type
       end
 
@@ -47,17 +51,21 @@ describe Spree::PersistedDynamicAttribute do
   describe 'when setting persisted attributes for a rate' do
     before do
       option_types = [
-          {:name => "start_date", :presentation => "Start Date", :attr_type => 'date'},
-          {:name => "end_date",   :presentation => "End Date",   :attr_type => 'date'},
-          {:name => 'three_six_days',   :presentation => "3 to 6 days",   :attr_type => 'integer'},
-          {:name => 'seven_thirteen_days',  :presentation => "7 to 13 days",  :attr_type => 'integer'},
-          {:name => 'fourteen_twentynine_days', :presentation => "14 to 29 days", :attr_type => 'integer'}
+          {name: "start_date", presentation: "Start Date", attr_type: 'date', travel: true, preciable: false},
+          {name: "end_date",   presentation: "End Date",   attr_type: 'date', travel: true, preciable: false},
+          {name: 'three_six_days',   presentation: "3 to 6 days", attr_type: 'integer', travel: true, preciable: true},
+          {name: 'seven_thirteen_days',  presentation: "7 to 13 days", attr_type: 'integer', travel: true, preciable: true},
+          {name: 'fourteen_twentynine_days', presentation: "14 to 29 days", attr_type: 'integer', travel: true, preciable: true}
       ]
 
       car_product_type = create(:product_type, name: 'car', presentation: 'Car')
 
       option_types.each do |cot|
-        option_type = create(:option_type_decorated, name: cot[:name], presentation: cot[:presentation], attr_type: cot[:attr_type])
+        option_type = create(:option_type_decorated, name: cot[:name],
+                                                     presentation: cot[:presentation],
+                                                     attr_type: cot[:attr_type],
+                                                     travel: cot[:travel],
+                                                     preciable: cot[:preciable])
         car_product_type.context_option_types << option_type
       end
 
