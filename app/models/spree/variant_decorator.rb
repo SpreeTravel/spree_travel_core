@@ -3,6 +3,11 @@ module Spree::VariantDecorator
 
     include Spree::PersistedDynamicAttribute
 
+    base.has_many :prices,
+             class_name: 'Spree::Price',
+             dependent: :destroy,
+             as: :preciable
+
     base.has_many :rates, class_name: 'Spree::Rate', foreign_key: 'variant_id', dependent: :destroy
     base.belongs_to :calculator, class_name:'Spree::TravelCalculator', foreign_key: 'calculator_id'
     base.delegate :product_type, to: :product
