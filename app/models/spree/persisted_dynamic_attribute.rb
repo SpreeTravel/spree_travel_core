@@ -39,7 +39,24 @@ module Spree
       ot = get_option_type_object(option_type)
       return if ot.nil?
       ovr = self.option_values.find {|ov| ov.option_value && ov.option_value.option_type_id == ot.id }
-      (%w(selection destination).include?(ot.attr_type) ? ovr.option_value.send(attrib) : ovr.value) if ovr
+      if ovr
+        if %w(selection destination).include?(ot.attr_type)
+          ovr.option_value.send(attrib)
+        else
+          price_or_value(rate_option_value: ovr)
+        end
+      end
+    end
+
+    def price_or_value(rate_option_value:)
+      if rate_option_value.option_value.option_type.preciable?
+        # TODO sustitude USD by current_currency
+        rate_option_value.price_in('USD')
+                         .display_price_including_vat_for({tax_zone: Spree::Zone.default_tax}).money
+      else
+        rate_option_value.value
+      end
+
     end
 
     def get_option_type_object(option_type)
