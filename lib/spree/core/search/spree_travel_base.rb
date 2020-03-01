@@ -34,6 +34,7 @@ module Spree
 
         def get_base_scope
           base_scope = get_products_by_product_type
+          base_scope = get_variants_with_option_types(base_scope)
           base_scope = get_product_by_taxons(base_scope)
           base_scope = get_products_conditions_for(base_scope, keywords)
           base_scope = add_search_scopes(base_scope)
@@ -43,10 +44,17 @@ module Spree
 
         def get_products_by_product_type
           product_ids = Spree::Product.joins(variants: :rates)
-                                      .where(product_type_id: product_type.id)
-                                      .group(:products).having('COUNT(spree_rates.variant_id) > 0')
-                                      .pluck(:id)
+                                      .where(product_type_id: product_type.id).pluck(:id)
+                                      # .group(:products).having('COUNT(spree_rates.variant_id) > 0')
+                                      # .pluck(:id)
           Spree::Product.where(id: product_ids).active
+        end
+
+        def get_variants_with_option_types(base_scope)
+          common_option_types = (product_type.variant_option_types & product_type.context_option_types).pluck(:name)
+          option_types_ids = common_option_types.map {|option_type| params["#{product_type.name}_#{option_type}"]}
+          # TODO make some test to check what happends when no context_option_type is passed, for example a case with `All` i the search box
+          base_scope.joins(variants: :option_values).where(spree_option_values: {id: option_types_ids}).distinct
         end
 
         def get_product_by_taxons(base_scope)
@@ -113,6 +121,7 @@ module Spree
         end
 
         def prepare(params)
+          @properties[:params] = params
           @properties[:taxon] = params[:taxon].blank? ? nil : Spree::Taxon.find(params[:taxon])
           @properties[:keywords] = params[:keywords]
           @properties[:search] = params[:search]
