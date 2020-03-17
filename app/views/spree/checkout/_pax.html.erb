@@ -1,28 +1,27 @@
-<% @order.line_items.each_with_index do |line_item, index1| %>
- <% if !line_item.product.product_type.nil? %>
-  <div class="row pb-sm-5">
-    <h1 class="col-sm-12"><%= line_item.product.name %>:</h1></td>
-    <% line_item.paxes.each_with_index do |pax, index| %>
-      <div class="card mr-3" data-hook="billing_fieldset_wrapper">
+<%= form.fields_for :line_items do |line_item_form| %>
+  <div class="row mb-5">
+    <%= line_item_form.fields_for :paxes do |pax| %>
+      <div class="card mr-5">
         <div class="card-header">
-            <div class="card-title h5">Pax #<%= index +1 %></div>
+          <h3 class="card-title mb-0 h5">
+            <%= line_item_form.object.product.name + ", Pax: #{pax.options[:child_index] + 1 }" %>
+          </h3>
         </div>
         <div class="card-body">
-          <p class="form-group" id=<%="#{index}firstname" %>>
-            <%= label_tag :first_name, Spree.t(:first_name) %><span class="required">*</span><br />
-            <%= text_field_tag "order[line_items_attributes][#{index1}][paxes_attributes][][first_name]", nil, :class => 'form-control required' %>
-          </p>
-          <p class="form-group" id=<%="#{index}lastname" %>>
-            <%= label_tag :last_name, Spree.t(:last_name) %><span class="required">*</span><br />
-            <%= text_field_tag "order[line_items_attributes][#{index1}][paxes_attributes][][last_name]", nil, :class => 'form-control required' %>
-          </p>
+          <div class="form-group">
+            <%= pax.label :first_name%><span class="required">*</span>
+            <%= pax.text_field :first_name, class: 'form-control required', required: 'required' %>
+          </div>
+          <div class="form-group">
+            <%= pax.label :last_name %><span class="required">*</span>
+            <%= pax.text_field :last_name, class: 'form-control required', required: 'required' %>
+          </div>
         </div>
       </div>
-    <%end%>
-  </div>
   <% end %>
+  </div>
 <% end %>
 
 <div class="well text-right form-buttons" data-hook="buttons">
   <%= submit_tag Spree.t(:save_and_continue), :class => 'btn btn-lg btn-success' %>
- </div>
+</div>
