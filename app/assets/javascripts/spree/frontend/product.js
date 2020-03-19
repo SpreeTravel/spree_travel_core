@@ -99,9 +99,9 @@ Spree.ready(function ($) {
 
 Spree.ready(function () {
   // var addToCartForm = document.getElementById('add-to-cart-form')
-  var addToCartFormCollection = document.querySelectorAll("[id^='add-to-cart-form-']")
+  var addToCartFormCollection = document.querySelectorAll("[id^='add-to-cart-form']");
   // var addToCartButton = document.getElementById('add-to-cart-button')
-  var addToCartButtonCollection = document.querySelectorAll(("[id^='add-to-cart-button-']"))
+  var addToCartButtonCollection = document.querySelectorAll(("[id^='add-to-cart-button']"));
 
     for (let i = 0; i < addToCartFormCollection.length; i++) {
         var addToCartForm = addToCartFormCollection[i]
