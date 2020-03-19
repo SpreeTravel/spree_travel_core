@@ -1,8 +1,8 @@
 /*
  *= require spree/frontend
- * require jquery-ui/datepicker
+ *= require jquery-ui
  * require jquery-ui/theme
- *= require spree/frontend/navs
+ * require spree/frontend/navs
 */
 
 .child-pair {

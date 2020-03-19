@@ -1,10 +1,11 @@
 <% active_product = params[:product_type] %>
 <% enabled_product_type = Spree::ProductType.enabled %>
-<% prefix = "#{product_type.name.downcase}_" %>
+
 
 <div id="search_box" class="">
   <ul id="search_box_tabs" class="nav nav-tabs">
     <% enabled_product_type.each do |product_type| %>
+      <% prefix = "#{product_type.name.downcase}_" %>
       <%
         if active_product
           active_class = active_product == product_type.name.downcase ? 'active' : ''
@@ -23,6 +24,7 @@
 
   <div id="tabcontent" class="tab-content">
     <% enabled_product_type.each do |product_type| %>
+      <% prefix = "#{product_type.name.downcase}_" %>
       <%= render partial: "spree/shared/#{product_type.name.to_s}_search_box", locals: {prefix: prefix,
                                                                                         product_type: product_type,
                                                                                         product: @product,

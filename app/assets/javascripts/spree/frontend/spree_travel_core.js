@@ -2,7 +2,7 @@
 //= require spree/frontend/tab
 //= require spree/frontend/cart_overlay
 //= require spree/frontend/datepicker
-// require jquery-ui/datepicker
+//= require jquery-ui
 //= require spree/frontend/spree_travel_core_room
 
 function params_data(product_id) {
