@@ -98,5 +98,9 @@ module Spree
     def return_date(options = {temporal: true})
       get_mixed_option_value(:return_date, options)
     end
+
+    def find_existing_option_value(option_type)
+      option_values.find { |ov| ov.option_value_id.present? && ov.option_value.option_type_id == option_type.id }
+    end
   end
 end
