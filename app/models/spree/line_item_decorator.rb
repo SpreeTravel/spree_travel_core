@@ -14,7 +14,7 @@ module Spree::LineItemDecorator
         # TODO this has to be improved, regarding the comparinson with the rate.
         variant.product.calculate_price(context, variant, temporal:false).each do |hash|
           if self.rate.id == hash[:rate]
-            self.price = hash[:price]
+            self.price = hash[:price].match(/(\d.+)/)[1].gsub(',','').to_f
           end
         end
         # self.price = variant.product.calculate_price(context, variant, temporal:false).first[:price]

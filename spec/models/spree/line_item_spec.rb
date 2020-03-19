@@ -21,7 +21,7 @@ describe Spree::LineItem do
       allow_any_instance_of(Spree::Variant).to receive(:currency).and_return('USD')
 
       allow_any_instance_of(Spree::LineItem).to receive(:rate).and_return(build_stubbed(:rate, id: 1))
-      expect(@travel_product).to receive(:calculate_price).and_return([{rate: 1, price: 20 }])
+      expect(@travel_product).to receive(:calculate_price).and_return([{rate: 1, price: '$20.00' }])
 
       # @line_item.copy_price
       @line_item = create(:travel_line_item)
