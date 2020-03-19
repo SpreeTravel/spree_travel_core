@@ -10,7 +10,6 @@ module Spree
              dependent: :destroy,
              as: :preciable
 
-    validates_presence_of :value#, :rate_id, :option_value_id
     validate :check_price
     validates_numericality_of :price, greater_than_or_equal_to: 0, allow_nil: true
 
