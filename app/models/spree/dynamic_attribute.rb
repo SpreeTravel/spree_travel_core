@@ -3,7 +3,6 @@ module Spree
 
     def option_types_and_values_from_params(params)
       prefix = params["product_type"]
-      hash = {}
       if prefix
         product_type = Spree::ProductType.find_by_name(prefix)
         attr_option_types = self.class.to_s.split('::').last.downcase + "_option_types"
@@ -13,10 +12,11 @@ module Spree
         if prefix == 'hotel'
           option_types << 'plan'
         end
-
       else
         option_types = [:start_date, :end_date, :adult, :child]
       end
+      hash = {}
+
       params.each do |key, value|
         name = key
         option_type = option_types.find do |ot|
