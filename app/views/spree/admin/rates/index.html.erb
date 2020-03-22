@@ -1,5 +1,3 @@
-<%#= render :partial => 'spree/admin/shared/product_sub_menu' %>
-
 <%= render partial: 'spree/admin/shared/product_tabs', locals: {current: :rates} %>
 
 <% content_for :page_title do %>
@@ -15,28 +13,28 @@
 <table class="table" id='listing_rates'>
   <thead>
     <tr data-hook="rate_<%=@product.product_type.name %>_header">
-      <% for ot in @product.option_types %>
+      <% @product.option_types.each do |ot| %>
         <th><%= ot.name %></th>
       <% end %>
-      <% for ot in @product.rate_option_types %>
+      <% @product.rate_option_types.each do |ot| %>
       <th><%= ot.presentation %></th>
       <% end %>
       <th class="actions"></th>
     </tr>
   </thead>
   <tbody>
-    <% for rate in @product.rates %>
+    <% @product.rates.each do |rate| %>
     <tr>
-      <% for ot in @product.option_types %>
+      <% @product.option_types.each do |ot| %>
         <td><%= rate.variant.option_value(ot.name) %></td>
       <% end %>
-      <% for ot in @product.rate_option_types %>
-        <td><%= rate.get_persisted_option_value(ot, 'presentation') %></td>
+      <% @product.rate_option_types.each do |ot| %>
+        <td><%= rate.get_persisted_option_value(ot.name) %></td>
       <% end %>
       <td class="actions">
       <!-- TODO fix bug regarding the links redirecting to some crazy url -->
-	      <%= link_to_edit(rate, :no_text => true, :class => 'admin_edit_rate') %>
-	      <%= link_to_delete(rate, :no_text => true) %>
+	      <%= link_to_edit(rate, no_text: true, class: 'admin_edit_rate') %>
+	      <%= link_to_delete(rate, no_text: true) %>
       </td>
     </tr>
     <% end %>
