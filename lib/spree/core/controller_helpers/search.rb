@@ -1,5 +1,3 @@
-require 'spree/core/search/spree_travel_base'
-
 module Spree
   module Core
     module ControllerHelpers
