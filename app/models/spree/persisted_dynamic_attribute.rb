@@ -11,6 +11,7 @@ module Spree
 
     def set_persisted_option_value(option_type, value)
       option_type = get_option_type_object(option_type)
+      ovr = nil
 
       ovr = self.find_existing_option_value(option_type) if option_type
 
@@ -42,12 +43,12 @@ module Spree
         if %w(selection destination).include?(ot.attr_type)
           ovr.option_value.send(attrib)
         else
-          price_or_value(rate_option_value: ovr)
+          price_or_value(ovr)
         end
       end
     end
 
-    def price_or_value(rate_option_value:)
+    def price_or_value(rate_option_value)
       if rate_option_value.option_value.option_type.preciable?
         # TODO sustitude USD by current_currency
         rate_option_value.price_in('USD')
