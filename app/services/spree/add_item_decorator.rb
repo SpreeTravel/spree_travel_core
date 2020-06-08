@@ -1,7 +1,7 @@
 module Spree::AddItemDecorator
   prepend Spree::ServiceModule::Base
 
-  def call(order:, variant:, context:, rate: nil, quantity: nil, options: {})
+  def call(order:, variant:, context: nil, rate: nil, quantity: nil, options: {})
     ApplicationRecord.transaction do
       run :add_to_line_item
       run Spree::Dependencies.cart_recalculate_service.constantize
@@ -10,7 +10,7 @@ module Spree::AddItemDecorator
 
   private
 
-  def add_to_line_item(order:, variant:, context:, rate: nil, quantity: nil, options: {})
+  def add_to_line_item(order:, variant:, context:nil, rate: nil, quantity: nil, options: {})
     # we used to have here a use_cart configuration to have cars or not, can be seen on brnach 3-0-stable
     options ||= {}
     quantity ||= 1
