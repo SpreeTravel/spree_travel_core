@@ -1,4 +1,4 @@
-Spree::Api::V1::LineItemsController.class_eval do
+module Spree::Api::V1::LineItemsControllerDecorator
 
   def update
     @line_item = find_line_item
@@ -33,3 +33,4 @@ Spree::Api::V1::LineItemsController.class_eval do
 
 end
 
+Spree::Api::V1::LineItemsController.prepend Spree::Api::V1::LineItemsControllerDecorator

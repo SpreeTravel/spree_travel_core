@@ -1,6 +1,6 @@
 module Spree
   module Admin
-    ProductsController.class_eval do
+    module ProductsControllerDecorator
       # after_action :after_save, only: :create
       #
       # def after_save
@@ -22,3 +22,6 @@ module Spree
     end
   end
 end
+
+
+Spree::Admin::ProductsController.prepend Spree::Admin::ProductsControllerDecorator
