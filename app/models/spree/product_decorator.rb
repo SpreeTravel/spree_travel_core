@@ -4,7 +4,7 @@ module Spree::ProductDecorator
 
     base.belongs_to :product_type
     base.belongs_to :calculator, :class_name => 'Spree::TravelCalculator', :foreign_key => 'calculator_id'
-    base.has_many :rates, :through => :variants_including_master
+    base.has_many :rates, through: :variants_including_master, dependent: :destroy
 
     base.after_create :absorb_option_types
     base.whitelisted_ransackable_attributes << 'product_type_id'
