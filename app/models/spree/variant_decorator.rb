@@ -18,6 +18,21 @@ module Spree::VariantDecorator
     option_values.where(option_type_id: option_types_ids).pluck(:presentation)
   end
 
+  def check_price
+    # TODO this code is  here to investigate ian issue about normal spree products not been uploaded
+    # this can be reproduced by seeding the database and the products will not appear
+    if price.nil? && Spree::Config[:require_master_price]
+      byebug
+      return errors.add(:base, :no_master_variant_found_to_infer_price)  unless product&.master
+      return errors.add(:base, :must_supply_price_for_variant_or_master) if self == product.master
+
+      self.price = product.master.price
+    end
+    if price.present? && currency.nil?
+      self.currency = Spree::Config[:currency]
+    end
+  end
+
   def count_on_hand
     byebug
     100
