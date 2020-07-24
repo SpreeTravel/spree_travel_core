@@ -6,7 +6,7 @@ module Spree::CartControllerDecorator
     spree_authorize! :update, spree_current_order, order_token
     spree_authorize! :show, variant
 
-    rate = Spree::Rate.find(params[:rate_id]) if params[:rate_id]
+    rate = Spree::Rate.find_by(id: params[:rate_id])
     context = Spree::Context.build_from_params(params, temporal: false)
 
     result = add_item_service.call(
