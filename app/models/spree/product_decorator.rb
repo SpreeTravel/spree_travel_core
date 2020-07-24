@@ -22,13 +22,8 @@ module Spree::ProductDecorator
     end
   end
 
-  def calculator_instance
-    calculator.name.constantize.new
-  end
-
   def calculate_price(context, variant, options)
-    # calculator_instance.calculate_price(context, self, options).sort
-    calculator_instance.calculate_price(context, self, variant, options)
+    calculator_instance(context, variant, options).calculate_price
   end
 
   def destination_taxon
@@ -46,6 +41,13 @@ module Spree::ProductDecorator
 
   def self.ransackable_scopes(auth_object = nil)
     [:product_type_id]
+  end
+
+  def calculator_instance(context, variant, options)
+    calculator.name.constantize.new(context: context,
+                                    product: self,
+                                    variant: variant,
+                                    options: options)
   end
 end
 
