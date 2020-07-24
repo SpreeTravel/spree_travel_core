@@ -1,4 +1,4 @@
-//= require spree/api/storefront/cart
+//= require spree/api/storefront/travel_cart
 //= require spree/frontend/cart
 
 Spree.ready(function ($) {
@@ -74,7 +74,7 @@ Spree.ready(function ($) {
 
   Spree.disableCartForm = function (variant) {
     var inStock = variant.data('in-stock');
-    return $('#add-to-cart-button').attr('disabled', !inStock);
+    return $('#travel-add-to-cart-button').attr('disabled', !inStock);
   }
 
   var radios = $("#product-variants input[type='radio']");
@@ -98,12 +98,10 @@ Spree.ready(function ($) {
 })
 
 Spree.ready(function () {
-  // var addToCartForm = document.getElementById('add-to-cart-form')
-  var addToCartFormCollection = document.querySelectorAll("[id^='add-to-cart-form']");
-  // var addToCartButton = document.getElementById('add-to-cart-button')
-  var addToCartButtonCollection = document.querySelectorAll(("[id^='add-to-cart-button']"));
+  var addToCartFormCollection = document.querySelectorAll("[id^='travel-add-to-cart-form']");
+  var addToCartButtonCollection = document.querySelectorAll(("[id^='travel-add-to-cart-button']"));
 
-    for (let i = 0; i < addToCartFormCollection.length; i++) {
+  for (let i = 0; i < addToCartFormCollection.length; i++) {
         var addToCartForm = addToCartFormCollection[i]
         var addToCartButton = addToCartButtonCollection[i]
 
@@ -140,7 +138,7 @@ Spree.ready(function () {
                 // another one
                 Spree.ensureCart(
                     function () {
-                        SpreeAPI.Storefront.addToCart(
+                        SpreeAPI.Storefront.travelAddToCart(
                             variantId,
                             quantity,
                             productType,
