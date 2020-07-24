@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 module Spree
   module TemporalDynamicAttribute
-
     include DynamicAttribute
 
     def set_temporal_option_values(params)
@@ -16,6 +17,5 @@ module Spree
     def get_temporal_option_value(option_type)
       @temporal[option_type.to_s]
     end
-
   end
 end

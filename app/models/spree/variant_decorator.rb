@@ -64,14 +64,13 @@ module Spree::VariantDecoratorClassMethod
     end
     case list.count
     when 0
-      return product.master
+      product.master
     when 1
-      return list.first
+      list.first
     else
       raise Exception.new("Revisa, que hay bateo en los datos")
     end
   end
-
 end
 
 Spree::Variant.singleton_class.send :prepend, Spree::VariantDecoratorClassMethod

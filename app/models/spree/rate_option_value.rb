@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class RateOptionValue < Spree::Base
     belongs_to :rate, class_name: 'Spree::Rate', foreign_key: 'rate_id', required: false
@@ -26,11 +28,9 @@ module Spree
     def check_price
       return unless option_value&.option_type&.preciable?
 
-      self.price = self.value if price.nil?
+      self.price = value if price.nil?
 
-      if price.present? && currency.nil?
-        self.currency = Spree::Config[:currency]
-      end
+      self.currency = Spree::Config[:currency] if price.present? && currency.nil?
     end
   end
 end

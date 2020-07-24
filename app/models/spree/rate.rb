@@ -1,7 +1,8 @@
-# TODO relate this model with Spree::Price for having multicurrency support
+# frozen_string_literal: true
+
+# TODO: relate this model with Spree::Price for having multicurrency support
 module Spree
   class Rate < Spree::Base
-
     include Spree::PersistedDynamicAttribute
 
     def self.excluded_list
@@ -67,6 +68,5 @@ module Spree
     def one_adult
       get_persisted_option_value(:one_adult).to_i
     end
-
   end
 end

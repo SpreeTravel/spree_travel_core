@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree
   class ContextOptionValue < Spree::Base
     belongs_to :context, class_name: 'Spree::Context', foreign_key: 'context_id', required: false

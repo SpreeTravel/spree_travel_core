@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Spree::OptionTypeDecorator
   def self.prepended(base)
     base.validates_uniqueness_of :name
@@ -7,10 +9,9 @@ module Spree::OptionTypeDecorator
 
   def default_option_value
     if attr_type != 'selection' && option_values.empty? && travel == true
-      Spree::OptionValue.create(name: self.name,
-                                presentation: self.presentation,
-                                option_type_id: self.id
-       )
+      Spree::OptionValue.create(name: name,
+                                presentation: presentation,
+                                option_type_id: id)
     end
   end
 end
