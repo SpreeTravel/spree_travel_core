@@ -20,7 +20,9 @@ module Spree
     end
 
     def self.build_from_params(params, options = {})
-      raise StandardError.new("You must be explicit about temporal or not") if options[:temporal].nil?
+      return nil if params[:product_type].nil?
+      raise StandardError, 'You must be explicit about temporal or not' if options[:temporal].nil?
+
       context = if !options[:line_item_id].nil?
                   Spree::LineItem.find(options[:line_item_id]).context
                 else
@@ -35,7 +37,7 @@ module Spree
         context.set_persisted_option_values(context_params)
         context.save
       end
-      return context
+      context
     end
 
     def product_type(options = { temporal: true })
