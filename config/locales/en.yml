@@ -29,3 +29,6 @@ en:
     reservation_details: Reservation Details
     paxes: Paxes
     product_types: Product Types
+    rate_option_types: Rate Option Type
+    context_option_types: Context Option Type
+    variant_option_types: Variant Option Type
