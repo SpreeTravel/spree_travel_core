@@ -2,7 +2,7 @@
 
 module Spree
   module DynamicAttribute
-    def option_types_and_values_from_params(params)
+    def sanitize_option_types_and_values(params)
       prefix = params['product_type']
       if prefix
         product_type = Spree::ProductType.find_by_name(prefix)

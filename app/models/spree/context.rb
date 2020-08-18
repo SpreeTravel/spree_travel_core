@@ -30,7 +30,7 @@ module Spree
                 end
 
       context.initialize_variables
-      context_params = context.option_types_and_values_from_params(params)
+      context_params = context.sanitize_option_types_and_values(params)
       if options[:temporal]
         context.set_temporal_option_values(context_params)
       else
