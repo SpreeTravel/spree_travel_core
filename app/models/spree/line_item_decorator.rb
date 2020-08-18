@@ -7,6 +7,13 @@ module Spree::LineItemDecorator
     base.belongs_to :rate, class_name: 'Spree::Rate'
 
     base.accepts_nested_attributes_for :paxes
+    base.accepts_nested_attributes_for :context
+  end
+
+  def context_attributes=(attr)
+    attr = attr.merge({line_item_id: id})
+    context.set_persisted_option_values(attr)
+    copy_price
   end
 
   def copy_price

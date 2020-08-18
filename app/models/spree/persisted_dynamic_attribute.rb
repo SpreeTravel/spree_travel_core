@@ -5,7 +5,7 @@ module Spree
 
     def set_persisted_option_values(params)
       sanitize_option_types_and_values(params).each do |key, value|
-        byebug if key == "return_destination"
+        # byebug if key == "return_destination"
         set_persisted_option_value(key, value)
       end
     end
