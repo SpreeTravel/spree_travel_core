@@ -30,11 +30,10 @@ module Spree
                 end
 
       context.initialize_variables
-      context_params = context.sanitize_option_types_and_values(params)
       if options[:temporal]
-        context.set_temporal_option_values(context_params)
+        context.set_temporal_option_values(params)
       else
-        context.set_persisted_option_values(context_params)
+        context.set_persisted_option_values(params)
         context.save
       end
       context
@@ -69,10 +68,6 @@ module Spree
       get_mixed_option_value(:room_count, options)
     end
 
-    def cabin_count(options = { temporal: true })
-      get_mixed_option_value(:cabin_count, options)
-    end
-
     # this is for the room type (Sweet, Junio Sweet, etc.....)
     def room(options = { temporal: true })
       get_mixed_option_value(:room, options)
@@ -103,7 +98,8 @@ module Spree
     end
 
     def find_existing_option_value(option_type)
-      option_values.find { |ov| ov.option_value_id.present? && ov.option_value.option_type_id == option_type.id }
+      option_values.includes(option_value: :option_type)
+                   .find { |ov| ov.option_value&.option_type_id == option_type.id }
     end
   end
 end
