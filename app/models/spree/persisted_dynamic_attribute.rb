@@ -5,7 +5,7 @@ module Spree
 
     def set_persisted_option_values(params)
       sanitize_option_types_and_values(params).each do |key, value|
-        # byebug if key == "return_destination"
+        next if key == "product_type"
         set_persisted_option_value(key, value)
       end
     end
@@ -62,12 +62,9 @@ module Spree
     end
 
     def get_option_type_object(option_type)
-      option_type = if option_type.is_a?(Integer)
-                      Spree::OptionType.find(option_type)
-                    else
-                      Spree::OptionType.find_by_name(option_type)
-                    end
-      option_type
+      Spree::OptionType.find(option_type) if option_type.is_a?(Integer)
+
+      Spree::OptionType.find_by_name(option_type)
     end
 
   end
