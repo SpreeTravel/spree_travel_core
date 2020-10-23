@@ -39,28 +39,14 @@ module Spree
       context
     end
 
-    def product_type(options = { temporal: true })
-      get_mixed_option_value(:product_type, options)
-    end
-
-    def start_date(options = { temporal: true })
-      get_mixed_option_value(:start_date, options)
-    end
-
-    def end_date(options = { temporal: true })
-      get_mixed_option_value(:end_date, options)
-    end
-
-    def plan(options = { temporal: true })
-      get_mixed_option_value(:plan, options)
-    end
-
-    def adult(options = { temporal: true })
-      get_mixed_option_value(:adult, options)
-    end
-
-    def child(options = { temporal: true })
-      get_mixed_option_value(:child, options)
+    %i[
+      product_type start_date end_date plan adult child
+      cabin_count departure_date category pickup_destination
+      return_destination pickup_date return_date
+    ].each do |method|
+      define_method method do |temporal=nil|
+        get_mixed_option_value(method, temporal)
+      end
     end
 
     # this is for the amount of rooms
@@ -71,30 +57,6 @@ module Spree
     # this is for the room type (Sweet, Junio Sweet, etc.....)
     def room(options = { temporal: true })
       get_mixed_option_value(:room, options)
-    end
-
-    def departure_date(options = { temporal: true })
-      get_mixed_option_value(:departure_date, options)
-    end
-
-    def category(options = { temporal: true })
-      get_mixed_option_value(:category, options)
-    end
-
-    def pickup_destination(options = { temporal: true })
-      get_mixed_option_value(:pickup_destination, options)
-    end
-
-    def return_destination(options = { temporal: true })
-      get_mixed_option_value(:return_destination, options)
-    end
-
-    def pickup_date(options = { temporal: true })
-      get_mixed_option_value(:pickup_date, options)
-    end
-
-    def return_date(options = { temporal: true })
-      get_mixed_option_value(:return_date, options)
     end
 
     def find_existing_option_value(option_type)
