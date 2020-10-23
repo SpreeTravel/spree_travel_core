@@ -12,8 +12,6 @@ describe Spree::PersistedDynamicAttribute do
           {name: 'category', presentation: 'Category', attr_type: 'selection', travel: true, preciable: false},
           {name: 'pickup_date', presentation: 'Pickup Date', attr_type: 'date', travel: true, preciable: false},
           {name: 'return_date', presentation: 'Return Date', attr_type: 'date', travel: true, preciable: false},
-          {name: 'pickup_destination', presentation: 'Pickup Destination', attr_type: 'destination', travel: true, preciable: false},
-          {name: 'return_destination', presentation: 'Return Destination', attr_type: 'destination', travel: true, preciable: false},
           {name: 'adult', presentation: 'Adult', attr_type: 'integer', short: 'Adult', travel: true, preciable: false},
       ]
       car_product_type = create(:product_type, name: 'car', presentation: 'Car')
@@ -31,8 +29,6 @@ describe Spree::PersistedDynamicAttribute do
       category = create(:option_value_decorated, name: 'economic', presentation: 'Economic', option_type: category)
 
       @params = {'category'=> category,
-                 'pickup_destination'=> 'Cienfuegos',
-                 'return_destination'=> 'La Habana',
                  'pickup_date'=> '2020-02-02',
                  'return_date'=> '2020-02-05',
                  'adult'=> '1',
@@ -44,7 +40,7 @@ describe Spree::PersistedDynamicAttribute do
       save_count = 0
       allow_any_instance_of(Spree::ContextOptionValue).to receive(:save) { |arg| save_count += 1 }
       @context.set_persisted_option_values(@params)
-      expect(save_count).to eq 7
+      expect(save_count).to eq 5
     end
   end
 

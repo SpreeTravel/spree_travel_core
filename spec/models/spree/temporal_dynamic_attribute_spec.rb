@@ -44,7 +44,7 @@ describe Spree::TemporalDynamicAttribute do
       expect(@context.return_date).to eq '2020-02-05'
       expect(@context.adult).to eq '1'
       expect(@context.product_type).to eq 'car'
-      expect(@context.get_temporal.count).to eq 7
+      expect(@context.temporal.count).to eq 7
       expect { @context.non_existing_context_attr }.to raise_error(NoMethodError)
     end
   end
