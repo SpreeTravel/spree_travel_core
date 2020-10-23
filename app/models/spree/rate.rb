@@ -33,40 +33,13 @@ module Spree
 
     # TODO: add restriction over dates overlapsed
 
-    def start_date
-      get_persisted_option_value(:start_date)
-    end
-
-    def end_date
-      get_persisted_option_value(:end_date)
-    end
-
-    def plan
-      get_persisted_option_value(:plan)
-    end
-
-    def simple
-      get_persisted_option_value(:simple)
-    end
-
-    def double
-      get_persisted_option_value(:double)
-    end
-
-    def triple
-      get_persisted_option_value(:triple)
-    end
-
-    def first_child
-      get_persisted_option_value(:first_child)
-    end
-
-    def second_child
-      get_persisted_option_value(:second_child)
-    end
-
-    def one_adult
-      get_persisted_option_value(:one_adult).to_i
+    %i[
+      start_date end_date plan simple double triple
+      first_child second_child one_adult
+    ].each do |method|
+      define_method method do
+        get_persisted_option_value(method)
+      end
     end
   end
 end
