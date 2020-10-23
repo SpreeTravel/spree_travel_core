@@ -10,15 +10,11 @@ module Spree::OrderDecorator
     base.state_machine.before_transition to: :pax, do: :generate_paxes
   end
 
-
     def generate_paxes
-      self.line_items.each do |line_item|
-        if !line_item.context.nil?
-          count = line_item.context.adult(:temporal => false).to_i + line_item.context.child(:temporal => false).to_i
-          if line_item.paxes.empty?
-            count.times { line_item.paxes.new }
-          end
-        end
+      line_items.each do |line_item|
+        return if line_item.context.nil?
+        count = line_item.context.adult(temporal: false).to_i + line_item.context.child(temporal: false).to_i
+        count.times { line_item.paxes.new } if line_item.paxes.empty?
       end
     end
 
