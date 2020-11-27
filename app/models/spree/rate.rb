@@ -22,7 +22,8 @@ module Spree
     end
 
     def find_existing_option_value(option_type)
-      option_values.find { |ov| ov.option_value_id.present? && ov.option_value.option_type_id == option_type.id }
+      option_values.includes(option_value: :option_type)
+                   .find { |ov| ov.option_value&.option_type_id == option_type.id }
     end
 
     # Spree::ProductType.all.map {|pt| pt.rate_option_types.pluck(:name)}.flatten.each do |rate_option_type|
