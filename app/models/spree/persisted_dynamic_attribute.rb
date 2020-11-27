@@ -33,19 +33,19 @@ module Spree
     end
 
     def get_persisted_option_value(option_type, attrib = 'presentation')
-      option_type, context_or_rate_option_value = find_option_value(option_type)
+      context_or_rate_option_value = find_existing_option_value(option_type)
 
-      return if option_type.nil?
+      return if option_type.nil? || context_or_rate_option_value.nil?
 
       context_or_rate_option_value.option_value.send(attrib) if selection_or_destination?(option_type)
 
       price_or_value(context_or_rate_option_value)
     end
 
-    def price_or_value(rate_option_value)
-      if rate_option_value.option_value.option_type.preciable?
+    def price_or_value(context_or_rate_option_value)
+      if context_or_rate_option_value.option_value.option_type.preciable?
         # TODO: sustitude USD by current_currency
-        rate_option_value.price_in('USD')
+        context_or_rate_option_value.price_in('USD')
                          .display_price_including_vat_for({tax_zone: Spree::Zone.default_tax}).money
       else
         rate_option_value.value
