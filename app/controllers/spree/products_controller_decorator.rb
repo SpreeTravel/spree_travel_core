@@ -1,5 +1,6 @@
 module Spree::ProductsControllerDecorator
   def self.prepended(base)
+    base.helper 'spree_travel/base'
     base.before_action :add_childrens_param, only: :show
   end
 
