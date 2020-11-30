@@ -12,24 +12,24 @@
 
 <table class="table" id='listing_rates'>
   <thead>
-    <tr data-hook="rate_<%=@product.product_type.name %>_header">
-      <% @product.option_types.each do |ot| %>
-        <th><%= ot.name %></th>
+    <tr data-hook="rate_<%= @product_type_name %>_header">
+      <% @product_option_types.each do |option_type| %>
+        <th><%= option_type.name %></th>
       <% end %>
-      <% @product.rate_option_types.each do |ot| %>
-      <th><%= ot.presentation %></th>
+      <% @product_rate_option_types.each do |rate_option_type| %>
+      <th><%= rate_option_type.presentation %></th>
       <% end %>
       <th class="actions"></th>
     </tr>
   </thead>
   <tbody>
-    <% @product.rates.each do |rate| %>
+    <% @product_rates.each do |rate| %>
     <tr>
-      <% @product.option_types.each do |ot| %>
-        <td><%= rate.variant.option_value(ot.name) %></td>
+      <% @product_option_types.each do |option_type| %>
+        <td><%= rate.variant.option_value(option_type.name) %></td>
       <% end %>
-      <% @product.rate_option_types.each do |ot| %>
-        <td><%= rate.get_persisted_option_value(ot.name) %></td>
+      <% @product_rate_option_types.each do |rate_option_type| %>
+        <td><%= rate.get_persisted_option_value(rate_option_type.name) %></td>
       <% end %>
       <td class="actions">
       <!-- TODO fix bug regarding the links redirecting to some crazy url -->

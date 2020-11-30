@@ -8,6 +8,13 @@ module Spree
         @product = Spree::Product.find_by_slug(params[:product_id])
       end
 
+      def index
+        @product_type_name = @product.product_type.name
+        @product_option_types = @product.option_types
+        @product_rate_option_types = @product.rate_option_types
+        @product_rates = @product.rates.includes(variant: [:option_value_variants, :option_values])
+      end
+
       def collection_url
         admin_product_rates_path
       end
