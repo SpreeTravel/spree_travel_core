@@ -1,11 +1,11 @@
-<%if line_item.product.product_type %>
+<%
+  product_type = line_item.product.product_type
+%>
+
+<%if product_type %>
   <br/>
   <h4><%= Spree.t(:reservation_details) %></h4>
-  <%line_item.product.product_type.context_option_types.each do |cot|%>
-    <% if cot.attr_type == 'destination' || cot.attr_type == 'selection' %>
-      <strong><%= cot.presentation%></strong>: <%= line_item.context.get_persisted_option_value(cot.name, 'presentation')%><br/>
-    <% else %>
-      <strong><%= cot.presentation%></strong>: <%= line_item.context.get_persisted_option_value(cot.name)%><br/>
-    <% end %>
+  <%product_type.context_option_types.each do |cot|%>
+    <strong><%= cot.presentation%></strong>: <%= line_item.context.get_persisted_option_value(cot.name)%><br/>
   <%end%>
 <%end%>
