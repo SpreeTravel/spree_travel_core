@@ -10,7 +10,7 @@ module Spree::VariantDecorator
 
     base.has_many :rates, class_name: 'Spree::Rate', foreign_key: 'variant_id', dependent: :destroy
     base.belongs_to :calculator, class_name:'Spree::TravelCalculator', foreign_key: 'calculator_id'
-    base.delegate :product_type, to: :product
+    base.has_one :product_type, class_name: 'Spree::ProductType', through: :product
   end
 
   def option_values_presentation
@@ -22,7 +22,6 @@ module Spree::VariantDecorator
     # TODO this code is  here to investigate ian issue about normal spree products not been uploaded
     # this can be reproduced by seeding the database and the products will not appear
     if price.nil? && Spree::Config[:require_master_price]
-      byebug
       return errors.add(:base, :no_master_variant_found_to_infer_price)  unless product&.master
       return errors.add(:base, :must_supply_price_for_variant_or_master) if self == product.master
 
