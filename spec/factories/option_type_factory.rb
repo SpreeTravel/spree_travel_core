@@ -12,7 +12,7 @@ FactoryBot.define do
       sequence(:presentation, 'a'){|n| "Selection Option Type #{n}"}
       attr_type {'selection'}
 
-      after(:create) {|option_type| option_type.option_values = [create(:option_value_decorated, option_type: option_type)]}
+      after(:create) {|option_type| option_type.option_values = [create(:option_value, option_type: option_type)]}
     end
 
     trait :with_date_option_type do

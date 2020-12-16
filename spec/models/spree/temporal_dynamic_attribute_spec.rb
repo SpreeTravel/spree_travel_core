@@ -4,48 +4,39 @@ describe Spree::TemporalDynamicAttribute do
 
   before do
     @context = Spree::Context.new
-    @context.initialize_variables
-    @context.extend(Spree::TemporalDynamicAttribute)
 
     option_types = [
-        {name: 'category', presentation: 'Category', attr_type: 'selection'},
-        {name: 'pickup_date', presentation: 'Pickup Date', attr_type: 'date'},
-        {name: 'return_date', presentation: 'Return Date', attr_type: 'date'},
-        {name: 'pickup_destination', presentation: 'Pickup Destination', attr_type: 'destination'},
-        {name: 'return_destination', presentation: 'Return Destination', attr_type: 'destination'},
-        {name: 'adult', presentation: 'Adult', attr_type: 'integer', short: 'Adult'},
+        {name: 'option_type_1', presentation: 'Category', attr_type: 'selection'},
+        {name: 'option_type_2', presentation: 'Pickup Date', attr_type: 'date'},
+        {name: 'option_type_3', presentation: 'Pickup Destination', attr_type: 'destination'},
+        {name: 'option_type_4', presentation: 'Adult', attr_type: 'integer', short: 'Adult'},
     ]
 
-    car_product_type = create(:product_type, name: 'car', presentation: 'Car')
+    @product_type = create(:product_type, name: 'any', presentation: 'Any')
 
     option_types.each do |cot|
-      option_type = create(:option_type_decorated, name: cot[:name], presentation: cot[:presentation], attr_type: cot[:attr_type])
-      car_product_type.context_option_types << option_type
+      option_type = create(:option_type_decorated,
+                           name: cot[:name],
+                           presentation: cot[:presentation],
+                           attr_type: cot[:attr_type])
+      @product_type.context_option_types << option_type
     end
   end
 
   describe 'when setting temporal attributes for a context to calculate the price' do
     before do
-      @params = {'category'=> '11',
-                 'pickup_destination'=> 'Cienfuegos',
-                 'return_destination'=> 'La Habana',
-                 'pickup_date'=> '2020-02-02',
-                 'return_date'=> '2020-02-05',
-                 'adult'=> '1',
-                 'product_type'=> 'car'}
-      @context.set_temporal_option_values(@params)
+      @params = {'option_type_1'=> '11',
+                 'option_type_2'=> 'Cienfuegos',
+                 'option_type_3'=> '2020-02-02',
+                 'option_type_4'=> '1',
+                 'product_type'=> 'any'}
+      @context.initialize_variables
     end
 
-    it 'should returns all attributes setted as temporal' do
-      expect(@context.category).to eq '11'
-      expect(@context.pickup_destination).to eq 'Cienfuegos'
-      expect(@context.return_destination).to eq 'La Habana'
-      expect(@context.pickup_date).to eq '2020-02-02'
-      expect(@context.return_date).to eq '2020-02-05'
-      expect(@context.adult).to eq '1'
-      expect(@context.product_type).to eq 'car'
-      expect(@context.temporal.count).to eq 7
-      expect { @context.non_existing_context_attr }.to raise_error(NoMethodError)
+    it 'should validate the option_types' do
+      expect(Spree::ProductType).to receive(:find_by_name).and_return(@product_type)
+      expect_any_instance_of(Spree::ProductType).to receive(:send).with('context_option_types').and_return(@product_type.context_option_types)
+      @context.set_temporal_option_values(@params)
     end
   end
 end

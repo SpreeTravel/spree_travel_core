@@ -11,7 +11,7 @@ describe Spree::RateOptionValue do
 
   describe 'When creating a preciable Rate Option Value' do
     let(:option_type) { create(:option_type_decorated, preciable:true) }
-    let(:option_value) { create(:option_value_decorated, option_type: option_type ) }
+    let(:option_value) { create(:option_value, option_type: option_type ) }
     let!(:rate) { create(:rate) }
 
     it 'should create a Spree::Price record related to the RateOptionValue' do
@@ -23,7 +23,7 @@ describe Spree::RateOptionValue do
 
   describe 'rate_option_value' do
     let(:option_type) { create(:option_type_decorated, preciable:true) }
-    let(:option_value) { create(:option_value_decorated, option_type: option_type ) }
+    let(:option_value) { create(:option_value, option_type: option_type ) }
     let(:rate_option_value) { create(:rate_option_value, option_value: option_value)}
 
     it 'should returns a Spree::Price' do

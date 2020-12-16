@@ -14,7 +14,7 @@ describe Spree::Variant do
     before do
       product_type    = create(:product_type, :with_variant_option_types)
       travel_product  = create(:travel_product, product_type: product_type)
-      @option_value    = create(:option_value_decorated, option_type: product_type.variant_option_types.first)
+      @option_value    = create(:option_value, option_type: product_type.variant_option_types.first)
       @travel_variant = create(:travel_variant, product: travel_product, option_values: [@option_value])
     end
 
