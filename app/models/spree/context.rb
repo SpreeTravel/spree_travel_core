@@ -20,7 +20,7 @@ module Spree
     end
 
     def self.build_from_params(params, options = {})
-      return nil if params[:product_type].nil?
+      return nil if params['product_type'].nil?
       raise StandardError, 'You must be explicit about temporal or not' if options[:temporal].nil?
 
       context = if !options[:line_item_id].nil?
