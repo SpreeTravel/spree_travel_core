@@ -2,6 +2,9 @@
 
 module Spree
   module DynamicAttribute
+    # This method validate that the params passed are valid Context or Rate
+    # option types that exist as a relation of the ProductType
+    # It will output only the valid ones removing the non existing from the return hash
     def sanitize_option_types_and_values(params)
       prefix = params['product_type']
       if prefix
