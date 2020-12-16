@@ -5,14 +5,16 @@ module Spree
       before_action :load_product
 
       def load_product
-        @product = Spree::Product.find_by_slug(params[:product_id])
+        @product = Spree::Product.includes(:rates, :option_types, product_type: :rate_option_types)
+                                 .find_by(slug: params[:product_id])
       end
 
       def index
-        @product_type_name = @product.product_type.name
-        @product_option_types = @product.option_types
-        @product_rate_option_types = @product.rate_option_types
-        @product_rates = @product.rates.includes(variant: [:option_value_variants, :option_values])
+        @product_type_name          = @product.product_type.name
+        @product_option_types       = @product.option_types
+        @product_rate_option_types  = @product.rate_option_types
+        @product_rates              = @product.rates
+                                              .includes(variant: [:option_value_variants, :option_values])
       end
 
       def collection_url
