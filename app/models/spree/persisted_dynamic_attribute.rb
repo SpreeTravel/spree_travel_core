@@ -33,7 +33,7 @@ module Spree
     end
 
     def get_persisted_option_value(option_type, attrib = 'presentation')
-      context_or_rate_option_value = find_existing_option_value(option_type)
+      option_type, context_or_rate_option_value = find_option_value(option_type)
 
       return if option_type.nil? || context_or_rate_option_value.nil?
 
@@ -48,7 +48,11 @@ module Spree
         context_or_rate_option_value.price_in('USD')
                          .display_price_including_vat_for({tax_zone: Spree::Zone.default_tax}).money
       else
-        rate_option_value.value
+        if selection_or_destination?(context_or_rate_option_value.option_value.option_type)
+          context_or_rate_option_value.option_value.presentation
+        else
+          context_or_rate_option_value.value
+        end
       end
     end
 
