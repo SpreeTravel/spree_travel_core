@@ -1,35 +1,36 @@
 # Run Coverage report
 require 'simplecov'
 SimpleCov.start do
-  add_filter "/test/"
-  add_filter "/spec/"
+  add_filter 'spec/'
   add_group 'Controllers', 'app/controllers'
   add_group 'Helpers', 'app/helpers'
-  add_group 'Mailers', 'app/mailers'
   add_group 'Models', 'app/models'
-  add_group 'Views', 'app/views'
-  add_group 'Libraries', 'lib'
+  add_group 'Libraries', 'lib/spree'
 end
 
-# Configure Rails Environment
-ENV['RAILS_ENV'] = 'test'
+ENV['RAILS_ENV'] ||= 'test'
 
-require File.expand_path('../dummy/config/environment.rb',  __FILE__)
+# Configure Rails Environment
+begin
+  require File.expand_path('../dummy/config/environment', __FILE__)
+rescue LoadError
+  puts 'Could not load dummy application. Please ensure you have run `bundle exec rake test_app`'
+  exit
+end
 
 require 'rspec/rails'
 require 'database_cleaner'
 require 'ffaker'
-require 'factory_bot_rails'
 require 'byebug'
 require 'shoulda/matchers'
-
-# require 'support/factory_bot'
+require 'webdrivers'
+require 'support/factory_bot'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[File.join(File.dirname(__FILE__), 'support/**/*.rb')].each { |f| require f }
 
-# Requires factories defined in spree_core
+# Requires factories and other useful helpers defined in spree_core.
 require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/factories'
 require 'spree/testing_support/preferences'
@@ -38,26 +39,15 @@ require 'spree/testing_support/flash'
 require 'spree/testing_support/url_helpers'
 require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/capybara_ext'
+require 'spree/testing_support/capybara_config'
+require 'spree/testing_support/image_helpers'
 
-# require 'paperclip/matchers'
-
-Capybara.javascript_driver = :poltergeist
-
-# Requires factories defined in lib/spree_travel_core/factories.rb
-# require 'spree_travel_core/factories'
-Dir["#{File.dirname(__FILE__)}/support/**"].each do |f|
-  require File.expand_path(f)
-end
-
-Shoulda::Matchers.configure do |config|
-  config.integrate do |with|
-    with.test_framework :rspec
-  end
-end
+require 'spree/core/controller_helpers/strong_parameters'
+require 'webdrivers'
 
 RSpec.configure do |config|
-
-  config.include FactoryBot::Syntax::Methods
+  # Infer an example group's spec type from the file location.
+  config.infer_spec_type_from_file_location!
 
   # == URL Helpers
   #
@@ -65,15 +55,16 @@ RSpec.configure do |config|
   #
   # visit spree.admin_path
   # current_path.should eql(spree.products_path)
+  config.include FactoryBot::Syntax::Methods
+
+  config.include Spree::TestingSupport::Preferences
   config.include Spree::TestingSupport::UrlHelpers
+  config.include Spree::TestingSupport::ControllerRequests, type: :controller
+  config.include Spree::TestingSupport::Flash
+  config.include Spree::TestingSupport::ImageHelpers
+
 
   # == Mock Framework
-  #
-  # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
-  #
-  # config.mock_with :mocha
-  # config.mock_with :flexmock
-  # config.mock_with :rr
   config.mock_with :rspec
   config.color = true
 
@@ -103,14 +94,5 @@ RSpec.configure do |config|
   end
 
   config.fail_fast = ENV['FAIL_FAST'] || false
-
-  config.expect_with :rspec do |expectations|
-    expectations.include_chain_clauses_in_custom_matcher_descriptions = true
-  end
-
-  config.mock_with :rspec do |mocks|
-    mocks.verify_partial_doubles = true
-  end
-  config.shared_context_metadata_behavior = :apply_to_host_groups
-
+  config.order = 'random'
 end

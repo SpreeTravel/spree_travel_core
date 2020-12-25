@@ -12,15 +12,15 @@ module SpreeTravelCore
     end
 
     def self.activate
-      Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/spree/*_decorator*.rb')) do |c|
-        Rails.application.config.cache_classes ? require(c) : load(c)
+      Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
+        Rails.configuration.cache_classes ? require(c) : load(c)
       end
     end
 
     config.to_prepare &method(:activate).to_proc
 
-    initializer "spree_travel_core.factories", after: "factory_bot.set_factory_paths" do
-      FactoryBot.definition_file_paths << File.expand_path('../../../spec/factories', __FILE__) if defined?(FactoryBot)
-    end
+    # initializer "spree_travel_core.factories", after: "factory_bot.set_factory_paths" do
+    #   FactoryBot.definition_file_paths << File.expand_path('../../../spec/factories', __FILE__) if defined?(FactoryBot)
+    # end
   end
 end
