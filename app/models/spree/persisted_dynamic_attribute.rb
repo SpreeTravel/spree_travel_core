@@ -18,17 +18,20 @@ module Spree
       return if option_type.nil?
 
       unless context_or_rate_option_value
-        context_or_rate_option_value = "#{self.class.to_s}OptionValue".constantize.new
-        self.option_values << context_or_rate_option_value
+        class_name = self.class.to_s
+        context_or_rate_option_value = "#{class_name}OptionValue".constantize.new
+        self.send("#{class_name.demodulize.downcase}_option_values") << context_or_rate_option_value
       end
 
+      # TODO Create a class to abstract the way each option value sets its value
       if selection_or_destination?(option_type)
         context_or_rate_option_value.option_value_id = value
+      elsif preciable?(option_type)
+        context_or_rate_option_value.price = value.to_i
       else
         context_or_rate_option_value.option_value_id = option_type.option_values.first.id
         context_or_rate_option_value.value = value
       end
-
       context_or_rate_option_value.save
     end
 
@@ -37,22 +40,20 @@ module Spree
 
       return if option_type.nil? || context_or_rate_option_value.nil?
 
-      context_or_rate_option_value.option_value.send(attrib) if selection_or_destination?(option_type)
-
-      price_or_value(context_or_rate_option_value)
+      price_or_value(context_or_rate_option_value, option_type, attrib)
     end
 
-    def price_or_value(context_or_rate_option_value)
-      if context_or_rate_option_value.option_value.option_type.preciable?
+    def price_or_value(context_or_rate_option_value, option_type, attrib)
+      # TODO Create a class to abstract the way each option value show its value
+      if preciable?(option_type)
         # TODO: sustitude USD by current_currency
         context_or_rate_option_value.price_in('USD')
-                         .display_price_including_vat_for({tax_zone: Spree::Zone.default_tax}).money
+                                    .display_price_including_vat_for({tax_zone: Spree::Zone.default_tax})
+                                    .money
+      elsif selection_or_destination?(context_or_rate_option_value.option_value.option_type)
+        context_or_rate_option_value.option_value.send(attrib)
       else
-        if selection_or_destination?(context_or_rate_option_value.option_value.option_type)
-          context_or_rate_option_value.option_value.presentation
-        else
-          context_or_rate_option_value.value
-        end
+        context_or_rate_option_value.value
       end
     end
 
@@ -70,6 +71,10 @@ module Spree
 
     def selection_or_destination?(option_type)
       %w(selection destination).include?(option_type.attr_type)
+    end
+
+    def preciable?(option_type)
+      option_type.preciable
     end
   end
 end
