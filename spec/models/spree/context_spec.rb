@@ -3,10 +3,10 @@ require 'spec_helper'
 describe Spree::Context do
 
   it { expect(Spree::Context.new.respond_to?(:line_items)).to eq true }
-  it { expect(Spree::Context.new.respond_to?(:option_values)).to eq true }
+  it { expect(Spree::Context.new.respond_to?(:context_option_values)).to eq true }
 
   it 'has a valid factory' do
-    expect(build(:context)).to be_valid
+    expect(create(:context)).to be_valid
   end
 
   describe 'build from params' do

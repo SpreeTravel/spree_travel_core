@@ -19,30 +19,22 @@ rescue LoadError
 end
 
 require 'rspec/rails'
+require 'rspec/active_model/mocks'
+
 require 'database_cleaner'
 require 'ffaker'
 require 'byebug'
 require 'shoulda/matchers'
 require 'webdrivers'
 require 'support/factory_bot'
+require 'jsonapi/rspec'
+# require 'support/controller_hacks'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[File.join(File.dirname(__FILE__), 'support/**/*.rb')].each { |f| require f }
 
 # Requires factories and other useful helpers defined in spree_core.
-require 'spree/testing_support/authorization_helpers'
-require 'spree/testing_support/factories'
-require 'spree/testing_support/preferences'
-require 'spree/testing_support/controller_requests'
-require 'spree/testing_support/flash'
-require 'spree/testing_support/url_helpers'
-require 'spree/testing_support/order_walkthrough'
-require 'spree/testing_support/capybara_ext'
-require 'spree/testing_support/capybara_config'
-require 'spree/testing_support/image_helpers'
-
-require 'spree/core/controller_helpers/strong_parameters'
 require 'webdrivers'
 
 RSpec.configure do |config|
@@ -57,11 +49,9 @@ RSpec.configure do |config|
   # current_path.should eql(spree.products_path)
   config.include FactoryBot::Syntax::Methods
 
-  config.include Spree::TestingSupport::Preferences
-  config.include Spree::TestingSupport::UrlHelpers
-  config.include Spree::TestingSupport::ControllerRequests, type: :controller
-  config.include Spree::TestingSupport::Flash
-  config.include Spree::TestingSupport::ImageHelpers
+  config.include JSONAPI::RSpec
+  config.include ControllerHacks, type: :controller
+
 
 
   # == Mock Framework

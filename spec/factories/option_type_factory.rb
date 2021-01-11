@@ -32,5 +32,9 @@ FactoryBot.define do
       sequence(:presentation, 'a'){|n| "Float Option Type #{n}"}
       attr_type {'float' }
     end
+
+    trait :preciable do
+      preciable { true }
+    end
   end
 end

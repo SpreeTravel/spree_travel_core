@@ -1,14 +1,20 @@
 FactoryBot.define do
   factory :travel_line_item, class: Spree::LineItem do
-    order
     quantity { 1 }
     price    { BigDecimal('10.00') }
     currency { order.currency }
-    transient do
-      association :product
-    end
+
+    order
+    product
     variant { product.master }
-    context  { build_stubbed(:context) }
+
+    trait :with_context do
+      context  { build_stubbed(:context) }
+    end
+
+    trait :with_travel_product do
+      association :product, factory: :travel_product
+    end
 
     after(:create) do |line_item|
       create(:pax, line_item: line_item)

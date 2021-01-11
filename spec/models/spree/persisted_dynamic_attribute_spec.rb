@@ -27,7 +27,10 @@ describe Spree::PersistedDynamicAttribute do
         end
 
         option_type = Spree::OptionType.find_by(name: 'option_type_1')
-        option_value = create(:option_value, name: 'option_value_1', presentation: 'option_value_1', option_type: option_type)
+        option_value = create(:option_value,
+                              name: 'option_value_1',
+                              presentation: 'option_value_1',
+                              option_type: option_type)
 
         @params = {'option_type_1'=> option_value,
                    'option_type_2'=> '2020/02/05',
@@ -36,21 +39,21 @@ describe Spree::PersistedDynamicAttribute do
       end
 
       it 'should create all context option values in the database' do
-        allow_any_instance_of(Spree::ContextOptionValue).to receive(:save).and_return(true)
-        save_count = 0
-        allow_any_instance_of(Spree::ContextOptionValue).to receive(:save) { |arg| save_count += 1 }
         @context.set_persisted_option_values(@params)
-        expect(save_count).to eq 3
       end
     end
   end
 
   describe "with rate" do
     describe 'when setting persisted attributes' do
+      let(:rate) { create(:rate) }
+      let(:default_zone) { Spree::Zone.new }
+
       before do
         option_types = [
             {name: 'option_type_1', presentation: "Option Type 1", attr_type: 'date', travel: true, preciable: false},
-            {name: 'option_type_2',   presentation: "Option Type 2", attr_type: 'integer', travel: true, preciable: true},
+            {name: 'option_type_2', presentation: "Option Type 2", attr_type: 'date', travel: true, preciable: false},
+            {name: 'option_type_3',   presentation: "Option Type 3", attr_type: 'integer', travel: true, preciable: true},
         ]
 
         option_types.each do |cot|
@@ -62,19 +65,20 @@ describe Spree::PersistedDynamicAttribute do
           @product_type.rate_option_types << option_type
         end
 
-        @rate = Spree::Rate.create(variant_id: 1)
-        @params ={'option_type_1'=>'2020/02/05',
-                  'option_type_2'=>'60',
-                  'product_type'=>'any' }
-        @rate.set_persisted_option_values(@params)
+        @params ={ 'option_type_1' => '2020/02/05',
+                   'option_type_2' => '2020/03/07',
+                   'option_type_3' => '60',
+                   'product_type' => 'any' }
+
+        allow(Spree::Zone).to receive(:default_tax).and_return(default_zone)
       end
 
-      it 'should create all context option values in the database' do
-        allow_any_instance_of(Spree::RateOptionValue).to receive(:save).and_return(true)
-        save_count = 0
-        allow_any_instance_of(Spree::RateOptionValue).to receive(:save) { |arg| save_count += 1 }
-        @rate.set_persisted_option_values(@params)
-        expect(save_count).to eq 2
+      it 'should create all rate option values in the database' do
+        rate.set_persisted_option_values(@params)
+
+        assert_equal '2020/02/05', rate.get_persisted_option_value('option_type_1')
+        assert_equal '2020/03/07', rate.get_persisted_option_value('option_type_2')
+        assert_equal '$60.00', rate.get_persisted_option_value('option_type_3').format
       end
     end
   end
