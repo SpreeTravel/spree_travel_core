@@ -10,7 +10,7 @@ module Spree
     end
 
     belongs_to :variant, class_name: 'Spree::Variant', foreign_key: 'variant_id'
-    has_many :option_values, class_name: 'Spree::RateOptionValue', foreign_key: 'rate_id', dependent: :delete_all
+    has_many :rate_option_values, class_name: 'Spree::RateOptionValue', foreign_key: 'rate_id', dependent: :delete_all
     has_many :line_items, class_name: 'Spree::LineItem'
 
     def first_time!
@@ -22,8 +22,10 @@ module Spree
     end
 
     def find_existing_option_value(option_type)
-      option_values.includes(option_value: :option_type)
-                   .find { |ov| ov.option_value&.option_type_id == option_type.id }
+      rate_option_values.includes(option_value: :option_type).find do |rov|
+        return rov if rov.respond_to?(:price) && rov.option_value_id.nil?
+        rov.option_value&.option_type_id == option_type.id
+      end
     end
 
     # Spree::ProductType.all.map {|pt| pt.rate_option_types.pluck(:name)}.flatten.each do |rate_option_type|

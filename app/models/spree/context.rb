@@ -7,7 +7,7 @@ module Spree
 
     has_many :line_items, class_name: 'Spree::LineItem',
                           foreign_key: 'context_id'
-    has_many :option_values, class_name: 'Spree::ContextOptionValue',
+    has_many :context_option_values, class_name: 'Spree::ContextOptionValue',
                              foreign_key: 'context_id',
                              dependent: :destroy
 
@@ -60,8 +60,8 @@ module Spree
     end
 
     def find_existing_option_value(option_type)
-      option_values.includes(option_value: :option_type)
-                   .find { |ov| ov.option_value&.option_type_id == option_type.id }
+      context_option_values.includes(option_value: :option_type)
+                   .find { |cov| cov.option_value&.option_type_id == option_type.id }
     end
   end
 end
