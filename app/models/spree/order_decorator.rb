@@ -13,7 +13,7 @@ module Spree::OrderDecorator
     def generate_paxes
       line_items.each do |line_item|
         return if line_item.context.nil?
-        count = line_item.context.adult(temporal: false).to_i + line_item.context.child(temporal: false).to_i
+        count = line_item.context.adult(temporal: false).to_i
         count.times { line_item.paxes.new } if line_item.paxes.empty?
       end
     end
