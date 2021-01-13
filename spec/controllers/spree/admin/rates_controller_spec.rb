@@ -28,6 +28,16 @@ module Spree
 
           expect(response.status).to eq(302)
         end
+
+        it 'do not save the record' do
+          allow_any_instance_of(Spree::Rate).to receive(:set_persisted_option_values)
+          allow_any_instance_of(Spree::Rate).to receive(:save).and_return(false)
+
+          post :create, params: { 'rate'=>{"variant_id"=>variant.id},
+                                  'product_id'=> variant.product.slug }
+
+          expect(response.status).to eq(200)
+        end
       end
 
       describe '#update' do
