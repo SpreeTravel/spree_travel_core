@@ -1,7 +1,6 @@
 module Spree
   module Admin
     class RatesController < ResourceController
-
       before_action :load_product
 
       def load_product
@@ -39,8 +38,8 @@ module Spree
           flash[:success] = flash_message_for(@rate, :successfully_created)
           redirect_to admin_product_rates_path(params[:product_id])
         else
-          invoke_callbacks(:create, :fails)
-          respond_with(@object) do |format|
+          flash[:error] = "There was a problem creating the rate"
+          respond_with(@rate) do |format|
             format.html { render action: :new }
             format.js { render layout: false }
           end
