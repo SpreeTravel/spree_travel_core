@@ -35,6 +35,10 @@ describe 'API V2 Storefront Cart Spec', type: :request do
       Spree::PermittedAttributes.line_item_attributes << :cost_price
     end
 
+    after do
+      Spree::PermittedAttributes.line_item_attributes.delete(:cost_price)
+    end
+
     shared_examples 'adds item' do
       before { execute }
 
