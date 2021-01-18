@@ -1,6 +1,7 @@
 # Run Coverage report
 require 'simplecov'
 SimpleCov.start do
+  enable_coverage :branch
   add_filter 'spec/'
   add_group 'Controllers', 'app/controllers'
   add_group 'Helpers', 'app/helpers'
@@ -28,7 +29,8 @@ require 'shoulda/matchers'
 require 'webdrivers'
 require 'support/factory_bot'
 require 'jsonapi/rspec'
-# require 'support/controller_hacks'
+require 'support/have_attributes_matcher'
+require 'support/controller_hacks'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
