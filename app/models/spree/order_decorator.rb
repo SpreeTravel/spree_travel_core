@@ -14,7 +14,8 @@ module Spree::OrderDecorator
       line_items.each do |line_item|
         return if line_item.context.nil?
         count = line_item.context.adult(temporal: false).to_i
-        count.times { line_item.paxes.new } if line_item.paxes.empty?
+        count.times { Spree::Pax.new(line_item: line_item) }
+        line_item.reload
       end
     end
 
