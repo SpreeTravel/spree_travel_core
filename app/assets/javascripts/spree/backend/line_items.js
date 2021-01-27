@@ -18,16 +18,16 @@ $(document).ready(function() {
         const line_item_id = save.data('line-item-id');
         const quantity = parseInt(save.parents('tr').find('input.line_item_quantity').val());
         const product_type = save.parents('tr').find('input#product_type_' + line_item_id).val();
-        const context_option_values= save.parents().find('.' + product_type + '_inputs');
+        const context_option_values= save.parents().find('.' + product_type + '_inputs_' + line_item_id);
 
         if (product_type && context_option_values) {
             context = {
                 product_type
             };
-            context_option_values.each((index, element) => context[element.id] = element.value);
+            context_option_values.each((index, element) => context[element.name] = element.value);
         }
 
-        toggleItemEdit();
+        toggleLineItemEdit();
         adjustLineItem(line_item_id, quantity, context);
         return false;
     });
@@ -38,7 +38,7 @@ $(document).ready(function() {
             const del = $(this);
             const line_item_id = del.data('line-item-id');
 
-            toggleItemEdit();
+            toggleLineItemEdit();
             return deleteLineItem(line_item_id);
         }
     });
@@ -48,7 +48,7 @@ $(document).ready(function() {
             const del = $(this);
             const pax_id = del.data('pax-id');
 
-            toggleItemEdit();
+            toggleLineItemEdit();
             return deletePax(pax_id);
         }
     });
