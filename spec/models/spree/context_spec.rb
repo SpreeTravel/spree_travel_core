@@ -29,6 +29,18 @@ describe Spree::Context do
       expect(context.get_persisted_option_value(@product.context_option_types.first.name))
           .to eq(@product.context_option_types.first.option_values.first.name)
     end
+
+    it 'return nil if no product_type specified' do
+      @context_params.delete('product_type')
+      context = Spree::Context.build_from_params(@context_params, temporal: false)
+
+      expect(context).to be(nil)
+    end
+
+    it 'raise Standard Error if temporal not specified' do
+      expect { Spree::Context.build_from_params(@context_params) }.to raise_error(StandardError, 'You must be explicit about temporal or not')
+
+    end
   end
 
   %i[
