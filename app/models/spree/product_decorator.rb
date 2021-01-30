@@ -25,7 +25,7 @@ module Spree::ProductDecorator
   def calculate_price(context, variant, options)
     calculator_instance(context, variant, options).calculate_price
   end
-  
+
   private
 
   def self.ransackable_scopes(auth_object = nil)
