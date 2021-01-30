@@ -25,18 +25,7 @@ module Spree::ProductDecorator
   def calculate_price(context, variant, options)
     calculator_instance(context, variant, options).calculate_price
   end
-
-  def destination_taxon
-    destination_taxonomy = Spree::Taxonomy.where(:name => 'Destination').first
-    self.taxons.where(:taxonomy_id => destination_taxonomy.id).first
-  rescue
-    nil
-  end
-
-  def destination
-    destination_taxon.name rescue "no place"
-  end
-
+  
   private
 
   def self.ransackable_scopes(auth_object = nil)
