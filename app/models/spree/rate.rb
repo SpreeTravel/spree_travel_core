@@ -9,9 +9,16 @@ module Spree
       ['variant_id', 'variant=']
     end
 
-    belongs_to :variant, class_name: 'Spree::Variant', foreign_key: 'variant_id'
-    has_many :rate_option_values, class_name: 'Spree::RateOptionValue', foreign_key: 'rate_id', dependent: :delete_all
+    belongs_to :variant,
+               class_name: 'Spree::Variant',
+               foreign_key: 'variant_id'
+    has_many :rate_option_values,
+             class_name: 'Spree::RateOptionValue',
+             foreign_key: 'rate_id',
+             dependent: :delete_all
     has_many :line_items, class_name: 'Spree::LineItem'
+
+    validates_presence_of :rate_option_values
 
     def first_time!
       @first_time = true
@@ -25,23 +32,6 @@ module Spree
       rate_option_values.includes(option_value: :option_type).find do |rov|
         return rov if rov.respond_to?(:price) && rov.option_value_id.nil?
         rov.option_value&.option_type_id == option_type.id
-      end
-    end
-
-    # Spree::ProductType.all.map {|pt| pt.rate_option_types.pluck(:name)}.flatten.each do |rate_option_type|
-    #   define_method rate_option_type do
-    #     get_persisted_option_value(rate_option_type)
-    #   end
-    # end
-
-    # TODO: add restriction over dates overlapsed
-
-    %i[
-      start_date end_date plan simple double triple
-      first_child second_child one_adult
-    ].each do |method|
-      define_method method do
-        get_persisted_option_value(method)
       end
     end
   end
