@@ -1,13 +1,9 @@
 class CreateSpreeRates < ActiveRecord::Migration[4.2]
-  def up
+  def change
     create_table :spree_rates do |t|
-      t.integer :variant_id
+      t.references :variant, index: true, foreign_key: {to_table: :spree_variants}
 
       t.timestamps
     end
-  end
-
-  def down
-    drop_table :spree_rates
   end
 end
