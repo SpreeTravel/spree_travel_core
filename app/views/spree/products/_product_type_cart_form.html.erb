@@ -16,6 +16,7 @@
           <%= hidden_field_tag :variant_id, variant_id %>
           <%= hidden_field_tag :product_id, product.id %>
           <%= hidden_field_tag :rate_id, rate_id if rate_id%>
+          <%= hidden_field_tag :price, price%>
           <% product_type = params['product_type'] %>
           <%= hidden_field_tag('product_type', product_type) if product_type%>
           <% product_type_params = params.select {|k| k.start_with?(product_type + '_') }%>

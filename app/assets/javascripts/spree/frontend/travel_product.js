@@ -124,6 +124,7 @@ Spree.ready(function () {
                 var rateId = form.elements.namedItem('rate_id').value;
                 var productId = form.elements.namedItem('product_id').value;
                 var productType = form.elements.namedItem('product_type').value;
+                var price = form.elements.namedItem('price').value;
 
                 var container = document.querySelector(".inside-room-cart-form-"+ variantId + "-" + rateId);
                 var context_options =  container.querySelectorAll("input[name^='" + productType + "']");
@@ -144,6 +145,7 @@ Spree.ready(function () {
                             productType,
                             rateId,
                             productId,
+                            price,
                             context_options_object,
                             {}, // options hash - you can pass additional parameters here, your backend
                             // needs to be aware of those, see API docs:

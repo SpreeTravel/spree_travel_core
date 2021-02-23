@@ -7,6 +7,7 @@ SpreeAPI.Storefront.travelAddToCart = function (variantId, quantity, productType
         product_type: productType,
         rate_id: rateId,
         product_id: productId,
+        price: price,
         options: options
     };
     $.extend(params, context_options);
