@@ -1,6 +1,6 @@
 //= require spree/api/main
 
-SpreeAPI.Storefront.travelAddToCart = function (variantId, quantity, productType, rateId, productId, context_options, options, successCallback, failureCallback) {
+SpreeAPI.Storefront.travelAddToCart = function (variantId, quantity, productType, rateId, productId, price, context_options, options, successCallback, failureCallback) {
     let params = {
         variant_id: variantId,
         quantity: quantity,

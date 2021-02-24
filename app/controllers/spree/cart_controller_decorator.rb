@@ -14,6 +14,7 @@ module Spree::CartControllerDecorator
         variant: variant,
         rate: rate,
         context: context,
+        price: params[:price],
         quantity: params[:quantity],
         options: params[:options]
     )
