@@ -12,23 +12,14 @@ rails g spree:install
 after testing the instalation and everything goes right, add to the Gemfile this dependencies for SpreeTravel:
 
 - gem 'spree_travel_core', github: 'openjaf/spree_travel_core', branch: '4-0-stable'
-- gem 'spree_travel_cruise', github: 'openjaf/spree_travel_cruise', branch: '4-0-stable'
-- gem 'spree_travel_hotel', github: 'openjaf/spree_travel_hotel', branch: '4-0-stable'
-- gem 'spree_travel_tour', github: 'openjaf/spree_travel_tour', branch: '4-0-stable'
 - gem 'spree_travel_car', github: 'openjaf/spree_travel_car', branch: '4-0-stable'
 - gem 'spree_travel_sample', github: 'openjaf/spree_travel_sample', branch: '4-0-stable'
 
 Run this command in this order:
 
 - rails g spree_travel_core:install
-- rails g spree_travel_hotel:install
 - rails g spree_travel_car:install
-- rails g spree_travel_cruise:install
-- rails g spree_travel_tour:install
-- rake spree_travel_sample:load PRODUCT_TYPE=hotels
-- rake spree_travel_sample:load PRODUCT_TYPE=cars
-- rake spree_travel_sample:load PRODUCT_TYPE=tours
-- rake spree_travel_sample:load PRODUCT_TYPE=cruises ##this product has fixed season date in year 2016
+- rake spree_travel_sample:load PRODUCT_TYPE=car
 
 
 Spree Travel Core
