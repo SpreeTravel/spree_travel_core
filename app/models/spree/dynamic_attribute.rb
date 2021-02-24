@@ -8,7 +8,7 @@ module Spree
     def sanitize_option_types_and_values(params)
       prefix = params['product_type']
       if prefix
-        product_type = Spree::ProductType.find_by_name(prefix)
+        product_type = Spree::ProductType.find_by(name: prefix)
         attr_option_types = self.class.to_s.split('::').last.downcase + '_option_types'
         option_types_objects = product_type.send(attr_option_types)
         option_types = option_types_objects.map(&:name)
