@@ -39,26 +39,6 @@ module Spree
       context
     end
 
-    %i[
-      product_type start_date end_date plan adult child
-      cabin_count departure_date category pickup_destination
-      return_destination pickup_date return_date
-    ].each do |method|
-      define_method method do |temporal=nil|
-        get_mixed_option_value(method, temporal)
-      end
-    end
-
-    # this is for the amount of rooms
-    def room_count(options = { temporal: true })
-      get_mixed_option_value(:room_count, options)
-    end
-
-    # this is for the room type (Sweet, Junio Sweet, etc.....)
-    def room(options = { temporal: true })
-      get_mixed_option_value(:room, options)
-    end
-
     def find_existing_option_value(option_type)
       context_option_values.includes(option_value: :option_type)
                    .find { |cov| cov.option_value&.option_type_id == option_type.id }
