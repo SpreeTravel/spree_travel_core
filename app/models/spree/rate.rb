@@ -31,7 +31,7 @@ module Spree
     def find_existing_option_value(option_type)
       rate_option_values
         .joins(:option_value)
-        .where('spree_option_values.option_type_id == ?', option_type.id)
+        .where('spree_option_values.option_type_id = ?', option_type.id)
         .take
     end
   end
