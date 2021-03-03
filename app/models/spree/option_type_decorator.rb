@@ -57,7 +57,7 @@ module Spree
   class DestinationOptionType
     def self.save(context_or_rate_option_value, value, option_type = nil)
       context_or_rate_option_value.option_value_id = value
-      context_or_rate_option_value
+      context_or_rate_option_value.save!
     end
 
     def self.value(context_or_rate_option_value)
@@ -73,7 +73,7 @@ module Spree
     def self.save(context_or_rate_option_value, value, option_type)
       context_or_rate_option_value.option_value = option_type.option_values.first
       context_or_rate_option_value.date_value = value
-      context_or_rate_option_value
+      context_or_rate_option_value.save!
     end
 
     def self.value(context_or_rate_option_value)
@@ -89,7 +89,7 @@ module Spree
     def self.save(context_or_rate_option_value, value, option_type)
       context_or_rate_option_value.option_value = option_type.option_values.first
       context_or_rate_option_value.pax_value = value
-      context_or_rate_option_value
+      context_or_rate_option_value.save!
     end
 
     def self.value(context_or_rate_option_value)
