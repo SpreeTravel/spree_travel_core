@@ -9,7 +9,7 @@ FactoryBot.define do
     variant { product.master }
 
     trait :with_context do
-      context  { build_stubbed(:context) }
+      association :context , factory: :context
     end
 
     trait :with_travel_product do

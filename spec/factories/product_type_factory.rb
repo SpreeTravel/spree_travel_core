@@ -16,8 +16,8 @@ FactoryBot.define do
       after(:create) {|product_type| product_type.rate_option_types = [create(:option_type_decorated, :with_date_option_type)]}
     end
 
-    trait :with_rate_option_types_integer do
-      after(:create) {|product_type| product_type.rate_option_types = [create(:option_type_decorated, :with_integer_option_type, :preciable)]}
+    trait :with_rate_option_types_price do
+      after(:create) {|product_type| product_type.rate_option_types = [create(:option_type_decorated, :with_price_option_type, :preciable)]}
     end
   end
 end

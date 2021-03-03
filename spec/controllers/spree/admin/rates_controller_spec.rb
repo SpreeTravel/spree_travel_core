@@ -41,7 +41,7 @@ module Spree
       end
 
       describe '#update' do
-        let(:product_type) { create(:product_type, :with_rate_option_types_integer) }
+        let(:product_type) { create(:product_type, :with_rate_option_types_price) }
         let(:variant) { create(:travel_variant) }
         let(:product) { create(:travel_product, product_type: product_type) }
         let(:rate) { create(:rate, variant: variant) }
@@ -52,7 +52,7 @@ module Spree
           post :update, params: {'product_id'=> product.slug,
                                  'id'=> rate.id,
                                  'rate'=>{"variant_id"=>variant.id},
-                                 'integer_option_type_a' => 100 }
+                                 product_type.rate_option_types.first.name => 100 }
 
           value = rate.get_persisted_option_value(product.rate_option_types.first.name)
 

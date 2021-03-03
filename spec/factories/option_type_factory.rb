@@ -15,22 +15,28 @@ FactoryBot.define do
       after(:create) {|option_type| option_type.option_values = [create(:option_value, option_type: option_type)]}
     end
 
+    trait :with_price_option_type do
+      sequence(:name, 'a'){ |n| "price_option_type_#{n}" }
+      sequence(:presentation, 'a'){|n| "Price Option Type #{n}"}
+      attr_type  {'price'}
+    end
+
     trait :with_date_option_type do
       sequence(:name, 'a'){ |n| "date_option_type_#{n}" }
       sequence(:presentation, 'a'){|n| "Date Option Type #{n}"}
-      attr_type  {'date' }
+      attr_type  {'date'}
     end
 
-    trait :with_integer_option_type do
-      sequence(:name, 'a'){ |n| "integer_option_type_#{n}" }
-      sequence(:presentation, 'a'){|n| "Integer Option Type #{n}"}
-      attr_type {'integer'}
+    trait :with_pax_option_type do
+      sequence(:name, 'a'){ |n| "pax_option_type_#{n}" }
+      sequence(:presentation, 'a'){|n| "Pax Option Type #{n}"}
+      attr_type {'pax'}
     end
 
     trait :with_float_option_type do
       sequence(:name, 'a'){ |n| "float_option_type_#{n}" }
       sequence(:presentation, 'a'){|n| "Float Option Type #{n}"}
-      attr_type {'float' }
+      attr_type {'float'}
     end
 
     trait :preciable do
