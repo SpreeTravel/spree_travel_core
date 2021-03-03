@@ -35,7 +35,7 @@ module Spree
     end
 
     def get_option_type_object(option_type)
-      Spree::OptionType.find(option_type) if option_type.is_a?(Integer)
+      return Spree::OptionType.find(option_type) if option_type.is_a?(Integer)
 
       Spree::OptionType.find_by_name(option_type)
     end
