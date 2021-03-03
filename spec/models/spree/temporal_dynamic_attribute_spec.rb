@@ -9,7 +9,7 @@ describe Spree::TemporalDynamicAttribute do
         {name: 'option_type_1', presentation: 'Category', attr_type: 'selection'},
         {name: 'option_type_2', presentation: 'Pickup Date', attr_type: 'date'},
         {name: 'option_type_3', presentation: 'Pickup Destination', attr_type: 'destination'},
-        {name: 'option_type_4', presentation: 'Adult', attr_type: 'pax', short: 'Adult'},
+        {name: 'option_type_4', presentation: 'Adult', attr_type: 'pax'},
     ]
 
     @product_type = create(:product_type, name: 'any', presentation: 'Any')

@@ -10,36 +10,33 @@ describe Spree::Context do
   end
 
   describe 'build from params' do
-    before do
-      @product_type   = create(:product_type, :with_context_option_types, name: 'car', presentation: 'Car')
-      @product         = create(:travel_product, product_type: @product_type)
-      @context_params = params_for_dynamic_attribute(@product)
-    end
+    let(:product_type) { create(:product_type, :with_context_option_types, name: 'car', presentation: 'Car') }
+    let(:product) { create(:travel_product, product_type: product_type) }
+    let(:context_params) { params_for_dynamic_attribute(product) }
 
     it 'for temporal params' do
-      context = Spree::Context.build_from_params(@context_params, temporal: true)
+      context = Spree::Context.build_from_params(context_params, temporal: true)
 
-      expect(context.get_temporal_option_value(@product.context_option_types.first.name))
-          .to eq(@product.context_option_types.first.option_values.first.name)
+      expect(context.get_temporal_option_value(product.context_option_types.first.name))
+          .to eq(product.context_option_types.first.option_values.first.name)
     end
 
     it 'for persisted params' do
-      context = Spree::Context.build_from_params(@context_params, temporal: false)
+      context = Spree::Context.build_from_params(context_params, temporal: false)
 
-      expect(context.get_persisted_option_value(@product.context_option_types.first.name))
-          .to eq(@product.context_option_types.first.option_values.first.name)
+      expect(context.get_persisted_option_value(product.context_option_types.first.name))
+          .to eq(product.context_option_types.first.option_values.first.name)
     end
 
     it 'return nil if no product_type specified' do
-      @context_params.delete('product_type')
-      context = Spree::Context.build_from_params(@context_params, temporal: false)
+      context_params.delete('product_type')
+      context = Spree::Context.build_from_params(context_params, temporal: false)
 
       expect(context).to be(nil)
     end
 
     it 'raise Standard Error if temporal not specified' do
-      expect { Spree::Context.build_from_params(@context_params) }.to raise_error(StandardError, 'You must be explicit about temporal or not')
-
+      expect { Spree::Context.build_from_params(context_params) }.to raise_error(StandardError, 'You must be explicit about temporal or not')
     end
   end
 end
