@@ -9,7 +9,7 @@ module Spree::VariantDecorator
              as: :preciable
 
     base.has_many :rates, class_name: 'Spree::Rate', foreign_key: 'variant_id', dependent: :destroy
-    base.belongs_to :calculator, class_name:'Spree::TravelCalculator', foreign_key: 'calculator_id'
+    base.belongs_to :calculator, class_name: 'Spree::TravelCalculator', foreign_key: 'calculator_id'
     base.has_one :product_type, class_name: 'Spree::ProductType', through: :product
   end
 

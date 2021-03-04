@@ -36,10 +36,10 @@ module Spree::LineItemDecorator
     # TODO: take into account here the currency change, i am not taking it now
     # TODO: this has to be improved, regarding the comparinson with the rate.
     if context_price
-      self.price = context_price.gsub(/[$,]/,'').to_f
+      self.price = context_price.gsub(/[$,]/, '').to_f
     else
-      variant.product.calculate_price(context, variant, temporal:false).each do |hash|
-        self.price = hash[:price].match(/(\d.+)/)[1].gsub(',','').to_f if self.rate.id == hash[:rate]
+      variant.product.calculate_price(context, variant, temporal: false).each do |hash|
+        self.price = hash[:price].match(/(\d.+)/)[1].gsub(',', '').to_f if rate.id == hash[:rate]
       end
     end
   end
