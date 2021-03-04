@@ -78,7 +78,7 @@ describe Spree::PersistedDynamicAttribute do
       end
 
       it 'should create all rate option values in the database' do
-        rate.set_persisted_option_values(@params)
+        rate.persist_option_values(@params)
         assert_equal '2020/02/05', rate.get_persisted_option_value('option_type_1')
         assert_equal '$60.00', rate.get_persisted_option_value('option_type_2').format
         assert_equal 1, rate.get_persisted_option_value('option_type_3')

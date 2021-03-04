@@ -33,7 +33,7 @@ module Spree
       if options[:temporal]
         context.set_temporal_option_values(params)
       else
-        context.set_persisted_option_values(params)
+        context.persist_option_values(params)
         context.save
       end
       context

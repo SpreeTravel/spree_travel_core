@@ -32,7 +32,7 @@ module Spree
       def create
         @rate = Spree::Rate.new(:variant_id => params[:rate][:variant_id])
         params[:product_type] = @product.product_type.name
-        @rate.set_persisted_option_values(params)
+        @rate.persist_option_values(params)
 
         if @rate.save
           flash[:success] = flash_message_for(@rate, :successfully_created)
@@ -50,7 +50,7 @@ module Spree
         @rate = Spree::Rate.find(params[:id])
         @rate.variant_id = params[:rate][:variant_id]
         params[:product_type] = @product.product_type.name
-        @rate.set_persisted_option_values(params)
+        @rate.persist_option_values(params)
         # TODO the rate is not updated we don't know why.
         if @rate.save
           flash[:success] = flash_message_for(@rate, :successfully_updated)

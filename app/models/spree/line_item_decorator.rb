@@ -14,8 +14,9 @@ module Spree::LineItemDecorator
 
   def context_attributes=(attr)
     return if attr.nil?
-    attr = attr.merge({line_item_id: id})
-    context.set_persisted_option_values(attr)
+
+    attr = attr.merge({ line_item_id: id })
+    context.persist_option_values(attr)
     copy_price
   end
 

@@ -4,15 +4,15 @@ module Spree
   module PersistedDynamicAttribute
     include Spree::DynamicAttribute
 
-    def set_persisted_option_values(params)
+    def persist_option_values(params)
       sanitize_option_types_and_values(params).each do |key, value|
         next if key == 'product_type'
 
-        set_persisted_option_value(key, value)
+        persist_option_value(key, value)
       end
     end
 
-    def set_persisted_option_value(option_type, value)
+    def persist_option_value(option_type, value)
       option_type, context_or_rate_option_value = find_option_value(option_type)
 
       return if option_type.nil?
