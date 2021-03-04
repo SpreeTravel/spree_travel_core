@@ -34,7 +34,7 @@ module Spree
     def get_mixed_option_value(option_type, options = { temporal: true })
       return get_temporal_option_value(option_type) if options[:temporal]
 
-      get_persisted_option_value(option_type)
+      persisted_option_value(option_type)
     end
   end
 end

@@ -40,9 +40,9 @@ describe Spree::PersistedDynamicAttribute do
       it 'should create all context option values in the database' do
         context = Spree::Context.build_from_params(@params, temporal: false)
 
-        assert_equal 'The Presentation', context.get_persisted_option_value('option_type_1')
-        assert_equal '2020/02/05', context.get_persisted_option_value('option_type_2')
-        assert_equal 1, context.get_persisted_option_value('option_type_3')
+        assert_equal 'The Presentation', context.persisted_option_value('option_type_1')
+        assert_equal '2020/02/05', context.persisted_option_value('option_type_2')
+        assert_equal 1, context.persisted_option_value('option_type_3')
 
       end
     end
@@ -79,9 +79,9 @@ describe Spree::PersistedDynamicAttribute do
 
       it 'should create all rate option values in the database' do
         rate.persist_option_values(@params)
-        assert_equal '2020/02/05', rate.get_persisted_option_value('option_type_1')
-        assert_equal '$60.00', rate.get_persisted_option_value('option_type_2').format
-        assert_equal 1, rate.get_persisted_option_value('option_type_3')
+        assert_equal '2020/02/05', rate.persisted_option_value('option_type_1')
+        assert_equal '$60.00', rate.persisted_option_value('option_type_2').format
+        assert_equal 1, rate.persisted_option_value('option_type_3')
       end
     end
   end

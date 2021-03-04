@@ -54,7 +54,7 @@ module Spree
                                  'rate'=>{"variant_id"=>variant.id},
                                  product_type.rate_option_types.first.name => 100 }
 
-          value = rate.get_persisted_option_value(product.rate_option_types.first.name)
+          value = rate.persisted_option_value(product.rate_option_types.first.name)
 
           assert_equal '$100.00', value.format
         end

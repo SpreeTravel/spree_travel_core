@@ -17,8 +17,8 @@ describe Spree::DynamicAttribute do
   end
 
   describe 'when passing temporal false' do
-    it 'should execute get_persisted_option_value' do
-      expect(@object).to receive(:get_persisted_option_value)
+    it 'should execute persisted_option_value' do
+      expect(@object).to receive(:persisted_option_value)
       @object.get_mixed_option_value('start_date', {temporal: false})
     end
   end

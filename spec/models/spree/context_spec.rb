@@ -24,7 +24,7 @@ describe Spree::Context do
     it 'for persisted params' do
       context = Spree::Context.build_from_params(context_params, temporal: false)
 
-      expect(context.get_persisted_option_value(product.context_option_types.first.name))
+      expect(context.persisted_option_value(product.context_option_types.first.name))
           .to eq(product.context_option_types.first.option_values.first.name)
     end
 

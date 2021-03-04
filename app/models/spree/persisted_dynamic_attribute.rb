@@ -26,7 +26,7 @@ module Spree
       "Spree::#{option_type.attr_type.camelcase}OptionType".constantize.save(context_or_rate_option_value, value, option_type)
     end
 
-    def get_persisted_option_value(option_type, attrib = 'presentation')
+    def persisted_option_value(option_type, _attrib = 'presentation')
       option_type, context_or_rate_option_value = find_option_value(option_type)
 
       return if option_type.nil? || context_or_rate_option_value.nil?

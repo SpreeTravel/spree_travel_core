@@ -29,7 +29,7 @@
         <td><%= rate.variant.option_value(option_type.name) %></td>
       <% end %>
       <% @product_rate_option_types.each do |rate_option_type| %>
-        <td><%= rate.get_persisted_option_value(rate_option_type.name) %></td>
+        <td><%= rate.persisted_option_value(rate_option_type.name) %></td>
       <% end %>
       <td class="actions">
       <!-- TODO fix bug regarding the links redirecting to some crazy url -->
