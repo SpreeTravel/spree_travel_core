@@ -15,28 +15,36 @@ module Spree
       @temporal = {}
     end
 
-    def get_temporal
-      @temporal
-    end
+    attr_reader :temporal
 
-    def self.build_from_params(params, options = {})
-      return nil if params['product_type'].nil?
-      raise StandardError, 'You must be explicit about temporal or not' if options[:temporal].nil?
+    class << self
+      def build_from_params(params, options = {})
+        return nil if params['product_type'].nil?
+        raise StandardError, 'You must be explicit about temporal or not' if options[:temporal].nil?
 
-      context = if !options[:line_item_id].nil?
-                  Spree::LineItem.find(options[:line_item_id]).context
-                else
-                  Spree::Context.new
-                end
+        context = fetch_context(options)
 
-      context.initialize_variables
-      if options[:temporal]
-        context.set_temporal_option_values(params)
-      else
+        context.initialize_variables
+
+        temporal_or_persisted(context, options, params)
+
+        context
+      end
+
+      private
+
+      def temporal_or_persisted(context, options, params)
+        return context.set_temporal_option_values(params) if options[:temporal]
+
         context.persist_option_values(params)
         context.save
       end
-      context
+
+      def fetch_context(options)
+        return Spree::Context.new if options[:line_item_id].nil?
+
+        Spree::LineItem.find(options[:line_item_id]).context
+      end
     end
 
     def find_existing_option_value(option_type)

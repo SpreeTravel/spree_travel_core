@@ -31,9 +31,9 @@ describe Spree::PersistedDynamicAttribute do
                               presentation: 'The Presentation',
                               option_type: @option_type)
 
-        @params = {'option_type_1'=> option_value.id,
-                   'option_type_2'=> '2020/02/05',
-                   'option_type_3'=> '1',
+        @params = {'any_option_type_1'=> option_value.id,
+                   'any_option_type_2'=> '2020/02/05',
+                   'any_option_type_3'=> '1',
                    'product_type'=> 'any'}
       end
 
@@ -69,9 +69,9 @@ describe Spree::PersistedDynamicAttribute do
           @product_type.rate_option_types << option_type
         end
 
-        @params ={ 'option_type_1' => '2020/02/05',
-                   'option_type_2' => '60',
-                   'option_type_3' => '1',
+        @params ={ 'any_option_type_1' => '2020/02/05',
+                   'any_option_type_2' => '60',
+                   'any_option_type_3' => '1',
                    'product_type' => 'any' }
 
         allow(Spree::Zone).to receive(:default_tax).and_return(default_zone)

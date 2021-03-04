@@ -20,14 +20,6 @@ module Spree
 
     validates_presence_of :rate_option_values
 
-    def first_time!
-      @first_time = true
-    end
-
-    def first_time?
-      @first_time
-    end
-
     def find_existing_option_value(option_type)
       rate_option_values
         .joins(:option_value)

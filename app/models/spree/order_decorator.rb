@@ -1,18 +1,20 @@
-module Spree::OrderDecorator
-  def self.prepended(base)
-    base.remove_checkout_step :delivery
+# frozen_string_literal: true
 
-    states = base.state_machine.states.map &:name
-    unless states.include?(:pax)
-      base.insert_checkout_step :pax, after: :address
+module Spree
+  module OrderDecorator
+    def self.prepended(base)
+      base.remove_checkout_step :delivery
+
+      states = base.state_machine.states.map(&:name)
+      base.insert_checkout_step :pax, after: :address unless states.include?(:pax)
+
+      base.state_machine.before_transition to: :pax, do: :generate_paxes
     end
-
-    base.state_machine.before_transition to: :pax, do: :generate_paxes
-  end
 
     def generate_paxes
       line_items.each do |line_item|
         return if line_item.context.nil?
+
         count = line_item.context.adult(temporal: false).to_i
         count.times { line_item.paxes.new } if line_item.paxes.empty?
       end
@@ -39,13 +41,13 @@ module Spree::OrderDecorator
       end
     end
 
-    def find_line_item_by_variant(variant, rate=nil, context=nil,  options = {})
-      line_items.detect { |line_item|
-        byebug
+    def find_line_item_by_variant(variant, _rate = nil, _context = nil, options = {})
+      line_items.detect do |line_item|
         line_item.variant_id == variant.id &&
           line_item_options_match(line_item, options)
-      }
+      end
     end
+  end
 end
 
 Spree::Order.prepend Spree::OrderDecorator

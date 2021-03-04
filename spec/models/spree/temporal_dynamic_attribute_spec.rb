@@ -25,17 +25,17 @@ describe Spree::TemporalDynamicAttribute do
 
   describe 'when setting temporal attributes for a context to calculate the price' do
     before do
-      @params = {'option_type_1'=> '11',
-                 'option_type_2'=> '2020-02-02',
-                 'option_type_3'=> 'Cienfuegos',
-                 'option_type_4'=> '1',
+      @params = {'any_option_type_1'=> '11',
+                 'any_option_type_2'=> '2020-02-02',
+                 'any_option_type_3'=> 'Cienfuegos',
+                 'any_option_type_4'=> '1',
                  'product_type'=> 'any'}
       @context.initialize_variables
       @context.set_temporal_option_values(@params)
     end
 
     it 'should validate the option_types' do
-      @context.get_temporal.eql?({"option_type_1"=>"11", "option_type_2"=>"2020-02-02", "option_type_3"=>"Cienfuegos", "option_type_4"=>"1", "product_type"=>"any"})
+      @context.temporal.eql?({"option_type_1"=>"11", "option_type_2"=>"2020-02-02", "option_type_3"=>"Cienfuegos", "option_type_4"=>"1", "product_type"=>"any"})
     end
   end
 end

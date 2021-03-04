@@ -20,7 +20,7 @@ module Spree
         let(:variant) { create(:travel_variant) }
 
         it 'create a new rate' do
-          allow_any_instance_of(Spree::Rate).to receive(:set_persisted_option_values)
+          allow_any_instance_of(Spree::Rate).to receive(:persist_option_values)
           allow_any_instance_of(Spree::Rate).to receive(:save).and_return(true)
 
           post :create, params: { 'rate'=>{"variant_id"=>variant.id},
@@ -30,7 +30,7 @@ module Spree
         end
 
         it 'do not save the record' do
-          allow_any_instance_of(Spree::Rate).to receive(:set_persisted_option_values)
+          allow_any_instance_of(Spree::Rate).to receive(:persist_option_values)
           allow_any_instance_of(Spree::Rate).to receive(:save).and_return(false)
 
           post :create, params: { 'rate'=>{"variant_id"=>variant.id},
@@ -41,7 +41,7 @@ module Spree
       end
 
       describe '#update' do
-        let(:product_type) { create(:product_type, :with_rate_option_types_price) }
+        let(:product_type) { create(:product_type, :with_rate_option_types_price, name: 'any') }
         let(:variant) { create(:travel_variant) }
         let(:product) { create(:travel_product, product_type: product_type) }
         let(:rate) { create(:rate, variant: variant) }

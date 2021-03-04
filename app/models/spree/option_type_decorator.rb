@@ -23,7 +23,7 @@ Spree::OptionType.prepend Spree::OptionTypeDecorator
 
 module Spree
   class SelectionOptionType
-    def self.save(context_or_rate_option_value, value, option_type = nil)
+    def self.save(context_or_rate_option_value, value, _option_type = nil)
       context_or_rate_option_value.option_value_id = value
       context_or_rate_option_value
     end
@@ -32,7 +32,7 @@ module Spree
       context_or_rate_option_value.option_value.send('presentation')
     end
 
-    def self.find_option_value(option_type)
+    def self.find_option_value(_option_type)
       puts 'to implement'
     end
   end
@@ -51,13 +51,13 @@ module Spree
                                   .money
     end
 
-    def self.find_option_value(option_type)
+    def self.find_option_value(_option_type)
       where(option_value_id: nil)
     end
   end
 
   class DestinationOptionType
-    def self.save(context_or_rate_option_value, value, option_type = nil)
+    def self.save(context_or_rate_option_value, value, _option_type = nil)
       context_or_rate_option_value.option_value_id = value
       context_or_rate_option_value.save!
     end
@@ -66,7 +66,7 @@ module Spree
       context_or_rate_option_value.option_value.send('presentation')
     end
 
-    def self.find_option_value(option_type)
+    def self.find_option_value(_option_type)
       puts 'to implement'
     end
   end

@@ -20,10 +20,11 @@ module Spree
       unless context_or_rate_option_value
         class_name = self.class.to_s
         context_or_rate_option_value = "#{class_name}OptionValue".constantize.new
-        self.send("#{class_name.demodulize.downcase}_option_values") << context_or_rate_option_value
+        send("#{class_name.demodulize.downcase}_option_values") << context_or_rate_option_value
       end
 
-      "Spree::#{option_type.attr_type.camelcase}OptionType".constantize.save(context_or_rate_option_value, value, option_type)
+      "Spree::#{option_type.attr_type.camelcase}OptionType".constantize
+                                                           .save(context_or_rate_option_value, value, option_type)
     end
 
     def persisted_option_value(option_type, _attrib = 'presentation')
