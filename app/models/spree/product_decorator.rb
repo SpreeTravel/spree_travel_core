@@ -23,21 +23,10 @@ module Spree
       self.option_types = product_type.variant_option_types if product_type.present?
     end
 
-    def calculate_price(context, variant, options)
-      calculator_instance(context, variant, options).calculate_price
-    end
-
     private
 
     def self.ransackable_scopes(_auth_object = nil)
       [:product_type_id]
-    end
-
-    def calculator_instance(context, variant, options)
-      calculator.name.constantize.new(context: context,
-                                      product: self,
-                                      variant: variant,
-                                      options: options)
     end
   end
 end

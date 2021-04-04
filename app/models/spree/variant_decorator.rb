@@ -19,6 +19,18 @@ module Spree
       option_types_ids = product_type.variant_option_types.pluck(:id)
       option_values.where(option_type_id: option_types_ids).pluck(:presentation)
     end
+
+    def calculate_price(context, options)
+      calculator_instance(context, options).calculate_price
+    end
+
+    private
+
+    def calculator_instance(context, options)
+      calculator.name.constantize.new(context: context,
+                                      variant: self,
+                                      options: options)
+    end
   end
 end
 
