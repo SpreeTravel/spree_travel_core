@@ -19,14 +19,6 @@ module Spree::ProductsControllerDecorator
     end
 
   end
-
-  def add_childrens_param
-    begin
-      @childrens = @product.childrens || @product.variants
-    rescue
-      @childrens = @product.variants
-    end
-  end
 end
 
 
