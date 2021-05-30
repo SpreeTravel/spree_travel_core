@@ -13,6 +13,8 @@ module Spree
       base.has_many :rates, class_name: 'Spree::Rate', foreign_key: 'variant_id', dependent: :destroy
       base.belongs_to :calculator, class_name: 'Spree::TravelCalculator', foreign_key: 'calculator_id'
       base.has_one :product_type, class_name: 'Spree::ProductType', through: :product
+
+      base.before_create :fill_calculator
     end
 
     def option_values_presentation
@@ -30,6 +32,10 @@ module Spree
       calculator.name.constantize.new(context: context,
                                       variant: self,
                                       options: options)
+    end
+
+    def fill_calculator
+      self.calculator_id = product.calculator_id
     end
   end
 end
