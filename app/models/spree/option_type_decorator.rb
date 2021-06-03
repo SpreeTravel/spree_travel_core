@@ -25,11 +25,11 @@ module Spree
   class SelectionOptionType
     def self.save(context_or_rate_option_value, value, _option_type = nil)
       context_or_rate_option_value.option_value_id = value
-      context_or_rate_option_value
+      context_or_rate_option_value.save!
     end
 
-    def self.value(context_or_rate_option_value)
-      context_or_rate_option_value.option_value.send('presentation')
+    def self.value(context_or_rate_option_value, attrib)
+      context_or_rate_option_value.option_value.send(attrib)
     end
 
     def self.find_option_value(_option_type)
@@ -41,10 +41,10 @@ module Spree
     def self.save(context_or_rate_option_value, value, option_type)
       context_or_rate_option_value.option_value = option_type.option_values.take
       context_or_rate_option_value.price = value.to_i
-      context_or_rate_option_value.save
+      context_or_rate_option_value.save!
     end
 
-    def self.value(context_or_rate_option_value)
+    def self.value(context_or_rate_option_value, _attrib)
       # TODO: sustitude USD by current_currency
       context_or_rate_option_value.price_in('USD')
                                   .display_price_including_vat_for({ tax_zone: Spree::Zone.default_tax })
@@ -62,8 +62,8 @@ module Spree
       context_or_rate_option_value.save!
     end
 
-    def self.value(context_or_rate_option_value)
-      context_or_rate_option_value.option_value.send('presentation')
+    def self.value(context_or_rate_option_value, attrib)
+      context_or_rate_option_value.option_value.send(attrib)
     end
 
     def self.find_option_value(_option_type)
@@ -78,7 +78,7 @@ module Spree
       context_or_rate_option_value.save!
     end
 
-    def self.value(context_or_rate_option_value)
+    def self.value(context_or_rate_option_value, _attrib)
       context_or_rate_option_value.date_value
     end
 
@@ -94,7 +94,7 @@ module Spree
       context_or_rate_option_value.save!
     end
 
-    def self.value(context_or_rate_option_value)
+    def self.value(context_or_rate_option_value, _attrib)
       context_or_rate_option_value.pax_value
     end
 
