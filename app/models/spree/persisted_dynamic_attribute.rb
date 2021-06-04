@@ -21,19 +21,15 @@ module Spree
         send("#{class_name.demodulize.downcase}_option_values") << klass_option_value
       end
 
-
-      "Spree::#{option_type.attr_type.camelcase}OptionType".constantize
-                                                           .save(klass_option_value, value, option_type)
+      klass_option_value.persist(option_type, value)
     end
 
-    def persisted_option_value(option_type, attrib = 'presentation')
-      # option_type = Spree::OptionType.find_by(name: name)
+    def persisted_option_value(option_type)
+      klass_option_value = find_existing_option_value(option_type)
 
-      context_or_rate_option_value = find_existing_option_value(option_type)
+      return 'No Value' if klass_option_value.nil?
 
-      return if context_or_rate_option_value.nil?
-
-      "Spree::#{option_type.attr_type.camelcase}OptionType".constantize.value(context_or_rate_option_value, attrib)
+      klass_option_value.persisted(option_type)
     end
   end
 end
