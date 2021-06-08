@@ -2,8 +2,6 @@
 
 module Spree
   module PersistedDynamicAttribute
-    include Spree::DynamicAttribute
-
     def persist_option_values(params)
       params.each do |key, value|
         persist_option_value(Spree::OptionType.find_by(name: key), value)

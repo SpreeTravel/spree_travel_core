@@ -50,5 +50,11 @@ module Spree
       context_option_values.includes(option_value: :option_type)
                            .find { |cov| cov.option_value&.option_type_id == option_type.id }
     end
+
+    def get_mixed_option_value(option_type, options = { temporal: true })
+      return get_temporal_option_value(option_type.name) if options[:temporal]
+
+      persisted_option_value(option_type)
+    end
   end
 end

@@ -2,8 +2,6 @@
 
 module Spree
   module TemporalDynamicAttribute
-    include DynamicAttribute
-
     def set_temporal_option_values(params)
       params.each do |key, value|
         set_temporal_option_value(key, value)
