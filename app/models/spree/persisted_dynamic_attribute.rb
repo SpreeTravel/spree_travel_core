@@ -5,9 +5,7 @@ module Spree
     include Spree::DynamicAttribute
 
     def persist_option_values(params)
-      sanitize_option_types_and_values(params).each do |key, value|
-        next if key == 'product_type'
-
+      params.each do |key, value|
         persist_option_value(Spree::OptionType.find_by(name: key), value)
       end
     end

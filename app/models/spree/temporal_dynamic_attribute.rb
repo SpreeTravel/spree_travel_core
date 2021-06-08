@@ -5,7 +5,7 @@ module Spree
     include DynamicAttribute
 
     def set_temporal_option_values(params)
-      sanitize_option_types_and_values(params).each do |key, value|
+      params.each do |key, value|
         set_temporal_option_value(key, value)
       end
     end
