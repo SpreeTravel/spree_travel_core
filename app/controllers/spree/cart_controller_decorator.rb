@@ -7,7 +7,8 @@ module Spree::CartControllerDecorator
     spree_authorize! :show, variant
 
     rate = Spree::Rate.find_by(id: params[:rate_id])
-    context = Spree::Context.build_from_params(params, temporal: false)
+
+    context = Spree::Context.build_from_params(params_sanitize, temporal: false)
 
     result = add_item_service.call(
         order: spree_current_order,
@@ -20,6 +21,12 @@ module Spree::CartControllerDecorator
     )
 
     render_order(result)
+  end
+
+  private
+
+  def params_sanitize
+    Spree::ContextParamsSanitize.new(params: params).call
   end
 
 end

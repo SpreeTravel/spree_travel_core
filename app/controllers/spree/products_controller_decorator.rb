@@ -1,7 +1,13 @@
 module Spree::ProductsControllerDecorator
-  def self.prepended(base)
-    base.helper 'spree_travel/base'
-    base.before_action :add_childrens_param, only: :show
+
+  def index
+    @searcher = build_searcher(params.merge(include_images: true))
+    @products = @searcher.retrieve_products
+    @products = @products.includes(:possible_promotions) if @products.respond_to?(:includes)
+
+    @context = Spree::Context.build_from_params(params_sanitize, temporal: true) if params['product_type']
+
+    @taxonomies = load_taxonomies
   end
 
   def show
@@ -14,10 +20,16 @@ module Spree::ProductsControllerDecorator
           active(current_currency).
           includes([:option_values, :images])
       @product_properties = @product.product_properties.includes(:property)
+      @context = Spree::Context.build_from_params(params_sanitize, temporal: true) if @product.product_type.present?
       @taxon = params[:taxon_id].present? ? Spree::Taxon.find(params[:taxon_id]) : @product.taxons.first
       redirect_if_legacy_path
     end
+  end
 
+  private
+
+  def params_sanitize
+    Spree::ContextParamsSanitize.new(params: params).call
   end
 end
 

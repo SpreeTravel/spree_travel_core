@@ -126,13 +126,17 @@ Spree.ready(function () {
                 var productType = form.elements.namedItem('product_type').value;
                 var price = form.elements.namedItem('price').value;
 
+                // context params
                 var container = document.querySelector(".inside-room-cart-form-"+ variantId + "-" + rateId);
-                var context_options =  container.querySelectorAll("input[name^='" + productType + "']");
+                var context_options =  container.querySelectorAll("input[name^='context[" + productType + "']");
                 var context_options_array = Array.from(context_options);
 
-                var context_options_object = {};
+                var context_options_object = {'context': {}};
 
-                context_options_array.forEach(function(e){ context_options_object[e.name] = e.value });
+                context_options_array.forEach(function(e){
+                    // remove the `context[` string and the last character `]`
+                    context_options_object['context'][e.name.replace('context[', '').slice(0, -1)] = e.value
+                });
 
                 // we need to ensure that we have an existing cart we want to add the item to
                 // if we have already a cart assigned to this guest / user this won't create

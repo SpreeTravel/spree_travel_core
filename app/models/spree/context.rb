@@ -19,7 +19,6 @@ module Spree
 
     class << self
       def build_from_params(params, options = {})
-        return nil if params['product_type'].nil?
         raise StandardError, 'You must be explicit about temporal or not' if options[:temporal].nil?
 
         context = fetch_context(options)
