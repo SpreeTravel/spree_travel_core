@@ -22,28 +22,24 @@ module Spree
     end
 
     def copy_price
-      if variant
-        if variant.product_type.present?
-          update_travel_price
-        elsif price.nil?
-          update_price
-        end
-        self.cost_price = variant.cost_price if cost_price.nil?
-        self.currency = variant.currency if currency.nil?
+      return unless variant
+
+      line_item_price
+      self.cost_price = variant.cost_price if cost_price.nil?
+      self.currency = variant.currency if currency.nil?
+    end
+
+    private
+
+    def line_item_price
+      if variant.product_type.present?
+        variant.calculate_price(context, temporal: false)
+        self.price = variant.context_price.to_i
+      elsif price.nil?
+        update_price
       end
     end
 
-    def update_travel_price
-      # TODO: take into account here the currency change, i am not taking it now
-      # TODO: this has to be improved, regarding the comparinson with the rate.
-      if context_price
-        self.price = context_price.gsub(/[$,]/, '').to_f
-      else
-        variant.product.calculate_price(context, variant, temporal: false).each do |hash|
-          self.price = hash[:price].match(/(\d.+)/)[1].gsub(',', '').to_f if rate.id == hash[:rate]
-        end
-      end
-    end
   end
 end
 
