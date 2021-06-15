@@ -29,7 +29,7 @@ module Spree::ProductsControllerDecorator
   private
 
   def params_sanitize
-    Spree::ContextParamsSanitize.new(params: params).call
+    Spree::ParamsSanitize.new(klass: 'context', params: params).call
   end
 end
 
