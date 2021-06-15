@@ -36,7 +36,7 @@ module Spree
         return context.set_temporal_option_values(params) if options[:temporal]
 
         context.persist_option_values(params)
-        context.save
+        context.save!
       end
 
       def fetch_context(options)
