@@ -1,10 +1,10 @@
 ### This is the data
 option_types = [
-  {name: "start_date", presentation: "Start Date", attr_type: 'date', short: 'Start', travel: true},
-  {name: "end_date", presentation: "End Date", attr_type: 'date', short: 'End', travel: true},
-  {name: "adult", presentation: "Adult", attr_type: 'integer', short: 'Adult', travel: true},
-  {name: "child", presentation: "Child", attr_type: 'integer', short: 'Child', travel: true},
-  {name: "destination", presentation: "Destination", attr_type: 'destination', short: 'Dest', travel: true},
+  {name: "start_date", presentation: "Start Date", attr_type: 'date', travel: true},
+  {name: "end_date", presentation: "End Date", attr_type: 'date', travel: true},
+  {name: "adult", presentation: "Adult", attr_type: 'pax', travel: true},
+  {name: "child", presentation: "Child", attr_type: 'pax', travel: true},
+  {name: "destination", presentation: "Destination", attr_type: 'destination', travel: true},
 ]
 
 ### Creating Option Types
