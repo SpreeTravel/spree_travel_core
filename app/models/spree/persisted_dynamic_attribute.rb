@@ -25,7 +25,7 @@ module Spree
     def persisted_option_value(option_type)
       klass_option_value = find_existing_option_value(option_type)
 
-      return 'No Value' if klass_option_value.nil?
+      return '' if klass_option_value.nil?
 
       klass_option_value.persisted(option_type)
     end
