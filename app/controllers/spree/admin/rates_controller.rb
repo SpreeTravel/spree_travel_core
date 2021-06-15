@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 module Spree
   module Admin
     class RatesController < ResourceController
       before_action :load_product
 
       def load_product
-        @product = Spree::Product.includes(:rates, :option_types, product_type: :rate_option_types)
-                                 .find_by(slug: params[:product_id])
+        @product = Spree::Product.find_by(slug: params[:product_id])
       end
 
       def index
@@ -13,32 +14,18 @@ module Spree
         @product_option_types       = @product.option_types
         @product_rate_option_types  = @product.rate_option_types
         @product_rates              = @product.rates
-                                              .includes(variant: [:option_value_variants, :option_values])
+                                              .includes(:rate_option_values, variant: [option_values: :option_type])
       end
 
-      def collection_url
-        admin_product_rates_path
-      end
-
-      def edit_object_url(rate)
-        edit_admin_product_rate_path(:product_id => rate.variant.product.slug, :id => rate.id)
-      end
-
-      def object_url(rate)
-        admin_product_rate_path(:product_id => rate.variant.product.slug, :id => rate.id)
-      end
-
-      # TODO: review params[:rate]
       def create
-        @rate = Spree::Rate.new(:variant_id => params[:rate][:variant_id])
+        @rate = Spree::Rate.new(variant_id: params[:rate][:variant_id])
         params[:product_type] = @product.product_type.name
-        @rate.persist_option_values(params)
 
-        if @rate.save
+        if save_rate
           flash[:success] = flash_message_for(@rate, :successfully_created)
           redirect_to admin_product_rates_path(params[:product_id])
         else
-          flash[:error] = "There was a problem creating the rate"
+          flash[:error] = 'There was a problem creating the rate'
           respond_with(@rate) do |format|
             format.html { render action: :new }
             format.js { render layout: false }
@@ -48,10 +35,9 @@ module Spree
 
       def update
         @rate = Spree::Rate.find(params[:id])
-        @rate.variant_id = params[:rate][:variant_id]
         params[:product_type] = @product.product_type.name
-        @rate.persist_option_values(params)
-        if @rate.save
+
+        if save_rate
           flash[:success] = flash_message_for(@rate, :successfully_updated)
           redirect_to admin_product_rates_path(params[:product_id])
         else
@@ -59,6 +45,20 @@ module Spree
         end
       end
 
+      private
+
+      def save_rate
+        ApplicationRecord.transaction do
+          @rate.persist_option_values(params_sanitize)
+          @rate.save!
+        end
+      rescue StandardError
+        false
+      end
+
+      def params_sanitize
+        Spree::ParamsSanitize.new(klass: 'rate', params: params).call
+      end
     end
   end
 end
