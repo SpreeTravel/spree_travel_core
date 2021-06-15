@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# This methods are used when the context is temporal, meaning, when a search is made.
+# This context will not persist
 module Spree
   module TemporalDynamicAttribute
     def set_temporal_option_values(params)

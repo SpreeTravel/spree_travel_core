@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# This methods are used when the context will persist in the database.
+# When a travel product is added to the cart, the context will persist.
 module Spree
   module PersistedDynamicAttribute
     def persist_option_values(params)

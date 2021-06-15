@@ -18,6 +18,7 @@ module Spree
     attr_reader :temporal
 
     class << self
+      # This argument `params` is already sanitized by the class Spree::ParamsSanitize
       def build_from_params(params, options = {})
         raise StandardError, 'You must be explicit about temporal or not' if options[:temporal].nil?
 
