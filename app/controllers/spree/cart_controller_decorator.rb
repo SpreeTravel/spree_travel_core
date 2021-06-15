@@ -8,7 +8,7 @@ module Spree::CartControllerDecorator
 
     rate = Spree::Rate.find_by(id: params[:rate_id])
 
-    context = Spree::Context.build_from_params(params_sanitize, temporal: false)
+    context = Spree::Context.build_from_params(params_sanitize, temporal: false) if params['product_type']
 
     result = add_item_service.call(
         order: spree_current_order,
