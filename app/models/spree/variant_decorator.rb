@@ -5,6 +5,8 @@ module Spree
     def self.prepended(base)
       include Spree::PersistedDynamicAttribute
 
+      attr_accessor :context_price, :rate
+
       base.has_many :prices,
                     class_name: 'Spree::Price',
                     dependent: :destroy,
