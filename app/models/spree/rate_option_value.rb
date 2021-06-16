@@ -2,11 +2,12 @@
 
 module Spree
   class RateOptionValue < Spree::Base
-    belongs_to :rate, class_name: 'Spree::Rate', foreign_key: 'rate_id', required: false
-    belongs_to :option_value, class_name: 'Spree::OptionValue', foreign_key: 'option_value_id', required: false
-
+    include Spree::RateContextMethods
     include Spree::DefaultPrice
 
+    belongs_to :rate, class_name: 'Spree::Rate', foreign_key: 'rate_id', required: false
+    belongs_to :option_value, class_name: 'Spree::OptionValue', foreign_key: 'option_value_id', required: false
+    has_one :value, as: :valuable
     has_many :prices,
              class_name: 'Spree::Price',
              dependent: :destroy,

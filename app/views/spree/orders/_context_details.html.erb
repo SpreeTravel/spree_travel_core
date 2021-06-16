@@ -6,6 +6,6 @@
   <br/>
   <h4><%= Spree.t(:reservation_details) %></h4>
   <%product_type.context_option_types.each do |cot|%>
-    <strong><%= cot.presentation%></strong>: <%= line_item.context.get_persisted_option_value(cot.name)%><br/>
+    <strong><%= cot.presentation%></strong>: <%= line_item.context.persisted_option_value(cot)%><br/>
   <%end%>
 <%end%>

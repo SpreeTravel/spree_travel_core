@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
+# This methods are used when the context is temporal, meaning, when a search is made.
+# This context will not persist
 module Spree
   module TemporalDynamicAttribute
-    include DynamicAttribute
-
     def set_temporal_option_values(params)
-      sanitize_option_types_and_values(params).each do |key, value|
+      params.each do |key, value|
         set_temporal_option_value(key, value)
       end
     end

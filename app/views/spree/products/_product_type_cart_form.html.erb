@@ -16,11 +16,12 @@
           <%= hidden_field_tag :variant_id, variant_id %>
           <%= hidden_field_tag :product_id, product.id %>
           <%= hidden_field_tag :rate_id, rate_id if rate_id%>
+          <%= hidden_field_tag :price, price%>
           <% product_type = params['product_type'] %>
           <%= hidden_field_tag('product_type', product_type) if product_type%>
-          <% product_type_params = params.select {|k| k.start_with?(product_type + '_') }%>
+          <% product_type_params = params['context'].select {|k| k.start_with?(product_type + '_') }%>
           <% product_type_params.each do |param| %>
-             <%= hidden_field_tag param[0], param[1] %>
+             <%= hidden_field_tag "context[#{param[0]}]", param[1] %>
           <%end%>
         </span>
         <%= button_tag :class => 'btn btn-success', :id => "travel-add-to-cart-button-#{product.id}", :type => :submit do %>

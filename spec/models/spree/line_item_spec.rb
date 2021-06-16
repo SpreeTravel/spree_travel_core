@@ -40,10 +40,10 @@ describe Spree::LineItem do
       @line_item_attrs = { context_attributes: context_attr}
     end
 
-    it 'should call set_persisted_option_values' do
+    it 'should call persist_option_values' do
       line_item = create(:travel_line_item, :with_context)
 
-      expect_any_instance_of(Spree::Context).to receive(:set_persisted_option_values)
+      expect_any_instance_of(Spree::Context).to receive(:persist_option_values)
                                             .with({'option_type_1'=> 20, 'product_type'=> 'any', line_item_id: line_item.id})
 
       line_item.update(@line_item_attrs)

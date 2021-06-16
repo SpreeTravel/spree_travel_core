@@ -1,6 +1,5 @@
 class CreateProductTypes < ActiveRecord::Migration[4.2]
-
-  def up
+  def change
     create_table :spree_product_types do |t|
       t.string :name
       t.string :presentation
@@ -8,9 +7,5 @@ class CreateProductTypes < ActiveRecord::Migration[4.2]
 
       t.timestamps
     end
-  end
-
-  def down
-    drop_table :spree_product_types
   end
 end

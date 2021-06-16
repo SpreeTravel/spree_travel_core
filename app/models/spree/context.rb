@@ -8,60 +8,54 @@ module Spree
     has_many :line_items, class_name: 'Spree::LineItem',
                           foreign_key: 'context_id'
     has_many :context_option_values, class_name: 'Spree::ContextOptionValue',
-                             foreign_key: 'context_id',
-                             dependent: :destroy
+                                     foreign_key: 'context_id',
+                                     dependent: :destroy
 
     def initialize_variables
       @temporal = {}
     end
 
-    def get_temporal
-      @temporal
-    end
+    attr_reader :temporal
 
-    def self.build_from_params(params, options = {})
-      return nil if params['product_type'].nil?
-      raise StandardError, 'You must be explicit about temporal or not' if options[:temporal].nil?
+    class << self
+      # This argument `params` is already sanitized by the class Spree::ParamsSanitize
+      def build_from_params(params, options = {})
+        raise StandardError, 'You must be explicit about temporal or not' if options[:temporal].nil?
 
-      context = if !options[:line_item_id].nil?
-                  Spree::LineItem.find(options[:line_item_id]).context
-                else
-                  Spree::Context.new
-                end
+        context = fetch_context(options)
 
-      context.initialize_variables
-      if options[:temporal]
-        context.set_temporal_option_values(params)
-      else
-        context.set_persisted_option_values(params)
-        context.save
+        context.initialize_variables
+
+        temporal_or_persisted(context, options, params)
+
+        context
       end
-      context
-    end
 
-    %i[
-      product_type start_date end_date plan adult child
-      cabin_count departure_date category pickup_destination
-      return_destination pickup_date return_date
-    ].each do |method|
-      define_method method do |temporal=nil|
-        get_mixed_option_value(method, temporal)
+      private
+
+      def temporal_or_persisted(context, options, params)
+        return context.set_temporal_option_values(params) if options[:temporal]
+
+        context.persist_option_values(params)
+        context.save!
       end
-    end
 
-    # this is for the amount of rooms
-    def room_count(options = { temporal: true })
-      get_mixed_option_value(:room_count, options)
-    end
+      def fetch_context(options)
+        return Spree::Context.new if options[:line_item_id].nil?
 
-    # this is for the room type (Sweet, Junio Sweet, etc.....)
-    def room(options = { temporal: true })
-      get_mixed_option_value(:room, options)
+        Spree::LineItem.find(options[:line_item_id]).context
+      end
     end
 
     def find_existing_option_value(option_type)
       context_option_values.includes(option_value: :option_type)
-                   .find { |cov| cov.option_value&.option_type_id == option_type.id }
+                           .find { |cov| cov.option_value&.option_type_id == option_type.id }
+    end
+
+    def get_mixed_option_value(option_type, options = { temporal: true })
+      return get_temporal_option_value(option_type.name) if options[:temporal]
+
+      persisted_option_value(option_type)
     end
   end
 end

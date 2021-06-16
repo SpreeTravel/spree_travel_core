@@ -15,7 +15,7 @@ describe Spree::OptionType do
   end
 
   it 'has a valid integer_type factory' do
-    expect(build(:option_type_decorated, :with_integer_option_type)).to be_valid
+    expect(build(:option_type_decorated, :with_price_option_type)).to be_valid
   end
 
   it 'has a valid float_type factory' do

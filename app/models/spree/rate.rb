@@ -20,19 +20,11 @@ module Spree
 
     validates_presence_of :rate_option_values
 
-    def first_time!
-      @first_time = true
-    end
-
-    def first_time?
-      @first_time
-    end
-
     def find_existing_option_value(option_type)
-      rate_option_values.includes(option_value: :option_type).find do |rov|
-        return rov if rov.respond_to?(:price) && rov.option_value_id.nil?
-        rov.option_value&.option_type_id == option_type.id
-      end
+      rate_option_values
+        .joins(:option_value)
+        .where('spree_option_values.option_type_id = ?', option_type.id)
+        .take
     end
   end
 end

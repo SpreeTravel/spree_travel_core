@@ -7,7 +7,7 @@
   <% @product.rate_option_types.each do |ot| %>
   <div class="form-group field">
     <%= label_tag ot.name, raw(Spree.t(ot.name) + content_tag(:span, ' *', class: 'required'))%>
-    <% current_value = @rate.get_persisted_option_value(ot.name) %>
+    <% current_value = @rate.persisted_option_value(ot) %>
       <% if ot.attr_type == 'selection' %>
         <%= select_tag ot.name, options_for_select(ot.option_values.map { |ov| [ov.presentation, ov.id] }, current_value), class: 'select2 fullwidth',  required: true%>
       <% elsif ot.attr_type == 'integer' %>

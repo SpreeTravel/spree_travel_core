@@ -20,7 +20,7 @@ module Spree
         let(:variant) { create(:travel_variant) }
 
         it 'create a new rate' do
-          allow_any_instance_of(Spree::Rate).to receive(:set_persisted_option_values)
+          allow_any_instance_of(Spree::Rate).to receive(:persist_option_values)
           allow_any_instance_of(Spree::Rate).to receive(:save).and_return(true)
 
           post :create, params: { 'rate'=>{"variant_id"=>variant.id},
@@ -30,7 +30,7 @@ module Spree
         end
 
         it 'do not save the record' do
-          allow_any_instance_of(Spree::Rate).to receive(:set_persisted_option_values)
+          allow_any_instance_of(Spree::Rate).to receive(:persist_option_values)
           allow_any_instance_of(Spree::Rate).to receive(:save).and_return(false)
 
           post :create, params: { 'rate'=>{"variant_id"=>variant.id},
@@ -41,7 +41,7 @@ module Spree
       end
 
       describe '#update' do
-        let(:product_type) { create(:product_type, :with_rate_option_types_integer) }
+        let(:product_type) { create(:product_type, :with_rate_option_types_price, name: 'any') }
         let(:variant) { create(:travel_variant) }
         let(:product) { create(:travel_product, product_type: product_type) }
         let(:rate) { create(:rate, variant: variant) }
@@ -52,9 +52,9 @@ module Spree
           post :update, params: {'product_id'=> product.slug,
                                  'id'=> rate.id,
                                  'rate'=>{"variant_id"=>variant.id},
-                                 'integer_option_type_a' => 100 }
+                                 product_type.rate_option_types.first.name => 100 }
 
-          value = rate.get_persisted_option_value(product.rate_option_types.first.name)
+          value = rate.persisted_option_value(product.rate_option_types.first.name)
 
           assert_equal '$100.00', value.format
         end

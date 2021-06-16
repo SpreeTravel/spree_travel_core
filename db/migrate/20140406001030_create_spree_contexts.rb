@@ -1,13 +1,9 @@
 class CreateSpreeContexts < ActiveRecord::Migration[4.2]
-  def up
+  def change
     create_table :spree_contexts do |t|
-      t.integer :line_item_id
+      t.references :line_item, foreign_key: {to_table: :spree_line_items}, index: true
 
       t.timestamps
     end
-  end
-
-  def down
-    drop_table :spree_contexts
   end
 end

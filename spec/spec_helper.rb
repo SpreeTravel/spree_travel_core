@@ -39,6 +39,8 @@ Dir[File.join(File.dirname(__FILE__), 'support/**/*.rb')].each { |f| require f }
 # Requires factories and other useful helpers defined in spree_core.
 require 'webdrivers'
 
+Money.default_currency= 'USD'
+
 RSpec.configure do |config|
   # Infer an example group's spec type from the file location.
   config.infer_spec_type_from_file_location!

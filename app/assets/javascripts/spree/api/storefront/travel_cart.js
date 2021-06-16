@@ -1,12 +1,13 @@
 //= require spree/api/main
 
-SpreeAPI.Storefront.travelAddToCart = function (variantId, quantity, productType, rateId, productId, context_options, options, successCallback, failureCallback) {
+SpreeAPI.Storefront.travelAddToCart = function (variantId, quantity, productType, rateId, productId, price, context_options, options, successCallback, failureCallback) {
     let params = {
         variant_id: variantId,
         quantity: quantity,
         product_type: productType,
         rate_id: rateId,
         product_id: productId,
+        price: price,
         options: options
     };
     $.extend(params, context_options);

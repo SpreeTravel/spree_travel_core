@@ -118,11 +118,10 @@ describe Spree::Order, type: :model do
       let!(:line_item) { create(:line_item, order: order, context: context) }
 
       it 'should create pax' do
-        expect_any_instance_of(Spree::Context).to receive(:adult).and_return('1')
-        expect_any_instance_of(Spree::LineItem).to receive(:context).twice.and_return(context)
-        expect(Spree::Pax).to receive(:new).with(line_item: line_item)
-        expect_any_instance_of(Spree::LineItem).to receive(:reload)
-        order.generate_paxes
+        allow_any_instance_of(Spree::Context).to receive(:adult).and_return('1')
+        allow_any_instance_of(Spree::LineItem).to receive(:context).and_return(context)
+        expect(order.generate_paxes.first.paxes.first).to be_an_instance_of(Spree::Pax)
+
       end
     end
 
