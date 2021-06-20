@@ -27,7 +27,7 @@ module Spree
     private
 
     def check_price
-      return unless option_value&.option_type&.preciable?
+      return unless option_value&.option_type&.attr_type == 'price'
 
       self.price = value if price.nil?
 
