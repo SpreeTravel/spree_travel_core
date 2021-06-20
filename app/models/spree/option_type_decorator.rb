@@ -10,11 +10,11 @@ module Spree
     end
 
     def default_option_value
-      if attr_type != 'selection' && option_values.empty? && travel
-        Spree::OptionValue.create(name: name,
-                                  presentation: presentation,
-                                  option_type_id: id)
-      end
+      return unless attr_type != 'selection' && option_values.empty? && travel
+
+      Spree::OptionValue.create(name: name,
+                                presentation: presentation,
+                                option_type_id: id)
     end
   end
 end
