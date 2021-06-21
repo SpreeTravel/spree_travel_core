@@ -5,8 +5,7 @@ FactoryBot.define do
     currency { order.currency }
 
     order
-    product
-    variant { product.master }
+    variant
 
     trait :with_context do
       association :context , factory: :context

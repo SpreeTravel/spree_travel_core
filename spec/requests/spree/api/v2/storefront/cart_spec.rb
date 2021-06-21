@@ -2,10 +2,11 @@ require 'spec_helper'
 
 
 class Spree::CalculatorProductType
-  def initialize(context:, product:, variant:, options:)
+  def initialize(context:, variant:, options:)
+    @variant = variant
   end
   def calculate_price
-    [{rate: 1, price: '$20.00' }]
+    @variant.context_price = 20
   end
 end
 
@@ -19,7 +20,7 @@ describe 'API V2 Storefront Cart Spec', type: :request do
   let(:user)  { create(:user) }
   let(:order) { create(:order, user: user, store: store, currency: currency) }
   let(:variant) { create(:variant, product: product) }
-  let(:rate) { create(:rate, variant: variant) }
+  let(:rate) { create(:rate, :with_rate_option_values, variant: variant) }
 
   include_context 'API v2 tokens'
 

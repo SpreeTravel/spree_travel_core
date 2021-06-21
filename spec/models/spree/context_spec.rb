@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Spree::Context do
-
   it { expect(Spree::Context.new.respond_to?(:line_items)).to eq true }
   it { expect(Spree::Context.new.respond_to?(:context_option_values)).to eq true }
 
@@ -9,34 +8,40 @@ describe Spree::Context do
     expect(build(:context)).to be_valid
   end
 
+  describe 'when no temporal option is provided' do
+    it 'raises a StandarError' do
+      expect{
+        Spree::Context.build_from_params({})
+      }.to raise_error(StandardError, 'You must be explicit about temporal or not')
+    end
+  end
+
   describe 'build from params' do
-    let(:product_type) { create(:product_type, :with_context_option_types, name: 'car', presentation: 'Car') }
-    let(:product) { create(:travel_product, product_type: product_type) }
-    let(:context_params) { params_for_dynamic_attribute(product) }
+    let!(:option_type) { create(:option_type_decorated, :with_date_option_type, name: 'date_option_type') }
+    let(:senitized_params) { { "date_option_type" => Date.today } }
 
-    it 'for temporal params' do
-      context = Spree::Context.build_from_params(context_params, temporal: true)
+    describe 'for TemporalDynamicAttribute' do
+      before do
+        @context = Spree::Context.build_from_params(senitized_params, temporal: true)
+      end
 
-      expect(context.get_temporal_option_value(product.context_option_types.first.name))
-          .to eq(product.context_option_types.first.option_values.first.name)
+      it 'store the params in the temporal variable' do
+        assert_equal @context.temporal, senitized_params
+      end
     end
 
-    it 'for persisted params' do
-      context = Spree::Context.build_from_params(context_params, temporal: false)
+    describe 'for PersistedDynamicAttribute' do
+      it 'creates a Spree::Context' do
+        expect {
+          Spree::Context.build_from_params(senitized_params, temporal: false)
+        }.to change(Spree::Context, :count).by(1)
+      end
 
-      expect(context.persisted_option_value(product.context_option_types.first.name))
-          .to eq(product.context_option_types.first.option_values.first.name)
-    end
-
-    it 'return nil if no product_type specified' do
-      context_params.delete('product_type')
-      context = Spree::Context.build_from_params(context_params, temporal: false)
-
-      expect(context).to be(nil)
-    end
-
-    it 'raise Standard Error if temporal not specified' do
-      expect { Spree::Context.build_from_params(context_params) }.to raise_error(StandardError, 'You must be explicit about temporal or not')
+      it 'creates a Spree::Value' do
+        expect {
+          Spree::Context.build_from_params(senitized_params, temporal: false)
+        }.to change(Spree::Value, :count).by(1)
+      end
     end
   end
 end

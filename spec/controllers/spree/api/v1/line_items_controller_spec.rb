@@ -19,7 +19,7 @@ module Spree
     let!(:stock_location) {create(:stock_location)}
 
     let(:product) { create(:travel_product) }
-    let(:rate) { create(:rate, variant: product.variants.first)}
+    let(:rate) { create(:rate, :with_rate_option_values, variant: product.variants.first)}
     let(:order) { create(:order) }
     let(:context) { create(:context) }
     let(:line_item) { create(:line_item, product: product, rate: rate, order: order, quantity: 2) }
