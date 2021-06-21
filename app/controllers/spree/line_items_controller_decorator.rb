@@ -6,7 +6,7 @@ module Spree
       { line_items_attributes: {
         id: params[:id],
         quantity: params[:line_item][:quantity],
-        context_attributes: params[:line_item][:context].as_json,
+        context_attributes: context_params_sanitize,
         options: params[:options] || {}
       } }
     end
@@ -18,6 +18,13 @@ module Spree
         :context,
         options: line_item_options
       )
+    end
+
+    private
+
+    def context_params_sanitize
+      Spree::ParamsSanitize.new(klass: 'context',
+                                params: params.dig(:line_item, :context)).call
     end
   end
 end
