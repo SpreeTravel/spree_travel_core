@@ -13,7 +13,7 @@ module Spree
 
     def generate_paxes
       line_items.each do |line_item|
-        return if line_item.context.nil?
+        next nil if line_item.context.nil?
 
         count = line_item.context.adult(temporal: false).to_i
         count.times { line_item.paxes.new } if line_item.paxes.empty?
