@@ -8,7 +8,7 @@ module Spree
     let(:variant) { create :variant, price: 20 }
     let(:qty) { 1 }
     let(:context) { create(:context) }
-    let(:rate) { create(:rate) }
+    let(:rate) { create(:rate, :with_rate_option_values) }
     let(:execute) { subject.call(order: order,
                                  variant: variant,
                                  context: context,

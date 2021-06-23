@@ -17,6 +17,18 @@ module Spree
                                               .includes(:rate_option_values, variant: [option_values: :option_type])
       end
 
+      def collection_url
+        admin_product_rates_path
+      end
+
+      def edit_object_url(rate)
+        edit_admin_product_rate_path(product_id: rate.variant.product.slug, id: rate.id)
+      end
+
+      def object_url(rate)
+        admin_product_rate_path(product_id: rate.variant.product.slug, id: rate.id)
+      end
+
       def create
         @rate = Spree::Rate.new(variant_id: params[:rate][:variant_id])
         params[:product_type] = @product.product_type.name

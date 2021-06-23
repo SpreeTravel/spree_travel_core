@@ -22,12 +22,12 @@ module Spree
       klass_option_value.persist(option_type, value)
     end
 
-    def persisted_option_value(option_type)
+    def persisted_option_value(option_type, attr = 'presentation')
       klass_option_value = find_existing_option_value(option_type)
 
       return '' if klass_option_value.nil?
 
-      klass_option_value.persisted(option_type)
+      klass_option_value.persisted(option_type, attr)
     end
   end
 end

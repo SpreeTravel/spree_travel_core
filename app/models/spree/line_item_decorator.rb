@@ -16,8 +16,8 @@ module Spree
     def context_attributes=(attr)
       return if attr.nil?
 
-      attr = attr.merge({ line_item_id: id })
       context.persist_option_values(attr)
+
       copy_price
     end
 
@@ -39,7 +39,6 @@ module Spree
         update_price
       end
     end
-
   end
 end
 

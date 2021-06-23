@@ -5,7 +5,6 @@ FactoryBot.define do
     position          { 0 }
     attr_type         { 'selection' }
     travel            { true }
-    preciable         { false }
 
     trait :with_selection_option_type_and_values do
       sequence(:name, 'a'){ |n| "selection_option_type_#{n}" }
@@ -37,10 +36,6 @@ FactoryBot.define do
       sequence(:name, 'a'){ |n| "float_option_type_#{n}" }
       sequence(:presentation, 'a'){|n| "Float Option Type #{n}"}
       attr_type {'float'}
-    end
-
-    trait :preciable do
-      preciable { true }
     end
   end
 end

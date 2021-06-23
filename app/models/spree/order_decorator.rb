@@ -13,7 +13,7 @@ module Spree
 
     def generate_paxes
       line_items.each do |line_item|
-        return if line_item.context.nil?
+        next nil if line_item.context.nil?
 
         count = line_item.context.adult(temporal: false).to_i
         count.times { line_item.paxes.new } if line_item.paxes.empty?
@@ -21,24 +21,22 @@ module Spree
     end
 
     def empty!
-      if completed?
-        raise Spree.t(:cannot_empty_completed_order)
-      else
-        line_items.each do |li|
-          li.paxes.destroy_all
-        end
-        line_items.destroy_all
-        updater.update_item_count
-        adjustments.destroy_all
-        shipments.destroy_all
-        state_changes.destroy_all
-        order_promotions.destroy_all
+      raise Spree.t(:cannot_empty_completed_order) if completed?
 
-        update_totals
-        persist_totals
-        restart_checkout_flow
-        self
+      line_items.each do |li|
+        li.paxes.destroy_all
       end
+      line_items.destroy_all
+      updater.update_item_count
+      adjustments.destroy_all
+      shipments.destroy_all
+      state_changes.destroy_all
+      order_promotions.destroy_all
+
+      update_totals
+      persist_totals
+      restart_checkout_flow
+      self
     end
 
     def find_line_item_by_variant(variant, _rate = nil, _context = nil, options = {})

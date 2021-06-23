@@ -25,6 +25,10 @@ module SpreeTravelCore
           puts 'Skipping rake db:migrate, don\'t forget to run it!'
         end
       end
+
+      def add_seeded_data
+        run 'bundle exec rake spree_travel_core:load'
+      end
     end
   end
 end

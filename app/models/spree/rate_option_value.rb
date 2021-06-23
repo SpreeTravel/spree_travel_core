@@ -16,6 +16,8 @@ module Spree
     validate :check_price
     validates_numericality_of :price, greater_than_or_equal_to: 0, allow_nil: true
 
+    delegate :date, to: :value
+
     def price_in(currency)
       prices.detect { |price| price.currency == currency } || prices.build(currency: currency)
     end
@@ -27,7 +29,7 @@ module Spree
     private
 
     def check_price
-      return unless option_value&.option_type&.preciable?
+      return unless option_value&.option_type&.attr_type == 'price'
 
       self.price = value if price.nil?
 
