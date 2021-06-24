@@ -16,7 +16,7 @@ module Spree
         next nil if line_item.context.nil?
 
         count = line_item.context.adult(temporal: false).to_i
-        count.times { line_item.paxes.new } if line_item.paxes.empty?
+        count.times { line_item.paxes.create } if line_item.paxes.empty?
       end
     end
 
