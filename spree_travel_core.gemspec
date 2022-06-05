@@ -23,9 +23,20 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.requirements << 'none'
 
-  s.add_dependency 'spree', versions['spree']
+  # spree_version = versions['spreel']
+  # s.add_dependency 'spree', versions['spree']
+  # s.add_dependency 'spree_extension'
+  # s.add_dependency 'redis', "~> 4.0"
+  s.add_dependency 'rails', '~> 6.1.4'
+  s.add_dependency 'spree_core', versions['spreel']
+  s.add_dependency 'spree_api'
+  s.add_dependency 'spree_backend'
   s.add_dependency 'spree_extension'
   s.add_runtime_dependency 'deface', '~> 1.0'
+
+  # s.add_development_dependency 'spree_cmd'
+  s.add_development_dependency 'redis', '~> 4.0'
+  s.add_development_dependency 'pg', '>= 0.18', '< 2.0'
 
   s.add_development_dependency 'jsonapi-rspec'
   s.add_development_dependency 'capybara'

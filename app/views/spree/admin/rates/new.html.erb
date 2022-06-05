@@ -10,7 +10,7 @@
   <li><%= link_to_with_icon 'icon-arrow-left', Spree.t(:back_to_rates_list), admin_product_rates_path(@product), :class => 'button' %></li>
 <% end %>
 
-<%= render :partial => 'spree/shared/error_messages', :locals => { :target => @rate } %>
+<%= render :partial => 'spree/admin/shared/error_messages', :locals => { :target => @rate } %>
 
 <%= form_for [:admin, @product, @rate] do |f| %>
   <fieldset class="no-border-top">

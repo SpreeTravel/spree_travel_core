@@ -4,6 +4,7 @@ module Spree
   module PriceDecorator
     def self.prepended(base)
       base.belongs_to :preciable, polymorphic: true
+      
     end
 
     def price_including_vat_for(price_options)

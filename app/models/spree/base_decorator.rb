@@ -3,7 +3,8 @@
 module Spree
   module BaseDecorator
     def spree_base_scopes
-      where(product_type: nil)
+      return where(product_type: nil) if column_names.include?("product_type")
+      super
     end
   end
 end
