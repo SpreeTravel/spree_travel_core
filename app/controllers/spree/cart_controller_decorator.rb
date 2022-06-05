@@ -31,4 +31,4 @@ module Spree::CartControllerDecorator
 
 end
 
-Spree::Api::V2::Storefront::CartController.prepend Spree::CartControllerDecorator
+# Spree::Api::V2::Storefront::CartController.prepend Spree::CartControllerDecorator

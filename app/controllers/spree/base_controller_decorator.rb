@@ -7,4 +7,4 @@ module Spree::BaseControllerDecorator
   end
 end
 
-Spree::BaseController.prepend Spree::BaseControllerDecorator
+# Spree::BaseController.prepend Spree::BaseControllerDecorator

@@ -4,18 +4,17 @@ module Spree
 
     included do
       has_one :default_price,
-              -> { where currency: Spree::Config[:currency] },
-              class_name: 'Spree::Price',
-              dependent: :destroy, as: :preciable
+              -> { with_deleted.where(currency: Spree::Store.default.default_currency) },
+        class_name: 'Spree::Price', dependent: :destroy, as: :preciable
 
-      delegate :display_price, :display_amount, :price, :currency, :price=,
-               :price_including_vat_for, :currency=, to: :find_or_build_default_price
+      delegate :display_price, :display_amount, :price, :currency, :price=, :price_including_vat_for, :currency=,
+               :display_compare_at_price, :compare_at_price, :compare_at_price=, to: :find_or_build_default_price
 
       after_save :save_default_price
 
-      def default_price
-        Spree::Price.unscoped { super }
-      end
+      # def default_price
+      #   Spree::Price.unscoped { super }
+      # end
 
       def has_default_price?
         !default_price.nil? == true

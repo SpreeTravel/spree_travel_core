@@ -29,4 +29,4 @@ module Spree
   end
 end
 
-Spree::Api::V1::LineItemsController.prepend Spree::LineItemsControllerDecorator
+# Spree::Api::V1::LineItemsController.prepend Spree::LineItemsControllerDecorator
